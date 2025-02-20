@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[DefaultExecutionOrder(-1000)]
 public class InputBuffer : MonoBehaviour
 {
     private PlayerInput _playerInput;
@@ -18,10 +19,7 @@ public class InputBuffer : MonoBehaviour
     private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
-    }
-
-    void Start()
-    {
+        
         //PlayerInputの設定を初期化
         if (_playerInput)
         {
@@ -37,5 +35,4 @@ public class InputBuffer : MonoBehaviour
         Attack2Action = _playerInput.actions["Attack_2"];
         Attack3Action = _playerInput.actions["Attack_3"];
     }
-
 }
