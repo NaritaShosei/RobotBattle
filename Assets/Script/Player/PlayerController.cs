@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
         var input = context.ReadValue<Vector2>();
         if (context.phase == InputActionPhase.Performed)
         {
-            _velocity += input;
+            _velocity = input;
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
@@ -52,13 +52,15 @@ public class PlayerController : MonoBehaviour
     {
         _input.MoveAction.performed += Move;
         _input.MoveAction.canceled += Move;
-        _input.JumpAction.performed += Jump;
+        _input.JumpAction.started += Jump;
+        _input.JumpAction.canceled += Jump;
     }
 
     void RemoveAction()
     {
         _input.MoveAction.performed -= Move;
         _input.MoveAction.canceled -= Move;
-        _input.JumpAction.performed -= Jump;
+        _input.JumpAction.started -= Jump;
+        _input.JumpAction.canceled -= Jump;
     }
 }
