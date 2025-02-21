@@ -4,10 +4,13 @@ using System.Threading.Tasks;
 using SymphonyFrameWork.System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class SceneChanger : MonoBehaviour
 {
     private SceneListEnum _currentScene = SceneListEnum.None;
+
+    private VisualElement _fadeBackGround;
     
     private void Awake()
     {
@@ -17,20 +20,29 @@ public class SceneChanger : MonoBehaviour
         {
             Debug.LogWarning("Scene '" + active.name + "' is not a valid SceneListEnum");
         }
+        
+        //フェード演出用の黒背景を取得
+        var document = GetComponentInChildren<UIDocument>();
+        _fadeBackGround = document.rootVisualElement;
     }
-    
+
+    private void Start()
+    {
+        _fadeBackGround.style.opacity = 0;
+    }
+
     /// <summary>
     /// 現在のシーンをアンロードし、引数のシーンをロードする
     /// </summary>
     /// <param name="scene"></param>
     public async void ChangeScene(SceneListEnum scene)
     {
-        await FadeOut();
+        await FadeOut(1f);
         
         //ロードシーンを読み込む
         await SceneLoader.LoadScene(SceneListEnum.Load.ToString());
         
-        await FadeIn();
+        await FadeIn(1f);
         
         //現在のシーンをアンロード
         await SceneLoader.UnloadScene(_currentScene.ToString());
@@ -39,21 +51,45 @@ public class SceneChanger : MonoBehaviour
         await SceneLoader.LoadScene(scene.ToString());
         _currentScene = scene;
         
-        await FadeOut();
+        await FadeOut(0.3f);
         
         //ロードシーンをアンロード
         await SceneLoader.UnloadScene(SceneListEnum.Load.ToString());
         
-        await FadeIn();
+        await FadeIn(0.3f);
     }
 
-    private async Task FadeIn()
+    private async Task FadeIn(float timer)
     {
-        await Awaitable.WaitForSecondsAsync(0.3f);
+        float speed = 1 / timer; //透明度の秒間変化スピード
+        
+        do
+        {
+            //透明度を変化させる
+            _fadeBackGround.style.opacity = _fadeBackGround.style.opacity.value
+                                            - speed * Time.deltaTime;
+            
+            await Awaitable.NextFrameAsync();
+            timer -= Time.deltaTime;
+        } while (timer > 0);
+
+        _fadeBackGround.style.opacity = 0;
     }
 
-    private async Task FadeOut()
+    private async Task FadeOut(float timer)
     {
-        await Awaitable.WaitForSecondsAsync(0.3f);
+        float speed = 1 / timer; //透明度の秒間変化スピード
+        
+        do
+        {
+            //透明度を変化させる
+            _fadeBackGround.style.opacity = _fadeBackGround.style.opacity.value
+                                            + speed * Time.deltaTime;
+            
+            await Awaitable.NextFrameAsync();
+            timer -= Time.deltaTime;
+        } while (timer > 0);
+        
+        _fadeBackGround.style.opacity = 1;
     }
 }
