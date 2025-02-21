@@ -1,13 +1,13 @@
-﻿using SymphonyFrameWork.Config;
+﻿using System.IO;
+using SymphonyFrameWork.Config;
 using SymphonyFrameWork.Debugger;
-using System.IO;
 using UnityEditor;
 using UnityEngine;
 
 namespace SymphonyFrameWork.Editor
 {
     /// <summary>
-    /// コンフィグ用データを生成するクラス
+    ///     コンフィグ用データを生成するクラス
     /// </summary>
     [InitializeOnLoad]
     public static class SymphonyConfigManager
@@ -15,34 +15,43 @@ namespace SymphonyFrameWork.Editor
         static SymphonyConfigManager()
         {
             FileCheck<SceneManagerConfig>();
-        }
-
-        private static void FileCheck<T>() where T : ScriptableObject
-        {
-            //型の名前でパスを指定
-            string filePath = $"{SymphonyConstant.RESOURCES_PATH}/{typeof(T).Name}.asset";
-
-            // ファイルが存在しない場合
-            if (AssetDatabase.LoadAssetAtPath<T>(filePath) == null)
-            {
-                CreateResourcesFolder();
-
-                //対象のアセットを生成してResources内に配置
-                T asset = ScriptableObject.CreateInstance<T>();
-                AssetDatabase.CreateAsset(asset, filePath);
-                AssetDatabase.SaveAssets();
-
-                SymphonyDebugLog.DirectLog($"'{SymphonyConstant.RESOURCES_PATH}' に新しい {typeof(T).Name} を作成しました。");
-            }
+            FileCheck<AutoEnumGeneratorConfig>();
         }
 
         /// <summary>
-        /// リソースフォルダが無ければ生成
+        ///     ファイルが存在するか確認する
         /// </summary>
-        private static void CreateResourcesFolder()
+        /// <typeparam name="T"></typeparam>
+        private static void FileCheck<T>() where T : ScriptableObject
         {
-            string resourcesPath = SymphonyConstant.RESOURCES_PATH;
+            var paths = SymphonyConfigLocator.GetFullPath<T>();
+            if (paths == null)
+            {
+                Debug.LogWarning(typeof(T).Name + " doesn't exist!");
+                return;
+            }
 
+            var (path, filePath) = paths.Value;
+
+            //ファイルが存在するなら終了
+            if (AssetDatabase.LoadAssetAtPath<T>(path + filePath) != null) return;
+
+            //フォルダがなければ生成
+            CreateResourcesFolder(path);
+
+            //対象のアセットを生成してResources内に配置
+            var asset = ScriptableObject.CreateInstance<T>();
+            AssetDatabase.CreateAsset(asset, path + filePath);
+            AssetDatabase.SaveAssets();
+
+            SymphonyDebugLog.DirectLog($"'{path}' に新しい {typeof(T).Name} を作成しました。");
+        }
+
+        /// <summary>
+        ///     リソースフォルダが無ければ生成
+        /// </summary>
+        private static void CreateResourcesFolder(string resourcesPath)
+        {
             //リソースがなければ生成
             if (!Directory.Exists(resourcesPath))
             {

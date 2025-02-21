@@ -1,8 +1,33 @@
 #Version
-1.19.5
+1.19.11
 
 
 #Log
+1.19.11
+[Update]
+SceneLoader
+SceneManagerConfig
+
+1.19.10
+[Add]
+SymphonyConfigLocator
+
+1.19.9
+[Add]
+EnumGeneratorConfig
+
+1.19.8
+[Update]
+EnumGenerator
+
+1.19.7
+[Update]
+SceneManagerConfig
+
+1.19.6
+[Fix]
+EnumGenerator
+
 1.19.5
 [Update]
 SceneManagerConfig
@@ -98,7 +123,7 @@ SymphonyUtility
 
 1.17.2
 [Fix]
-SymphonyCoreSystem
+SymphonySystem
 ServiceLocator
 SceneLoader
 SaveDataSystem
@@ -170,12 +195,12 @@ SceneLoader
 
 1.14
 [fix]
-SymphonyCoreSystem
+SymphonySystem
 SceneLoader
 
 1.13
 [Add]
-SymphonyCoreSystem
+SymphonySystem
 
 1.12
 [Add]
