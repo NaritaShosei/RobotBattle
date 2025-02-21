@@ -41,6 +41,7 @@ public class SceneChanger : MonoBehaviour
         
         //ロードシーンを読み込む
         await SceneLoader.LoadScene(SceneListEnum.Load.ToString());
+        SceneLoader.SetActiveScene(SceneListEnum.Load.ToString());
         
         await FadeIn(1f);
         
@@ -51,12 +52,14 @@ public class SceneChanger : MonoBehaviour
         await SceneLoader.LoadScene(scene.ToString());
         _currentScene = scene;
         
-        await FadeOut(0.3f);
+        await FadeOut(1f);
+        
+        SceneLoader.SetActiveScene(scene.ToString());
         
         //ロードシーンをアンロード
         await SceneLoader.UnloadScene(SceneListEnum.Load.ToString());
         
-        await FadeIn(0.3f);
+        await FadeIn(1f);
     }
 
     private async Task FadeIn(float timer)
