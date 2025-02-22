@@ -51,13 +51,12 @@ public class AudioManager : MonoBehaviour
             {
                 AudioSource source = gameObject.AddComponent<AudioSource>();
                 source.outputAudioMixerGroup = group;
-
                 source.playOnAwake = false;
 
-                //�����̉��ʂ��擾
+                //初期のボリュームを取得
                 _mixer.GetFloat($"{name}_Volume", out float value);
 
-                //���������o�^
+                //各情報を追加
                 _audioDict.Add(type, (group, source, value));
             }
             else
@@ -101,7 +100,7 @@ public class AudioManager : MonoBehaviour
     public async void BGMChanged(int index, float duration)
     {
         //前のBGM変更があれば止める
-        if (_bgmChangeToken != null && !_bgmChangeToken.IsCancellationRequested)
+        if (_bgmChangeToken is { IsCancellationRequested: false })
         {
             _bgmChangeToken.Cancel();
         }
