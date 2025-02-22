@@ -3,44 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace SymphonyFrameWork.CoreSystem
+namespace SymphonyFrameWork.System
 {
     /// <summary>
-    /// シングルトンのインスタンスを統括して管理するクラス
+    ///     シングルトンのインスタンスを統括して管理するクラス
     /// </summary>
     //インスタンスを一時的にシーンロードから切り離したい時にも使用できる
     public static class ServiceLocator
     {
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void Initialize()
+        internal static void Initialize()
         {
             _instance = null;
             _singletonObjects.Clear();
         }
+        
+        public enum LocateType
+        {
+            Singleton,
+            Locator
+        }
 
-        [Tooltip("シングルトン化するインスタンスのコンテナ")]
-        private static GameObject _instance;
+        [Tooltip("シングルトン化するインスタンスのコンテナ")] private static GameObject _instance;
+
         [Tooltip("シングルトン登録されている型のインスタンス辞書")]
-        private static Dictionary<Type, Component> _singletonObjects = new();
+        private static readonly Dictionary<Type, Component> _singletonObjects = new();
 
         /// <summary>
-        /// インスタンスコンテナが無い場合に生成する
+        ///     インスタンスコンテナが無い場合に生成する
         /// </summary>
         private static void CreateInstance()
         {
-            if (_instance is not null)
-            {
-                return;
-            }
+            if (_instance is not null) return;
 
-            GameObject instance = new GameObject("ServiceLocator");
+            var instance = new GameObject("ServiceLocator");
 
             SymphonyCoreSystem.MoveObjectToSymphonySystem(instance);
             _instance = instance;
         }
 
         /// <summary>
-        /// 入れられたコンポーネントをロケーターに登録する
+        ///     入れられたコンポーネントをロケーターに登録する
         /// </summary>
         /// <typeparam name="T">登録する型</typeparam>
         /// <param name="instance">インスタンス</param>
@@ -55,7 +57,7 @@ namespace SymphonyFrameWork.CoreSystem
             }
 
             Debug.Log($"{typeof(T).Name}クラスの{instance.name}が" +
-                $"{type switch { LocateType.Locator => "ロケート", LocateType.Singleton => "シングルトン", _ => string.Empty }}登録されました");
+                      $"{type switch { LocateType.Locator => "ロケート", LocateType.Singleton => "シングルトン", _ => string.Empty }}登録されました");
 
             if (type == LocateType.Singleton)
             {
@@ -65,25 +67,22 @@ namespace SymphonyFrameWork.CoreSystem
         }
 
         /// <summary>
-        /// 指定したインスタンスを破棄する
+        ///     指定したインスタンスを破棄する
         /// </summary>
         /// <typeparam name="T">破棄したいインスタンスの型</typeparam>
         public static void DestroyInstance<T>(T instance) where T : Component
         {
             //インスタンスが登録されたコンポーネントか
-            if (_singletonObjects.TryGetValue(typeof(T), out Component md) && md == instance)
-            {
-                DestroyInstance<T>();
-            }
+            if (_singletonObjects.TryGetValue(typeof(T), out var md) && md == instance) DestroyInstance<T>();
         }
 
         /// <summary>
-        /// 指定した型のインスタンスを破棄する
+        ///     指定した型のインスタンスを破棄する
         /// </summary>
         /// <typeparam name="T">破棄したいインスタンスの型</typeparam>
         public static void DestroyInstance<T>() where T : Component
         {
-            if (_singletonObjects.TryGetValue(typeof(T), out Component md))
+            if (_singletonObjects.TryGetValue(typeof(T), out var md))
             {
                 Object.Destroy(md.gameObject);
                 _singletonObjects.Remove(typeof(T));
@@ -96,33 +95,22 @@ namespace SymphonyFrameWork.CoreSystem
         }
 
         /// <summary>
-        /// 登録されたインスタンスを返す
+        ///     登録されたインスタンスを返す
         /// </summary>
         /// <typeparam name="T">取得したいインスタンスの型</typeparam>
         /// <returns>指定した型のインスタンス</returns>
         public static T GetInstance<T>() where T : Component
         {
-            if (_singletonObjects.TryGetValue(typeof(T), out Component md))
+            if (_singletonObjects.TryGetValue(typeof(T), out var md))
             {
-                if (md != null)
-                {
-                    return md as T;
-                }
-                else
-                {
-                    Debug.LogError($"{typeof(T).Name} は破棄されています。");
-                    return null;
-                }
+                if (md != null) return md as T;
+
+                Debug.LogError($"{typeof(T).Name} は破棄されています。");
+                return null;
             }
 
             Debug.LogWarning($"{typeof(T).Name} は登録されていません。");
             return null;
-        }
-
-        public enum LocateType
-        {
-            Singleton,
-            Locator,
         }
     }
 }

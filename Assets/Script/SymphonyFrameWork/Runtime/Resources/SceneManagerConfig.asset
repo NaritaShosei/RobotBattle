@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: SceneManagerConfig
   m_EditorClassIdentifier: 
   _isActiveLoadScene: 0
-  _loadScene: 
-  _sceneList:
-  - SampleScene
+  _loadScene: 0
+  _initializeSceneList: 01000000

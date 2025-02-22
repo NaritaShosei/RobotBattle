@@ -1,27 +1,28 @@
-﻿using SymphonyFrameWork.Attribute;
+﻿using System.Collections.Generic;
+using SymphonyFrameWork.Attribute;
 using UnityEngine;
 
 namespace SymphonyFrameWork.Config
 {
     /// <summary>
-    /// シーンマネージャーのコンフィグを格納する
+    ///     シーンマネージャーのコンフィグを格納する
     /// </summary>
-    public partial class SceneManagerConfig : ScriptableObject
+    public class SceneManagerConfig : ScriptableObject
     {
         [DisplayText("開発中の機能です")]
-
         [Space]
-
-        [SerializeField, Tooltip("ロードシーンを有効化するかどうか")]
+        
+        [SerializeField] [Tooltip("ロードシーンを有効化するかどうか")]
         private bool _isActiveLoadScene;
-        public bool IsActiveLoadScene { get => _isActiveLoadScene; }
 
-        [SerializeField, Tooltip("ロード中に表示されるシーン")]
-        private string _loadScene;
-        public string LoadScene { get => _loadScene; }
+        [SerializeField] [Tooltip("ロード中に表示されるシーン")]
+        private SceneListEnum _loadScene;
 
-        [ReadOnly, SerializeField, Tooltip("Enumを生成するシーンの一覧")]
-        private string[] _sceneList = new string[] { };
-        public string[] SceneList { get => _sceneList; }
+        public bool IsActiveLoadScene => _isActiveLoadScene;
+        public SceneListEnum LoadScene => _loadScene;
+        
+        [SerializeField] [Tooltip("初期化時にロードするシーン")]
+        private List<SceneListEnum> _initializeSceneList;
+        public List<SceneListEnum> InitializeSceneList => _initializeSceneList;
     }
 }
