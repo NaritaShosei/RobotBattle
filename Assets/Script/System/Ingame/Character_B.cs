@@ -2,7 +2,7 @@
 
 namespace Script.System.Ingame
 {
-    public class Character_B<DataType> : MonoBehaviour
+    public abstract class Character_B<DataType> : MonoBehaviour
     where DataType : CharacterData_B
     {
         [SerializeField]
