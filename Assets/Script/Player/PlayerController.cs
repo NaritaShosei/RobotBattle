@@ -1,4 +1,4 @@
-﻿using SymphonyFrameWork.CoreSystem;
+﻿using SymphonyFrameWork.System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
