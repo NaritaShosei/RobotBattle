@@ -11,10 +11,10 @@ namespace Script.System.Ingame
         /// <summary>
         /// データを初期化する
         /// </summary>
-        public void Initialize()
+        public void Initialize(DataType data)
         {
             //データを生成
-            _data = Instantiate(_data);
+            _data = Instantiate(data);
         }
 
         private void OnDestroy()
