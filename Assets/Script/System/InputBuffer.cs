@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,20 +7,21 @@ using UnityEngine.InputSystem;
 public class InputBuffer : MonoBehaviour
 {
     private PlayerInput _playerInput;
-    
+
     public InputAction MoveAction { get; private set; }
     public InputAction LookAction { get; private set; }
     public InputAction JumpAction { get; private set; }
     public InputAction GuardAction { get; private set; }
-    public InputAction Attack1Action {get; private set;}
-    public InputAction Attack2Action {get; private set;}
-    public InputAction Attack3Action {get; private set;}
-    
+    public InputAction Attack1Action { get; private set; }
+    public InputAction Attack2Action { get; private set; }
+    public InputAction Attack3Action { get; private set; }
+    public InputAction DashAction { get; private set; }
+
 
     private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
-        
+
         //PlayerInputの設定を初期化
         if (_playerInput)
         {
@@ -35,5 +36,6 @@ public class InputBuffer : MonoBehaviour
         Attack1Action = _playerInput.actions["Attack_1"];
         Attack2Action = _playerInput.actions["Attack_2"];
         Attack3Action = _playerInput.actions["Attack_3"];
+        DashAction = _playerInput.actions["Dash"];
     }
 }

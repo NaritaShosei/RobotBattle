@@ -1,9 +1,10 @@
-﻿using SymphonyFrameWork.System;
+﻿using Script.System.Ingame;
+using SymphonyFrameWork.System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : Character_B<CharacterData_B>
 {
     [SerializeField]
     float _moveSpeed;
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
     InputBuffer _input;
     Vector2 _velocity;
     bool _isJumped;
+    bool _isDashed;
     void Start()
     {
         _input = ServiceLocator.GetInstance<InputBuffer>();
@@ -22,7 +24,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        _rb.linearVelocity = new Vector3(_velocity.x, 0, _velocity.y) * _moveSpeed;
+        if (!_isDashed)
+        {
+            _rb.linearVelocity = new Vector3(_velocity.x, 0, _velocity.y) * _moveSpeed;
+        }
+        else if (_isDashed)
+        {
+            _rb.linearVelocity = new Vector3(_velocity.x, 0, _velocity.y) * _moveSpeed * 5;
+        }
         if (_isJumped)
         {
             _rb.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
@@ -56,7 +65,18 @@ public class PlayerController : MonoBehaviour
             _isJumped = false;
         }
     }
+    void Dash(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            _isDashed = true;
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            _isDashed = false;
+        }
 
+    }
     private void OnDisable()
     {
         RemoveAction();
@@ -68,6 +88,8 @@ public class PlayerController : MonoBehaviour
         _input.MoveAction.canceled += Move;
         _input.JumpAction.started += Jump;
         _input.JumpAction.canceled += Jump;
+        _input.DashAction.started += Dash;
+        _input.DashAction.canceled += Dash;
     }
 
     void RemoveAction()
@@ -76,5 +98,7 @@ public class PlayerController : MonoBehaviour
         _input.MoveAction.canceled -= Move;
         _input.JumpAction.started -= Jump;
         _input.JumpAction.canceled -= Jump;
+        _input.DashAction.started -= Dash;
+        _input.DashAction.canceled -= Dash;
     }
 }
