@@ -1,5 +1,9 @@
-﻿using Script.System.Ingame;
+﻿using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
+using Script.System.Ingame;
 using SymphonyFrameWork.System;
+using SymphonyFrameWork.Utility;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,18 +11,23 @@ using UnityEngine.InputSystem;
 public class PlayerController : Character_B<CharacterData_B>
 {
     [SerializeField]
-    float _moveSpeed;
+    float _normalSpeed;
+    [SerializeField]
+    float _dashSpeed;
     [SerializeField]
     float _jumpSpeed;
     Rigidbody _rb;
     InputBuffer _input;
     Vector2 _velocity;
+    float _currentSpeed;
     bool _isJumped;
     bool _isDashed;
+    TweenerCore<float, float, FloatOptions> _dashTween = null;
     void Start()
     {
         _input = ServiceLocator.GetInstance<InputBuffer>();
         _rb = GetComponent<Rigidbody>();
+        _currentSpeed = _normalSpeed;
         AddAction();
     }
 
@@ -26,16 +35,17 @@ public class PlayerController : Character_B<CharacterData_B>
     {
         if (!_isDashed)
         {
-            _rb.linearVelocity = new Vector3(_velocity.x, 0, _velocity.y) * _moveSpeed;
+            // _currentSpeed = _normalSpeed;
         }
         else if (_isDashed)
         {
-            _rb.linearVelocity = new Vector3(_velocity.x, 0, _velocity.y) * _moveSpeed * 5;
+            //_currentSpeed = _dashSpeed;
         }
         if (_isJumped)
         {
             _rb.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
         }
+        _rb.linearVelocity = new Vector3(_velocity.x, 0, _velocity.y) * _currentSpeed;
     }
 
     void Move(InputAction.CallbackContext context)
@@ -67,13 +77,17 @@ public class PlayerController : Character_B<CharacterData_B>
     }
     void Dash(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started)
+        if (context.phase == InputActionPhase.Started && !_isDashed)
         {
             _isDashed = true;
+            _dashTween?.Kill();
+            _dashTween = DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _dashSpeed, 0.2f);
         }
-        else if (context.phase == InputActionPhase.Canceled)
+        else if (context.phase == InputActionPhase.Canceled && _isDashed)
         {
             _isDashed = false;
+            _dashTween?.Kill();
+            _dashTween = DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _normalSpeed, 0.8f);
         }
 
     }
