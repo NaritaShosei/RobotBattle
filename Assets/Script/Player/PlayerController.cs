@@ -3,7 +3,7 @@ using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 using Script.System.Ingame;
 using SymphonyFrameWork.System;
-using SymphonyFrameWork.Utility;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,19 +33,18 @@ public class PlayerController : Character_B<CharacterData_B>
 
     void Update()
     {
-        if (!_isDashed)
-        {
-            // _currentSpeed = _normalSpeed;
-        }
-        else if (_isDashed)
-        {
-            //_currentSpeed = _dashSpeed;
-        }
         if (_isJumped)
         {
             _rb.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
         }
-        _rb.linearVelocity = new Vector3(_velocity.x, 0, _velocity.y) * _currentSpeed;
+        if (!_isDashed)
+        {
+            _rb.linearVelocity = new Vector3(_velocity.x, 0, _velocity.y) * _currentSpeed;
+        }
+        else if (_isDashed)
+        {
+
+        }
     }
 
     void Move(InputAction.CallbackContext context)
@@ -77,19 +76,27 @@ public class PlayerController : Character_B<CharacterData_B>
     }
     void Dash(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started && !_isDashed)
+        if (context.phase == InputActionPhase.Started)
         {
             _isDashed = true;
+            var vel = _velocity != Vector2.zero ? _velocity : new Vector2(0, 1);
+            _rb.AddForce(new Vector3(vel.x, 0, vel.y) * _dashSpeed * 3, ForceMode.Impulse);
             _dashTween?.Kill();
-            _dashTween = DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _dashSpeed, 0.2f);
+            _dashTween = DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _dashSpeed, 0.5f);
+            StartCoroutine(Dash());
         }
-        else if (context.phase == InputActionPhase.Canceled && _isDashed)
+        else if (context.phase == InputActionPhase.Canceled)
         {
-            _isDashed = false;
             _dashTween?.Kill();
             _dashTween = DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _normalSpeed, 0.8f);
         }
 
+    }
+
+    IEnumerator Dash()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _isDashed = false;
     }
     private void OnDisable()
     {
