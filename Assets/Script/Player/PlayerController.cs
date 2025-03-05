@@ -18,13 +18,10 @@ public class PlayerController : Character_B<CharacterData_B>
     float _jumpPower;
     [SerializeField]
     float _dashTime = 0.5f;
-    [SerializeField]
-    float _jumpTime = 0.5f;
     Rigidbody _rb;
     InputBuffer _input;
     Vector2 _velocity;
     float _currentSpeed;
-    float _currentJumpPower;
     bool _isJumped;
     bool _isDashed;
     TweenerCore<float, float, FloatOptions> _dashTween = null;
@@ -48,6 +45,9 @@ public class PlayerController : Character_B<CharacterData_B>
             vel.y = _rb.linearVelocity.y;
             _rb.linearVelocity = vel;
         }
+        var cam = Camera.main.transform.forward;
+        cam.y = 0;
+        //transform.forward = cam;
     }
 
     void Move(InputAction.CallbackContext context)
@@ -76,7 +76,6 @@ public class PlayerController : Character_B<CharacterData_B>
         else if (context.phase == InputActionPhase.Canceled)
         {
             _isJumped = false;
-            _currentJumpPower = 0;
         }
     }
     void Dash(InputAction.CallbackContext context)
