@@ -658,7 +658,9 @@ MonoBehaviour:
   _data: {fileID: 0}
   _normalSpeed: 50
   _dashSpeed: 150
-  _jumpSpeed: 53.3
+  _jumpPower: 10
+  _dashTime: 0.3
+  _jumpTime: 0.5
 --- !u!54 &789319752
 Rigidbody:
   m_ObjectHideFlags: 0

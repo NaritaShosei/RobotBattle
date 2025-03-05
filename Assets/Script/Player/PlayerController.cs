@@ -15,11 +15,16 @@ public class PlayerController : Character_B<CharacterData_B>
     [SerializeField]
     float _dashSpeed;
     [SerializeField]
-    float _jumpSpeed;
+    float _jumpPower;
+    [SerializeField]
+    float _dashTime = 0.5f;
+    [SerializeField]
+    float _jumpTime = 0.5f;
     Rigidbody _rb;
     InputBuffer _input;
     Vector2 _velocity;
     float _currentSpeed;
+    float _currentJumpPower;
     bool _isJumped;
     bool _isDashed;
     TweenerCore<float, float, FloatOptions> _dashTween = null;
@@ -35,15 +40,13 @@ public class PlayerController : Character_B<CharacterData_B>
     {
         if (_isJumped)
         {
-            _rb.AddForce(new Vector3(0, _jumpSpeed, 0), ForceMode.Impulse);
+            _rb.AddForce(new Vector3(0, _jumpPower, 0), ForceMode.Impulse);
         }
         if (!_isDashed)
         {
-            _rb.linearVelocity = new Vector3(_velocity.x, 0, _velocity.y) * _currentSpeed;
-        }
-        else if (_isDashed)
-        {
-
+            var vel = new Vector3(_velocity.x, 0, _velocity.y) * _currentSpeed;
+            vel.y = _rb.linearVelocity.y;
+            _rb.linearVelocity = vel;
         }
     }
 
@@ -68,10 +71,12 @@ public class PlayerController : Character_B<CharacterData_B>
         if (context.phase == InputActionPhase.Started)
         {
             _isJumped = true;
+            _rb.AddForce(new Vector3(0, _jumpPower * 5, 0), ForceMode.Impulse);
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
             _isJumped = false;
+            _currentJumpPower = 0;
         }
     }
     void Dash(InputAction.CallbackContext context)
@@ -82,7 +87,7 @@ public class PlayerController : Character_B<CharacterData_B>
             var vel = _velocity != Vector2.zero ? _velocity : new Vector2(0, 1);
             _rb.AddForce(new Vector3(vel.x, 0, vel.y) * _dashSpeed * 3, ForceMode.Impulse);
             _dashTween?.Kill();
-            _dashTween = DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _dashSpeed, 0.5f);
+            _dashTween = DOTween.To(() => _currentSpeed, speed => _currentSpeed = speed, _dashSpeed, _dashTime);
             StartCoroutine(Dash());
         }
         else if (context.phase == InputActionPhase.Canceled)
@@ -95,7 +100,7 @@ public class PlayerController : Character_B<CharacterData_B>
 
     IEnumerator Dash()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(_dashTime);
         _isDashed = false;
     }
     private void OnDisable()
