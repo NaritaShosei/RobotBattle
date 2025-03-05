@@ -982,9 +982,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _freeLookCamera: {fileID: 222685864}
   _cameraSensitivityX: 2
-  _invertX: 0
+  _invertX: 1
   _cameraSensitivityY: 1
-  _invertY: 0
+  _invertY: 1
 --- !u!4 &1246506307
 Transform:
   m_ObjectHideFlags: 0

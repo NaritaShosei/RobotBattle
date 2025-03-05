@@ -21,6 +21,9 @@ public class PlayerController : Character_B<CharacterData_B>
     Rigidbody _rb;
     InputBuffer _input;
     Vector2 _velocity;
+    Vector3 _camForward;
+    Vector3 _camRight;
+    Vector3 _moveDir;
     float _currentSpeed;
     bool _isJumped;
     bool _isDashed;
@@ -41,13 +44,20 @@ public class PlayerController : Character_B<CharacterData_B>
         }
         if (!_isDashed)
         {
-            var vel = new Vector3(_velocity.x, 0, _velocity.y) * _currentSpeed;
+            _camForward = Camera.main.transform.forward;
+            _camRight = Camera.main.transform.right;
+            _camForward.y = _camRight.y = 0;
+            _camForward.Normalize();
+            _camRight.Normalize();
+            _moveDir = _camForward * _velocity.y + _camRight * _velocity.x;
+
+            var vel = _moveDir * _currentSpeed;
             vel.y = _rb.linearVelocity.y;
             _rb.linearVelocity = vel;
         }
         var cam = Camera.main.transform.forward;
         cam.y = 0;
-        //transform.forward = cam;
+        transform.forward = cam;
     }
 
     void Move(InputAction.CallbackContext context)
@@ -83,8 +93,8 @@ public class PlayerController : Character_B<CharacterData_B>
         if (context.phase == InputActionPhase.Started)
         {
             _isDashed = true;
-            var vel = _velocity != Vector2.zero ? _velocity : new Vector2(0, 1);
-            _rb.AddForce(new Vector3(vel.x, 0, vel.y) * _dashSpeed * 3, ForceMode.Impulse);
+            var vel = _velocity != Vector2.zero ? _moveDir : _camForward;
+            _rb.AddForce(new Vector3(vel.x, 0, vel.z) * _dashSpeed * 3, ForceMode.Impulse);
             _dashTween?.Kill();
             _dashTween = DOTween.To(() => _currentSpeed, speed => _currentSpeed = speed, _dashSpeed, _dashTime);
             StartCoroutine(Dash());
@@ -115,6 +125,7 @@ public class PlayerController : Character_B<CharacterData_B>
         _input.JumpAction.canceled += Jump;
         _input.DashAction.started += Dash;
         _input.DashAction.canceled += Dash;
+        // _input.Attack1Action.started += 
     }
 
     void RemoveAction()
