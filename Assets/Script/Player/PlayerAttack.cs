@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField]
+    AttackData _data;
+    [SerializeField]
     GameObject _attack1Bullet;
     InputBuffer _input;
     bool _isAttacked1;
@@ -19,7 +21,8 @@ public class PlayerAttack : MonoBehaviour
     {
         if (_isAttacked1)
         {
-            
+            float rate = 1 / _data.AttackRate;
+
         }
     }
 
