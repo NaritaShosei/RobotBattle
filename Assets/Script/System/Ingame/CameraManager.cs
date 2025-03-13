@@ -47,7 +47,7 @@ public class CameraManager : MonoBehaviour
         _freeLookCamera.VerticalAxis.Value = Mathf.Clamp(
         _freeLookCamera.VerticalAxis.Value += _velocity.y
         * (_invertY ? _cameraSensitivityY : -_cameraSensitivityY),
-        _freeLookCamera.VerticalAxis.Range.x,//Rangの範囲内に固定する
+        _freeLookCamera.VerticalAxis.Range.x,//Rangeの範囲内に固定する
         _freeLookCamera.VerticalAxis.Range.y);
     }
     private void OnDisable()

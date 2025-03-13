@@ -125,7 +125,6 @@ public class PlayerController : Character_B<CharacterData_B>
         _input.JumpAction.canceled += Jump;
         _input.DashAction.started += Dash;
         _input.DashAction.canceled += Dash;
-        // _input.Attack1Action.started += 
     }
 
     void RemoveAction()
