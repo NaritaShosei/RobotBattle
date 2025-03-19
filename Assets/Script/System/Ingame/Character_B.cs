@@ -2,12 +2,17 @@
 
 namespace Script.System.Ingame
 {
-    public abstract class Character_B<DataType> : MonoBehaviour
+    public abstract class Character_B<DataType> : MonoBehaviour, IFightable
     where DataType : CharacterData_B
     {
         [SerializeField]
         protected DataType _data;
-        
+
+        public void HitDamage()
+        {
+
+        }
+
         /// <summary>
         /// データを初期化する
         /// </summary>
@@ -22,4 +27,8 @@ namespace Script.System.Ingame
             _data = null;
         }
     }
+}
+public interface IFightable
+{
+    void HitDamage();
 }
