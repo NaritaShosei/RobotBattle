@@ -3,17 +3,16 @@ using UnityEngine;
 
 public class Bullet_B : MonoBehaviour
 {
-
+    Vector3 _moveDirection;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -26,5 +25,9 @@ public class Bullet_B : MonoBehaviour
     protected virtual void AddDamage(float damage, IFightable fightable)
     {
 
+    }
+    protected virtual void SetDirection(Vector3 dir)
+    {
+        _moveDirection = dir;
     }
 }
