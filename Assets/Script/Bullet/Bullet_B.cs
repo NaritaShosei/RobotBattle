@@ -25,11 +25,11 @@ public class Bullet_B : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        gameObject.SetActive(false);
+        ReturnPoolEvent?.Invoke(this);
         if (other.TryGetComponent(out IFightable component))
         {
             AddDamage(0, component);
-            gameObject.SetActive(false);
-            ReturnPoolEvent?.Invoke(this);
         }
     }
 
