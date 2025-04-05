@@ -10,12 +10,12 @@ public class PlayerAttack : MonoBehaviour
     AttackData _data;
 
     [SerializeField]
-    GameObject _attack1Bullet;
+    Bullet_B _attack1Bullet;
 
     [SerializeField]
     Transform _attack1Muzzle;
 
-    Queue<GameObject> _attack1BulletPool = new();
+    Queue<Bullet_B> _attack1BulletPool = new();
 
     InputBuffer _input;
 
@@ -32,7 +32,7 @@ public class PlayerAttack : MonoBehaviour
         for (int i = 0; i < 30; i++)
         {
             var bullet = Instantiate(_attack1Bullet);
-            bullet.SetActive(false);
+            bullet.gameObject.SetActive(false);
             _attack1BulletPool.Enqueue(bullet);
         }
     }
@@ -46,8 +46,9 @@ public class PlayerAttack : MonoBehaviour
             {
                 _time = Time.time;
                 var bullet = _attack1BulletPool.Dequeue();
-                bullet.transform.position = _attack1Muzzle.position;
-                bullet.SetActive(true);
+                bullet.SetPosition(_attack1Muzzle.position);
+                bullet.SetDirection(transform.forward);
+                bullet.gameObject.SetActive(true);
             }
         }
     }
