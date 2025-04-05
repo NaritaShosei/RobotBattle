@@ -1191,7 +1191,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3573825822341839908, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: _jumpPower
-      value: 3
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 6566685940692556744, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: m_Layer

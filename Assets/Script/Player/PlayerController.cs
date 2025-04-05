@@ -90,7 +90,7 @@ public class PlayerController : Character_B<CharacterData_B>
     }
     void Dash(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started)
+        if (context.phase == InputActionPhase.Started && !_isDashed)
         {
             _isDashed = true;
             var vel = _velocity != Vector2.zero ? _moveDir : _camForward;
