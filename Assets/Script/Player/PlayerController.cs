@@ -49,7 +49,7 @@ public class PlayerController : Character_B<CharacterData_B>
             _camForward.y = _camRight.y = 0;
             _camForward.Normalize();
             _camRight.Normalize();
-            _moveDir = _camForward * _velocity.y + _camRight * _velocity.x;
+            _moveDir = _camForward * _velocity.y + _camRight * _velocity.x * 1.5f;
 
             var vel = _moveDir * _currentSpeed;
             vel.y = _rb.linearVelocity.y;
