@@ -25,6 +25,7 @@ public class Bullet_B : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        EffectManager.Instance.PlayExplosion(transform.position);
         gameObject.SetActive(false);
         ReturnPoolEvent?.Invoke(this);
         if (other.TryGetComponent(out IFightable component))
