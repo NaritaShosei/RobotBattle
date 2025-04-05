@@ -51,6 +51,7 @@ public class PlayerAttack : MonoBehaviour
                     bullet.SetPosition(_attack1Muzzle.position);
                     bullet.SetDirection(transform.forward);
                     bullet.gameObject.SetActive(true);
+                    bullet.gameObject.layer = LayerMask.NameToLayer("PlayerBullet");
                 }
             }
         }
