@@ -60,7 +60,6 @@ public class PlayerAttack : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started)
         {
-            _time = Time.time;
             _isAttacked1 = true;
         }
         else if (context.phase == InputActionPhase.Canceled)
