@@ -21,7 +21,6 @@ public class PlayerAttack : MonoBehaviour
 
     bool _isAttacked1;
 
-    float _timer;
     float _time;
     void Start()
     {
@@ -32,6 +31,7 @@ public class PlayerAttack : MonoBehaviour
         for (int i = 0; i < 30; i++)
         {
             var bullet = Instantiate(_attack1Bullet);
+            bullet.ReturnPoolEvent = OnReturnPool;
             bullet.gameObject.SetActive(false);
             _attack1BulletPool.Enqueue(bullet);
         }
@@ -41,14 +41,17 @@ public class PlayerAttack : MonoBehaviour
     {
         if (_isAttacked1)
         {
-            float rate = 1 / _data.AttackRate;
-            if (_time < _timer + rate)
+            if (_attack1BulletPool.Count != 0)
             {
-                _time = Time.time;
-                var bullet = _attack1BulletPool.Dequeue();
-                bullet.SetPosition(_attack1Muzzle.position);
-                bullet.SetDirection(transform.forward);
-                bullet.gameObject.SetActive(true);
+                float rate = 1 / _data.AttackRate;
+                if (Time.time > _time + rate)
+                {
+                    _time = Time.time;
+                    var bullet = _attack1BulletPool.Dequeue();
+                    bullet.SetPosition(_attack1Muzzle.position);
+                    bullet.SetDirection(transform.forward);
+                    bullet.gameObject.SetActive(true);
+                }
             }
         }
     }
@@ -57,12 +60,18 @@ public class PlayerAttack : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started)
         {
+            _time = Time.time;
             _isAttacked1 = true;
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
             _isAttacked1 = false;
         }
+    }
+
+    void OnReturnPool(Bullet_B bullet)
+    {
+        _attack1BulletPool.Enqueue(bullet);
     }
     private void OnDisable()
     {
