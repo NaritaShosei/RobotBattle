@@ -655,6 +655,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 241586332}
     m_Modifications:
+    - target: {fileID: 257142241181060058, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 257142241226085151, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 257142241316034340, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 257142241354730664, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 257142241421274524, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 257142241709043258, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 257142241851313760, guid: f514be6126461c64eab6f02358f894f3, type: 3}
       propertyPath: m_Name
       value: TerrainHigh
@@ -697,6 +721,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 257142241851313763, guid: f514be6126461c64eab6f02358f894f3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 257142241893090612, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 257142242105027306, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 257142242276785766, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 257142242311654876, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 257142242361213524, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 257142242361213525, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 257142242431874013, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 257142242484871124, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 257142242807247217, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 257142242937042226, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_EnableTreeColliders
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 257142243187119940, guid: f514be6126461c64eab6f02358f894f3, type: 3}
+      propertyPath: m_EnableTreeColliders
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1121,6 +1189,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3573825822341839908, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: _jumpPower
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7053778544467440685, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1800
