@@ -7,12 +7,13 @@ public class Bullet_B : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        transform.position += _moveDirection * 100 * Time.deltaTime;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -26,8 +27,12 @@ public class Bullet_B : MonoBehaviour
     {
 
     }
-    protected virtual void SetDirection(Vector3 dir)
+    public virtual void SetDirection(Vector3 dir)
     {
         _moveDirection = dir;
+    }
+    public virtual void SetPosition(Vector3 pos)
+    {
+        transform.position = pos;
     }
 }
