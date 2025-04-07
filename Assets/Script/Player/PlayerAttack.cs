@@ -34,6 +34,7 @@ public class PlayerAttack : MonoBehaviour
             bullet.ReturnPoolEvent = OnReturnPool;
             bullet.gameObject.SetActive(false);
             _attack1BulletPool.Enqueue(bullet);
+            bullet.gameObject.layer = LayerMask.NameToLayer("PlayerBullet");
         }
     }
 
@@ -51,7 +52,6 @@ public class PlayerAttack : MonoBehaviour
                     bullet.SetPosition(_attack1Muzzle.position);
                     bullet.SetDirection(transform.forward);
                     bullet.gameObject.SetActive(true);
-                    bullet.gameObject.layer = LayerMask.NameToLayer("PlayerBullet");
                 }
             }
         }
