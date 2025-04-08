@@ -11,6 +11,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : Character_B<CharacterData_B>
 {
     [SerializeField]
+    CharacterData_B _dataBase;
+    [SerializeField]
     float _normalSpeed;
     [SerializeField]
     float _dashSpeed;
@@ -27,13 +29,14 @@ public class PlayerController : Character_B<CharacterData_B>
     float _currentSpeed;
     bool _isJumped;
     bool _isDashed;
-    TweenerCore<float, float, FloatOptions> _dashTween = null;
+    Sequence _dashSeq;
     void Start()
     {
         _input = ServiceLocator.GetInstance<InputBuffer>();
         _rb = GetComponent<Rigidbody>();
         _currentSpeed = _normalSpeed;
         AddAction();
+        Initialize(_dataBase);
     }
 
     void Update()
@@ -95,14 +98,14 @@ public class PlayerController : Character_B<CharacterData_B>
             _isDashed = true;
             var vel = _velocity != Vector2.zero ? _moveDir : _camForward;
             _rb.AddForce(new Vector3(vel.x, 0, vel.z) * _dashSpeed * 3, ForceMode.Impulse);
-            _dashTween?.Kill();
-            _dashTween = DOTween.To(() => _currentSpeed, speed => _currentSpeed = speed, _dashSpeed, _dashTime);
+            _dashSeq?.Kill();
+            _dashSeq = DOTween.Sequence(DOTween.To(() => _currentSpeed, speed => _currentSpeed = speed, _dashSpeed, _dashTime));
             StartCoroutine(Dash());
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
-            _dashTween?.Kill();
-            _dashTween = DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _normalSpeed, 0.8f);
+            _dashSeq?.Kill();
+            _dashSeq = DOTween.Sequence(DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _normalSpeed, 0.8f));
         }
 
     }

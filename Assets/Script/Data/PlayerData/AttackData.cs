@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "AttackData", menuName = "GameData")]
+[CreateAssetMenu(fileName = "AttackData", menuName = "GameData/AttackData")]
 public class AttackData : ScriptableObject
 {
-    public float AttackRate { get => _attackRate; }
+    public float AttackRate => _attackRate;
     [SerializeField]
     float _attackRate = 1f;
+    public float AttackPower => _attackPower;
+    [SerializeField]
+    float _attackPower = 1f;
 }
