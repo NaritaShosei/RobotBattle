@@ -3,7 +3,7 @@
 [CreateAssetMenu(fileName = "AttackData", menuName = "GameData")]
 public class AttackData : ScriptableObject
 {
-    public float AttackRat => _attackRate;
+    public float AttackRate => _attackRate;
     [SerializeField]
     float _attackRate = 1f;
     public float AttackPower => _attackPower;
