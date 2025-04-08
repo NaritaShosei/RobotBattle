@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "AttackData", menuName = "GameData")]
+[CreateAssetMenu(fileName = "AttackData", menuName = "GameData/AttackData")]
 public class AttackData : ScriptableObject
 {
     public float AttackRate => _attackRate;
