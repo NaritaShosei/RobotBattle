@@ -8,6 +8,8 @@ namespace Script.System.Ingame
         [SerializeField]
         protected DataType _data;
 
+        protected float MaxHealth { get => _data.MaxHealth; }
+        protected float _currentHealth;
         public void HitDamage()
         {
 
