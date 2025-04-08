@@ -11,6 +11,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : Character_B<CharacterData_B>
 {
     [SerializeField]
+    CharacterData_B _dataBase;
+    [SerializeField]
     float _normalSpeed;
     [SerializeField]
     float _dashSpeed;
@@ -34,6 +36,7 @@ public class PlayerController : Character_B<CharacterData_B>
         _rb = GetComponent<Rigidbody>();
         _currentSpeed = _normalSpeed;
         AddAction();
+        Initialize(_dataBase);
     }
 
     void Update()
