@@ -10,10 +10,18 @@ namespace Script.System.Ingame
         public void HitDamage(float damage)
         {
             _data.Health -= damage;
+            if (_data.Health <= 0)
+            {
+                Debug.Log("Dead");
+            }
         }
         public void HitHeal(float heal)
         {
             _data.Health += heal;
+        }
+        protected virtual void OnHealthChanged(float health)
+        {
+
         }
 
         /// <summary>
@@ -23,17 +31,20 @@ namespace Script.System.Ingame
         {
             //データを生成
             _data = Instantiate(data);
-            _data.OnHealthChanged += HitDamage;
-            _data.OnHealthChanged += HitHeal;
+            _data.Health = data.MaxHealth;
+            _data.OnHealthChanged += OnHealthChanged;
         }
 
         private void OnDestroy()
         {
             _data = null;
+            if (_data == null) return;
+            _data.OnHealthChanged -= OnHealthChanged;
         }
     }
-}
-public interface IFightable
-{
-    void HitDamage(float damage);
+    public interface IFightable
+    {
+        void HitDamage(float damage);
+        void HitHeal(float heal);
+    }
 }
