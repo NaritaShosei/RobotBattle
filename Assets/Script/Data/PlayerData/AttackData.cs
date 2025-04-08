@@ -9,4 +9,8 @@ public class AttackData : ScriptableObject
     public float AttackPower => _attackPower;
     [SerializeField]
     float _attackPower = 1f;
+
+    public int BulletCount => _bulletCount;
+    [SerializeField]
+    int _bulletCount = 30;
 }
