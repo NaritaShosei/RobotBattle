@@ -29,15 +29,17 @@ public class Bullet_B : MonoBehaviour
     {
         EffectManager.Instance.PlayExplosion(transform.position);
         gameObject.SetActive(false);
+        Debug.Log(other.name);
         if (other.TryGetComponent(out IFightable component))
         {
-            AddDamage(0, component);
+            AddDamage(10, component);
+            Debug.Log(other.name);
         }
     }
 
     protected virtual void AddDamage(float damage, IFightable fightable)
     {
-
+        fightable.HitDamage(damage);
     }
     public virtual void SetDirection(Vector3 dir)
     {
