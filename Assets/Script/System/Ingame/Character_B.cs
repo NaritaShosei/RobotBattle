@@ -5,12 +5,9 @@ namespace Script.System.Ingame
     public abstract class Character_B<DataType> : MonoBehaviour, IFightable
     where DataType : CharacterData_B
     {
-        [SerializeField]
         protected DataType _data;
 
-        protected float MaxHealth { get => _data.MaxHealth; }
-        protected float _currentHealth;
-        public void HitDamage()
+        public void HitDamage(float damage)
         {
 
         }
@@ -32,5 +29,5 @@ namespace Script.System.Ingame
 }
 public interface IFightable
 {
-    void HitDamage();
+    void HitDamage(float damage);
 }
