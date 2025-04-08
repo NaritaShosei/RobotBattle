@@ -9,7 +9,11 @@ namespace Script.System.Ingame
 
         public void HitDamage(float damage)
         {
-
+            _data.Health -= damage;
+        }
+        public void HitHeal(float heal)
+        {
+            _data.Health += heal;
         }
 
         /// <summary>
@@ -19,6 +23,8 @@ namespace Script.System.Ingame
         {
             //データを生成
             _data = Instantiate(data);
+            _data.OnHealthChanged += HitDamage;
+            _data.OnHealthChanged += HitHeal;
         }
 
         private void OnDestroy()
