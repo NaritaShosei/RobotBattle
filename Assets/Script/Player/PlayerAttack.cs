@@ -15,6 +15,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     Transform _attack1Muzzle;
 
+    [SerializeField]
+    Transform _bulletParent;
     Queue<Bullet_B> _attack1BulletPool = new();
 
     InputBuffer _input;
@@ -30,7 +32,7 @@ public class PlayerAttack : MonoBehaviour
         _input.Attack1Action.canceled += Attack1;
         for (int i = 0; i < 30; i++)
         {
-            var bullet = Instantiate(_attack1Bullet);
+            var bullet = Instantiate(_attack1Bullet, _bulletParent);
             bullet.ReturnPoolEvent = OnReturnPool;
             bullet.gameObject.SetActive(false);
             _attack1BulletPool.Enqueue(bullet);
