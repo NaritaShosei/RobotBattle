@@ -7,6 +7,7 @@ public class Bullet_B : MonoBehaviour
     Vector3 _moveDirection;
     public Action<Bullet_B> ReturnPoolEvent;
     float _timer;
+    float _attackValue;
     private void OnEnable()
     {
         _timer = Time.time;
@@ -32,7 +33,7 @@ public class Bullet_B : MonoBehaviour
         Debug.Log(other.name);
         if (other.TryGetComponent(out IFightable component))
         {
-            AddDamage(10, component);
+            AddDamage(_attackValue, component);
             Debug.Log(other.name);
         }
     }
@@ -48,5 +49,9 @@ public class Bullet_B : MonoBehaviour
     public virtual void SetPosition(Vector3 pos)
     {
         transform.position = pos;
+    }
+    public virtual void SetAttackValue(float attack)
+    {
+        _attackValue = attack;
     }
 }

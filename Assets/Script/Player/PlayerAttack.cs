@@ -30,11 +30,13 @@ public class PlayerAttack : MonoBehaviour
         _input = ServiceLocator.GetInstance<InputBuffer>();
         _input.Attack1Action.started += Attack1;
         _input.Attack1Action.canceled += Attack1;
-        for (int i = 0; i < 30; i++)
+
+        for (int i = 0; i < _data.BulletCount; i++)
         {
             var bullet = Instantiate(_attack1Bullet, _bulletParent);
             bullet.ReturnPoolEvent = OnReturnPool;
             bullet.gameObject.SetActive(false);
+            bullet.SetAttackValue(_data.AttackPower);
             _attack1BulletPool.Enqueue(bullet);
             bullet.gameObject.layer = LayerMask.NameToLayer("PlayerBullet");
         }
