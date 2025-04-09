@@ -57,6 +57,7 @@ public class PlayerController : Character_B<PlayerData>
     {
         if (_isJumped)
         {
+            
             _rb.AddForce(new Vector3(0, _jumpPower, 0), ForceMode.Impulse);
         }
         if (!_isDashed)
@@ -97,7 +98,7 @@ public class PlayerController : Character_B<PlayerData>
     {
         if (context.phase == InputActionPhase.Started)
         {
-            if (!GaugeValueChange(_data.JumpValue)) return;
+            if (!GaugeValueChange(-_data.JumpValue)) return;
             _isJumped = true;
             _rb.AddForce(new Vector3(0, _jumpPower * 5, 0), ForceMode.Impulse);
         }
@@ -110,7 +111,7 @@ public class PlayerController : Character_B<PlayerData>
     {
         if (context.phase == InputActionPhase.Started && !_isDashed)
         {
-            if (!GaugeValueChange(_data.DashValue)) return;
+            if (!GaugeValueChange(-_data.DashValue)) return;
             var vel = _velocity != Vector2.zero ? _moveDir : _camForward;
             _rb.AddForce(new Vector3(vel.x, 0, vel.z) * _dashSpeed * 3, ForceMode.Impulse);
             _dashSeq?.Kill();
