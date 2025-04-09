@@ -27,19 +27,22 @@ namespace Script.System.Ingame
         /// <summary>
         /// データを初期化する
         /// </summary>
-        public void Initialize(DataType data)
+        protected virtual void Initialize(DataType data)
         {
             //データを生成
             _data = Instantiate(data);
             _data.Health = data.MaxHealth;
             _data.OnHealthChanged += OnHealthChanged;
         }
-
-        private void OnDestroy()
+        protected virtual void OnDestroyMethod()
         {
             _data = null;
             if (_data == null) return;
             _data.OnHealthChanged -= OnHealthChanged;
+        }
+        private void OnDestroy()
+        {
+            OnDestroyMethod();
         }
     }
     public interface IFightable

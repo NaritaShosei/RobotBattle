@@ -10,10 +10,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : Character_B<CharacterData_B>
+public class PlayerController : Character_B<PlayerData>
 {
     [SerializeField]
-    CharacterData_B _dataBase;
+    PlayerData _dataBase;
     [SerializeField]
     float _normalSpeed;
     [SerializeField]
@@ -39,6 +39,18 @@ public class PlayerController : Character_B<CharacterData_B>
         _currentSpeed = _normalSpeed;
         AddAction();
         Initialize(_dataBase);
+    }
+    protected override void Initialize(PlayerData data)
+    {
+        base.Initialize(data);
+        _data.Gauge = data.MaxGauge;
+        _data.OnGaugeChanged += OnGaugeChanged;
+    }
+    protected override void OnDestroyMethod()
+    {
+        base.OnDestroyMethod();
+        if (_data == null) return;
+        _data.OnGaugeChanged -= OnGaugeChanged;
     }
 
     void Update()
@@ -85,6 +97,7 @@ public class PlayerController : Character_B<CharacterData_B>
     {
         if (context.phase == InputActionPhase.Started)
         {
+            if (!GaugeValueChange(_data.JumpValue)) return;
             _isJumped = true;
             _rb.AddForce(new Vector3(0, _jumpPower * 5, 0), ForceMode.Impulse);
         }
@@ -97,6 +110,7 @@ public class PlayerController : Character_B<CharacterData_B>
     {
         if (context.phase == InputActionPhase.Started && !_isDashed)
         {
+            if (!GaugeValueChange(_data.DashValue)) return;
             var vel = _velocity != Vector2.zero ? _moveDir : _camForward;
             _rb.AddForce(new Vector3(vel.x, 0, vel.z) * _dashSpeed * 3, ForceMode.Impulse);
             _dashSeq?.Kill();
@@ -115,6 +129,21 @@ public class PlayerController : Character_B<CharacterData_B>
         _isDashed = true;
         await UniTask.Delay((int)(_dashTime * 1000));
         _isDashed = false;
+    }
+    /// <summary>
+    /// 増やすときは正の値、減らすときは負の値
+    /// </summary>
+    bool GaugeValueChange(float value)
+    {
+        if (_data.Gauge + value <= 0) return false;
+
+        _data.Gauge += value;
+        return true;
+    }
+
+    void OnGaugeChanged(float value)
+    {
+
     }
     private void OnDisable()
     {
