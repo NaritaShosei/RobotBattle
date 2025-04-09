@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CharacterData", menuName = "GameData/CharacterData/PlayerData")]
+[CreateAssetMenu(fileName = "PlayerData", menuName = "GameData/CharacterData/PlayerData")]
 
 public class PlayerData : CharacterData_B
 {

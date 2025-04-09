@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Script.System.Ingame
 {
-    [CreateAssetMenu(fileName = "CharacterData", menuName = "GameData/CharacterData")]
+    [CreateAssetMenu(fileName = "CharacterData", menuName = "GameData/CharacterData/CharacterData")]
     public class CharacterData_B : ScriptableObject
     {
         [SerializeField]
