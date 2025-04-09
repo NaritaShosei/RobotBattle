@@ -13,4 +13,7 @@ public class AttackData : ScriptableObject
     public int BulletCount => _bulletCount;
     [SerializeField]
     int _bulletCount = 30;
+    public float ReloadInterval => _reloadInterval;
+    [SerializeField]
+    float _reloadInterval = 1.5f;
 }
