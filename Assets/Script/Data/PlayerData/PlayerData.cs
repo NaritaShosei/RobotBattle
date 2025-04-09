@@ -21,6 +21,11 @@ public class PlayerData : CharacterData_B
             OnGaugeChanged?.Invoke(value);
         }
     }
+
+    [SerializeField, Header("1秒間に回復するゲージ量")]
+    private float _recoveryValue = 30;
+    public float RecoveryValue => _recoveryValue;
+
     [SerializeField]
     private float _jumpValue;
     public float JumpValue => _jumpValue;

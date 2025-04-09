@@ -31,6 +31,7 @@ public class PlayerController : Character_B<PlayerData>
     float _currentSpeed;
     bool _isJumped;
     bool _isDashed;
+    bool _isBoost;
     Sequence _dashSeq;
     void Start()
     {
@@ -55,10 +56,30 @@ public class PlayerController : Character_B<PlayerData>
 
     void Update()
     {
+        Debug.Log(_data.Gauge);
+        if (!_isDashed && !_isJumped)
+        {
+            GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
+        }
         if (_isJumped)
         {
-            
-            _rb.AddForce(new Vector3(0, _jumpPower, 0), ForceMode.Impulse);
+            if (!GaugeValueChange(-_data.JumpValue * Time.deltaTime))
+            {
+                _isJumped = false;
+            }
+            else
+            {
+                _rb.AddForce(new Vector3(0, _jumpPower, 0), ForceMode.Impulse);
+            }
+        }
+        if (_isBoost)
+        {
+            if (!GaugeValueChange(-_data.DashValue * Time.deltaTime))
+            {
+                _isBoost = false;
+                _dashSeq?.Kill();
+                _dashSeq = DOTween.Sequence(DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _normalSpeed, 0.8f));
+            }
         }
         if (!_isDashed)
         {
@@ -112,6 +133,7 @@ public class PlayerController : Character_B<PlayerData>
         if (context.phase == InputActionPhase.Started && !_isDashed)
         {
             if (!GaugeValueChange(-_data.DashValue)) return;
+            _isDashed = true;
             var vel = _velocity != Vector2.zero ? _moveDir : _camForward;
             _rb.AddForce(new Vector3(vel.x, 0, vel.z) * _dashSpeed * 3, ForceMode.Impulse);
             _dashSeq?.Kill();
@@ -127,18 +149,18 @@ public class PlayerController : Character_B<PlayerData>
     }
     async UniTaskVoid Dash()
     {
-        _isDashed = true;
         await UniTask.Delay((int)(_dashTime * 1000));
         _isDashed = false;
+        _isBoost = true;
     }
     /// <summary>
     /// 増やすときは正の値、減らすときは負の値
     /// </summary>
     bool GaugeValueChange(float value)
     {
-        if (_data.Gauge + value <= 0) return false;
+        if (value < 0 && _data.Gauge + value <= 0) return false;
 
-        _data.Gauge += value;
+        _data.Gauge = Mathf.Clamp(_data.Gauge + value, 0, _data.MaxGauge);
         return true;
     }
 
