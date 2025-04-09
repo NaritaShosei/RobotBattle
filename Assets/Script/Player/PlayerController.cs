@@ -1,9 +1,11 @@
-﻿using DG.Tweening;
+﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 using Script.System.Ingame;
 using SymphonyFrameWork.System;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -95,12 +97,11 @@ public class PlayerController : Character_B<CharacterData_B>
     {
         if (context.phase == InputActionPhase.Started && !_isDashed)
         {
-            _isDashed = true;
             var vel = _velocity != Vector2.zero ? _moveDir : _camForward;
             _rb.AddForce(new Vector3(vel.x, 0, vel.z) * _dashSpeed * 3, ForceMode.Impulse);
             _dashSeq?.Kill();
             _dashSeq = DOTween.Sequence(DOTween.To(() => _currentSpeed, speed => _currentSpeed = speed, _dashSpeed, _dashTime));
-            StartCoroutine(Dash());
+            Dash().Forget();
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
@@ -109,10 +110,10 @@ public class PlayerController : Character_B<CharacterData_B>
         }
 
     }
-
-    IEnumerator Dash()
+    async UniTaskVoid Dash()
     {
-        yield return new WaitForSeconds(_dashTime);
+        _isDashed = true;
+        await UniTask.Delay((int)(_dashTime * 1000));
         _isDashed = false;
     }
     private void OnDisable()
