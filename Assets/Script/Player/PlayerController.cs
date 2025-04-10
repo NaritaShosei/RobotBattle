@@ -119,7 +119,7 @@ public class PlayerController : Character_B<PlayerData>
     {
         if (context.phase == InputActionPhase.Started)
         {
-            if (!GaugeValueChange(-_data.JumpValue)) return;
+            if (!GaugeValueChange(-_data.JumpValue / 10)) return;
             _isJumped = true;
             _rb.AddForce(new Vector3(0, _jumpPower * 5, 0), ForceMode.Impulse);
         }
