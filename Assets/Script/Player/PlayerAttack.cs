@@ -12,6 +12,9 @@ public class PlayerAttack : MonoBehaviour
     AttackData _data;
 
     [SerializeField]
+    LockOn _lockOn;
+
+    [SerializeField]
     Bullet_B _attack1Bullet;
 
     [SerializeField]
@@ -59,7 +62,12 @@ public class PlayerAttack : MonoBehaviour
                     _time = Time.time;
                     var bullet = _attack1BulletPool.Dequeue();
                     bullet.SetPosition(_attack1Muzzle.position);
-                    bullet.SetDirection(transform.forward);
+
+                    var enemy = _lockOn.GetTarget();
+
+                    var dir = enemy != null ? (enemy.transform.position - transform.position).normalized : transform.forward;
+
+                    bullet.SetDirection(dir);
                     bullet.gameObject.SetActive(true);
                     _count--;
                 }
