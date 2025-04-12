@@ -35,12 +35,22 @@ public class LockOn : MonoBehaviour
 
             Vector2 targetScreenPos = new Vector2(viewPos.x, viewPos.y);
 
-            var dis = Vector2.Distance(lockOnCenterScreenPos, targetScreenPos);
+            var screenDis = Vector2.Distance(lockOnCenterScreenPos, targetScreenPos);
 
-            if (dis < minDistance && dis <= 0.5f)
+            //Debug用にここで実行しているが下のカッコの中でやるようにしたい
+            var dis = enemy.transform.position - _player.position;
+            dis.y = 0;
+            Debug.Log(dis.magnitude);
+            //画面内にいるかつ基準座標からの距離が一番近い敵を保存
+            if (screenDis < minDistance && screenDis <= 0.5f)
             {
-                minDistance = dis;
-                _lockOnEnemy = enemy;
+                //var dis = enemy.transform.position - _player.position;
+                //dis.y = 0; 
+                if (dis.magnitude <= _maxDistance)
+                {
+                    minDistance = screenDis;
+                    _lockOnEnemy = enemy;
+                }
             }
         }
     }
