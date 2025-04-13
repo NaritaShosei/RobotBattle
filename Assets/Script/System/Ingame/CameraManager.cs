@@ -7,7 +7,7 @@ public class CameraManager : MonoBehaviour
 {
     [SerializeField]
     CinemachineOrbitalFollow _freeLookCamera;
-    [SerializeField, Range(0.1f, 5)]
+    [SerializeField, Range(0.1f, 10)]
     float _cameraSensitivityX = 2;
     [SerializeField]
     bool _invertX;
