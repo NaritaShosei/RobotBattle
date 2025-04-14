@@ -23,5 +23,34 @@ namespace Script.System.Ingame
         }
 
         public event Action<float> OnHealthChanged;
+        [SerializeField]
+        private float _maxGauge;
+        public float MaxGauge { get => _maxGauge; }
+
+        [SerializeField]
+        private float _gauge;
+        public float Gauge
+        {
+            get => _gauge;
+            set
+            {
+                _gauge = value;
+                OnGaugeChanged?.Invoke(value);
+            }
+        }
+
+        [SerializeField, Header("1秒間に回復するゲージ量")]
+        private float _recoveryValue = 30;
+        public float RecoveryValue => _recoveryValue;
+
+        [SerializeField]
+        private float _jumpValue;
+        public float JumpValue => _jumpValue;
+
+        [SerializeField]
+        private float _dashValue;
+        public float DashValue => _dashValue;
+
+        public event Action<float> OnGaugeChanged;
     }
 }
