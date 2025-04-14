@@ -10,10 +10,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : Character_B<PlayerData>
+public class PlayerController : Character_B<CharacterData_B>
 {
     [SerializeField]
-    PlayerData _dataBase;
+    CharacterData_B _dataBase;
     [SerializeField]
     float _normalSpeed;
     [SerializeField]
@@ -40,18 +40,6 @@ public class PlayerController : Character_B<PlayerData>
         _currentSpeed = _normalSpeed;
         AddAction();
         Initialize(_dataBase);
-    }
-    protected override void Initialize(PlayerData data)
-    {
-        base.Initialize(data);
-        _data.Gauge = data.MaxGauge;
-        _data.OnGaugeChanged += OnGaugeChanged;
-    }
-    protected override void OnDestroyMethod()
-    {
-        base.OnDestroyMethod();
-        if (_data == null) return;
-        _data.OnGaugeChanged -= OnGaugeChanged;
     }
 
     void Update()
@@ -153,21 +141,8 @@ public class PlayerController : Character_B<PlayerData>
         _isDashed = false;
         _isBoost = true;
     }
-    /// <summary>
-    /// 増やすときは正の値、減らすときは負の値
-    /// </summary>
-    bool GaugeValueChange(float value)
-    {
-        if (value < 0 && _data.Gauge + value <= 0) return false;
 
-        _data.Gauge = Mathf.Clamp(_data.Gauge + value, 0, _data.MaxGauge);
-        return true;
-    }
 
-    void OnGaugeChanged(float value)
-    {
-
-    }
     private void OnDisable()
     {
         RemoveAction();
