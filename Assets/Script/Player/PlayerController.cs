@@ -1,11 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using DG.Tweening.Core;
-using DG.Tweening.Plugins.Options;
 using Script.System.Ingame;
 using SymphonyFrameWork.System;
-using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,14 +10,7 @@ public class PlayerController : Character_B<CharacterData_B>
 {
     [SerializeField]
     CharacterData_B _dataBase;
-    [SerializeField]
-    float _normalSpeed;
-    [SerializeField]
-    float _dashSpeed;
-    [SerializeField]
-    float _jumpPower;
-    [SerializeField]
-    float _dashTime = 0.5f;
+
     Rigidbody _rb;
     InputBuffer _input;
     Vector2 _velocity;
@@ -37,9 +26,9 @@ public class PlayerController : Character_B<CharacterData_B>
     {
         _input = ServiceLocator.GetInstance<InputBuffer>();
         _rb = GetComponent<Rigidbody>();
-        _currentSpeed = _normalSpeed;
-        AddAction();
         Initialize(_dataBase);
+        _currentSpeed = _data.NormalSpeed;
+        AddAction();
     }
 
     void Update()
@@ -57,7 +46,7 @@ public class PlayerController : Character_B<CharacterData_B>
             }
             else
             {
-                _rb.AddForce(new Vector3(0, _jumpPower, 0), ForceMode.Impulse);
+                _rb.AddForce(new Vector3(0, _data.JumpPower, 0), ForceMode.Impulse);
             }
         }
         if (_isBoost)
@@ -66,7 +55,7 @@ public class PlayerController : Character_B<CharacterData_B>
             {
                 _isBoost = false;
                 _dashSeq?.Kill();
-                _dashSeq = DOTween.Sequence(DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _normalSpeed, 0.8f));
+                _dashSeq = DOTween.Sequence(DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _data.NormalSpeed, 0.8f));
             }
         }
         if (!_isDashed)
@@ -109,13 +98,15 @@ public class PlayerController : Character_B<CharacterData_B>
         {
             if (!GaugeValueChange(-_data.JumpValue / 10)) return;
             _isJumped = true;
-            _rb.AddForce(new Vector3(0, _jumpPower * 5, 0), ForceMode.Impulse);
+            _rb.AddForce(new Vector3(0, _data.JumpPower * 5, 0), ForceMode.Impulse);
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
             _isJumped = false;
         }
     }
+
+    //HERE:Dashの仕様を線形補完に変更する
     void Dash(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started && !_isDashed)
@@ -123,21 +114,21 @@ public class PlayerController : Character_B<CharacterData_B>
             if (!GaugeValueChange(-_data.DashValue)) return;
             _isDashed = true;
             var vel = _velocity != Vector2.zero ? _moveDir : _camForward;
-            _rb.AddForce(new Vector3(vel.x, 0, vel.z) * _dashSpeed * 3, ForceMode.Impulse);
+            _rb.AddForce(new Vector3(vel.x, 0, vel.z) * _data.DashSpeed * 3, ForceMode.Impulse);
             _dashSeq?.Kill();
-            _dashSeq = DOTween.Sequence(DOTween.To(() => _currentSpeed, speed => _currentSpeed = speed, _dashSpeed, _dashTime));
+            _dashSeq = DOTween.Sequence(DOTween.To(() => _currentSpeed, speed => _currentSpeed = speed, _data.DashSpeed, _data.DashTime));
             Dash().Forget();
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
             _dashSeq?.Kill();
-            _dashSeq = DOTween.Sequence(DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _normalSpeed, 0.8f));
+            _dashSeq = DOTween.Sequence(DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _data.NormalSpeed, 0.8f));
         }
 
     }
     async UniTaskVoid Dash()
     {
-        await UniTask.Delay((int)(_dashTime * 1000));
+        await UniTask.Delay((int)(_data.DashTime * 1000));
         _isDashed = false;
         _isBoost = true;
     }
