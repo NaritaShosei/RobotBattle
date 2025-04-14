@@ -19,7 +19,22 @@ namespace Script.System.Ingame
         {
             _data.Health += heal;
         }
+        /// <summary>
+        /// 増やすときは正の値、減らすときは負の値
+        /// </summary>
+        protected virtual bool GaugeValueChange(float value)
+        {
+            if (value < 0 && _data.Gauge + value <= 0) return false;
+
+            _data.Gauge = Mathf.Clamp(_data.Gauge + value, 0, _data.MaxGauge);
+            return true;
+        }
+
         protected virtual void OnHealthChanged(float health)
+        {
+
+        }
+        protected virtual void OnGaugeChanged(float value)
         {
 
         }
@@ -27,19 +42,24 @@ namespace Script.System.Ingame
         /// <summary>
         /// データを初期化する
         /// </summary>
-        public void Initialize(DataType data)
+        protected virtual void Initialize(DataType data)
         {
             //データを生成
             _data = Instantiate(data);
             _data.Health = data.MaxHealth;
             _data.OnHealthChanged += OnHealthChanged;
+            _data.Gauge = data.MaxGauge;
+            _data.OnGaugeChanged += OnGaugeChanged;
         }
-
-        private void OnDestroy()
+        protected virtual void OnDestroyMethod()
         {
             _data = null;
             if (_data == null) return;
             _data.OnHealthChanged -= OnHealthChanged;
+        }
+        private void OnDestroy()
+        {
+            OnDestroyMethod();
         }
     }
     public interface IFightable
