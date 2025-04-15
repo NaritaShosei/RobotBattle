@@ -23,7 +23,6 @@ public class PlayerController : Character_B<CharacterData_B>
     bool _isJumped;
     bool _isDashed;
     bool _isBoost;
-    Sequence _dashSeq;
     void Start()
     {
         _input = ServiceLocator.GetInstance<InputBuffer>();
@@ -56,8 +55,6 @@ public class PlayerController : Character_B<CharacterData_B>
             if (!GaugeValueChange(-_data.DashValue * Time.deltaTime))
             {
                 _isBoost = false;
-                _dashSeq?.Kill();
-                _dashSeq = DOTween.Sequence(DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _data.NormalSpeed, 0.8f));
             }
         }
 
@@ -78,7 +75,7 @@ public class PlayerController : Character_B<CharacterData_B>
 
         if (!_isDashed)
         {
-            Move(_currentSpeed);
+            Move(_isBoost ? _data.DashSpeed : _data.NormalSpeed);
         }
         var cam = Camera.main.transform.forward;
         cam.y = 0;
@@ -112,7 +109,8 @@ public class PlayerController : Character_B<CharacterData_B>
         _moveDir = _camForward * _velocity.y + _camRight * _velocity.x * 1.5f;
 
         var vel = _moveDir * speed;
-        vel.y = _rb.linearVelocity.y;
+        var currentVel = _rb.linearVelocity;
+        vel.y = currentVel.y;
         _rb.linearVelocity = vel;
     }
 
@@ -136,18 +134,17 @@ public class PlayerController : Character_B<CharacterData_B>
         if (context.phase == InputActionPhase.Started && !_isDashed)
         {
             if (!GaugeValueChange(-_data.DashValue)) return;
+            _isBoost = true;
             _isDashed = true;
             _data.DashTimer = 0;
             _dashStartPos = transform.position;
             _dashTargetPos = transform.position + (_velocity != Vector2.zero ? _moveDir : _camForward) * _data.DashDistance;
         }
-        else if (context.phase == InputActionPhase.Canceled)
+        if (context.phase == InputActionPhase.Canceled)
         {
-            _dashSeq?.Kill();
-            _dashSeq = DOTween.Sequence(DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _data.NormalSpeed, 0.8f));
+            _isBoost = false;
         }
     }
-
     private void OnDisable()
     {
         RemoveAction();
