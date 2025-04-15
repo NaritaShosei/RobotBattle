@@ -33,9 +33,16 @@ namespace Script.System.Ingame
         [SerializeField]
         private float _jumpPower = 7.5f;
         public float JumpPower => _jumpPower;
+
+        [SerializeField]
+        private float _dashDistance = 100;
+        public float DashDistance => _dashDistance;
+
         [SerializeField]
         private float _dashTime = 0.5f;
         public float DashTime => _dashTime;
+
+        public float DashTimer;
 
         [SerializeField]
         private float _maxGauge;
