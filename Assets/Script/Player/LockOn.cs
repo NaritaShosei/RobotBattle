@@ -8,22 +8,21 @@ public class LockOn : MonoBehaviour
     Transform _player;
 
     [SerializeField, Header("0～1の間 Debug Only")]
-    Vector2 _lockOnCenterScreenPos;
+    Vector2 _lockOnCenterScreenPos = new Vector2(0.5f, 0.55f);
 
     [SerializeField]
     float _maxDistance;
 
     [SerializeField, Range(0, 180)]
-    float _viewAngleHorizontal = 120;
+    float _viewAngle = 60;
 
-    [SerializeField, Range(0, 180)]
-    float _viewAngleVertical = 60;
-
+    Camera _camera;
 
     Enemy_B _lockOnEnemy;
     List<Enemy_B> _enemies;
     void Start()
     {
+        _camera = Camera.main;
         _enemies = FindObjectsByType<Enemy_B>(FindObjectsSortMode.None).ToList();
     }
 
@@ -35,47 +34,97 @@ public class LockOn : MonoBehaviour
 
         foreach (var enemy in _enemies)
         {
-            Vector3 enemyDir = enemy.transform.position - _player.position;
+            //距離チェック
+            Vector3 dirToEnemy = enemy.transform.position - _player.position;
+            float disToEnemy = dirToEnemy.magnitude;
 
-            var toEnemyDir = enemyDir.normalized;
-            var forward = Camera.main.transform.forward.normalized;
+            dirToEnemy.y = 0;
 
-            enemyDir.y = 0;
-            if (enemyDir.magnitude > _maxDistance) continue;
+            if (disToEnemy > _maxDistance) continue;
 
-            Vector3 viewPos = Camera.main.WorldToViewportPoint(enemy.transform.position);
-            if (viewPos.z < 0f) continue;
+            //カメラの前方にいるかチェック
+            Vector3 viewportPosition = _camera.WorldToViewportPoint(enemy.transform.position);
+            if (viewportPosition.z < 0) continue;
 
-            Vector3 enemyDirFlat = new Vector3(toEnemyDir.x, 0, toEnemyDir.z).normalized;
-            Vector3 flatForward = new Vector3(forward.x, 0, forward.z).normalized;
+            //視野角チェック
+            float angleToEnemy = Vector3.Angle(_camera.transform.forward, dirToEnemy);
+            if (angleToEnemy > _viewAngle * 0.5f) continue;
 
-            float dotHorizontal = Vector3.Dot(flatForward, enemyDirFlat);
 
-            if (dotHorizontal < Mathf.Cos(_viewAngleHorizontal * 0.5f * Mathf.Deg2Rad)) continue;
+            //実際に見えているかチェック
+            if (!IsVisible(enemy)) continue;
 
-            float verticalDis = new Vector3(toEnemyDir.x, 0, toEnemyDir.z).magnitude;
-            Vector3 verticalEnemy = new Vector3(0, toEnemyDir.y, verticalDis).normalized;
+            //指定ポイントからの距離計算
+            Vector2 screenPos = new Vector2(viewportPosition.x, viewportPosition.y);
+            float disToCenter = Vector2.Distance(screenPos, _lockOnCenterScreenPos);
 
-            float forwardFlatDis = new Vector3(forward.x, 0, forward.z).magnitude;
-            var verticalForward = new Vector3(0, forward.y, forwardFlatDis).normalized;
-
-            float dotVertical = Vector3.Dot(verticalForward, verticalEnemy);
-            if (dotVertical < Mathf.Cos(_viewAngleVertical * 0.5f * Mathf.Deg2Rad)) continue;
-
-            Vector2 targetScreenPos = new Vector2(viewPos.x, viewPos.y);
-            float screenDis = Vector2.Distance(_lockOnCenterScreenPos, targetScreenPos);
-
-            enemyDir.y = 0;
-
-            if (screenDis < minDistance)
+            //最も指定ポイントに近い敵を選択
+            if (disToCenter < minDistance)
             {
-                minDistance = screenDis;
+                minDistance = disToCenter;
                 _lockOnEnemy = enemy;
             }
         }
+    }
+
+    bool IsVisible(Enemy_B enemy)
+    {
+        //方向、距離計算
+        var dirToEnemy = enemy.transform.position - _camera.transform.position;
+        float disToEnemy = dirToEnemy.magnitude;
+
+        //カメラを始点にスフィアキャストを飛ばす
+        if (Physics.SphereCast(_camera.transform.position, 5, dirToEnemy.normalized, out RaycastHit hit, disToEnemy))
+        {
+            //敵との間に敵以外がいればfalse
+            if (hit.transform != enemy.transform)
+            {
+                Debug.Log("a");
+                return false;
+            }
+        }
+
+        return true;
     }
     public Enemy_B GetTarget()
     {
         return _lockOnEnemy;
     }
+
+    void OnDrawGizmos()
+    {
+        if (_camera == null) _camera = Camera.main;
+        if (_camera == null) return;
+
+        Gizmos.color = Color.yellow;
+        Vector3 cameraPos = _camera.transform.position;
+        Vector3 forward = _camera.transform.forward;
+
+        // 視野角の可視化
+        float halfAngle = _viewAngle * 0.5f * Mathf.Deg2Rad;
+        Vector3 right = _camera.transform.right;
+        Vector3 up = _camera.transform.up;
+
+        // 視野角の端を示す方向ベクトル
+        Vector3 forwardRight = Quaternion.AngleAxis(_viewAngle * 0.5f, up) * forward;
+        Vector3 forwardLeft = Quaternion.AngleAxis(-_viewAngle * 0.5f, up) * forward;
+
+        // 視野角の線を描画
+        Gizmos.DrawRay(cameraPos, forwardRight * _maxDistance);
+        Gizmos.DrawRay(cameraPos, forwardLeft * _maxDistance);
+
+        // 視野範囲の円弧を描画
+        int segments = 20;
+        Vector3 prevPos = cameraPos + forwardRight * _maxDistance;
+
+        for (int i = 1; i <= segments; i++)
+        {
+            float angle = _viewAngle * ((float)i / segments - 0.5f);
+            Vector3 direction = Quaternion.AngleAxis(angle, up) * forward;
+            Vector3 pos = cameraPos + direction * _maxDistance;
+            Gizmos.DrawLine(prevPos, pos);
+            prevPos = pos;
+        }
+    }
+
 }
