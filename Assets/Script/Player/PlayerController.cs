@@ -1,11 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using DG.Tweening.Core;
-using DG.Tweening.Plugins.Options;
 using Script.System.Ingame;
 using SymphonyFrameWork.System;
-using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,32 +10,26 @@ public class PlayerController : Character_B<CharacterData_B>
 {
     [SerializeField]
     CharacterData_B _dataBase;
-    [SerializeField]
-    float _normalSpeed;
-    [SerializeField]
-    float _dashSpeed;
-    [SerializeField]
-    float _jumpPower;
-    [SerializeField]
-    float _dashTime = 0.5f;
+
     Rigidbody _rb;
     InputBuffer _input;
     Vector2 _velocity;
     Vector3 _camForward;
     Vector3 _camRight;
     Vector3 _moveDir;
+    Vector3 _dashStartPos;
+    Vector3 _dashTargetPos;
     float _currentSpeed;
     bool _isJumped;
     bool _isDashed;
     bool _isBoost;
-    Sequence _dashSeq;
     void Start()
     {
         _input = ServiceLocator.GetInstance<InputBuffer>();
         _rb = GetComponent<Rigidbody>();
-        _currentSpeed = _normalSpeed;
-        AddAction();
         Initialize(_dataBase);
+        _currentSpeed = _data.NormalSpeed;
+        AddAction();
     }
 
     void Update()
@@ -57,7 +47,7 @@ public class PlayerController : Character_B<CharacterData_B>
             }
             else
             {
-                _rb.AddForce(new Vector3(0, _jumpPower, 0), ForceMode.Impulse);
+                _rb.AddForce(new Vector3(0, _data.JumpPower, 0), ForceMode.Impulse);
             }
         }
         if (_isBoost)
@@ -65,29 +55,34 @@ public class PlayerController : Character_B<CharacterData_B>
             if (!GaugeValueChange(-_data.DashValue * Time.deltaTime))
             {
                 _isBoost = false;
-                _dashSeq?.Kill();
-                _dashSeq = DOTween.Sequence(DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _normalSpeed, 0.8f));
             }
         }
+
+        if (_isDashed)
+        {
+            _data.DashTimer += Time.deltaTime;
+
+            var t = Mathf.Clamp01(_data.DashTimer / _data.DashTime);
+
+            var newPos = Vector3.Lerp(_dashStartPos, _dashTargetPos, t);
+            _rb.MovePosition(newPos);
+
+            if (t >= 1)
+            {
+                _isDashed = false;
+            }
+        }
+
         if (!_isDashed)
         {
-            _camForward = Camera.main.transform.forward;
-            _camRight = Camera.main.transform.right;
-            _camForward.y = _camRight.y = 0;
-            _camForward.Normalize();
-            _camRight.Normalize();
-            _moveDir = _camForward * _velocity.y + _camRight * _velocity.x * 1.5f;
-
-            var vel = _moveDir * _currentSpeed;
-            vel.y = _rb.linearVelocity.y;
-            _rb.linearVelocity = vel;
+            Move(_isBoost ? _data.DashSpeed : _data.NormalSpeed);
         }
         var cam = Camera.main.transform.forward;
         cam.y = 0;
         transform.forward = cam;
     }
 
-    void Move(InputAction.CallbackContext context)
+    void OnMoveInput(InputAction.CallbackContext context)
     {
         var input = context.ReadValue<Vector2>();
         if (context.phase == InputActionPhase.Performed)
@@ -103,46 +98,53 @@ public class PlayerController : Character_B<CharacterData_B>
             _velocity = _velocity.normalized;
         }
     }
+
+    void Move(float speed)
+    {
+        _camForward = Camera.main.transform.forward;
+        _camRight = Camera.main.transform.right;
+        _camForward.y = _camRight.y = 0;
+        _camForward.Normalize();
+        _camRight.Normalize();
+        _moveDir = _camForward * _velocity.y + _camRight * _velocity.x * 1.5f;
+
+        var vel = _moveDir * speed;
+        var currentVel = _rb.linearVelocity;
+        vel.y = currentVel.y;
+        _rb.linearVelocity = vel;
+    }
+
     void Jump(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started)
         {
             if (!GaugeValueChange(-_data.JumpValue / 10)) return;
             _isJumped = true;
-            _rb.AddForce(new Vector3(0, _jumpPower * 5, 0), ForceMode.Impulse);
+            _rb.AddForce(new Vector3(0, _data.JumpPower * 5, 0), ForceMode.Impulse);
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
             _isJumped = false;
         }
     }
+
+    //HERE:Dashの仕様を線形補完に変更する
     void Dash(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started && !_isDashed)
         {
             if (!GaugeValueChange(-_data.DashValue)) return;
+            _isBoost = true;
             _isDashed = true;
-            var vel = _velocity != Vector2.zero ? _moveDir : _camForward;
-            _rb.AddForce(new Vector3(vel.x, 0, vel.z) * _dashSpeed * 3, ForceMode.Impulse);
-            _dashSeq?.Kill();
-            _dashSeq = DOTween.Sequence(DOTween.To(() => _currentSpeed, speed => _currentSpeed = speed, _dashSpeed, _dashTime));
-            Dash().Forget();
+            _data.DashTimer = 0;
+            _dashStartPos = transform.position;
+            _dashTargetPos = transform.position + (_velocity != Vector2.zero ? _moveDir : _camForward) * _data.DashDistance;
         }
-        else if (context.phase == InputActionPhase.Canceled)
+        if (context.phase == InputActionPhase.Canceled)
         {
-            _dashSeq?.Kill();
-            _dashSeq = DOTween.Sequence(DOTween.To(() => _currentSpeed, x => _currentSpeed = x, _normalSpeed, 0.8f));
+            _isBoost = false;
         }
-
     }
-    async UniTaskVoid Dash()
-    {
-        await UniTask.Delay((int)(_dashTime * 1000));
-        _isDashed = false;
-        _isBoost = true;
-    }
-
-
     private void OnDisable()
     {
         RemoveAction();
@@ -150,8 +152,8 @@ public class PlayerController : Character_B<CharacterData_B>
 
     void AddAction()
     {
-        _input.MoveAction.performed += Move;
-        _input.MoveAction.canceled += Move;
+        _input.MoveAction.performed += OnMoveInput;
+        _input.MoveAction.canceled += OnMoveInput;
         _input.JumpAction.started += Jump;
         _input.JumpAction.canceled += Jump;
         _input.DashAction.started += Dash;
@@ -160,8 +162,8 @@ public class PlayerController : Character_B<CharacterData_B>
 
     void RemoveAction()
     {
-        _input.MoveAction.performed -= Move;
-        _input.MoveAction.canceled -= Move;
+        _input.MoveAction.performed -= OnMoveInput;
+        _input.MoveAction.canceled -= OnMoveInput;
         _input.JumpAction.started -= Jump;
         _input.JumpAction.canceled -= Jump;
         _input.DashAction.started -= Dash;

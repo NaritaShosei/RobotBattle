@@ -23,6 +23,27 @@ namespace Script.System.Ingame
         }
 
         public event Action<float> OnHealthChanged;
+
+        [SerializeField]
+        private float _normalSpeed = 50;
+        public float NormalSpeed => _normalSpeed;
+        [SerializeField]
+        private float _dashSpeed = 150;
+        public float DashSpeed => _dashSpeed;
+        [SerializeField]
+        private float _jumpPower = 7.5f;
+        public float JumpPower => _jumpPower;
+
+        [SerializeField]
+        private float _dashDistance = 100;
+        public float DashDistance => _dashDistance;
+
+        [SerializeField]
+        private float _dashTime = 0.5f;
+        public float DashTime => _dashTime;
+
+        public float DashTimer;
+
         [SerializeField]
         private float _maxGauge;
         public float MaxGauge { get => _maxGauge; }
@@ -43,11 +64,11 @@ namespace Script.System.Ingame
         private float _recoveryValue = 30;
         public float RecoveryValue => _recoveryValue;
 
-        [SerializeField]
+        [SerializeField, Header("ジャンプの消費ゲージ量")]
         private float _jumpValue;
         public float JumpValue => _jumpValue;
 
-        [SerializeField]
+        [SerializeField, Header("ダッシュの消費ゲージ量")]
         private float _dashValue;
         public float DashValue => _dashValue;
 

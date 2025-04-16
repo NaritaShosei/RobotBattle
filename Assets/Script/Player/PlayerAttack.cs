@@ -65,7 +65,7 @@ public class PlayerAttack : MonoBehaviour
 
                     var enemy = _lockOn.GetTarget();
 
-                    var dir = enemy != null ? (enemy.transform.position - transform.position).normalized : transform.forward;
+                    var dir = enemy != null ? (enemy.transform.position - _attack1Muzzle.position).normalized : transform.forward;
 
                     bullet.SetDirection(dir);
                     bullet.gameObject.SetActive(true);
