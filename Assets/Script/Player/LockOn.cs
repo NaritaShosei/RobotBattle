@@ -36,9 +36,8 @@ public class LockOn : MonoBehaviour
         {
             //距離チェック
             Vector3 dirToEnemy = enemy.transform.position - _player.position;
-            float disToEnemy = dirToEnemy.magnitude;
 
-            dirToEnemy.y = 0;
+            float disToEnemy = new Vector3(dirToEnemy.x, 0, dirToEnemy.z).magnitude;
 
             if (disToEnemy > _maxDistance) continue;
 
