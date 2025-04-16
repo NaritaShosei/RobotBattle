@@ -646,8 +646,7 @@ MonoBehaviour:
   _player: {fileID: 1210062565}
   _lockOnCenterScreenPos: {x: 0.5, y: 0.6}
   _maxDistance: 300
-  _viewAngleHorizontal: 120
-  _viewAngleVertical: 60
+  _viewAngle: 90
 --- !u!4 &1233173314 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6634082531630241526, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
