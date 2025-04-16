@@ -73,13 +73,19 @@ public class LockOn : MonoBehaviour
         var dirToEnemy = enemy.transform.position - _camera.transform.position;
         float disToEnemy = dirToEnemy.magnitude;
 
-        //カメラを始点にスフィアキャストを飛ばす
-        if (Physics.SphereCast(_camera.transform.position, 5, dirToEnemy.normalized, out RaycastHit hit, disToEnemy))
+        //カメラを始点にレイキャストを飛ばす
+        var hits = Physics.RaycastAll(_camera.transform.position, dirToEnemy.normalized, disToEnemy);
+        foreach (var hit in hits)
         {
-            //敵との間に敵以外がいればfalse
-            if (hit.transform != enemy.transform)
+            //子オブジェクトを含めPlayerなら無視
+            if (hit.transform == _player || hit.transform.IsChildOf(_player)) continue;
+
+            //子オブジェクトを含めEnemyなら無視
+            if (hit.transform == enemy.transform || hit.transform.IsChildOf(enemy.transform)) continue;
+
+            //それ以外でEnemyより手前ならfalse
+            if (hit.distance < disToEnemy)
             {
-                Debug.Log("a");
                 return false;
             }
         }
