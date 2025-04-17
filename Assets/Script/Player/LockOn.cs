@@ -23,6 +23,7 @@ public class LockOn : MonoBehaviour
 
     Enemy_B _lockOnEnemy;
     List<Enemy_B> _enemies;
+
     void Start()
     {
         _camera = Camera.main;
@@ -31,14 +32,13 @@ public class LockOn : MonoBehaviour
 
     void Update()
     {
-
         float minDistance = float.MaxValue;
         _lockOnEnemy = null;
 
         foreach (var enemy in _enemies)
         {
             //距離チェック
-            Vector3 dirToEnemy = enemy.transform.position - _player.position;
+            Vector3 dirToEnemy = enemy.transform.position - _camera.transform.position;
 
             float disToEnemy = new Vector3(dirToEnemy.x, 0, dirToEnemy.z).magnitude;
 
@@ -89,10 +89,7 @@ public class LockOn : MonoBehaviour
             if (hit.transform == _bulletParent || hit.transform.IsChildOf(_bulletParent)) continue;
 
             //それ以外でEnemyより手前ならfalse
-            if (hit.distance < disToEnemy)
-            {
-                return false;
-            }
+            if (hit.distance < disToEnemy) return false;
         }
 
         return true;
@@ -137,5 +134,4 @@ public class LockOn : MonoBehaviour
             prevPos = pos;
         }
     }
-
 }
