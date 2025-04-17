@@ -7,6 +7,9 @@ public class LockOn : MonoBehaviour
     [SerializeField]
     Transform _player;
 
+    [SerializeField]
+    Transform _bulletParent;
+
     [SerializeField, Header("0～1の間 Debug Only")]
     Vector2 _lockOnCenterScreenPos = new Vector2(0.5f, 0.55f);
 
@@ -81,6 +84,9 @@ public class LockOn : MonoBehaviour
 
             //子オブジェクトを含めEnemyなら無視
             if (hit.transform == enemy.transform || hit.transform.IsChildOf(enemy.transform)) continue;
+
+            //子オブジェクトを含めBulletなら無視
+            if (hit.transform == _bulletParent || hit.transform.IsChildOf(_bulletParent)) continue;
 
             //それ以外でEnemyより手前ならfalse
             if (hit.distance < disToEnemy)
