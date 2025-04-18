@@ -10,7 +10,6 @@ namespace Script.System.Ingame
         private float _maxHealth;
         public float MaxHealth { get => _maxHealth; }
 
-        [SerializeField]
         private float _health;
         public float Health
         {
@@ -28,8 +27,8 @@ namespace Script.System.Ingame
         private float _normalSpeed = 50;
         public float NormalSpeed => _normalSpeed;
         [SerializeField]
-        private float _dashSpeed = 150;
-        public float DashSpeed => _dashSpeed;
+        private float _boostSpeed = 150;
+        public float BoostSpeed => _boostSpeed;
         [SerializeField]
         private float _jumpPower = 7.5f;
         public float JumpPower => _jumpPower;
@@ -42,13 +41,13 @@ namespace Script.System.Ingame
         private float _dashTime = 0.5f;
         public float DashTime => _dashTime;
 
+        [NonSerialized]
         public float DashTimer;
 
         [SerializeField]
         private float _maxGauge;
         public float MaxGauge { get => _maxGauge; }
 
-        [SerializeField]
         private float _gauge;
         public float Gauge
         {

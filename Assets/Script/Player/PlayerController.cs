@@ -34,7 +34,6 @@ public class PlayerController : Character_B<CharacterData_B>
 
     void Update()
     {
-        Debug.Log(_data.Gauge);
         if (!_isDashed && !_isJumped)
         {
             GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
@@ -75,7 +74,7 @@ public class PlayerController : Character_B<CharacterData_B>
 
         if (!_isDashed)
         {
-            Move(_isBoost ? _data.DashSpeed : _data.NormalSpeed);
+            Move(_isBoost ? _data.BoostSpeed : _data.NormalSpeed);
         }
         var cam = Camera.main.transform.forward;
         cam.y = 0;
