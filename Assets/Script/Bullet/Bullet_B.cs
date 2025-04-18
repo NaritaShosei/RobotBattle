@@ -21,13 +21,14 @@ public class Bullet_B : MonoBehaviour
     void Update()
     {
         transform.position += _moveDirection * 100 * Time.deltaTime;
-        if (_timer + 10 < Time.time)
+        if (_timer + 5 < Time.time)
         {
             gameObject.SetActive(false);
         }
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("DodgeCollider")) return;
         EffectManager.Instance.PlayExplosion(transform.position);
         gameObject.SetActive(false);
         Debug.Log(other.name);
