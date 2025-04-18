@@ -3,19 +3,17 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal.Internal;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Enemy_B : Character_B<CharacterData_B>
+public class Enemy_B : Character_B<EnemyData_B>
 {
     Rigidbody _rb;
     PlayerController _player;
-    [SerializeField] CharacterData_B _dataBase;
+    [SerializeField] EnemyData_B _dataBase;
     [SerializeField] EnemyDodgeZone _dodgeZone;
     [SerializeField] Transform _bulletParent;
     Vector3 _startPos;
     Vector3 _targetPos;
     bool _isDodge;
 
-
-    float _dodgeTimer;
     void Start()
     {
         Initialize(_dataBase);
@@ -45,7 +43,7 @@ public class Enemy_B : Character_B<CharacterData_B>
         else if (!_isDodge)
         {
             Move(_player.transform.position);
-            if (_dodgeTimer + 5 <= Time.time)
+            if (_data.DashTimer + _data.DashTime <= Time.time)
             {
                 _dodgeZone.Collider.enabled = true;
             }
@@ -67,7 +65,7 @@ public class Enemy_B : Character_B<CharacterData_B>
         {
             if (!GaugeValueChange(-_data.DashValue)) return;
             _dodgeZone.Collider.enabled = false;
-            _dodgeTimer = Time.time;
+            _data.DashTimer = Time.time;
             _isDodge = true;
             _data.DashTimer = 0;
             _startPos = transform.position;
