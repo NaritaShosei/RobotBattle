@@ -51,6 +51,7 @@ public class Enemy_B : Character_B<CharacterData_B>
         Vector3 dir = target - transform.position;
         dir.Normalize();
         dir.y = 0;
+        transform.forward = dir;
         _rb.linearVelocity = dir * _data.NormalSpeed;
     }
 
@@ -58,6 +59,7 @@ public class Enemy_B : Character_B<CharacterData_B>
     {
         if (other.transform == _bulletParent || other.transform.IsChildOf(_bulletParent))
         {
+            if (!GaugeValueChange(-_data.DashValue)) return;
             _isDodge = true;
             _data.DashTimer = 0;
             _startPos = transform.position;
