@@ -7,6 +7,9 @@ public class LockOn : MonoBehaviour
     [SerializeField]
     Transform _player;
 
+    [SerializeField]
+    Transform _bulletParent;
+
     [SerializeField, Header("0～1の間 Debug Only")]
     Vector2 _lockOnCenterScreenPos = new Vector2(0.5f, 0.55f);
 
@@ -20,6 +23,7 @@ public class LockOn : MonoBehaviour
 
     Enemy_B _lockOnEnemy;
     List<Enemy_B> _enemies;
+
     void Start()
     {
         _camera = Camera.main;
@@ -28,14 +32,13 @@ public class LockOn : MonoBehaviour
 
     void Update()
     {
-
         float minDistance = float.MaxValue;
         _lockOnEnemy = null;
 
         foreach (var enemy in _enemies)
         {
             //距離チェック
-            Vector3 dirToEnemy = enemy.transform.position - _player.position;
+            Vector3 dirToEnemy = enemy.transform.position - _camera.transform.position;
 
             float disToEnemy = new Vector3(dirToEnemy.x, 0, dirToEnemy.z).magnitude;
 
@@ -82,11 +85,11 @@ public class LockOn : MonoBehaviour
             //子オブジェクトを含めEnemyなら無視
             if (hit.transform == enemy.transform || hit.transform.IsChildOf(enemy.transform)) continue;
 
+            //子オブジェクトを含めBulletなら無視
+            if (hit.transform == _bulletParent || hit.transform.IsChildOf(_bulletParent)) continue;
+
             //それ以外でEnemyより手前ならfalse
-            if (hit.distance < disToEnemy)
-            {
-                return false;
-            }
+            if (hit.distance < disToEnemy) return false;
         }
 
         return true;
@@ -131,5 +134,4 @@ public class LockOn : MonoBehaviour
             prevPos = pos;
         }
     }
-
 }
