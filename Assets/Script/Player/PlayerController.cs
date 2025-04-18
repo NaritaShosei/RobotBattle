@@ -4,6 +4,7 @@ using Script.System.Ingame;
 using SymphonyFrameWork.System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : Character_B<CharacterData_B>
@@ -23,6 +24,10 @@ public class PlayerController : Character_B<CharacterData_B>
     bool _isJumped;
     bool _isDashed;
     bool _isBoost;
+    /// <summary>
+    /// Debug用
+    /// </summary>
+    [SerializeField] Text a;
     void Start()
     {
         _input = ServiceLocator.GetInstance<InputBuffer>();
@@ -34,6 +39,8 @@ public class PlayerController : Character_B<CharacterData_B>
 
     void Update()
     {
+        //Debug用
+        a.text = _data.Gauge.ToString();
         if (!_isDashed && !_isJumped)
         {
             GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
@@ -51,9 +58,12 @@ public class PlayerController : Character_B<CharacterData_B>
         }
         if (_isBoost)
         {
-            if (!GaugeValueChange(-_data.DashValue * Time.deltaTime))
+            if (_velocity != Vector2.zero)
             {
-                _isBoost = false;
+                if (!GaugeValueChange(-_data.DashValue * Time.deltaTime))
+                {
+                    _isBoost = false;
+                }
             }
         }
 

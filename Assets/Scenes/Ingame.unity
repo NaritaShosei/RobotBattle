@@ -860,7 +860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _freeLookCamera: {fileID: 222685864}
-  _cameraSensitivityX: 5
+  _cameraSensitivityX: 3.37
   _invertX: 1
   _cameraSensitivityY: 1.2
   _invertY: 0
