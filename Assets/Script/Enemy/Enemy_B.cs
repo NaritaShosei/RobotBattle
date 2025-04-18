@@ -14,6 +14,8 @@ public class Enemy_B : Character_B<CharacterData_B>
     Vector3 _targetPos;
     bool _isDodge;
 
+
+    float _dodgeTimer;
     void Start()
     {
         Initialize(_dataBase);
@@ -43,6 +45,10 @@ public class Enemy_B : Character_B<CharacterData_B>
         else if (!_isDodge)
         {
             Move(_player.transform.position);
+            if (_dodgeTimer + 5 <= Time.time)
+            {
+                _dodgeZone.Collider.enabled = true;
+            }
         }
     }
 
@@ -60,6 +66,8 @@ public class Enemy_B : Character_B<CharacterData_B>
         if (other.transform == _bulletParent || other.transform.IsChildOf(_bulletParent))
         {
             if (!GaugeValueChange(-_data.DashValue)) return;
+            _dodgeZone.Collider.enabled = false;
+            _dodgeTimer = Time.time;
             _isDodge = true;
             _data.DashTimer = 0;
             _startPos = transform.position;
