@@ -1,6 +1,7 @@
 ﻿using Script.System.Ingame;
 using UnityEngine;
 using UnityEngine.Rendering.Universal.Internal;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Enemy_B : Character_B<EnemyData_B>
@@ -15,6 +16,7 @@ public class Enemy_B : Character_B<EnemyData_B>
     bool _isDodged;
     bool _isJumping;
     bool _canJump = true;
+    [SerializeField] Text a;
     void Start()
     {
         Initialize(_dataBase);
@@ -25,6 +27,9 @@ public class Enemy_B : Character_B<EnemyData_B>
 
     private void Update()
     {
+        //Debug用
+        a.text = _data.Gauge.ToString();
+
         var dirToPlayer = _player.transform.position - transform.position;
         if (_isDodged)
         {
@@ -50,11 +55,6 @@ public class Enemy_B : Character_B<EnemyData_B>
         }
         if (_isJumping)
         {
-            if (!GaugeValueChange(_data.JumpValue))
-            {
-                _isJumping = false;
-                return;
-            }
             _rb.AddForce(Vector3.up * _data.JumpPower, ForceMode.Acceleration); // Impulseより連続的に加速感ある
 
             if (_data.JumpTimer + _data.JumpDuration <= Time.time)
@@ -104,6 +104,7 @@ public class Enemy_B : Character_B<EnemyData_B>
 
     void StartJump()
     {
+        if (!GaugeValueChange(-_data.JumpValue)) return;
         _isJumping = true;
         _canJump = false;
         _data.JumpTimer = Time.time;

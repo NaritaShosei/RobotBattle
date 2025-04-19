@@ -24,7 +24,7 @@ namespace Script.System.Ingame
         /// </summary>
         protected virtual bool GaugeValueChange(float value)
         {
-            if (value < 0 && _data.Gauge + value <= 0) return false;
+            if (value < 0 && _data.Gauge + value < 0) return false;
 
             _data.Gauge = Mathf.Clamp(_data.Gauge + value, 0, _data.MaxGauge);
             return true;
