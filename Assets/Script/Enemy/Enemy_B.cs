@@ -44,18 +44,27 @@ public class Enemy_B : Character_B<EnemyData_B>
 
         Move(_player.transform.position);
 
-        if (!_isJumping && _player.transform.position.y > transform.position.y)
+        if (_canJump && !_isJumping && _player.transform.position.y > transform.position.y)
         {
             StartJump();
         }
         if (_isJumping)
         {
+            if (!GaugeValueChange(_data.JumpValue))
+            {
+                _isJumping = false;
+                return;
+            }
             _rb.AddForce(Vector3.up * _data.JumpPower, ForceMode.Acceleration); // Impulseより連続的に加速感ある
 
             if (_data.JumpTimer + _data.JumpDuration <= Time.time)
             {
                 _isJumping = false;
             }
+        }
+        if (_data.JumpTimer + _data.JumpDuration + _data.JumpInterval <= Time.time)
+        {
+            _canJump = true;
         }
 
         if (_data.DodgeTimer + _data.DodgeInterval <= Time.time)
@@ -96,6 +105,7 @@ public class Enemy_B : Character_B<EnemyData_B>
     void StartJump()
     {
         _isJumping = true;
+        _canJump = false;
         _data.JumpTimer = Time.time;
     }
 

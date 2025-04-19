@@ -22,6 +22,7 @@ MonoBehaviour:
   _recoveryValue: 30
   _jumpValue: 50
   _dashValue: 50
-  _dodgeTime: 5
+  _dodgeInterval: 5
   _jumpDuration: 0.5
+  _jumInterval: 0.5
   _minDistance: 100
