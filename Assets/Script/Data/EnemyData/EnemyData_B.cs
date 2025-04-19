@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "EnemyData", menuName = "GameData/CharacterData/EnemyData")]
 public class EnemyData_B : CharacterData_B
 {
     [SerializeField]
@@ -10,4 +11,6 @@ public class EnemyData_B : CharacterData_B
     [NonSerialized]
     public float DodgeTimer;
 
+    [SerializeField]
+    float _minDistance = 100;
 }
