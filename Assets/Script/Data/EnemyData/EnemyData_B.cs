@@ -25,4 +25,8 @@ public class EnemyData_B : CharacterData_B
     [SerializeField, Header("移動できるPlayerとの最小距離")]
     float _minDistance = 100;
     public float MinDistance => _minDistance;
+
+    [SerializeField, Header("ダッシュに移行する距離")]
+    float _dashMInDistance = 200;
+    public float DashMinDistance => _dashMInDistance;
 }

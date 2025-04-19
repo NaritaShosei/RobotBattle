@@ -16,6 +16,9 @@ public class Enemy_B : Character_B<EnemyData_B>
     bool _isDodged;
     bool _isJumping;
     bool _canJump = true;
+    bool CanMove => _data.MinDistance <= (_player.transform.position - transform.position).magnitude;
+    bool IsDash => _data.DashMinDistance <= (_player.transform.position - transform.position).magnitude;
+
     [SerializeField] Text a;
     void Start()
     {
@@ -46,8 +49,10 @@ public class Enemy_B : Character_B<EnemyData_B>
                 _isDodged = false;
             }
         }
-
-        Move(_player.transform.position);
+        if (CanMove)
+        {
+            Move(_player.transform.position);
+        }
 
         if (_canJump && !_isJumping && _player.transform.position.y > transform.position.y)
         {
@@ -81,8 +86,10 @@ public class Enemy_B : Character_B<EnemyData_B>
 
         var currentVel = _rb.linearVelocity;
 
-        currentVel.x = dir.x * _data.NormalSpeed;
-        currentVel.z = dir.z * _data.NormalSpeed;
+        var speed = IsDash ? _data.BoostSpeed : _data.NormalSpeed;
+
+        currentVel.x = dir.x * speed;
+        currentVel.z = dir.z * speed;
 
         _rb.linearVelocity = currentVel;
     }
@@ -98,7 +105,7 @@ public class Enemy_B : Character_B<EnemyData_B>
             _data.DashTimer = 0;
             _startPos = transform.position;
             var dir = Random.Range(0, 2) == 0 ? transform.right : -transform.right;
-            _targetPos = transform.position + dir * _data.DashDistance;
+            _targetPos = transform.position + dir * (_data.DashDistance);
         }
     }
 
