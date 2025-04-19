@@ -43,7 +43,7 @@ public class Enemy_B : Character_B<EnemyData_B>
         else if (!_isDodge)
         {
             Move(_player.transform.position);
-            if (_data.DashTimer + _data.DashTime <= Time.time)
+            if (_data.DodgeTimer + _data.DodgeTime <= Time.time)
             {
                 _dodgeZone.Collider.enabled = true;
             }
