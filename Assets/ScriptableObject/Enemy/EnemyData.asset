@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65ff2d1b4da99ee46adf757ccb9e7a64, type: 3}
   m_Name: EnemyData
   m_EditorClassIdentifier: 
-  _maxHealth: 0
+  _maxHealth: 500
   _normalSpeed: 50
   _boostSpeed: 150
-  _jumpPower: 7.5
+  _jumpPower: 125
   _dashDistance: 100
   _dashTime: 0.5
-  _maxGauge: 0
+  _maxGauge: 500
   _recoveryValue: 30
-  _jumpValue: 0
-  _dashValue: 0
+  _jumpValue: 50
+  _dashValue: 50
   _dodgeTime: 5
+  _jumpDuration: 0.5
   _minDistance: 100

@@ -12,8 +12,9 @@ public class Enemy_B : Character_B<EnemyData_B>
     [SerializeField] Transform _bulletParent;
     Vector3 _startPos;
     Vector3 _targetPos;
-    bool _isDodge;
-
+    bool _isDodged;
+    bool _isJumping;
+    bool _canJump = true;
     void Start()
     {
         Initialize(_dataBase);
@@ -25,7 +26,7 @@ public class Enemy_B : Character_B<EnemyData_B>
     private void Update()
     {
         var dirToPlayer = _player.transform.position - transform.position;
-        if (_isDodge)
+        if (_isDodged)
         {
             _data.DashTimer += Time.deltaTime;
 
@@ -37,16 +38,29 @@ public class Enemy_B : Character_B<EnemyData_B>
 
             if (t >= 1)
             {
-                _isDodge = false;
+                _isDodged = false;
             }
         }
-        else if (!_isDodge)
+
+        Move(_player.transform.position);
+
+        if (!_isJumping && _player.transform.position.y > transform.position.y)
         {
-            Move(_player.transform.position);
-            if (_data.DodgeTimer + _data.DodgeTime <= Time.time)
+            StartJump();
+        }
+        if (_isJumping)
+        {
+            _rb.AddForce(Vector3.up * _data.JumpPower, ForceMode.Acceleration); // Impulseより連続的に加速感ある
+
+            if (_data.JumpTimer + _data.JumpDuration <= Time.time)
             {
-                _dodgeZone.Collider.enabled = true;
+                _isJumping = false;
             }
+        }
+
+        if (_data.DodgeTimer + _data.DodgeInterval <= Time.time)
+        {
+            _dodgeZone.Collider.enabled = true;
         }
     }
 
@@ -54,9 +68,14 @@ public class Enemy_B : Character_B<EnemyData_B>
     {
         Vector3 dir = target - transform.position;
         dir.Normalize();
-        dir.y = 0;
-        transform.forward = dir;
-        _rb.linearVelocity = dir * _data.NormalSpeed;
+        transform.forward = new Vector3(dir.x, 0, dir.z);
+
+        var currentVel = _rb.linearVelocity;
+
+        currentVel.x = dir.x * _data.NormalSpeed;
+        currentVel.z = dir.z * _data.NormalSpeed;
+
+        _rb.linearVelocity = currentVel;
     }
 
     void Dodge(Collider other)
@@ -65,13 +84,19 @@ public class Enemy_B : Character_B<EnemyData_B>
         {
             if (!GaugeValueChange(-_data.DashValue)) return;
             _dodgeZone.Collider.enabled = false;
-            _data.DashTimer = Time.time;
-            _isDodge = true;
+            _data.DodgeTimer = Time.time;
+            _isDodged = true;
             _data.DashTimer = 0;
             _startPos = transform.position;
             var dir = Random.Range(0, 2) == 0 ? transform.right : -transform.right;
             _targetPos = transform.position + dir * _data.DashDistance;
         }
+    }
+
+    void StartJump()
+    {
+        _isJumping = true;
+        _data.JumpTimer = Time.time;
     }
 
     /// <summary>
