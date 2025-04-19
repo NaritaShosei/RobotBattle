@@ -437,7 +437,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 222685860}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.22058591, y: -0.000000019422766, z: 0.0000000043925876, w: 0.97536755}
+  m_LocalRotation: {x: 0.22058594, y: 0.000000027403278, z: -0.0000000061974363, w: 0.9753676}
   m_LocalPosition: {x: 0, y: 48.4925, z: -31.765598}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -606,7 +606,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 357140965}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2205859, y: -0.000000019422767, z: 0.000000004392589, w: 0.97536755}
+  m_LocalRotation: {x: 0.22058594, y: 0.000000027403278, z: -0.000000006197437, w: 0.97536755}
   m_LocalPosition: {x: 0, y: 48.4925, z: -31.765598}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1210,7 +1210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8474cd302a0fd5e47a422a90d5fee26f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dataBase: {fileID: 11400000, guid: 5b581689816f33d4b8b93f4429a042da, type: 2}
+  _dataBase: {fileID: 11400000, guid: e850416b047e55047a39aa83ef92063e, type: 2}
   _dodgeZone: {fileID: 311763051}
   _bulletParent: {fileID: 104793615}
 --- !u!54 &1298332444
@@ -1222,7 +1222,7 @@ Rigidbody:
   m_GameObject: {fileID: 1298332440}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -1237,9 +1237,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &1556743756
 GameObject:
   m_ObjectHideFlags: 0
