@@ -20,7 +20,6 @@ public class Enemy_B : Character_B<EnemyData_B>
     bool _canJump = true;
     bool CanMove => _data.MinDistance <= (_player.transform.position - transform.position).magnitude;
     bool IsDash => _data.DashMinDistance <= (_player.transform.position - transform.position).magnitude;
-
     [SerializeField] Text a;
     void Start()
     {
