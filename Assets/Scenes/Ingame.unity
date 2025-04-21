@@ -496,8 +496,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 27.26
-  m_Height: 1
+  m_Radius: 11.45
+  m_Height: 46.93
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &311763051
@@ -1293,6 +1293,7 @@ MonoBehaviour:
   _dataBase: {fileID: 11400000, guid: e850416b047e55047a39aa83ef92063e, type: 2}
   _dodgeZone: {fileID: 311763051}
   _bulletParent: {fileID: 104793615}
+  _targetCenter: {fileID: 311763049}
   a: {fileID: 1240678493}
 --- !u!54 &1298332444
 Rigidbody:

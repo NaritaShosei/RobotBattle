@@ -11,6 +11,8 @@ public class Enemy_B : Character_B<EnemyData_B>
     [SerializeField] EnemyData_B _dataBase;
     [SerializeField] EnemyDodgeZone _dodgeZone;
     [SerializeField] Transform _bulletParent;
+    [SerializeField] Transform _targetCenter;
+    public Transform TargetCenter => _targetCenter;
     Vector3 _startPos;
     Vector3 _targetPos;
     bool _isDodged;

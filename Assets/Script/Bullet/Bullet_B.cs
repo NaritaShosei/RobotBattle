@@ -22,9 +22,9 @@ public class Bullet_B : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_target && (_target.transform.position - transform.position).magnitude >= _minDistance)
+        if (_target && (_target.TargetCenter.position - transform.position).magnitude >= _minDistance)
         {
-            var dir = _target.transform.position - transform.position;
+            var dir = _target.TargetCenter.position - transform.position;
             transform.forward = dir;
         }
         transform.position += transform.forward * _moveSpeed * Time.deltaTime;
