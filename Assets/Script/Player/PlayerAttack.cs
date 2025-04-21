@@ -25,7 +25,6 @@ public class PlayerAttack : MonoBehaviour
     Queue<Bullet_B> _attack1BulletPool = new();
 
     InputBuffer _input;
-
     bool _isAttacked1;
     /// <summary>
     /// 残弾数
@@ -67,7 +66,8 @@ public class PlayerAttack : MonoBehaviour
 
                     var dir = enemy != null ? (enemy.transform.position - _attack1Muzzle.position).normalized : transform.forward;
 
-                    bullet.SetDirection(dir);
+                    bullet.SetDirection(transform.forward);
+                    bullet.SetTarget(enemy);
                     bullet.gameObject.SetActive(true);
                     _count--;
                 }
