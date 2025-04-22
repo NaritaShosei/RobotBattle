@@ -23,11 +23,6 @@ public class LongRangeAttack_B : MonoBehaviour
         OnStart();
     }
 
-    protected void Update_B()
-    {
-
-    }
-
     protected virtual void OnStart()
     {
         _time = Time.time;
