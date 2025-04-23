@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class BossEnemy : Enemy_B
 {
     Rigidbody _rb;
-    PlayerController _player;
-    [SerializeField] EnemyData_B _dataBase;
+    
+
     [SerializeField] EnemyDodgeZone _dodgeZone;
     [SerializeField] Transform _bulletParent;
 
@@ -21,9 +21,8 @@ public class BossEnemy : Enemy_B
     [SerializeField] Text a;
     void Start()
     {
-        Initialize(_dataBase);
         _rb = GetComponent<Rigidbody>();
-        _player = FindAnyObjectByType<PlayerController>();
+       
         _dodgeZone.OnTriggerEnterEvent += Dodge;
     }
 
