@@ -11,7 +11,7 @@ public class Enemy_B : Character_B<EnemyData_B>
     protected void OnStart()
     {
         
-        _player = FindAnyObjectByType<PlayerController>();
+        
     }
 
     private void Update()

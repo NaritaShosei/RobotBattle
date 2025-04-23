@@ -22,7 +22,7 @@ public class BossEnemy : Enemy_B
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-       
+        _player = FindAnyObjectByType<PlayerController>();
         _dodgeZone.OnTriggerEnterEvent += Dodge;
     }
 

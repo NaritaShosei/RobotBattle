@@ -15,7 +15,6 @@ public class EnemyLongRangeAttack : LongRangeAttack_B
     {
         if (_isAttacked)
         {
-            Debug.Assert(player);
             if (_bulletPool.Count != 0 && _count != 0)
             {
                 float rate = 1 / _data.AttackRate;

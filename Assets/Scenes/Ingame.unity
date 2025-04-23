@@ -181,6 +181,72 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2001594876}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &191831442
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 191831443}
+  - component: {fileID: 191831445}
+  - component: {fileID: 191831444}
+  m_Layer: 10
+  m_Name: TargetZone
+  m_TagString: DodgeCollider
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &191831443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191831442}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2001594876}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &191831444
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191831442}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2.84
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &191831445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191831442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609284d8484b52d4d91096a6f4c059ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &222685860
 GameObject:
   m_ObjectHideFlags: 0
@@ -1355,6 +1421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetCenter: {fileID: 342246638}
   _dataBase: {fileID: 11400000, guid: e850416b047e55047a39aa83ef92063e, type: 2}
+  _collider: {fileID: 191831445}
 --- !u!65 &2001594873
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1444,6 +1511,7 @@ Transform:
   m_Children:
   - {fileID: 342246638}
   - {fileID: 157268164}
+  - {fileID: 191831443}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2010256460
