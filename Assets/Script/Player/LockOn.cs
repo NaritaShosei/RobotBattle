@@ -38,11 +38,11 @@ public class LockOn : MonoBehaviour
         foreach (var enemy in _enemies)
         {
             //距離チェック
-            Vector3 dirToEnemy = enemy.TargetCenter.position - _camera.transform.position;
+            Vector3 dirToEnemy = enemy.GetTargetCenter().position - _camera.transform.position;
             if (dirToEnemy.magnitude > _maxDistance) continue;
 
             //カメラの前方にいるかチェック
-            Vector3 viewportPosition = _camera.WorldToViewportPoint(enemy.TargetCenter.position);
+            Vector3 viewportPosition = _camera.WorldToViewportPoint(enemy.GetTargetCenter().position);
             if (viewportPosition.z < 0) continue;
 
             //視野角チェック
@@ -69,7 +69,7 @@ public class LockOn : MonoBehaviour
     bool IsVisible(BossEnemy enemy)
     {
         //方向、距離計算
-        var dirToEnemy = enemy.TargetCenter.position - _camera.transform.position;
+        var dirToEnemy = enemy.GetTargetCenter().position - _camera.transform.position;
         float disToEnemy = dirToEnemy.magnitude;
 
         //カメラを始点にレイキャストを飛ばす
@@ -80,7 +80,7 @@ public class LockOn : MonoBehaviour
             if (hit.transform == _player || hit.transform.IsChildOf(_player)) continue;
 
             //子オブジェクトを含めEnemyなら無視
-            if (hit.transform == enemy.TargetCenter || hit.transform.IsChildOf(enemy.transform)) continue;
+            if (hit.transform == enemy.GetTargetCenter() || hit.transform.IsChildOf(enemy.transform)) continue;
 
             //子オブジェクトを含めBulletなら無視
             if (hit.transform == _bulletParent || hit.transform.IsChildOf(_bulletParent)) continue;
