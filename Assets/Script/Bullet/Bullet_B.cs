@@ -7,6 +7,7 @@ public class Bullet_B : MonoBehaviour
     IFightable _target;
     [SerializeField] float _moveSpeed = 100;
     [SerializeField] float _minDistance;
+    [SerializeField] float _enableTime = 5;
     public Action<Bullet_B> ReturnPoolEvent;
     float _timer;
     float _attackValue;
@@ -14,6 +15,7 @@ public class Bullet_B : MonoBehaviour
     private void OnEnable()
     {
         _timer = Time.time;
+        _isChased = true;
     }
     private void OnDisable()
     {
@@ -33,7 +35,7 @@ public class Bullet_B : MonoBehaviour
             _isChased = false;
         }
         transform.position += transform.forward * _moveSpeed * Time.deltaTime;
-        if (_timer + 5 < Time.time)
+        if (_timer + _enableTime < Time.time)
         {
             gameObject.SetActive(false);
         }
