@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet_B : MonoBehaviour
 {
-    Enemy_B _target;
+    IFightable _target;
     [SerializeField] float _moveSpeed = 100;
     [SerializeField] float _minDistance;
     public Action<Bullet_B> ReturnPoolEvent;
@@ -22,9 +22,9 @@ public class Bullet_B : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_target && (_target.TargetCenter.position - transform.position).magnitude >= _minDistance)
+        if (_target != null && (_target.GetTargetCenter().position - transform.position).magnitude >= _minDistance)
         {
-            var dir = _target.TargetCenter.position - transform.position;
+            var dir = _target.GetTargetCenter().position - transform.position;
             transform.forward = dir;
         }
         transform.position += transform.forward * _moveSpeed * Time.deltaTime;
@@ -50,7 +50,7 @@ public class Bullet_B : MonoBehaviour
     {
         fightable.HitDamage(damage);
     }
-    public virtual void SetTarget(Enemy_B enemy)
+    public virtual void SetTarget(IFightable enemy)
     {
         _target = enemy;
     }

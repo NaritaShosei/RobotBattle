@@ -12,17 +12,13 @@ public class PlayerAttack : LongRangeAttack_B
     InputBuffer _input;
     void Start()
     {
-        Start_B();
-    }
-
-    protected override void OnStart()
-    {
         _input = ServiceLocator.GetInstance<InputBuffer>();
         _input.Attack1Action.started += Attack1;
         _input.Attack1Action.canceled += Attack1;
 
-        base.OnStart();
+        Start_B();
     }
+
     void Update()
     {
         if (_isAttacked)

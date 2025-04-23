@@ -6,7 +6,7 @@ namespace Script.System.Ingame
     where DataType : CharacterData_B
     {
         protected DataType _data;
-
+        [SerializeField] Transform _targetCenter;
         public void HitDamage(float damage)
         {
             _data.Health -= damage;
@@ -61,9 +61,15 @@ namespace Script.System.Ingame
         {
             OnDestroyMethod();
         }
+
+        public Transform GetTargetCenter()
+        {
+            return _targetCenter;
+        }
     }
     public interface IFightable
     {
+        Transform GetTargetCenter();
         void HitDamage(float damage);
         void HitHeal(float heal);
     }

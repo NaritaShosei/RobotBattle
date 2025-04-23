@@ -23,7 +23,7 @@ public class LongRangeAttack_B : MonoBehaviour
         OnStart();
     }
 
-    protected virtual void OnStart()
+    void OnStart()
     {
         _time = Time.time;
         _count = _data.BulletCount;
