@@ -10,6 +10,7 @@ public class Bullet_B : MonoBehaviour
     public Action<Bullet_B> ReturnPoolEvent;
     float _timer;
     float _attackValue;
+    bool _isChased = true;
     private void OnEnable()
     {
         _timer = Time.time;
@@ -22,10 +23,14 @@ public class Bullet_B : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_target != null && (_target.GetTargetCenter().position - transform.position).magnitude >= _minDistance)
+        if (_target != null && (_target.GetTargetCenter().position - transform.position).magnitude >= _minDistance && _isChased)
         {
             var dir = _target.GetTargetCenter().position - transform.position;
             transform.forward = dir;
+        }
+        else
+        {
+            _isChased = false;
         }
         transform.position += transform.forward * _moveSpeed * Time.deltaTime;
         if (_timer + 5 < Time.time)
