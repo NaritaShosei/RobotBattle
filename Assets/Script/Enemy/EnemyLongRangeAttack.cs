@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class EnemyLongRangeAttack : LongRangeAttack_B
 {
-    [SerializeField]
+    [SerializeField] Enemy_B _enemy;
     void Start()
     {
         Start_B();
+        _enemy.OnAttackEvent += Attack;
     }
 
-    void Update()
+    void Attack(PlayerController player)
     {
         if (_isAttacked)
         {
@@ -23,12 +24,17 @@ public class EnemyLongRangeAttack : LongRangeAttack_B
                     bullet.SetPosition(_muzzle.position);
 
                     bullet.SetDirection(transform.forward);
-                    bullet.SetTarget(enemy);
+                    bullet.SetTarget(player);
                     bullet.gameObject.SetActive(true);
                     _count--;
                 }
             }
         }
+    }
+
+    void Update()
+    {
+
     }
     async UniTaskVoid Reload()
     {

@@ -50,9 +50,9 @@ public class Bullet_B : MonoBehaviour
     {
         fightable.HitDamage(damage);
     }
-    public virtual void SetTarget(IFightable enemy)
+    public virtual void SetTarget(IFightable target)
     {
-        _target = enemy;
+        _target = target;
     }
     public virtual void SetPosition(Vector3 pos)
     {
