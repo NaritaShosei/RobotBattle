@@ -21,13 +21,13 @@ public class LockOn : MonoBehaviour
 
     Camera _camera;
 
-    BossEnemy _lockOnEnemy;
-    List<BossEnemy> _enemies;
+    Enemy_B _lockOnEnemy;
+    List<Enemy_B> _enemies;
 
     void Start()
     {
         _camera = Camera.main;
-        _enemies = FindObjectsByType<BossEnemy>(FindObjectsSortMode.None).ToList();
+        _enemies = FindObjectsByType<Enemy_B>(FindObjectsSortMode.None).ToList();
     }
 
     void Update()
@@ -66,7 +66,7 @@ public class LockOn : MonoBehaviour
         }
     }
 
-    bool IsVisible(BossEnemy enemy)
+    bool IsVisible(Enemy_B enemy)
     {
         //方向、距離計算
         var dirToEnemy = enemy.GetTargetCenter().position - _camera.transform.position;
@@ -91,7 +91,7 @@ public class LockOn : MonoBehaviour
 
         return true;
     }
-    public BossEnemy GetTarget()
+    public Enemy_B GetTarget()
     {
         return _lockOnEnemy;
     }
