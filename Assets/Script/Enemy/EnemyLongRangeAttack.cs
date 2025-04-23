@@ -8,12 +8,14 @@ public class EnemyLongRangeAttack : LongRangeAttack_B
     {
         Start_B();
         _enemy.OnAttackEvent += Attack;
+        _isAttacked = true;
     }
 
     void Attack(PlayerController player)
     {
         if (_isAttacked)
         {
+            Debug.Assert(player);
             if (_bulletPool.Count != 0 && _count != 0)
             {
                 float rate = 1 / _data.AttackRate;
@@ -23,11 +25,17 @@ public class EnemyLongRangeAttack : LongRangeAttack_B
                     var bullet = _bulletPool.Dequeue();
                     bullet.SetPosition(_muzzle.position);
 
-                    bullet.SetDirection(transform.forward);
+                    bullet.SetDirection(player.GetTargetCenter().position - _muzzle.transform.position);
                     bullet.SetTarget(player);
                     bullet.gameObject.SetActive(true);
                     _count--;
                 }
+            }
+
+            if (_count <= 0)
+            {
+                _isAttacked = false;
+                Reload().Forget();
             }
         }
     }
@@ -40,5 +48,10 @@ public class EnemyLongRangeAttack : LongRangeAttack_B
     {
         await UniTask.Delay((int)(_data.ReloadInterval * 1000));
         _count = _data.BulletCount;
+        _isAttacked = true;
+    }
+    private void OnDisable()
+    {
+        _enemy.OnAttackEvent -= Attack;
     }
 }
