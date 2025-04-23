@@ -18,6 +18,8 @@ public class PlayerAttack : LongRangeAttack_B
     protected override void OnStart()
     {
         _input = ServiceLocator.GetInstance<InputBuffer>();
+        _input.Attack1Action.started += Attack1;
+        _input.Attack1Action.canceled += Attack1;
 
         base.OnStart();
     }
@@ -64,10 +66,6 @@ public class PlayerAttack : LongRangeAttack_B
     {
         await UniTask.Delay((int)(_data.ReloadInterval * 1000));
         _count = _data.BulletCount;
-    }
-    void OnReturnPool(Bullet_B bullet)
-    {
-        _bulletPool.Enqueue(bullet);
     }
     private void OnDisable()
     {

@@ -1038,10 +1038,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 2b88c8056234f104188b2923875adbd7, type: 2}
-  _lockOn: {fileID: 1210062573}
-  _attack1Bullet: {fileID: 739508395337416385, guid: b71227c7f80bc7a44b9d12f4d78566fe, type: 3}
-  _attack1Muzzle: {fileID: 1624548926}
+  _bullet: {fileID: 739508395337416385, guid: b71227c7f80bc7a44b9d12f4d78566fe, type: 3}
+  _muzzle: {fileID: 1624548926}
   _bulletParent: {fileID: 104793615}
+  _layer:
+    serializedVersion: 2
+    m_Bits: 256
+  _lockOn: {fileID: 1210062573}
 --- !u!4 &1210062565 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7053778544467440685, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
