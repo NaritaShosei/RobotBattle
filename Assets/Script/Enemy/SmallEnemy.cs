@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using Script.System.Ingame;
+using UnityEngine;
 
-public class SmallEnemy : Enemy_B
+public class SmallEnemy : Enemy_B<CharacterData_B>
 {
+    [SerializeField] CharacterData_B _dataBase;
     [SerializeField] SmallEnemyTargetZone _collider;
     [SerializeField] Transform _muzzleModel;
 
@@ -22,7 +24,7 @@ public class SmallEnemy : Enemy_B
         }
     }
 
-    void TargetSet(Collider other)
+    public override void TargetSet(Collider other)
     {
         if (other.TryGetComponent(out PlayerController player))
         {
@@ -30,7 +32,7 @@ public class SmallEnemy : Enemy_B
         }
     }
 
-    void TargetUnset(Collider other)
+    public override void TargetUnset(Collider other)
     {
         if (other.TryGetComponent(out PlayerController player))
         {

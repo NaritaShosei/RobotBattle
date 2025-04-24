@@ -21,13 +21,13 @@ public class LockOn : MonoBehaviour
 
     Camera _camera;
 
-    Enemy_B _lockOnEnemy;
-    List<Enemy_B> _enemies;
+    IEnemy _lockOnEnemy;
+    List<IEnemy> _enemies;
 
     void Start()
     {
         _camera = Camera.main;
-        _enemies = FindObjectsByType<Enemy_B>(FindObjectsSortMode.None).ToList();
+        _enemies = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IEnemy>().ToList();
     }
 
     void Update()
@@ -66,7 +66,7 @@ public class LockOn : MonoBehaviour
         }
     }
 
-    bool IsVisible(Enemy_B enemy)
+    bool IsVisible(IEnemy enemy)
     {
         //方向、距離計算
         var dirToEnemy = enemy.GetTargetCenter().position - _camera.transform.position;
@@ -80,7 +80,7 @@ public class LockOn : MonoBehaviour
             if (hit.transform == _player || hit.transform.IsChildOf(_player)) continue;
 
             //子オブジェクトを含めEnemyなら無視
-            if (hit.transform == enemy.GetTargetCenter() || hit.transform.IsChildOf(enemy.transform)) continue;
+            if (hit.transform == enemy.GetTargetCenter() || hit.transform.IsChildOf(enemy.GetTransform())) continue;
 
             //子オブジェクトを含めBulletなら無視
             if (hit.transform == _bulletParent || hit.transform.IsChildOf(_bulletParent)) continue;
@@ -91,7 +91,7 @@ public class LockOn : MonoBehaviour
 
         return true;
     }
-    public Enemy_B GetTarget()
+    public IEnemy GetTarget()
     {
         return _lockOnEnemy;
     }

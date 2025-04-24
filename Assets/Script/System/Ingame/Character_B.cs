@@ -66,9 +66,16 @@ namespace Script.System.Ingame
         {
             return _targetCenter;
         }
+
+        public Transform GetTransform()
+        {
+            return transform;
+        }
+
     }
     public interface IFightable
     {
+        Transform GetTransform();
         Transform GetTargetCenter();
         void HitDamage(float damage);
         void HitHeal(float heal);

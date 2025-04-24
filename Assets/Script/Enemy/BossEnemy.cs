@@ -3,11 +3,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
-public class BossEnemy : Enemy_B
+public class BossEnemy : Enemy_B<EnemyData_B>
 {
     Rigidbody _rb;
-    
 
+    [SerializeField] EnemyData_B _dataBase;
     [SerializeField] EnemyDodgeZone _dodgeZone;
     [SerializeField] Transform _bulletParent;
 

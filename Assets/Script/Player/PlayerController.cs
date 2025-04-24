@@ -7,10 +7,10 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : Character_B<CharacterData_B>
+public class PlayerController : Character_B<CharacterData_SB>
 {
     [SerializeField]
-    CharacterData_B _dataBase;
+    CharacterData_SB _dataBase;
 
     Rigidbody _rb;
     InputBuffer _input;

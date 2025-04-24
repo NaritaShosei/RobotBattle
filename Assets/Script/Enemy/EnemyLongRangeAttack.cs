@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class EnemyLongRangeAttack : LongRangeAttack_B
 {
-    [SerializeField] Enemy_B _enemy;
+    [SerializeField] IEnemy _enemy;
     void Start()
     {
         Start_B();
-        _enemy.OnAttackEvent += Attack;
+        _enemy.AddOnAttackEvent(Attack);
         _isAttacked = true;
     }
 
@@ -51,6 +51,6 @@ public class EnemyLongRangeAttack : LongRangeAttack_B
     }
     private void OnDisable()
     {
-        _enemy.OnAttackEvent -= Attack;
+        _enemy.RemoveOnAttackEvent(Attack);
     }
 }
