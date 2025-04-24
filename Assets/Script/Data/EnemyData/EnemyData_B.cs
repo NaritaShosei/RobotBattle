@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemyData", menuName = "GameData/CharacterData/EnemyData")]
-public class EnemyData_B : CharacterData_B
+public class EnemyData_B : CharacterData_SB
 {
     [SerializeField, Header("回避のインターバル")]
     float _dodgeInterval = 5;
