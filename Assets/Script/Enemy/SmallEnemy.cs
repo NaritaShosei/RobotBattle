@@ -3,6 +3,7 @@
 public class SmallEnemy : Enemy_B
 {
     [SerializeField] SmallEnemyTargetZone _collider;
+    [SerializeField] Transform _muzzleModel;
 
     void Start()
     {
@@ -16,6 +17,7 @@ public class SmallEnemy : Enemy_B
     {
         if (_player)
         {
+            _muzzleModel.forward = _player.GetTargetCenter().position - _muzzleModel.transform.position;
             OnAttackEvent?.Invoke(_player);
         }
     }
