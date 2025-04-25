@@ -1732,7 +1732,7 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 512
-  _enemy: {fileID: 2001594872}
+  _enemyObj: {fileID: 2001594870}
 --- !u!114 &2001594872
 MonoBehaviour:
   m_ObjectHideFlags: 0
