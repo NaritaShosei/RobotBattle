@@ -14,12 +14,37 @@ public class PlayerController : Character_B<CharacterData_SB>
 
     Rigidbody _rb;
     InputBuffer _input;
+    /// <summary>
+    /// 入力情報の保持
+    /// </summary>
     Vector2 _velocity;
+    /// <summary>
+    /// カメラの正面
+    /// </summary>
     Vector3 _camForward;
+    /// <summary>
+    /// カメラの右
+    /// </summary>
     Vector3 _camRight;
+    /// <summary>
+    /// 移動方向
+    /// </summary>
     Vector3 _moveDir;
+    /// <summary>
+    /// ダッシュ開始地点
+    /// </summary>
     Vector3 _dashStartPos;
+    /// <summary>
+    /// ダッシュの終了地点
+    /// </summary>
     Vector3 _dashTargetPos;
+    /// <summary>
+    /// 線形補完によって出されたダッシュ時の座標
+    /// </summary>
+    Vector3 _newPos;
+    /// <summary>
+    /// ブースト時のスピードを線形補完にするための変数
+    /// </summary>
     float _currentSpeed;
     bool _isJumped;
     bool _isDashed;
@@ -66,15 +91,13 @@ public class PlayerController : Character_B<CharacterData_SB>
                 }
             }
         }
-
         if (_isDashed)
         {
             _data.DashTimer += Time.deltaTime;
 
             var t = Mathf.Clamp01(_data.DashTimer / _data.DashTime);
 
-            var newPos = Vector3.Lerp(_dashStartPos, _dashTargetPos, t);
-            _rb.MovePosition(newPos);
+            _newPos = Vector3.Lerp(_dashStartPos, _dashTargetPos, t);
 
             if (t >= 1)
             {
@@ -89,6 +112,15 @@ public class PlayerController : Character_B<CharacterData_SB>
         var cam = Camera.main.transform.forward;
         cam.y = 0;
         transform.forward = cam;
+    }
+
+    private void FixedUpdate()
+    {
+
+        if (_isDashed)
+        {
+            _rb.MovePosition(_newPos);
+        }
     }
 
     void OnMoveInput(InputAction.CallbackContext context)
@@ -137,7 +169,6 @@ public class PlayerController : Character_B<CharacterData_SB>
         }
     }
 
-    //HERE:Dashの仕様を線形補完に変更する
     void Dash(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started && !_isDashed)
