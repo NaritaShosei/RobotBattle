@@ -7,10 +7,10 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : Character_B<CharacterData_B>
+public class PlayerController : Character_B<CharacterData_SB>
 {
     [SerializeField]
-    CharacterData_B _dataBase;
+    CharacterData_SB _dataBase;
 
     Rigidbody _rb;
     InputBuffer _input;
@@ -53,7 +53,7 @@ public class PlayerController : Character_B<CharacterData_B>
             }
             else
             {
-                _rb.AddForce(new Vector3(0, _data.JumpPower, 0), ForceMode.Impulse);
+                _rb.AddForce(Vector3.up * _data.JumpPower, ForceMode.Impulse);
             }
         }
         if (_isBoost)
@@ -129,7 +129,7 @@ public class PlayerController : Character_B<CharacterData_B>
         {
             if (!GaugeValueChange(-_data.JumpValue / 10)) return;
             _isJumped = true;
-            _rb.AddForce(new Vector3(0, _data.JumpPower * 5, 0), ForceMode.Impulse);
+            _rb.AddForce(Vector3.up * _data.JumpPower * 5, ForceMode.Impulse);
         }
         else if (context.phase == InputActionPhase.Canceled)
         {

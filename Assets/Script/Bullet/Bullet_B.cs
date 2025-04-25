@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class Bullet_B : MonoBehaviour
 {
-    Vector3 _moveDirection;
+    IFightable _target;
+    [SerializeField] float _moveSpeed = 100;
+    [SerializeField] float _minDistance;
+    [SerializeField] float _enableTime = 5;
     public Action<Bullet_B> ReturnPoolEvent;
     float _timer;
     float _attackValue;
+    bool _isChased = true;
     private void OnEnable()
     {
         _timer = Time.time;
+        _isChased = true;
     }
     private void OnDisable()
     {
@@ -20,8 +25,17 @@ public class Bullet_B : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += _moveDirection * 100 * Time.deltaTime;
-        if (_timer + 5 < Time.time)
+        if (_target != null && (_target.GetTargetCenter().position - transform.position).magnitude >= _minDistance && _isChased)
+        {
+            var dir = _target.GetTargetCenter().position - transform.position;
+            transform.forward = dir;
+        }
+        else
+        {
+            _isChased = false;
+        }
+        transform.position += transform.forward * _moveSpeed * Time.deltaTime;
+        if (_timer + _enableTime < Time.time)
         {
             gameObject.SetActive(false);
         }
@@ -43,13 +57,17 @@ public class Bullet_B : MonoBehaviour
     {
         fightable.HitDamage(damage);
     }
-    public virtual void SetDirection(Vector3 dir)
+    public virtual void SetTarget(IFightable target)
     {
-        _moveDirection = dir;
+        _target = target;
     }
     public virtual void SetPosition(Vector3 pos)
     {
         transform.position = pos;
+    }
+    public virtual void SetDirection(Vector3 dir)
+    {
+        transform.forward = dir;
     }
     public virtual void SetAttackValue(float attack)
     {

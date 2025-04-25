@@ -21,13 +21,13 @@ public class LockOn : MonoBehaviour
 
     Camera _camera;
 
-    Enemy_B _lockOnEnemy;
-    List<Enemy_B> _enemies;
+    IEnemy _lockOnEnemy;
+    List<IEnemy> _enemies;
 
     void Start()
     {
         _camera = Camera.main;
-        _enemies = FindObjectsByType<Enemy_B>(FindObjectsSortMode.None).ToList();
+        _enemies = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IEnemy>().ToList();
     }
 
     void Update()
@@ -38,14 +38,11 @@ public class LockOn : MonoBehaviour
         foreach (var enemy in _enemies)
         {
             //距離チェック
-            Vector3 dirToEnemy = enemy.transform.position - _camera.transform.position;
-
-            float disToEnemy = new Vector3(dirToEnemy.x, 0, dirToEnemy.z).magnitude;
-
-            if (disToEnemy > _maxDistance) continue;
+            Vector3 dirToEnemy = enemy.GetTargetCenter().position - _camera.transform.position;
+            if (dirToEnemy.magnitude > _maxDistance) continue;
 
             //カメラの前方にいるかチェック
-            Vector3 viewportPosition = _camera.WorldToViewportPoint(enemy.transform.position);
+            Vector3 viewportPosition = _camera.WorldToViewportPoint(enemy.GetTargetCenter().position);
             if (viewportPosition.z < 0) continue;
 
             //視野角チェック
@@ -69,10 +66,10 @@ public class LockOn : MonoBehaviour
         }
     }
 
-    bool IsVisible(Enemy_B enemy)
+    bool IsVisible(IEnemy enemy)
     {
         //方向、距離計算
-        var dirToEnemy = enemy.transform.position - _camera.transform.position;
+        var dirToEnemy = enemy.GetTargetCenter().position - _camera.transform.position;
         float disToEnemy = dirToEnemy.magnitude;
 
         //カメラを始点にレイキャストを飛ばす
@@ -83,7 +80,7 @@ public class LockOn : MonoBehaviour
             if (hit.transform == _player || hit.transform.IsChildOf(_player)) continue;
 
             //子オブジェクトを含めEnemyなら無視
-            if (hit.transform == enemy.transform || hit.transform.IsChildOf(enemy.transform)) continue;
+            if (hit.transform == enemy.GetTargetCenter() || hit.transform.IsChildOf(enemy.GetTransform())) continue;
 
             //子オブジェクトを含めBulletなら無視
             if (hit.transform == _bulletParent || hit.transform.IsChildOf(_bulletParent)) continue;
@@ -94,7 +91,7 @@ public class LockOn : MonoBehaviour
 
         return true;
     }
-    public Enemy_B GetTarget()
+    public IEnemy GetTarget()
     {
         return _lockOnEnemy;
     }

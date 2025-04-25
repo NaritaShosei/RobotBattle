@@ -6,7 +6,7 @@ namespace Script.System.Ingame
     where DataType : CharacterData_B
     {
         protected DataType _data;
-
+        [SerializeField] Transform _targetCenter;
         public void HitDamage(float damage)
         {
             _data.Health -= damage;
@@ -24,7 +24,7 @@ namespace Script.System.Ingame
         /// </summary>
         protected virtual bool GaugeValueChange(float value)
         {
-            if (value < 0 && _data.Gauge + value <= 0) return false;
+            if (value < 0 && _data.Gauge + value < 0) return false;
 
             _data.Gauge = Mathf.Clamp(_data.Gauge + value, 0, _data.MaxGauge);
             return true;
@@ -61,9 +61,22 @@ namespace Script.System.Ingame
         {
             OnDestroyMethod();
         }
+
+        public Transform GetTargetCenter()
+        {
+            return _targetCenter;
+        }
+
+        public Transform GetTransform()
+        {
+            return transform;
+        }
+
     }
     public interface IFightable
     {
+        Transform GetTransform();
+        Transform GetTargetCenter();
         void HitDamage(float damage);
         void HitHeal(float heal);
     }
