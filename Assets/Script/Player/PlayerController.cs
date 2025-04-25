@@ -11,9 +11,12 @@ public class PlayerController : Character_B<CharacterData_SB>
 {
     [SerializeField]
     CharacterData_SB _dataBase;
-
     Rigidbody _rb;
     InputBuffer _input;
+    /// <summary>
+    /// 衝突中のオブジェクト
+    /// </summary>
+    GameObject _conflictObj;
     /// <summary>
     /// 入力情報の保持
     /// </summary>
@@ -97,10 +100,14 @@ public class PlayerController : Character_B<CharacterData_SB>
 
             var t = Mathf.Clamp01(_data.DashTimer / _data.DashTime);
 
-            _newPos = Vector3.Lerp(_dashStartPos, _dashTargetPos, t);
+            if (!_conflictObj)
+            {
+                _newPos = Vector3.Lerp(_dashStartPos, _dashTargetPos, t);
+            }
 
             if (t >= 1)
             {
+                _conflictObj = null;
                 _isDashed = false;
             }
         }
@@ -123,6 +130,27 @@ public class PlayerController : Character_B<CharacterData_SB>
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!collision.gameObject.CompareTag("Plane"))
+        {
+            if (!_conflictObj && _isDashed)
+            {
+                _conflictObj = collision.gameObject;
+                _newPos = transform.position;
+            }
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (!collision.gameObject.CompareTag("Plane"))
+        {
+            if (_conflictObj)
+            {
+                _conflictObj = null;
+            }
+        }
+    }
     void OnMoveInput(InputAction.CallbackContext context)
     {
         var input = context.ReadValue<Vector2>();
@@ -173,12 +201,17 @@ public class PlayerController : Character_B<CharacterData_SB>
     {
         if (context.phase == InputActionPhase.Started && !_isDashed)
         {
+            Vector3 moveDir = _velocity != Vector2.zero ? _moveDir : _camForward;
+            moveDir.Normalize();
+            var rayCastDis = 8;
+            if (Physics.Raycast(GetTargetCenter().position, moveDir, out RaycastHit hit, rayCastDis)) return;
             if (!GaugeValueChange(-_data.DashValue)) return;
             _isBoost = true;
             _isDashed = true;
             _data.DashTimer = 0;
             _dashStartPos = transform.position;
-            _dashTargetPos = transform.position + (_velocity != Vector2.zero ? _moveDir : _camForward) * _data.DashDistance;
+
+            _dashTargetPos = transform.position + moveDir * _data.DashDistance;
         }
         if (context.phase == InputActionPhase.Canceled)
         {
