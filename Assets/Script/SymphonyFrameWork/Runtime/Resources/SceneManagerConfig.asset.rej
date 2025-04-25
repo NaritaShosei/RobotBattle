@@ -1,0 +1,7 @@
+diff a/Assets/Script/SymphonyFrameWork/Runtime/Resources/SceneManagerConfig.asset b/Assets/Script/SymphonyFrameWork/Runtime/Resources/SceneManagerConfig.asset	(rejected hunks)
+@@ -14,4 +14,4 @@
+   m_EditorClassIdentifier: 
+   _isActiveLoadScene: 0
+   _loadScene: 0
+-  _initializeSceneList: 01000000
++  _initializeSceneList: 
