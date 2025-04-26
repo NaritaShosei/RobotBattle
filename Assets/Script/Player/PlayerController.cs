@@ -94,6 +94,7 @@ public class PlayerController : Character_B<CharacterData_SB>
                 }
             }
         }
+
         if (_isDashed)
         {
             _data.DashTimer += Time.deltaTime;
@@ -201,17 +202,23 @@ public class PlayerController : Character_B<CharacterData_SB>
     {
         if (context.phase == InputActionPhase.Started && !_isDashed)
         {
+            if (!GaugeValueChange(-_data.DashValue)) return;
+            _isBoost = true;
+            _data.DashTimer = 0;
+            _dashStartPos = transform.position;
             Vector3 moveDir = _velocity != Vector2.zero ? _moveDir : _camForward;
             moveDir.Normalize();
             var rayCastDis = 8;
-            if (Physics.Raycast(GetTargetCenter().position, moveDir, out RaycastHit hit, rayCastDis)) return;
-            if (!GaugeValueChange(-_data.DashValue)) return;
-            _isBoost = true;
             _isDashed = true;
-            _data.DashTimer = 0;
-            _dashStartPos = transform.position;
-
-            _dashTargetPos = transform.position + moveDir * _data.DashDistance;
+            if (Physics.Raycast(GetTargetCenter().position, moveDir, out RaycastHit hit, rayCastDis))
+            {
+                _newPos = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                _conflictObj = hit.collider.gameObject;
+            }
+            else
+            {
+                _dashTargetPos = transform.position + moveDir * _data.DashDistance;
+            }
         }
         if (context.phase == InputActionPhase.Canceled)
         {
