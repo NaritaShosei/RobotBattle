@@ -212,7 +212,10 @@ public class PlayerController : Character_B<CharacterData_SB>
             _isDashed = true;
             if (Physics.Raycast(GetTargetCenter().position, moveDir, out RaycastHit hit, rayCastDis))
             {
-                _newPos = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                var dir = (transform.position - hit.point).normalized;
+                var newPos = hit.point + dir * 10;
+                newPos.y = transform.position.y;
+                _newPos = newPos;
                 _conflictObj = hit.collider.gameObject;
             }
             else
