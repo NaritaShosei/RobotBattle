@@ -11,15 +11,43 @@ public class PlayerController : Character_B<CharacterData_SB>
 {
     [SerializeField]
     CharacterData_SB _dataBase;
-
     Rigidbody _rb;
     InputBuffer _input;
+    /// <summary>
+    /// 衝突中のオブジェクト
+    /// </summary>
+    GameObject _conflictObj;
+    /// <summary>
+    /// 入力情報の保持
+    /// </summary>
     Vector2 _velocity;
+    /// <summary>
+    /// カメラの正面
+    /// </summary>
     Vector3 _camForward;
+    /// <summary>
+    /// カメラの右
+    /// </summary>
     Vector3 _camRight;
+    /// <summary>
+    /// 移動方向
+    /// </summary>
     Vector3 _moveDir;
+    /// <summary>
+    /// ダッシュ開始地点
+    /// </summary>
     Vector3 _dashStartPos;
+    /// <summary>
+    /// ダッシュの終了地点
+    /// </summary>
     Vector3 _dashTargetPos;
+    /// <summary>
+    /// 線形補完によって出されたダッシュ時の座標
+    /// </summary>
+    Vector3 _newPos;
+    /// <summary>
+    /// ブースト時のスピードを線形補完にするための変数
+    /// </summary>
     float _currentSpeed;
     bool _isJumped;
     bool _isDashed;
@@ -73,11 +101,14 @@ public class PlayerController : Character_B<CharacterData_SB>
 
             var t = Mathf.Clamp01(_data.DashTimer / _data.DashTime);
 
-            var newPos = Vector3.Lerp(_dashStartPos, _dashTargetPos, t);
-            _rb.MovePosition(newPos);
+            if (!_conflictObj)
+            {
+                _newPos = Vector3.Lerp(_dashStartPos, _dashTargetPos, t);
+            }
 
             if (t >= 1)
             {
+                _conflictObj = null;
                 _isDashed = false;
             }
         }
@@ -91,6 +122,36 @@ public class PlayerController : Character_B<CharacterData_SB>
         transform.forward = cam;
     }
 
+    private void FixedUpdate()
+    {
+
+        if (_isDashed)
+        {
+            _rb.MovePosition(_newPos);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!collision.gameObject.CompareTag("Plane"))
+        {
+            if (!_conflictObj && _isDashed)
+            {
+                _conflictObj = collision.gameObject;
+                _newPos = transform.position;
+            }
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (!collision.gameObject.CompareTag("Plane"))
+        {
+            if (_conflictObj)
+            {
+                _conflictObj = null;
+            }
+        }
+    }
     void OnMoveInput(InputAction.CallbackContext context)
     {
         var input = context.ReadValue<Vector2>();
@@ -137,17 +198,30 @@ public class PlayerController : Character_B<CharacterData_SB>
         }
     }
 
-    //HERE:Dashの仕様を線形補完に変更する
     void Dash(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started && !_isDashed)
         {
             if (!GaugeValueChange(-_data.DashValue)) return;
             _isBoost = true;
-            _isDashed = true;
             _data.DashTimer = 0;
             _dashStartPos = transform.position;
-            _dashTargetPos = transform.position + (_velocity != Vector2.zero ? _moveDir : _camForward) * _data.DashDistance;
+            Vector3 moveDir = _velocity != Vector2.zero ? _moveDir : _camForward;
+            moveDir.Normalize();
+            var rayCastDis = 8;
+            _isDashed = true;
+            if (Physics.Raycast(GetTargetCenter().position, moveDir, out RaycastHit hit, rayCastDis))
+            {
+                var dir = (transform.position - hit.point).normalized;
+                var newPos = hit.point + dir * 10;
+                newPos.y = transform.position.y;
+                _newPos = newPos;
+                _conflictObj = hit.collider.gameObject;
+            }
+            else
+            {
+                _dashTargetPos = transform.position + moveDir * _data.DashDistance;
+            }
         }
         if (context.phase == InputActionPhase.Canceled)
         {

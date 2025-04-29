@@ -21,6 +21,7 @@ public class BossEnemy : Enemy_B<EnemyData_B>
     [SerializeField] Text a;
     void Start()
     {
+        OnStart();
         _rb = GetComponent<Rigidbody>();
         _player = FindAnyObjectByType<PlayerController>();
         _dodgeZone.OnTriggerEnterEvent += Dodge;

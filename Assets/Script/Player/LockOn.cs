@@ -35,15 +35,14 @@ public class LockOn : MonoBehaviour
         float minDistance = float.MaxValue;
         _lockOnEnemy = null;
 
-        foreach (var enemy in _enemies)
+        foreach (var enemy in _enemies.Where(x => x.IsTargetInView()))
         {
             //距離チェック
             Vector3 dirToEnemy = enemy.GetTargetCenter().position - _camera.transform.position;
             if (dirToEnemy.magnitude > _maxDistance) continue;
 
-            //カメラの前方にいるかチェック
+            // カメラの前方にいるかチェック
             Vector3 viewportPosition = _camera.WorldToViewportPoint(enemy.GetTargetCenter().position);
-            if (viewportPosition.z < 0) continue;
 
             //視野角チェック
             float angleToEnemy = Vector3.Angle(_camera.transform.forward, dirToEnemy);
@@ -76,6 +75,9 @@ public class LockOn : MonoBehaviour
         var hits = Physics.RaycastAll(_camera.transform.position, dirToEnemy.normalized, disToEnemy);
         foreach (var hit in hits)
         {
+            //特定のコライダーの場合は無視
+            if (hit.collider.CompareTag("IgnoreCollider")) continue;
+
             //子オブジェクトを含めPlayerなら無視
             if (hit.transform == _player || hit.transform.IsChildOf(_player)) continue;
 
@@ -86,7 +88,12 @@ public class LockOn : MonoBehaviour
             if (hit.transform == _bulletParent || hit.transform.IsChildOf(_bulletParent)) continue;
 
             //それ以外でEnemyより手前ならfalse
-            if (hit.distance < disToEnemy) return false;
+            if (hit.distance < disToEnemy)
+            {
+                Debug.LogError("Hit False");
+                Debug.LogError($"Hit Object Name : {hit.collider.gameObject.name}");
+                return false;
+            }
         }
 
         return true;

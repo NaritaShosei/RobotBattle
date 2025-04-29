@@ -53,6 +53,9 @@ public class EnemyLongRangeAttack : LongRangeAttack_B
     }
     private void OnDisable()
     {
-        _enemy.RemoveOnAttackEvent(Attack);
+        if (_enemy != null)
+        {
+            _enemy.RemoveOnAttackEvent(Attack);
+        }
     }
 }
