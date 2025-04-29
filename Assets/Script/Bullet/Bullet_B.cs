@@ -42,7 +42,7 @@ public class Bullet_B : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("DodgeCollider")) return;
+        if (other.CompareTag("IgnoreCollider")) return;
         EffectManager.Instance.PlayExplosion(transform.position);
         gameObject.SetActive(false);
         Debug.Log(other.name);
