@@ -13,13 +13,11 @@ public class BossEnemy : Enemy_B<EnemyData_B>
 
     Vector3 _startPos;
     Vector3 _targetPos;
-    Vector3 _moveDir;
     bool _isDodged;
     bool _isJumping;
     bool _canJump = true;
     bool CanMove => _data.MinDistance <= (_player.transform.position - transform.position).magnitude;
     bool IsDash => _data.DashMinDistance <= (_player.transform.position - transform.position).magnitude;
-    Camera _camera;
     [SerializeField] Text a;
     void Start()
     {

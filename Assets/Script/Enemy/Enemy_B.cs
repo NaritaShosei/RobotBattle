@@ -7,7 +7,7 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
 {
     public Action<PlayerController> OnAttackEvent;
     protected PlayerController _player;
-    Camera _camera;
+    protected Camera _camera;
     protected void OnStart()
     {
         _camera = Camera.main;
