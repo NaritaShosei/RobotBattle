@@ -24,7 +24,7 @@ public class SmallEnemy : Enemy_B<CharacterData_B>
         }
     }
 
-    public override void TargetSet(Collider other)
+     void TargetSet(Collider other)
     {
         if (other.TryGetComponent(out PlayerController player))
         {
@@ -32,7 +32,7 @@ public class SmallEnemy : Enemy_B<CharacterData_B>
         }
     }
 
-    public override void TargetUnset(Collider other)
+     void TargetUnset(Collider other)
     {
         if (other.TryGetComponent(out PlayerController player))
         {
