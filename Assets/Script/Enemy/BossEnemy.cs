@@ -51,6 +51,10 @@ public class BossEnemy : Enemy_B<EnemyData_B>
                 _isDodged = false;
             }
         }
+        else
+        {
+            _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
+        }
         if (CanMove)
         {
             Move(_player.transform.position);
