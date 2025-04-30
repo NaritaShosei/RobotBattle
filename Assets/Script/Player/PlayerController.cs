@@ -1,6 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using Script.System.Ingame;
+﻿using Script.System.Ingame;
 using SymphonyFrameWork.System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,6 +9,8 @@ public class PlayerController : Character_B<CharacterData_SB>
 {
     [SerializeField]
     CharacterData_SB _dataBase;
+    [SerializeField]
+    GuardCollider _collider;
     Rigidbody _rb;
     InputBuffer _input;
     /// <summary>
@@ -21,25 +21,10 @@ public class PlayerController : Character_B<CharacterData_SB>
     /// 入力情報の保持
     /// </summary>
     Vector2 _velocity;
-    /// <summary>
-    /// カメラの正面
-    /// </summary>
     Vector3 _camForward;
-    /// <summary>
-    /// カメラの右
-    /// </summary>
     Vector3 _camRight;
-    /// <summary>
-    /// 移動方向
-    /// </summary>
     Vector3 _moveDir;
-    /// <summary>
-    /// ダッシュ開始地点
-    /// </summary>
     Vector3 _dashStartPos;
-    /// <summary>
-    /// ダッシュの終了地点
-    /// </summary>
     Vector3 _dashTargetPos;
     /// <summary>
     /// 線形補完によって出されたダッシュ時の座標
@@ -52,6 +37,7 @@ public class PlayerController : Character_B<CharacterData_SB>
     bool _isJumped;
     bool _isDashed;
     bool _isBoost;
+    bool _isGuard;
     /// <summary>
     /// Debug用
     /// </summary>
@@ -231,6 +217,27 @@ public class PlayerController : Character_B<CharacterData_SB>
             _isBoost = false;
         }
     }
+
+    void Guard(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            _isGuard = true;
+            _collider.Collider.enabled = true;
+        }
+        if (context.phase == InputActionPhase.Canceled)
+        {
+            _isGuard = false;
+            _collider.Collider.enabled = false;
+        }
+    }
+    void OnGuard(Collider other)
+    {
+        if (other.TryGetComponent(out Bullet_B _))
+        {
+            GaugeValueChange(-50);
+        }
+    }
     private void OnDisable()
     {
         RemoveAction();
@@ -238,21 +245,27 @@ public class PlayerController : Character_B<CharacterData_SB>
 
     void AddAction()
     {
+        _collider.OnTriggerEnterEvent += OnGuard;
         _input.MoveAction.performed += OnMoveInput;
         _input.MoveAction.canceled += OnMoveInput;
         _input.JumpAction.started += Jump;
         _input.JumpAction.canceled += Jump;
         _input.DashAction.started += Dash;
         _input.DashAction.canceled += Dash;
+        _input.GuardAction.started += Guard;
+        _input.GuardAction.canceled += Guard;
     }
 
     void RemoveAction()
     {
+        _collider.OnTriggerEnterEvent -= OnGuard;
         _input.MoveAction.performed -= OnMoveInput;
         _input.MoveAction.canceled -= OnMoveInput;
         _input.JumpAction.started -= Jump;
         _input.JumpAction.canceled -= Jump;
         _input.DashAction.started -= Dash;
         _input.DashAction.canceled -= Dash;
+        _input.GuardAction.started -= Guard;
+        _input.GuardAction.canceled -= Guard;
     }
 }
