@@ -3,16 +3,23 @@ using UnityEngine;
 
 public class EnemyLongRangeAttack : LongRangeAttack_B
 {
-    [SerializeField] GameObject _enemyObj;
     IEnemy _enemy;
     void Start()
     {
-        _enemyObj.TryGetComponent(out IEnemy _enemy);
         Start_B();
-        _enemy.AddOnAttackEvent(Attack);
         _isAttacked = true;
     }
-
+    private void OnEnable()
+    {
+        if (_enemy == null)
+        {
+            TryGetComponent(out IEnemy _enemy);
+        }
+        if (_enemy != null)
+        {
+            _enemy.AddOnAttackEvent(Attack);
+        }
+    }
     void Attack(PlayerController player)
     {
         if (_isAttacked)
