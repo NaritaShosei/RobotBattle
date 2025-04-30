@@ -130,13 +130,13 @@ GameObject:
   - component: {fileID: 79142884}
   - component: {fileID: 79142883}
   - component: {fileID: 79142882}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &79142882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 104793615}
   m_Layer: 0
-  m_Name: PlayerBulletPool
+  m_Name: BulletPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 105310603}
   - component: {fileID: 105310602}
   - component: {fileID: 105310601}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,7 +341,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 157268164}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -374,13 +374,13 @@ GameObject:
   - component: {fileID: 191831443}
   - component: {fileID: 191831445}
   - component: {fileID: 191831444}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: TargetZone
   m_TagString: IgnoreCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &191831443
 Transform:
   m_ObjectHideFlags: 0
@@ -627,7 +627,7 @@ GameObject:
   - component: {fileID: 291930404}
   - component: {fileID: 291930403}
   - component: {fileID: 291930402}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -743,13 +743,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 342246638}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: TargetCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &342246638
 Transform:
   m_ObjectHideFlags: 0
@@ -1200,13 +1200,13 @@ GameObject:
   - component: {fileID: 421746014}
   - component: {fileID: 421746013}
   - component: {fileID: 421746012}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &421746011
 Transform:
   m_ObjectHideFlags: 0
@@ -1308,7 +1308,7 @@ GameObject:
   - component: {fileID: 469557089}
   - component: {fileID: 469557087}
   - component: {fileID: 469557088}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: TargetZone
   m_TagString: IgnoreCollider
   m_Icon: {fileID: 0}
@@ -1375,7 +1375,7 @@ GameObject:
   - component: {fileID: 584853190}
   - component: {fileID: 584853189}
   - component: {fileID: 584853188}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1472,6 +1472,35 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 584853186}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &928698035 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2166134176414654115, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
+  m_PrefabInstance: {fileID: 1072022755}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &928698039 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 362356832563821023, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
+  m_PrefabInstance: {fileID: 1072022755}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &928698040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 928698035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c95dab13358b514e9a06688e51d15b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data: {fileID: 11400000, guid: 5950c4c586f138444848f56c6e1dd67f, type: 2}
+  _bullet: {fileID: 739508395337416385, guid: b71227c7f80bc7a44b9d12f4d78566fe, type: 3}
+  _muzzle: {fileID: 1239679003}
+  _bulletParent: {fileID: 104793615}
+  _layer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &932168503
 GameObject:
   m_ObjectHideFlags: 0
@@ -1560,7 +1589,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1043736122}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1688,10 +1717,16 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 4423399898653731963, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 362356832563821023, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1239679003}
     - targetCorrespondingSourceObject: {fileID: 881671302396875546, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2065719438}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2166134176414654115, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 928698040}
   m_SourcePrefab: {fileID: 100100000, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
 --- !u!1 &1210062559 stripped
 GameObject:
@@ -1767,6 +1802,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6634082531630241526, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
   m_PrefabInstance: {fileID: 3019013742801692727}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1239679002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1239679003}
+  m_Layer: 10
+  m_Name: Muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1239679003
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239679002}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 29.3, z: 6.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 928698039}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1240678491
 GameObject:
   m_ObjectHideFlags: 0
@@ -1904,7 +1970,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1481965782}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: TargetCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1984,7 +2050,7 @@ GameObject:
   - component: {fileID: 1587118218}
   - component: {fileID: 1587118217}
   - component: {fileID: 1587118216}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2157,7 +2223,7 @@ GameObject:
   - component: {fileID: 1964479555}
   - component: {fileID: 1964479554}
   - component: {fileID: 1964479553}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2265,13 +2331,13 @@ GameObject:
   - component: {fileID: 2001594876}
   - component: {fileID: 2001594872}
   - component: {fileID: 2001594871}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2001594871
 MonoBehaviour:
   m_ObjectHideFlags: 0
