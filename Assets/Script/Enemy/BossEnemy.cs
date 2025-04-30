@@ -22,6 +22,7 @@ public class BossEnemy : Enemy_B<EnemyData_B>
     void Start()
     {
         OnStart();
+        Initialize(_dataBase);
         _rb = GetComponent<Rigidbody>();
         _player = FindAnyObjectByType<PlayerController>();
         _dodgeZone.OnTriggerEnterEvent += Dodge;
