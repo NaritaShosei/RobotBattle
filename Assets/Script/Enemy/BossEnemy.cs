@@ -13,11 +13,13 @@ public class BossEnemy : Enemy_B<EnemyData_B>
 
     Vector3 _startPos;
     Vector3 _targetPos;
+    Vector3 _moveDir;
     bool _isDodged;
     bool _isJumping;
     bool _canJump = true;
     bool CanMove => _data.MinDistance <= (_player.transform.position - transform.position).magnitude;
     bool IsDash => _data.DashMinDistance <= (_player.transform.position - transform.position).magnitude;
+    Camera _camera;
     [SerializeField] Text a;
     void Start()
     {
@@ -26,6 +28,7 @@ public class BossEnemy : Enemy_B<EnemyData_B>
         _rb = GetComponent<Rigidbody>();
         _player = FindAnyObjectByType<PlayerController>();
         _dodgeZone.OnTriggerEnterEvent += Dodge;
+        _camera = Camera.main;
     }
 
     private void Update()
@@ -34,6 +37,7 @@ public class BossEnemy : Enemy_B<EnemyData_B>
         a.text = _data.Gauge.ToString();
 
         var dirToPlayer = _player.transform.position - transform.position;
+        transform.forward = new Vector3(dirToPlayer.x, 0, dirToPlayer.z);
         if (_isDodged)
         {
             _data.DashTimer += Time.deltaTime;
@@ -82,7 +86,6 @@ public class BossEnemy : Enemy_B<EnemyData_B>
     {
         Vector3 dir = target - transform.position;
         dir.Normalize();
-        transform.forward = new Vector3(dir.x, 0, dir.z);
 
         var currentVel = _rb.linearVelocity;
 
@@ -104,7 +107,8 @@ public class BossEnemy : Enemy_B<EnemyData_B>
             _isDodged = true;
             _data.DashTimer = 0;
             _startPos = transform.position;
-            var dir = Random.Range(0, 2) == 0 ? transform.right : -transform.right;
+            //カメラの左側にいたら右に避ける、右側にいたら左に避ける
+            var dir = _camera.WorldToViewportPoint(transform.position).x <= 0.5f ? _camera.transform.right : -_camera.transform.right;
             _targetPos = transform.position + dir * (_data.DashDistance);
         }
     }
