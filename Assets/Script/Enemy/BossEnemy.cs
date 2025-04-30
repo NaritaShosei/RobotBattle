@@ -112,7 +112,7 @@ public class BossEnemy : Enemy_B<EnemyData_B>
     void Dodge(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("EnemyBullet")) return;
-        if (other.CompareTag("Plane")) return;
+        if (!other.TryGetComponent(out MonoBehaviour _)) return;
 
         if (!GaugeValueChange(-_data.DashValue)) return;
         _dodgeZone.Collider.enabled = false;
