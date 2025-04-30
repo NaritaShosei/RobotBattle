@@ -32,17 +32,17 @@ public class LockOn : MonoBehaviour
 
     void Update()
     {
-        float minDistance = float.MaxValue;
+        float bestScore = float.MinValue;
         _lockOnEnemy = null;
 
         foreach (var enemy in _enemies.Where(x => x.IsTargetInView()))
         {
+            Vector3 enemyPos = enemy.GetTargetCenter().position;
+
             //距離チェック
-            Vector3 dirToEnemy = enemy.GetTargetCenter().position - _camera.transform.position;
+            Vector3 dirToEnemy = enemyPos - _camera.transform.position;
             if (dirToEnemy.magnitude > _maxDistance) continue;
 
-            // カメラの前方にいるかチェック
-            Vector3 viewportPosition = _camera.WorldToViewportPoint(enemy.GetTargetCenter().position);
 
             //視野角チェック
             float angleToEnemy = Vector3.Angle(_camera.transform.forward, dirToEnemy);
@@ -53,13 +53,26 @@ public class LockOn : MonoBehaviour
             if (!IsVisible(enemy)) continue;
 
             //指定ポイントからの距離計算
+            Vector3 viewportPosition = _camera.WorldToViewportPoint(enemyPos);
             Vector2 screenPos = new Vector2(viewportPosition.x, viewportPosition.y);
             float disToCenter = Vector2.Distance(screenPos, _lockOnCenterScreenPos);
 
-            //最も指定ポイントに近い敵を選択
-            if (disToCenter < minDistance)
+            //Y成分を無視したPlayerとEnemyの距離
+            float playerDis = (new Vector3(_player.transform.position.x, 0, _player.transform.position.z)
+                                                                        - new Vector3(enemyPos.x, 0, enemyPos.z)).magnitude;
+
+            //スコア計算
+            //指定ポイントからの距離とY成分を無視したPlayerとEnemyの距離のスコア倍率
+            float centerValue = 0.5f;
+            float playerValue = 1.5f;
+            //0で割らないように小さい数を足す
+            float score = (1 / (disToCenter + 0.001f)) * centerValue +
+                          (1 / (playerDis + 0.001f)) * playerValue;
+
+            //プレイヤーからの近さをより優先しつつ、画面中央への近さも考慮する
+            if (score > bestScore)
             {
-                minDistance = disToCenter;
+                bestScore = score;
                 _lockOnEnemy = enemy;
             }
         }
@@ -90,8 +103,6 @@ public class LockOn : MonoBehaviour
             //それ以外でEnemyより手前ならfalse
             if (hit.distance < disToEnemy)
             {
-                Debug.LogError("Hit False");
-                Debug.LogError($"Hit Object Name : {hit.collider.gameObject.name}");
                 return false;
             }
         }
