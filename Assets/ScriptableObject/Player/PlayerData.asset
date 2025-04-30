@@ -16,9 +16,11 @@ MonoBehaviour:
   _maxGauge: 1000
   _normalSpeed: 50
   _boostSpeed: 150
-  _jumpPower: 7.5
+  _jumpPower: 30
+  _floatPower: 200
   _dashDistance: 100
   _dashTime: 0.5
+  _fallSpeed: 20
   _recoveryValue: 30
   _jumpValue: 50
   _dashValue: 50
