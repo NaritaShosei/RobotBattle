@@ -69,6 +69,9 @@ public class PlayerController : Character_B<CharacterData_SB>
     {
         //Debug用
         a.text = _data.Gauge.ToString();
+
+        _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
+
         if (!_isDashed && !_isJumped)
         {
             GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
@@ -113,9 +116,8 @@ public class PlayerController : Character_B<CharacterData_SB>
             }
         }
 
-        if (!_isDashed)
+        else if (!_isDashed)
         {
-            _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
             Move(_isBoost ? _data.BoostSpeed : _data.NormalSpeed);
         }
         var cam = Camera.main.transform.forward;

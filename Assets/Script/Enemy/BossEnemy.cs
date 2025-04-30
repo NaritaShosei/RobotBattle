@@ -11,13 +11,15 @@ public class BossEnemy : Enemy_B<EnemyData_B>
     [SerializeField] EnemyDodgeZone _dodgeZone;
     [SerializeField] Transform _bulletParent;
 
+    float _playerDistance;
     Vector3 _startPos;
     Vector3 _targetPos;
     bool _isDodged;
     bool _isJumping;
     bool _canJump = true;
-    bool CanMove => _data.MinDistance <= (_player.transform.position - transform.position).magnitude;
-    bool IsDash => _data.DashMinDistance <= (_player.transform.position - transform.position).magnitude;
+    bool CanMove => _data.MinDistance <= _playerDistance;
+    bool IsDash => _data.DashMinDistance <= _playerDistance;
+    bool IsAttack => _data.AttackDistance >= _playerDistance;
     [SerializeField] Text a;
     void Start()
     {
@@ -26,7 +28,6 @@ public class BossEnemy : Enemy_B<EnemyData_B>
         _rb = GetComponent<Rigidbody>();
         _player = FindAnyObjectByType<PlayerController>();
         _dodgeZone.OnTriggerEnterEvent += Dodge;
-        _camera = Camera.main;
     }
 
     private void Update()
@@ -36,6 +37,16 @@ public class BossEnemy : Enemy_B<EnemyData_B>
 
         var dirToPlayer = _player.transform.position - transform.position;
         transform.forward = new Vector3(dirToPlayer.x, 0, dirToPlayer.z);
+
+        _playerDistance = dirToPlayer.magnitude;
+
+        _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
+
+        if (IsAttack)
+        {
+            OnAttackEvent?.Invoke(_player);
+        }
+
         if (_isDodged)
         {
             _data.DashTimer += Time.deltaTime;
@@ -53,7 +64,6 @@ public class BossEnemy : Enemy_B<EnemyData_B>
         }
         else
         {
-            _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
         }
         if (CanMove)
         {
@@ -101,20 +111,19 @@ public class BossEnemy : Enemy_B<EnemyData_B>
 
     void Dodge(Collider other)
     {
-        if (other.transform == _bulletParent || other.transform.IsChildOf(_bulletParent))
-        {
-            if (!GaugeValueChange(-_data.DashValue)) return;
-            _dodgeZone.Collider.enabled = false;
-            _data.DodgeTimer = Time.time;
-            _isDodged = true;
-            _data.DashTimer = 0;
-            _startPos = transform.position;
-            //カメラの左側にいたら右に避ける、右側にいたら左に避ける
-            var dir = _camera.WorldToViewportPoint(transform.position).x <= 0.5f ? _camera.transform.right : -_camera.transform.right;
-            _targetPos = transform.position + dir * (_data.DashDistance);
-        }
-    }
+        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyBullet")) return;
+        if (other.CompareTag("Plane")) return;
 
+        if (!GaugeValueChange(-_data.DashValue)) return;
+        _dodgeZone.Collider.enabled = false;
+        _data.DodgeTimer = Time.time;
+        _isDodged = true;
+        _data.DashTimer = 0;
+        _startPos = transform.position;
+        //カメラの左側にいたら右に避ける、右側にいたら左に避ける
+        var dir = _camera.WorldToViewportPoint(transform.position).x <= 0.5f ? _camera.transform.right : -_camera.transform.right;
+        _targetPos = transform.position + dir * (_data.DashDistance);
+    }
     void StartJump()
     {
         if (!GaugeValueChange(-_data.JumpValue)) return;
