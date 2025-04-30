@@ -11,11 +11,7 @@ public class EnemyLongRangeAttack : LongRangeAttack_B
     }
     private void OnEnable()
     {
-        if (_enemy == null)
-        {
-            TryGetComponent(out IEnemy _enemy);
-        }
-        if (_enemy != null)
+        if (TryGetComponent(out _enemy))
         {
             _enemy.AddOnAttackEvent(Attack);
         }
@@ -31,11 +27,11 @@ public class EnemyLongRangeAttack : LongRangeAttack_B
                 {
                     _time = Time.time;
                     var bullet = _bulletPool.Dequeue();
+                    bullet.gameObject.SetActive(true);
                     bullet.SetPosition(_muzzle.position);
 
-                    bullet.SetDirection(player.GetTargetCenter().position - _muzzle.transform.position);
+                    bullet.SetDirection((player.GetTargetCenter().position - _muzzle.transform.position).normalized);
                     bullet.SetTarget(player);
-                    bullet.gameObject.SetActive(true);
                     _count--;
                 }
             }
