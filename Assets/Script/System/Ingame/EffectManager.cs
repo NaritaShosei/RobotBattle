@@ -13,11 +13,17 @@ public class EffectManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
         Instance = this;
     }
 
     private void Start()
     {
+        //プールに一定数保存
         for (int i = 0; i < 50; i++)
         {
             var effect = Instantiate(_explosion, _parent);
@@ -28,6 +34,7 @@ public class EffectManager : MonoBehaviour
 
     public void PlayExplosion(Vector3 pos)
     {
+        //プールが空だったら生成
         if (_pool.Count == 0)
         {
             Debug.LogWarning("プールが空になりました");
@@ -36,12 +43,14 @@ public class EffectManager : MonoBehaviour
             _pool.Enqueue(newEffect);
         }
 
+        //エフェクトの生成
         var effect = _pool.Dequeue();
         effect.transform.position = pos;
         effect.gameObject.SetActive(true);
         _particles.Add(effect);
 
-
+        //プールに戻す処理
+        //Updateでやると重いのでここでやる
         for (int i = _particles.Count - 1; i >= 0; i--)
         {
             if (_particles[i].gameObject.activeSelf == false)
