@@ -12,20 +12,27 @@ public class Bullet_B : MonoBehaviour
     float _timer;
     float _attackValue;
     bool _isChased = true;
+    bool _isTimeReturned;
+    bool _isConflictReturned;
     private void OnEnable()
     {
-        _timer = Time.time;
         _isChased = true;
+        _isTimeReturned = false;
+        _isConflictReturned = false;
     }
     private void OnDisable()
     {
-        ReturnPoolEvent?.Invoke(this);
+        if (_isTimeReturned || _isConflictReturned)
+        {
+            ReturnPoolEvent?.Invoke(this);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_target != null && (_target.GetTargetCenter().position - transform.position).magnitude >= _minDistance && _isChased)
+        _timer += Time.deltaTime;
+        if (_target != null && (_target.GetTargetCenter().position - transform.position).sqrMagnitude >= _minDistance * _minDistance && _isChased)
         {
             var dir = _target.GetTargetCenter().position - transform.position;
             transform.forward = dir;
@@ -34,9 +41,12 @@ public class Bullet_B : MonoBehaviour
         {
             _isChased = false;
         }
+
         transform.position += transform.forward * _moveSpeed * Time.deltaTime;
-        if (_timer + _enableTime < Time.time)
+
+        if (_timer >= _enableTime)
         {
+            _isTimeReturned = true;
             gameObject.SetActive(false);
         }
     }
@@ -44,12 +54,11 @@ public class Bullet_B : MonoBehaviour
     {
         if (other.CompareTag("IgnoreCollider")) return;
         EffectManager.Instance.PlayExplosion(transform.position);
+        _isConflictReturned = true;
         gameObject.SetActive(false);
-        Debug.Log(other.name);
         if (other.TryGetComponent(out IFightable component))
         {
             AddDamage(_attackValue, component);
-            Debug.Log(other.name);
         }
     }
 
@@ -63,6 +72,7 @@ public class Bullet_B : MonoBehaviour
     }
     public virtual void SetPosition(Vector3 pos)
     {
+        _timer = 0;
         transform.position = pos;
     }
     public virtual void SetDirection(Vector3 dir)

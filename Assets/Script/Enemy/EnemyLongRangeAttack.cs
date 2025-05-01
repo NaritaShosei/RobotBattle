@@ -3,16 +3,19 @@ using UnityEngine;
 
 public class EnemyLongRangeAttack : LongRangeAttack_B
 {
-    [SerializeField] GameObject _enemyObj;
     IEnemy _enemy;
     void Start()
     {
-        _enemyObj.TryGetComponent(out IEnemy _enemy);
         Start_B();
-        _enemy.AddOnAttackEvent(Attack);
         _isAttacked = true;
     }
-
+    private void OnEnable()
+    {
+        if (TryGetComponent(out _enemy))
+        {
+            _enemy.AddOnAttackEvent(Attack);
+        }
+    }
     void Attack(PlayerController player)
     {
         if (_isAttacked)
@@ -24,11 +27,11 @@ public class EnemyLongRangeAttack : LongRangeAttack_B
                 {
                     _time = Time.time;
                     var bullet = _bulletPool.Dequeue();
+                    bullet.gameObject.SetActive(true);
                     bullet.SetPosition(_muzzle.position);
 
-                    bullet.SetDirection(player.GetTargetCenter().position - _muzzle.transform.position);
+                    bullet.SetDirection((player.GetTargetCenter().position - _muzzle.transform.position).normalized);
                     bullet.SetTarget(player);
-                    bullet.gameObject.SetActive(true);
                     _count--;
                 }
             }

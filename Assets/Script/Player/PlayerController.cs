@@ -1,6 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using Script.System.Ingame;
+﻿using Script.System.Ingame;
 using SymphonyFrameWork.System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,6 +9,8 @@ public class PlayerController : Character_B<CharacterData_SB>
 {
     [SerializeField]
     CharacterData_SB _dataBase;
+    [SerializeField]
+    GuardCollider _collider;
     Rigidbody _rb;
     InputBuffer _input;
     /// <summary>
@@ -21,25 +21,10 @@ public class PlayerController : Character_B<CharacterData_SB>
     /// 入力情報の保持
     /// </summary>
     Vector2 _velocity;
-    /// <summary>
-    /// カメラの正面
-    /// </summary>
     Vector3 _camForward;
-    /// <summary>
-    /// カメラの右
-    /// </summary>
     Vector3 _camRight;
-    /// <summary>
-    /// 移動方向
-    /// </summary>
     Vector3 _moveDir;
-    /// <summary>
-    /// ダッシュ開始地点
-    /// </summary>
     Vector3 _dashStartPos;
-    /// <summary>
-    /// ダッシュの終了地点
-    /// </summary>
     Vector3 _dashTargetPos;
     /// <summary>
     /// 線形補完によって出されたダッシュ時の座標
@@ -52,10 +37,12 @@ public class PlayerController : Character_B<CharacterData_SB>
     bool _isJumped;
     bool _isDashed;
     bool _isBoost;
+    bool _isGuard;
     /// <summary>
     /// Debug用
     /// </summary>
     [SerializeField] Text a;
+    [SerializeField] Text b;
     void Start()
     {
         _input = ServiceLocator.GetInstance<InputBuffer>();
@@ -68,7 +55,11 @@ public class PlayerController : Character_B<CharacterData_SB>
     void Update()
     {
         //Debug用
-        a.text = _data.Gauge.ToString();
+        a.text = "gauge" + _data.Gauge.ToString();
+        b.text = "health" + _data.Health.ToString();
+
+        _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
+
         if (!_isDashed && !_isJumped)
         {
             GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
@@ -81,7 +72,7 @@ public class PlayerController : Character_B<CharacterData_SB>
             }
             else
             {
-                _rb.AddForce(Vector3.up * _data.JumpPower, ForceMode.Impulse);
+                _rb.AddForce(Vector3.up * _data.FloatPower, ForceMode.Acceleration);
             }
         }
         if (_isBoost)
@@ -113,7 +104,7 @@ public class PlayerController : Character_B<CharacterData_SB>
             }
         }
 
-        if (!_isDashed)
+        else if (!_isDashed)
         {
             Move(_isBoost ? _data.BoostSpeed : _data.NormalSpeed);
         }
@@ -188,7 +179,7 @@ public class PlayerController : Character_B<CharacterData_SB>
     {
         if (context.phase == InputActionPhase.Started)
         {
-            if (!GaugeValueChange(-_data.JumpValue / 10)) return;
+            if (!GaugeValueChange(-_data.JumpValue)) return;
             _isJumped = true;
             _rb.AddForce(Vector3.up * _data.JumpPower * 5, ForceMode.Impulse);
         }
@@ -228,6 +219,27 @@ public class PlayerController : Character_B<CharacterData_SB>
             _isBoost = false;
         }
     }
+
+    void Guard(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            _isGuard = true;
+            _collider.GuardVisible(true);
+        }
+        if (context.phase == InputActionPhase.Canceled)
+        {
+            _isGuard = false;
+            _collider.GuardVisible(false);
+        }
+    }
+    void OnGuard(Collider other)
+    {
+        if (other.TryGetComponent(out Bullet_B _))
+        {
+            GaugeValueChange(-50);
+        }
+    }
     private void OnDisable()
     {
         RemoveAction();
@@ -235,21 +247,27 @@ public class PlayerController : Character_B<CharacterData_SB>
 
     void AddAction()
     {
+        _collider.OnTriggerEnterEvent += OnGuard;
         _input.MoveAction.performed += OnMoveInput;
         _input.MoveAction.canceled += OnMoveInput;
         _input.JumpAction.started += Jump;
         _input.JumpAction.canceled += Jump;
         _input.DashAction.started += Dash;
         _input.DashAction.canceled += Dash;
+        _input.GuardAction.started += Guard;
+        _input.GuardAction.canceled += Guard;
     }
 
     void RemoveAction()
     {
+        _collider.OnTriggerEnterEvent -= OnGuard;
         _input.MoveAction.performed -= OnMoveInput;
         _input.MoveAction.canceled -= OnMoveInput;
         _input.JumpAction.started -= Jump;
         _input.JumpAction.canceled -= Jump;
         _input.DashAction.started -= Dash;
         _input.DashAction.canceled -= Dash;
+        _input.GuardAction.started -= Guard;
+        _input.GuardAction.canceled -= Guard;
     }
 }

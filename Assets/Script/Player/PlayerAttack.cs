@@ -30,13 +30,13 @@ public class PlayerAttack : LongRangeAttack_B
                 {
                     _time = Time.time;
                     var bullet = _bulletPool.Dequeue();
+                    bullet.gameObject.SetActive(true);
                     bullet.SetPosition(_muzzle.position);
 
                     var enemy = _lockOn.GetTarget();
 
                     bullet.SetDirection(transform.forward);
                     bullet.SetTarget(enemy);
-                    bullet.gameObject.SetActive(true);
                     _count--;
                 }
             }

@@ -15,6 +15,9 @@ public class CharacterData_SB : CharacterData_B
     [SerializeField]
     private float _jumpPower = 7.5f;
     public float JumpPower => _jumpPower;
+    [SerializeField]
+    private float _floatPower = 200f;
+    public float FloatPower => _floatPower;
 
     [SerializeField]
     private float _dashDistance = 100;
@@ -26,6 +29,10 @@ public class CharacterData_SB : CharacterData_B
 
     [NonSerialized]
     public float DashTimer;
+
+    [SerializeField, Header("自由落下速度")]
+    private float _fallSpeed = 9.8f;
+    public float FallSpeed => _fallSpeed;
 
     [SerializeField, Header("1秒間に回復するゲージ量")]
     private float _recoveryValue = 30;

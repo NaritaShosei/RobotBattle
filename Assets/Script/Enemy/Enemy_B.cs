@@ -7,7 +7,7 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
 {
     public Action<PlayerController> OnAttackEvent;
     protected PlayerController _player;
-    Camera _camera;
+    protected Camera _camera;
     protected void OnStart()
     {
         _camera = Camera.main;
@@ -34,21 +34,9 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
         OnAttackEvent -= action;
     }
 
-    public virtual void TargetSet(Collider other)
-    {
-
-    }
-
-    public virtual void TargetUnset(Collider other)
-    {
-
-    }
 }
 public interface IEnemy : IFightable
 {
-    void TargetSet(Collider other);
-    void TargetUnset(Collider other);
-
     void AddOnAttackEvent(Action<PlayerController> action);
     void RemoveOnAttackEvent(Action<PlayerController> action);
 
