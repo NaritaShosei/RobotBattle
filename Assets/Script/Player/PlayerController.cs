@@ -42,6 +42,7 @@ public class PlayerController : Character_B<CharacterData_SB>
     /// Debug用
     /// </summary>
     [SerializeField] Text a;
+    [SerializeField] Text b;
     void Start()
     {
         _input = ServiceLocator.GetInstance<InputBuffer>();
@@ -54,7 +55,8 @@ public class PlayerController : Character_B<CharacterData_SB>
     void Update()
     {
         //Debug用
-        a.text = _data.Gauge.ToString();
+        a.text = "gauge" + _data.Gauge.ToString();
+        b.text = "health" + _data.Health.ToString();
 
         _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
 
@@ -223,12 +225,12 @@ public class PlayerController : Character_B<CharacterData_SB>
         if (context.phase == InputActionPhase.Started)
         {
             _isGuard = true;
-            _collider.Collider.enabled = true;
+            _collider.GuardVisible(true);
         }
         if (context.phase == InputActionPhase.Canceled)
         {
             _isGuard = false;
-            _collider.Collider.enabled = false;
+            _collider.GuardVisible(false);
         }
     }
     void OnGuard(Collider other)
