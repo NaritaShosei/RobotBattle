@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: AttackData
   m_EditorClassIdentifier: 
   _attackRate: 10
+  _attackPower: 1
+  _bulletCount: 30
+  _reloadInterval: 1.5

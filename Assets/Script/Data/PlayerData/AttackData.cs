@@ -16,4 +16,8 @@ public class AttackData : ScriptableObject
     public float ReloadInterval => _reloadInterval;
     [SerializeField]
     float _reloadInterval = 1.5f;
+
+    public float BreakPoint => _breakPoint;
+    [SerializeField]
+    float _breakPoint;
 }
