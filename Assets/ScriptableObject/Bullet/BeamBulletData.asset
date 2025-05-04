@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd663ca065a40864780b8e830eb8a925, type: 3}
-  m_Name: AttackData
+  m_Script: {fileID: 11500000, guid: 032255c9dd6f6d3448905a3b24f5d29a, type: 3}
+  m_Name: BeamBulletData
   m_EditorClassIdentifier: 
-  _attackRate: 10
   _attackPower: 1
-  _bulletCount: 30
-  _reloadInterval: 1.5
+  _guardBreakValue: 0
+  _moveSpeed: 500
+  _minDistance: 20
+  _enableTime: 3.84

@@ -32,7 +32,6 @@ public class LongRangeAttack_B : MonoBehaviour
             var bullet = Instantiate(_bullet, _bulletParent);
             bullet.ReturnPoolEvent = OnReturnPool;
             bullet.gameObject.SetActive(false);
-            bullet.SetAttackValue(_data.AttackPower);
             _bulletPool.Enqueue(bullet);
             bullet.gameObject.layer = Mathf.RoundToInt(Mathf.Log(_layer.value, 2));
         }

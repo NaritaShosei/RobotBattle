@@ -2,66 +2,52 @@
 using System;
 using UnityEngine;
 
-public class Bullet_B : MonoBehaviour
+public abstract class Bullet_B : MonoBehaviour
 {
-    IFightable _target;
-    [SerializeField] float _moveSpeed = 100;
-    [SerializeField] float _minDistance;
-    [SerializeField] float _enableTime = 5;
+    protected IFightable _target;
+    [SerializeField] protected BulletData _bulletData;
     public Action<Bullet_B> ReturnPoolEvent;
-    float _timer;
-    float _attackValue;
-    bool _isChased = true;
-    bool _isTimeReturned;
-    bool _isConflictReturned;
-    private void OnEnable()
+    protected float _timer;
+
+    protected bool _isTimeReturned;
+    protected bool _isConflictReturned;
+    public float GuardBreakValue => _bulletData.GuardBreakValue;
+
+    private void OnEnable() => OnEnable_B();
+
+    private void OnDisable() => OnDisable_B();
+
+    protected virtual void OnEnable_B()
     {
-        _isChased = true;
         _isTimeReturned = false;
         _isConflictReturned = false;
     }
-    private void OnDisable()
+    protected virtual void OnDisable_B()
     {
         if (_isTimeReturned || _isConflictReturned)
         {
             ReturnPoolEvent?.Invoke(this);
         }
     }
-
-    // Update is called once per frame
     void Update()
     {
-        _timer += Time.deltaTime;
-        if (_target != null && (_target.GetTargetCenter().position - transform.position).sqrMagnitude >= _minDistance * _minDistance && _isChased)
-        {
-            var dir = _target.GetTargetCenter().position - transform.position;
-            transform.forward = dir;
-        }
-        else
-        {
-            _isChased = false;
-        }
-
-        transform.position += transform.forward * _moveSpeed * Time.deltaTime;
-
-        if (_timer >= _enableTime)
-        {
-            _isTimeReturned = true;
-            gameObject.SetActive(false);
-        }
+        OnUpdate();
     }
-    private void OnTriggerEnter(Collider other)
+    /// <summary>
+    /// Updateで実行したい処理をここに書く
+    /// </summary>
+    abstract protected void OnUpdate();
+
+    void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("IgnoreCollider")) return;
-        EffectManager.Instance.PlayExplosion(transform.position);
-        _isConflictReturned = true;
-        gameObject.SetActive(false);
-        if (other.TryGetComponent(out IFightable component))
-        {
-            AddDamage(_attackValue, component);
-        }
+        Conflict(other);
     }
-
+    /// <summary>
+    /// ぶつかった時の処理
+    /// </summary>
+    /// <param name="other"></param>
+    protected abstract void Conflict(Collider other);
     protected virtual void AddDamage(float damage, IFightable fightable)
     {
         fightable.HitDamage(damage);
@@ -69,18 +55,14 @@ public class Bullet_B : MonoBehaviour
     public virtual void SetTarget(IFightable target)
     {
         _target = target;
+        if (_target != null)
+        {
+            transform.forward = (target.GetTargetCenter().position - transform.position).normalized;
+        }
     }
     public virtual void SetPosition(Vector3 pos)
     {
         _timer = 0;
         transform.position = pos;
-    }
-    public virtual void SetDirection(Vector3 dir)
-    {
-        transform.forward = dir;
-    }
-    public virtual void SetAttackValue(float attack)
-    {
-        _attackValue = attack;
     }
 }

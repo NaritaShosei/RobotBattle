@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 8321046948249653819}
   - component: {fileID: 8293611069074141623}
   - component: {fileID: 5535709724549614593}
-  - component: {fileID: 739508395337416385}
   - component: {fileID: 8960308695917481017}
+  - component: {fileID: 7544377930784953706}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: ChaseBullet
   m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,20 +110,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &739508395337416385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3021180886170110144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94304f98eb4e8d34d90c5418e1df23fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveSpeed: 100
-  _minDistance: 20
 --- !u!54 &8960308695917481017
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -151,3 +137,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &7544377930784953706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3021180886170110144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa53f67535622974eb27e47ec5127f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bulletData: {fileID: 11400000, guid: be675c3171d4bd447b91e92dcecac8d1, type: 2}

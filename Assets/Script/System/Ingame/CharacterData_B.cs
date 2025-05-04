@@ -7,7 +7,7 @@ namespace Script.System.Ingame
     public class CharacterData_B : ScriptableObject
     {
         [SerializeField]
-        private float _maxHealth;
+        private float _maxHealth = 1000;
         public float MaxHealth { get => _maxHealth; }
 
         private float _health;
@@ -25,7 +25,7 @@ namespace Script.System.Ingame
 
 
         [SerializeField]
-        private float _maxGauge;
+        private float _maxGauge = 1000;
         public float MaxGauge { get => _maxGauge; }
 
         private float _gauge;
