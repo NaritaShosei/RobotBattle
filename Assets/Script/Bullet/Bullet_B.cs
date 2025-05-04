@@ -6,9 +6,6 @@ public class Bullet_B : MonoBehaviour
 {
     IFightable _target;
     [SerializeField] BulletData _bulletData;
-    [SerializeField] float _moveSpeed = 100;
-    [SerializeField] float _minDistance;
-    [SerializeField] float _enableTime = 5;
     public Action<Bullet_B> ReturnPoolEvent;
     float _timer;
     bool _isChased = true;
@@ -33,7 +30,7 @@ public class Bullet_B : MonoBehaviour
     void Update()
     {
         _timer += Time.deltaTime;
-        if (_target != null && (_target.GetTargetCenter().position - transform.position).sqrMagnitude >= _minDistance * _minDistance && _isChased)
+        if (_target != null && (_target.GetTargetCenter().position - transform.position).sqrMagnitude >= _bulletData.MinDistance * _bulletData.MinDistance && _isChased)
         {
             var dir = _target.GetTargetCenter().position - transform.position;
             transform.forward = dir;
@@ -43,9 +40,9 @@ public class Bullet_B : MonoBehaviour
             _isChased = false;
         }
 
-        transform.position += transform.forward * _moveSpeed * Time.deltaTime;
+        transform.position += transform.forward * _bulletData.MoveSpeed * Time.deltaTime;
 
-        if (_timer >= _enableTime)
+        if (_timer >= _bulletData.EnableTime)
         {
             _isTimeReturned = true;
             gameObject.SetActive(false);
