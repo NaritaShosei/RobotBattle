@@ -5,10 +5,10 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : Character_B<CharacterData_SB>
+public class PlayerController : Character_B<PlayerData>
 {
     [SerializeField]
-    CharacterData_SB _dataBase;
+    PlayerData _dataBase;
     [SerializeField]
     GuardCollider _collider;
     Rigidbody _rb;
@@ -64,6 +64,14 @@ public class PlayerController : Character_B<CharacterData_SB>
         {
             GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
         }
+        if (_isGuard)
+        {
+            _collider.GuardVisible(true);
+        }
+        else if (!_isGuard)
+        {
+            _collider.GuardVisible(false);
+        }
         if (_isJumped)
         {
             if (!GaugeValueChange(-_data.JumpValue * Time.deltaTime))
@@ -75,6 +83,7 @@ public class PlayerController : Character_B<CharacterData_SB>
                 _rb.AddForce(Vector3.up * _data.FloatPower, ForceMode.Acceleration);
             }
         }
+
         if (_isBoost)
         {
             if (_velocity != Vector2.zero)
@@ -224,20 +233,24 @@ public class PlayerController : Character_B<CharacterData_SB>
     {
         if (context.phase == InputActionPhase.Started)
         {
-            _isGuard = true;
-            _collider.GuardVisible(true);
+            if (_data.Gauge >= _data.GuardMinValue)
+            {
+                _isGuard = true;
+            }
         }
         if (context.phase == InputActionPhase.Canceled)
         {
             _isGuard = false;
-            _collider.GuardVisible(false);
         }
     }
     void OnGuard(Collider other)
     {
         if (other.TryGetComponent(out Bullet_B bullet))
         {
-            GaugeValueChange(-bullet.GuardBreakValue);
+            if (!GaugeValueChange(-bullet.GuardBreakValue))
+            {
+                _isGuard = false;
+            }
         }
     }
     private void OnDisable()
