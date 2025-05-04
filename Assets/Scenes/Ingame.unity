@@ -1706,6 +1706,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 838447219257471581, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
+      propertyPath: _bullet
+      value: 
+      objectReference: {fileID: 1930764663170779167, guid: beb06f7ff0d3af348a90099e4de7dbee, type: 3}
+    - target: {fileID: 838447219257471581, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
       propertyPath: _bulletParent
       value: 
       objectReference: {fileID: 104793615}
@@ -1867,7 +1871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 2b88c8056234f104188b2923875adbd7, type: 2}
-  _bullet: {fileID: 7544377930784953706, guid: b71227c7f80bc7a44b9d12f4d78566fe, type: 3}
+  _bullet: {fileID: 1930764663170779167, guid: beb06f7ff0d3af348a90099e4de7dbee, type: 3}
   _muzzle: {fileID: 1624548926}
   _bulletParent: {fileID: 104793615}
   _layer:
