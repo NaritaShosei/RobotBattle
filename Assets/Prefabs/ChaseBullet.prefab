@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8960308695917481017}
   - component: {fileID: 7544377930784953706}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: ChaseBullet
   m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
