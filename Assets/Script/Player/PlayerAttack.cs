@@ -34,6 +34,8 @@ public class PlayerAttack : LongRangeAttack_B
                     bullet.SetPosition(_muzzle.position);
 
                     var enemy = _lockOn.GetTarget();
+
+                    //TODO:クロスヘアの座標からRayCastを飛ばして、その方向に弾が向くようにする
                     if (enemy == null)
                     {
                         bullet.transform.forward = transform.forward;
