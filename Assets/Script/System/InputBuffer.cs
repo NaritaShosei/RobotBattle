@@ -12,10 +12,9 @@ public class InputBuffer : MonoBehaviour
     public InputAction LookAction { get; private set; }
     public InputAction JumpAction { get; private set; }
     public InputAction GuardAction { get; private set; }
-    public InputAction Attack1Action { get; private set; }
-    public InputAction Attack2Action { get; private set; }
-    public InputAction Attack3Action { get; private set; }
+    public InputAction AttackAction { get; private set; }
     public InputAction DashAction { get; private set; }
+    public InputAction WeaponChangeAction { get; private set; }
 
 
     private void Awake()
@@ -33,9 +32,8 @@ public class InputBuffer : MonoBehaviour
         LookAction = _playerInput.actions["Look"];
         JumpAction = _playerInput.actions["Jump"];
         GuardAction = _playerInput.actions["Guard"];
-        Attack1Action = _playerInput.actions["Attack_1"];
-        Attack2Action = _playerInput.actions["Attack_2"];
-        Attack3Action = _playerInput.actions["Attack_3"];
+        AttackAction = _playerInput.actions["Attack"];
         DashAction = _playerInput.actions["Dash"];
+        WeaponChangeAction = _playerInput.actions["WeaponChange"];
     }
 }

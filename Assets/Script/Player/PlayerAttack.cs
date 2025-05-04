@@ -13,8 +13,8 @@ public class PlayerAttack : LongRangeAttack_B
     void Start()
     {
         _input = ServiceLocator.GetInstance<InputBuffer>();
-        _input.Attack1Action.started += Attack1;
-        _input.Attack1Action.canceled += Attack1;
+        _input.AttackAction.started += Attack1;
+        _input.AttackAction.canceled += Attack1;
 
         Start_B();
     }
@@ -69,7 +69,7 @@ public class PlayerAttack : LongRangeAttack_B
     }
     private void OnDisable()
     {
-        _input.Attack1Action.started -= Attack1;
-        _input.Attack1Action.canceled -= Attack1;
+        _input.AttackAction.started -= Attack1;
+        _input.AttackAction.canceled -= Attack1;
     }
 }

@@ -33,27 +33,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Attack_1",
+                    "name": "Attack",
                     "type": "Button",
                     "id": "6c2ab1b8-8984-453a-af3d-a3c78ae1679a",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Attack_2",
-                    "type": "Button",
-                    "id": "852140f2-7766-474d-8707-702459ba45f3",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Hold",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Attack_3",
-                    "type": "Button",
-                    "id": "27c5f898-bc57-4ee1-8800-db469aca5fe3",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -72,6 +54,15 @@
                     "name": "Dash",
                     "type": "Button",
                     "id": "28b8f395-eebf-4d46-a96c-54f3edbb43c5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "WeaponChange",
+                    "type": "Button",
+                    "id": "329449f1-ba69-4b7a-adcf-ea3b8f8ee496",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -251,7 +242,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Attack_1",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -262,7 +253,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Attack_1",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -273,7 +264,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack_1",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -307,50 +298,6 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1c04ea5f-b012-41d1-a6f7-02e963b52893",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Attack_2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b3f66d0b-7751-423f-908b-a11c5bd95930",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Attack_2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4f4649ac-64a8-4a73-af11-b3faef356a4d",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Attack_3",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "36e52cba-0905-478e-a818-f4bfcb9f3b9a",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Attack_3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -395,6 +342,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Guard",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b4062548-03ab-4b40-a8ae-c7c32c1faf4e",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WeaponChange",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4a32f544-654c-4952-9617-a4c936bc3f70",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WeaponChange",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
