@@ -8,7 +8,7 @@ public class BulletData : ScriptableObject
     [SerializeField]
     float _attackPower = 1f;
 
-    public float BreakPoint => _breakPoint;
+    public float GuardBreakValue => _guardBreakValue;
     [SerializeField]
-    float _breakPoint;
+    float _guardBreakValue;
 }

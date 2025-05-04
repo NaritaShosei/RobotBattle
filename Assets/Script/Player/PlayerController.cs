@@ -235,9 +235,9 @@ public class PlayerController : Character_B<CharacterData_SB>
     }
     void OnGuard(Collider other)
     {
-        if (other.TryGetComponent(out Bullet_B _))
+        if (other.TryGetComponent(out Bullet_B bullet))
         {
-            GaugeValueChange(-50);
+            GaugeValueChange(-bullet.GuardBreakValue);
         }
     }
     private void OnDisable()

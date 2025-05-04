@@ -5,15 +5,16 @@ using UnityEngine;
 public class Bullet_B : MonoBehaviour
 {
     IFightable _target;
+    [SerializeField] BulletData _bulletData;
     [SerializeField] float _moveSpeed = 100;
     [SerializeField] float _minDistance;
     [SerializeField] float _enableTime = 5;
     public Action<Bullet_B> ReturnPoolEvent;
     float _timer;
-    float _attackValue;
     bool _isChased = true;
     bool _isTimeReturned;
     bool _isConflictReturned;
+    public float GuardBreakValue => _bulletData.GuardBreakValue;
     private void OnEnable()
     {
         _isChased = true;
@@ -58,7 +59,7 @@ public class Bullet_B : MonoBehaviour
         gameObject.SetActive(false);
         if (other.TryGetComponent(out IFightable component))
         {
-            AddDamage(_attackValue, component);
+            AddDamage(_bulletData.AttackPower, component);
         }
     }
 
@@ -78,9 +79,5 @@ public class Bullet_B : MonoBehaviour
     public virtual void SetDirection(Vector3 dir)
     {
         transform.forward = dir;
-    }
-    public virtual void SetAttackValue(float attack)
-    {
-        _attackValue = attack;
     }
 }
