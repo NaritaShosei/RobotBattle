@@ -3,7 +3,6 @@ using System;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "PlayerData", menuName = "GameData/CharacterData/PlayerData")]
 public class CharacterData_SB : CharacterData_B
 {
     [SerializeField]
@@ -13,7 +12,7 @@ public class CharacterData_SB : CharacterData_B
     private float _boostSpeed = 150;
     public float BoostSpeed => _boostSpeed;
     [SerializeField]
-    private float _jumpPower = 7.5f;
+    private float _jumpPower = 30f;
     public float JumpPower => _jumpPower;
     [SerializeField]
     private float _floatPower = 200f;
@@ -31,7 +30,7 @@ public class CharacterData_SB : CharacterData_B
     public float DashTimer;
 
     [SerializeField, Header("自由落下速度")]
-    private float _fallSpeed = 9.8f;
+    private float _fallSpeed = 20f;
     public float FallSpeed => _fallSpeed;
 
     [SerializeField, Header("1秒間に回復するゲージ量")]
@@ -39,10 +38,10 @@ public class CharacterData_SB : CharacterData_B
     public float RecoveryValue => _recoveryValue;
 
     [SerializeField, Header("ジャンプの消費ゲージ量")]
-    private float _jumpValue;
+    private float _jumpValue = 50;
     public float JumpValue => _jumpValue;
 
     [SerializeField, Header("ダッシュの消費ゲージ量")]
-    private float _dashValue;
+    private float _dashValue = 50;
     public float DashValue => _dashValue;
 }
