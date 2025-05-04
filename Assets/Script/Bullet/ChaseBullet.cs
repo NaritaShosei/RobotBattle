@@ -17,7 +17,7 @@ public class ChaseBullet : Bullet_B
     }
 
 
-    protected override void Update()
+    protected override void OnUpdate()
     {
         _timer += Time.deltaTime;
         if (_target != null && (_target.GetTargetCenter().position - transform.position).sqrMagnitude >= _bulletData.MinDistance * _bulletData.MinDistance && _isChased)
@@ -39,13 +39,8 @@ public class ChaseBullet : Bullet_B
         }
     }
 
-    protected override void OnTriggerEnter(Collider other)
-    {
-        Conflict(other);
-    }
     protected override void Conflict(Collider other)
     {
-        if (other.CompareTag("IgnoreCollider")) return;
         EffectManager.Instance.PlayExplosion(transform.position);
         _isConflictReturned = true;
         gameObject.SetActive(false);

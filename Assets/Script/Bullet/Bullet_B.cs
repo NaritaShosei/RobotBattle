@@ -24,9 +24,24 @@ public abstract class Bullet_B : MonoBehaviour
             ReturnPoolEvent?.Invoke(this);
         }
     }
-    abstract protected void Update();
+    void Update()
+    {
+        OnUpdate();
+    }
+    /// <summary>
+    /// Updateで実行したい処理をここに書く
+    /// </summary>
+    abstract protected void OnUpdate();
 
-    abstract protected void OnTriggerEnter(Collider other);
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("IgnoreCollider")) return;
+        Conflict(other);
+    }
+    /// <summary>
+    /// ぶつかった時の処理
+    /// </summary>
+    /// <param name="other"></param>
     protected abstract void Conflict(Collider other);
     protected virtual void AddDamage(float damage, IFightable fightable)
     {
