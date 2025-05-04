@@ -2,64 +2,32 @@
 using System;
 using UnityEngine;
 
-public class Bullet_B : MonoBehaviour
+public abstract class Bullet_B : MonoBehaviour
 {
-    IFightable _target;
-    [SerializeField] BulletData _bulletData;
+    protected IFightable _target;
+    [SerializeField] protected BulletData _bulletData;
     public Action<Bullet_B> ReturnPoolEvent;
-    float _timer;
-    bool _isChased = true;
-    bool _isTimeReturned;
-    bool _isConflictReturned;
+    protected float _timer;
+
+    protected bool _isTimeReturned;
+    protected bool _isConflictReturned;
     public float GuardBreakValue => _bulletData.GuardBreakValue;
-    private void OnEnable()
+    protected void OnEnable_B()
     {
-        _isChased = true;
         _isTimeReturned = false;
         _isConflictReturned = false;
     }
-    private void OnDisable()
+    protected void OnDisable_B()
     {
         if (_isTimeReturned || _isConflictReturned)
         {
             ReturnPoolEvent?.Invoke(this);
         }
     }
+    abstract protected void Update();
 
-    // Update is called once per frame
-    void Update()
-    {
-        _timer += Time.deltaTime;
-        if (_target != null && (_target.GetTargetCenter().position - transform.position).sqrMagnitude >= _bulletData.MinDistance * _bulletData.MinDistance && _isChased)
-        {
-            var dir = _target.GetTargetCenter().position - transform.position;
-            transform.forward = dir;
-        }
-        else
-        {
-            _isChased = false;
-        }
-
-        transform.position += transform.forward * _bulletData.MoveSpeed * Time.deltaTime;
-
-        if (_timer >= _bulletData.EnableTime)
-        {
-            _isTimeReturned = true;
-            gameObject.SetActive(false);
-        }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("IgnoreCollider")) return;
-        EffectManager.Instance.PlayExplosion(transform.position);
-        _isConflictReturned = true;
-        gameObject.SetActive(false);
-        if (other.TryGetComponent(out IFightable component))
-        {
-            AddDamage(_bulletData.AttackPower, component);
-        }
-    }
-
+    abstract protected void OnTriggerEnter(Collider other);
+    protected abstract void Conflict(Collider other);
     protected virtual void AddDamage(float damage, IFightable fightable)
     {
         fightable.HitDamage(damage);
