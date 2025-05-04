@@ -1,75 +1,53 @@
-﻿using Cysharp.Threading.Tasks;
-using SymphonyFrameWork.System;
+﻿using SymphonyFrameWork.System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerAttack : LongRangeAttack_B
+public class PlayerAttack : MonoBehaviour
 {
     [SerializeField]
-    LockOn _lockOn;
+    List<PlayerWeapon> _weapons = new();
 
+    PlayerWeapon _currentWeapon;
+    int _index;
     InputBuffer _input;
+
     void Start()
     {
+        _currentWeapon = _weapons[0];
         _input = ServiceLocator.GetInstance<InputBuffer>();
-        _input.AttackAction.started += Attack1;
-        _input.AttackAction.canceled += Attack1;
-
-        Start_B();
+        _input.AttackAction.started += Attack;
+        _input.AttackAction.canceled += Attack;
+        _input.WeaponChangeAction.started += WeaponChange;
     }
 
     void Update()
     {
-        if (_isAttacked)
-        {
-            if (_bulletPool.Count != 0 && _count != 0)
-            {
-                float rate = 1 / _data.AttackRate;
-                if (Time.time > _time + rate)
-                {
-                    _time = Time.time;
-                    var bullet = _bulletPool.Dequeue();
-                    bullet.gameObject.SetActive(true);
-                    bullet.SetPosition(_muzzle.position);
 
-                    var enemy = _lockOn.GetTarget();
-
-                    //TODO:クロスヘアの座標からRayCastを飛ばして、その方向に弾が向くようにする
-                    if (enemy == null)
-                    {
-                        bullet.transform.forward = transform.forward;
-                    }
-                    bullet.SetTarget(enemy);
-                    _count--;
-                }
-            }
-        }
     }
-
-    void Attack1(InputAction.CallbackContext context)
+    //TODO:武器変更処理はできてはいるが、直観的ではない部分があるので要・修正
+    void WeaponChange(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started)
-        {
-            _isAttacked = true;
-            if (_count <= 0)
-            {
-                Reload().Forget();
-            }
-        }
-        else if (context.phase == InputActionPhase.Canceled)
-        {
-            _isAttacked = false;
-        }
+        Debug.LogWarning("武装変更");
+        _index++;
+        _currentWeapon = _weapons[_index % _weapons.Count];
     }
-    async UniTaskVoid Reload()
+
+    void Attack(InputAction.CallbackContext context)
     {
-        await UniTask.Delay((int)(_data.ReloadInterval * 1000));
-        _count = _data.BulletCount;
+        _currentWeapon.Attack(context);
     }
+
+    //TODO:リロード処理を呼び出す
+    void Reload(InputAction.CallbackContext context)
+    {
+
+    }
+
     private void OnDisable()
     {
-        _input.AttackAction.started -= Attack1;
-        _input.AttackAction.canceled -= Attack1;
+        _input.AttackAction.started -= Attack;
+        _input.AttackAction.canceled -= Attack;
+        _input.WeaponChangeAction.started -= WeaponChange;
     }
 }
