@@ -34,8 +34,10 @@ public class PlayerAttack : LongRangeAttack_B
                     bullet.SetPosition(_muzzle.position);
 
                     var enemy = _lockOn.GetTarget();
-
-                    bullet.SetDirection(transform.forward);
+                    if (enemy == null)
+                    {
+                        bullet.transform.forward = transform.forward;
+                    }
                     bullet.SetTarget(enemy);
                     _count--;
                 }

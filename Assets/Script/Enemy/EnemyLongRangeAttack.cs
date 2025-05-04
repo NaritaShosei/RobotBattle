@@ -30,7 +30,6 @@ public class EnemyLongRangeAttack : LongRangeAttack_B
                     bullet.gameObject.SetActive(true);
                     bullet.SetPosition(_muzzle.position);
 
-                    bullet.SetDirection((player.GetTargetCenter().position - _muzzle.transform.position).normalized);
                     bullet.SetTarget(player);
                     _count--;
                 }

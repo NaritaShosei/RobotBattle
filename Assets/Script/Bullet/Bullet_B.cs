@@ -12,12 +12,17 @@ public abstract class Bullet_B : MonoBehaviour
     protected bool _isTimeReturned;
     protected bool _isConflictReturned;
     public float GuardBreakValue => _bulletData.GuardBreakValue;
-    protected void OnEnable_B()
+
+    private void OnEnable() => OnEnable_B();
+
+    private void OnDisable() => OnDisable_B();
+
+    protected virtual void OnEnable_B()
     {
         _isTimeReturned = false;
         _isConflictReturned = false;
     }
-    protected void OnDisable_B()
+    protected virtual void OnDisable_B()
     {
         if (_isTimeReturned || _isConflictReturned)
         {
@@ -50,14 +55,14 @@ public abstract class Bullet_B : MonoBehaviour
     public virtual void SetTarget(IFightable target)
     {
         _target = target;
+        if (_target != null)
+        {
+            transform.forward = (target.GetTargetCenter().position - transform.position).normalized;
+        }
     }
     public virtual void SetPosition(Vector3 pos)
     {
         _timer = 0;
         transform.position = pos;
-    }
-    public virtual void SetDirection(Vector3 dir)
-    {
-        transform.forward = dir;
     }
 }

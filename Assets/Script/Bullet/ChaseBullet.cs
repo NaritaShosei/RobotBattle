@@ -5,17 +5,11 @@ public class ChaseBullet : Bullet_B
 {
     bool _isChased = true;
 
-    private void OnEnable()
+    protected override void OnEnable_B()
     {
+        base.OnEnable_B();
         _isChased = true;
-        OnEnable_B();
     }
-
-    private void OnDisable()
-    {
-        OnDisable_B();
-    }
-
 
     protected override void OnUpdate()
     {
