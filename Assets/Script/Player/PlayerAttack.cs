@@ -5,6 +5,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
+
+    [SerializeField]
+    PlayerManager _playerManager;
+
     [SerializeField]
     List<PlayerWeapon> _weapons = new();
 
