@@ -10,7 +10,7 @@ public class PlayerWeapon : LongRangeAttack_B
     LockOn _lockOn;
 
     bool _isAttack;
-
+    bool _isReload;
     public bool IsAttack { get => _isAttack; set => _isAttack = value; }
     void Start()
     {
@@ -19,6 +19,7 @@ public class PlayerWeapon : LongRangeAttack_B
 
     void Update()
     {
+        if (_isReload) return;
         if (IsAttack)
         {
             if (_bulletPool.Count != 0 && _count != 0)
@@ -55,8 +56,13 @@ public class PlayerWeapon : LongRangeAttack_B
     }
     public async UniTaskVoid Reload()
     {
+        if (_isReload) return;
         if (_count == _data.BulletCount) return;
+        _isReload = true;
+        Debug.LogWarning("Reload" + _count);
         await UniTask.Delay((int)(_data.ReloadInterval * 1000));
         _count = _data.BulletCount;
+        Debug.LogWarning("Reload To Complete" + _count);
+        _isReload = false;
     }
 }

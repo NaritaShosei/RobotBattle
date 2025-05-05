@@ -20,6 +20,7 @@ public class PlayerAttack : MonoBehaviour
         _input.AttackAction.started += Attack;
         _input.AttackAction.canceled += Attack;
         _input.WeaponChangeAction.started += WeaponChange;
+        _input.ReloadAction.started += Reload;
     }
 
     void Update()
@@ -45,7 +46,7 @@ public class PlayerAttack : MonoBehaviour
     //TODO:リロード処理を呼び出す
     void Reload(InputAction.CallbackContext context)
     {
-
+        _currentWeapon.Reload().Forget();
     }
 
     private void OnDisable()
@@ -53,5 +54,6 @@ public class PlayerAttack : MonoBehaviour
         _input.AttackAction.started -= Attack;
         _input.AttackAction.canceled -= Attack;
         _input.WeaponChangeAction.started -= WeaponChange;
+        _input.ReloadAction.started -= Reload;
     }
 }
