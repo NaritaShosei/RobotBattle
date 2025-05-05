@@ -8,6 +8,10 @@ public class PlayerWeapon : LongRangeAttack_B
 {
     [SerializeField]
     LockOn _lockOn;
+
+    bool _isAttack;
+    bool _isReload;
+    public bool IsAttack { get => _isAttack; set => _isAttack = value; }
     void Start()
     {
         Start_B();
@@ -15,7 +19,8 @@ public class PlayerWeapon : LongRangeAttack_B
 
     void Update()
     {
-        if (_isAttacked)
+        if (_isReload) return;
+        if (IsAttack)
         {
             if (_bulletPool.Count != 0 && _count != 0)
             {
@@ -41,24 +46,23 @@ public class PlayerWeapon : LongRangeAttack_B
         }
     }
 
-    public void Attack(InputAction.CallbackContext context)
+    public void SetAttack(bool value)
     {
-        if (context.phase == InputActionPhase.Started)
+        IsAttack = value;
+        if (value && _count <= 0)
         {
-            _isAttacked = true;
-            if (_count <= 0)
-            {
-                Reload().Forget();
-            }
-        }
-        else if (context.phase == InputActionPhase.Canceled)
-        {
-            _isAttacked = false;
+            Reload().Forget();
         }
     }
     public async UniTaskVoid Reload()
     {
+        if (_isReload) return;
+        if (_count == _data.BulletCount) return;
+        _isReload = true;
+        Debug.LogWarning("Reload" + _count);
         await UniTask.Delay((int)(_data.ReloadInterval * 1000));
         _count = _data.BulletCount;
+        Debug.LogWarning("Reload To Complete" + _count);
+        _isReload = false;
     }
 }

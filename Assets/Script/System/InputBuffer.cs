@@ -15,6 +15,7 @@ public class InputBuffer : MonoBehaviour
     public InputAction AttackAction { get; private set; }
     public InputAction DashAction { get; private set; }
     public InputAction WeaponChangeAction { get; private set; }
+    public InputAction ReloadAction { get; private set; }
 
 
     private void Awake()
@@ -35,5 +36,6 @@ public class InputBuffer : MonoBehaviour
         AttackAction = _playerInput.actions["Attack"];
         DashAction = _playerInput.actions["Dash"];
         WeaponChangeAction = _playerInput.actions["WeaponChange"];
+        ReloadAction = _playerInput.actions["Reload"];
     }
 }

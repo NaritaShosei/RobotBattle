@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class PlayerController : Character_B<PlayerData>
 {
     [SerializeField]
+    PlayerManager _playerManager;
+    [SerializeField]
     PlayerData _dataBase;
     [SerializeField]
     GuardCollider _collider;

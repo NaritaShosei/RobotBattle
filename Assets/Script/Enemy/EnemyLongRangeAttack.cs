@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemyLongRangeAttack : LongRangeAttack_B
 {
     IEnemy _enemy;
+    bool _isAttacked;
     void Start()
     {
         Start_B();
