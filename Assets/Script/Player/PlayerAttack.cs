@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     PlayerWeapon _currentWeapon;
     int _index;
     InputBuffer _input;
+    bool _isInput;
 
     void Start()
     {
@@ -28,14 +29,17 @@ public class PlayerAttack : MonoBehaviour
     //TODO:武器変更処理はできてはいるが、直観的ではない部分があるので要・修正
     void WeaponChange(InputAction.CallbackContext context)
     {
+        _currentWeapon.IsAttack = false;
         Debug.LogWarning("武装変更");
         _index++;
         _currentWeapon = _weapons[_index % _weapons.Count];
+        _currentWeapon.IsAttack = _isInput;
     }
 
     void Attack(InputAction.CallbackContext context)
     {
-        _currentWeapon.Attack(context);
+        _isInput = context.phase == InputActionPhase.Started;
+        _currentWeapon.SetAttack(_isInput);
     }
 
     //TODO:リロード処理を呼び出す

@@ -14,7 +14,6 @@ public class LongRangeAttack_B : MonoBehaviour
 
     [SerializeField] protected LayerMask _layer;
     protected Queue<Bullet_B> _bulletPool = new();
-    protected bool _isAttacked;
     protected float _time;
     protected int _count;
 
