@@ -19,5 +19,6 @@ public enum PlayerState
     Boost,
     Jump,
     Guard,
-    WeaponChange
+    WeaponChange,
+    Dead
 }
