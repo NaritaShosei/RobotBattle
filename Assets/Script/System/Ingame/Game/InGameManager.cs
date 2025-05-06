@@ -5,7 +5,7 @@ public class InGameManager : MonoBehaviour
     public static InGameManager Instance { get; private set; }
 
     [SerializeField]
-    PlayerState _player;
+    PlayerManager _player;
 
     [SerializeField]
     int _maxTime;
@@ -16,23 +16,19 @@ public class InGameManager : MonoBehaviour
     private void Awake()
     {
         _time = _maxTime;
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-            return;
-        }
         Instance = this;
     }
     void Start()
     {
-
+        //GameUIManagerの初期化がAwakeで行われているのでStartでTimeの初期化
+        GameUIManager.Instance.TimeView.SetTime(_time);
     }
 
     // Update is called once per frame
     void Update()
     {
         //Playerが死んでいたら処理を抜ける
-        if (_player == PlayerState.Dead)
+        if (_player.State == PlayerState.Dead)
         {
             return;
         }
@@ -44,7 +40,7 @@ public class InGameManager : MonoBehaviour
         }
 
         _time = Mathf.Max(_time - Time.deltaTime, 0);
-
+        GameUIManager.Instance.TimeView.SetTime(_time);
         //時間切れになった際の処理
         if (IsTimeOver)
         {
