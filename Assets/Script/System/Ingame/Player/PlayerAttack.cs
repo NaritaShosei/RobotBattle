@@ -17,19 +17,24 @@ public class PlayerAttack : MonoBehaviour
     InputBuffer _input;
     bool _isInput;
 
+    WeaponPresenter _presenter;
+
     void Start()
     {
+        _presenter = new WeaponPresenter(GameUIManager.Instance.WeaponView);
         _currentWeapon = _weapons[0];
         _input = ServiceLocator.GetInstance<InputBuffer>();
         _input.AttackAction.started += Attack;
         _input.AttackAction.canceled += Attack;
         _input.WeaponChangeAction.started += WeaponChange;
         _input.ReloadAction.started += Reload;
+
+        _presenter.Initialize(_currentWeapon, _weapons[1]);
     }
 
     void Update()
     {
-
+        _presenter.CountUpdate(_currentWeapon.Count);
     }
     //TODO:武器変更処理はできてはいるが、直観的ではない部分があるので要・修正
     void WeaponChange(InputAction.CallbackContext context)
@@ -39,6 +44,8 @@ public class PlayerAttack : MonoBehaviour
         _index++;
         _currentWeapon = _weapons[_index % _weapons.Count];
         _currentWeapon.IsAttack = _isInput;
+
+        _presenter.SwapWeapon();
     }
 
     void Attack(InputAction.CallbackContext context)

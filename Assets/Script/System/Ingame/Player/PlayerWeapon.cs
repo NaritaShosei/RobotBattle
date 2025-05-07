@@ -1,17 +1,22 @@
 ﻿using Cysharp.Threading.Tasks;
-using SymphonyFrameWork.System;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerWeapon : LongRangeAttack_B
 {
+    [SerializeField]
+    Sprite _weaponIcon;
+    public Sprite Icon;
+
+    public int Count => _count;
+
     [SerializeField]
     LockOn _lockOn;
 
     bool _isAttack;
     bool _isReload;
     public bool IsAttack { get => _isAttack; set => _isAttack = value; }
+
     void Start()
     {
         Start_B();
