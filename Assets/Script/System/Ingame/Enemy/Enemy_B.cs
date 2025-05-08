@@ -5,6 +5,8 @@ using UnityEngine;
 public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
     where DataType : CharacterData_B
 {
+    [SerializeField]
+    ScoreData _scoreData;
     public Action<PlayerController> OnAttackEvent;
     protected PlayerController _player;
     protected Camera _camera;
