@@ -27,7 +27,7 @@ public class WeaponUISlotView : MonoBehaviour
     {
         _bulletCountText.enabled = true;
         _rectTransform.DOAnchorPosX(100, 0.5f);
-        _rectTransform.DOScale(Vector3.one * 2, 0.5f);
+        _rectTransform.DOScale(Vector3.one * 1.2f, 0.5f);
         _canvasGroup.DOFade(1, 0.5f);
         _rectTransform.SetAsLastSibling();
     }
