@@ -41,7 +41,8 @@ public class PlayerController : Character_B<PlayerData>
     bool _isBoost;
     bool _isGuard;
 
-    HPGaugePresenter _presenter;
+    HPGaugePresenter _healthPresenter;
+    GaugePresenter _gaugePresenter;
 
     /// <summary>
     /// Debug用
@@ -55,8 +56,10 @@ public class PlayerController : Character_B<PlayerData>
         Initialize(_dataBase);
         _currentSpeed = _data.NormalSpeed;
         AddAction();
-        _presenter = new HPGaugePresenter(GameUIManager.Instance.HPGaugeView);
-        _presenter.Initialize(_data.Health);
+        _healthPresenter = new HPGaugePresenter(GameUIManager.Instance.HPGaugeView);
+        _healthPresenter.Initialize(_data.Health);
+        _gaugePresenter = new GaugePresenter(GameUIManager.Instance.GaugeView);
+        _gaugePresenter.Initialize(_data.Gauge);
     }
 
     void Update()
@@ -263,8 +266,12 @@ public class PlayerController : Character_B<PlayerData>
 
     protected override void OnHealthChanged(float health)
     {
-        Debug.Log("ダメージを受けました");
-        _presenter.GaugeUpdate(health);
+        _healthPresenter.GaugeUpdate(health);
+    }
+
+    protected override void OnGaugeChanged(float value)
+    {
+        _gaugePresenter.GaugeUpdate(value);
     }
     private void OnDisable()
     {

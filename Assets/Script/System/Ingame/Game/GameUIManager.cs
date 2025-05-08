@@ -13,6 +13,9 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] HPGaugeView _hpgaugeView;
     public HPGaugeView HPGaugeView => _hpgaugeView;
 
+    [SerializeField] GaugeView _gaugeView;
+    public GaugeView GaugeView => _gaugeView;
+
     private void Awake()
     {
         Instance = this;
