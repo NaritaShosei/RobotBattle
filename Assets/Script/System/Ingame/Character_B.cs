@@ -12,7 +12,7 @@ namespace Script.System.Ingame
             _data.Health -= damage;
             if (_data.Health <= 0)
             {
-                Debug.Log("Dead");
+                Dead();
             }
         }
         public void HitHeal(float heal)
@@ -30,14 +30,8 @@ namespace Script.System.Ingame
             return true;
         }
 
-        protected virtual void OnHealthChanged(float health)
-        {
-
-        }
-        protected virtual void OnGaugeChanged(float value)
-        {
-
-        }
+        protected virtual void OnHealthChanged(float health) { }
+        protected virtual void OnGaugeChanged(float value) { }
 
         /// <summary>
         /// データを初期化する
@@ -60,6 +54,11 @@ namespace Script.System.Ingame
         private void OnDestroy()
         {
             OnDestroyMethod();
+        }
+
+        protected virtual void Dead()
+        {
+            Debug.Log($"{gameObject.name}が死亡しました");
         }
 
         public Transform GetTargetCenter()

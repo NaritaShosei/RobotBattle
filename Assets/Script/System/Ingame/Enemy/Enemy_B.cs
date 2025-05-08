@@ -36,6 +36,12 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
         OnAttackEvent -= action;
     }
 
+    protected override void Dead()
+    {
+        base.Dead();
+        ScoreManager.instance.AddScore(_scoreData.Score);
+    }
+
 }
 public interface IEnemy : IFightable
 {
