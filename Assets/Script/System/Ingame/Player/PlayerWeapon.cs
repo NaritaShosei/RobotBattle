@@ -6,7 +6,7 @@ public class PlayerWeapon : LongRangeAttack_B
 {
     [SerializeField]
     Sprite _weaponIcon;
-    public Sprite Icon;
+    public Sprite Icon => _weaponIcon;
 
     public int Count => _count;
 
