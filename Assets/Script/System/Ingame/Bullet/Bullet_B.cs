@@ -13,6 +13,8 @@ public abstract class Bullet_B : MonoBehaviour
     protected bool _isConflictReturned;
     public float GuardBreakValue => _bulletData.GuardBreakValue;
 
+    public float AttackPower => _bulletData.AttackPower;
+
     private void OnEnable() => OnEnable_B();
 
     private void OnDisable() => OnDisable_B();
@@ -40,6 +42,7 @@ public abstract class Bullet_B : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.name);
         if (other.CompareTag("IgnoreCollider")) return;
         Conflict(other);
     }
@@ -48,10 +51,6 @@ public abstract class Bullet_B : MonoBehaviour
     /// </summary>
     /// <param name="other"></param>
     protected abstract void Conflict(Collider other);
-    protected virtual void AddDamage(float damage, IFightable fightable)
-    {
-        fightable.HitDamage(damage);
-    }
     public virtual void SetTarget(IFightable target)
     {
         _target = target;

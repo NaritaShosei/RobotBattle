@@ -7,17 +7,17 @@ namespace Script.System.Ingame
     {
         protected DataType _data;
         [SerializeField] Transform _targetCenter;
-        public void HitDamage(float damage)
+        [SerializeField] DamageReactionCollider _damageReactionCollider;
+        public void HitDamage(Collider other)
         {
-            _data.Health -= damage;
-            if (_data.Health <= 0)
+            if (other.TryGetComponent(out Bullet_B component))
             {
-                Debug.Log("Dead");
+                _data.Health -= component.AttackPower;
+                if (_data.Health <= 0)
+                {
+                    Dead();
+                }
             }
-        }
-        public void HitHeal(float heal)
-        {
-            _data.Health += heal;
         }
         /// <summary>
         /// 増やすときは正の値、減らすときは負の値
@@ -30,14 +30,8 @@ namespace Script.System.Ingame
             return true;
         }
 
-        protected virtual void OnHealthChanged(float health)
-        {
-
-        }
-        protected virtual void OnGaugeChanged(float value)
-        {
-
-        }
+        protected virtual void OnHealthChanged(float health) { }
+        protected virtual void OnGaugeChanged(float value) { }
 
         /// <summary>
         /// データを初期化する
@@ -51,15 +45,29 @@ namespace Script.System.Ingame
             _data.Gauge = data.MaxGauge;
             _data.OnGaugeChanged += OnGaugeChanged;
         }
+
+        protected virtual void Start_B()
+        {
+            Debug.LogWarning("Start");
+            _damageReactionCollider.OnTriggerEnterEvent += HitDamage;
+        }
+
         protected virtual void OnDestroyMethod()
         {
             _data = null;
             if (_data == null) return;
             _data.OnHealthChanged -= OnHealthChanged;
+            _damageReactionCollider.OnTriggerEnterEvent -= HitDamage;
         }
         private void OnDestroy()
         {
             OnDestroyMethod();
+        }
+
+
+        protected virtual void Dead()
+        {
+            Debug.Log($"{gameObject.name}が死亡しました");
         }
 
         public Transform GetTargetCenter()
@@ -77,7 +85,6 @@ namespace Script.System.Ingame
     {
         Transform GetTransform();
         Transform GetTargetCenter();
-        void HitDamage(float damage);
-        void HitHeal(float heal);
+        void HitDamage(Collider other);
     }
 }

@@ -5,12 +5,15 @@ using UnityEngine;
 public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
     where DataType : CharacterData_B
 {
+    [SerializeField]
+    ScoreData _scoreData;
     public Action<PlayerController> OnAttackEvent;
     protected PlayerController _player;
     protected Camera _camera;
     protected void OnStart()
     {
         _camera = Camera.main;
+        Start_B();
     }
 
     public bool IsTargetInView()
@@ -32,6 +35,13 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
     public void RemoveOnAttackEvent(Action<PlayerController> action)
     {
         OnAttackEvent -= action;
+    }
+
+    protected override void Dead()
+    {
+        base.Dead();
+        ScoreManager.instance.AddScore(_scoreData.Score);
+        gameObject.SetActive(false);
     }
 
 }

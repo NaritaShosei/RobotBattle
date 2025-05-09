@@ -367,8 +367,8 @@
                 },
                 {
                     "name": "",
-                    "id": "4a32f544-654c-4952-9617-a4c936bc3f70",
-                    "path": "<Gamepad>/leftShoulder",
+                    "id": "9c9b5af7-5ac1-451f-85ca-3d78777276ff",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

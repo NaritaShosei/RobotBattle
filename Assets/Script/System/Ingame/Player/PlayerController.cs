@@ -40,10 +40,13 @@ public class PlayerController : Character_B<PlayerData>
     bool _isDashed;
     bool _isBoost;
     bool _isGuard;
+
+    HPGaugePresenter _healthPresenter;
+    GaugePresenter _gaugePresenter;
+
     /// <summary>
     /// Debug用
     /// </summary>
-    [SerializeField] Text a;
     [SerializeField] Text b;
     void Start()
     {
@@ -52,12 +55,16 @@ public class PlayerController : Character_B<PlayerData>
         Initialize(_dataBase);
         _currentSpeed = _data.NormalSpeed;
         AddAction();
+        _healthPresenter = new HPGaugePresenter(GameUIManager.Instance.HPGaugeView);
+        _healthPresenter.Initialize(_data.Health);
+        _gaugePresenter = new GaugePresenter(GameUIManager.Instance.GaugeView);
+        _gaugePresenter.Initialize(_data.Gauge);
+        Start_B();
     }
 
     void Update()
     {
         //Debug用
-        a.text = "gauge" + _data.Gauge.ToString();
         b.text = "health" + _data.Health.ToString();
 
         _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
@@ -254,6 +261,16 @@ public class PlayerController : Character_B<PlayerData>
                 _isGuard = false;
             }
         }
+    }
+
+    protected override void OnHealthChanged(float health)
+    {
+        _healthPresenter.GaugeUpdate(health);
+    }
+
+    protected override void OnGaugeChanged(float value)
+    {
+        _gaugePresenter.GaugeUpdate(value);
     }
     private void OnDisable()
     {

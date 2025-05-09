@@ -38,10 +38,6 @@ public class ChaseBullet : Bullet_B
         EffectManager.Instance.PlayExplosion(transform.position);
         _isConflictReturned = true;
         gameObject.SetActive(false);
-        if (other.TryGetComponent(out IFightable component))
-        {
-            AddDamage(_bulletData.AttackPower, component);
-        }
     }
 
 }

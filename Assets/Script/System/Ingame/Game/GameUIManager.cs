@@ -10,6 +10,15 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] WeaponView _weaponView;
     public WeaponView WeaponView => _weaponView;
 
+    [SerializeField] HPGaugeView _hpgaugeView;
+    public HPGaugeView HPGaugeView => _hpgaugeView;
+
+    [SerializeField] GaugeView _gaugeView;
+    public GaugeView GaugeView => _gaugeView;
+
+    [SerializeField] ScoreView _scoreView;
+    public ScoreView ScoreView => _scoreView;
+
     private void Awake()
     {
         Instance = this;

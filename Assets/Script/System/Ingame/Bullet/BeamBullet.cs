@@ -8,10 +8,6 @@ public class BeamBullet : Bullet_B
     {
         EffectManager.Instance.PlayExplosion(transform.position);
         _isConflictReturned = true;
-        if (other.TryGetComponent(out IFightable component))
-        {
-            AddDamage(_bulletData.AttackPower, component);
-        }
         gameObject.SetActive(false);
     }
 

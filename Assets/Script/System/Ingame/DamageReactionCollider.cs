@@ -1,16 +1,13 @@
 ﻿using System;
 using UnityEngine;
 
-public class EnemyDodgeZone : MonoBehaviour
+public class DamageReactionCollider : MonoBehaviour
 {
-    [SerializeField]
-    Collider _collider;
-    public Collider Collider => _collider;
-
     public Action<Collider> OnTriggerEnterEvent;
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.LogError(other.name);
         OnTriggerEnterEvent?.Invoke(other);
     }
 }

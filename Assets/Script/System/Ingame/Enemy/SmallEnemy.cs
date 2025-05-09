@@ -24,7 +24,7 @@ public class SmallEnemy : Enemy_B<CharacterData_B>
         }
     }
 
-     void TargetSet(Collider other)
+    void TargetSet(Collider other)
     {
         if (other.TryGetComponent(out PlayerController player))
         {
@@ -32,11 +32,15 @@ public class SmallEnemy : Enemy_B<CharacterData_B>
         }
     }
 
-     void TargetUnset(Collider other)
+    void TargetUnset(Collider other)
     {
         if (other.TryGetComponent(out PlayerController player))
         {
             _player = null;
         }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.LogError("SmallEnemy" + _data.Health);
     }
 }
