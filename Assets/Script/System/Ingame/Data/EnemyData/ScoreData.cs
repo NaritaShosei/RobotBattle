@@ -4,7 +4,7 @@
 public class ScoreData : ScriptableObject
 {
     [SerializeField]
-    float _score;
+    int _score;
 
-    public float Score => _score;
+    public int Score => _score;
 }

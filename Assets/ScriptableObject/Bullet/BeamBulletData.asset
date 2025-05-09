@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 032255c9dd6f6d3448905a3b24f5d29a, type: 3}
   m_Name: BeamBulletData
   m_EditorClassIdentifier: 
-  _attackPower: 1
+  _attackPower: 10
   _guardBreakValue: 0
   _moveSpeed: 500
   _minDistance: 20
