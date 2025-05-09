@@ -47,7 +47,6 @@ public class PlayerController : Character_B<PlayerData>
     /// <summary>
     /// Debug用
     /// </summary>
-    [SerializeField] Text a;
     [SerializeField] Text b;
     void Start()
     {
@@ -60,12 +59,12 @@ public class PlayerController : Character_B<PlayerData>
         _healthPresenter.Initialize(_data.Health);
         _gaugePresenter = new GaugePresenter(GameUIManager.Instance.GaugeView);
         _gaugePresenter.Initialize(_data.Gauge);
+        Start_B();
     }
 
     void Update()
     {
         //Debug用
-        a.text = "gauge" + _data.Gauge.ToString();
         b.text = "health" + _data.Health.ToString();
 
         _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
