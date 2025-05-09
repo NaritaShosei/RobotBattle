@@ -42,7 +42,6 @@ public abstract class Bullet_B : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name);
         if (other.CompareTag("IgnoreCollider")) return;
         Conflict(other);
     }

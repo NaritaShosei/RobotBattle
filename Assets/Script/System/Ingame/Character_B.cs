@@ -48,7 +48,6 @@ namespace Script.System.Ingame
 
         protected virtual void Start_B()
         {
-            Debug.LogWarning("Start");
             _damageReactionCollider.OnTriggerEnterEvent += HitDamage;
         }
 

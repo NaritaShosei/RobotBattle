@@ -7,7 +7,6 @@ public class DamageReactionCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.LogError(other.name);
         OnTriggerEnterEvent?.Invoke(other);
     }
 }
