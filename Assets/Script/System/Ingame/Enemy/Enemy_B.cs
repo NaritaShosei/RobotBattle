@@ -41,6 +41,7 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
     {
         base.Dead();
         ScoreManager.instance.AddScore(_scoreData.Score);
+        gameObject.SetActive(false);
     }
 
 }
