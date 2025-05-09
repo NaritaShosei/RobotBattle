@@ -7,9 +7,6 @@ public class EnemyDodgeZone : MonoBehaviour
     Collider _collider;
     public Collider Collider => _collider;
 
-    bool _isDodge;
-    public bool IsDodge => _isDodge;
-
     public Action<Collider> OnTriggerEnterEvent;
 
     private void OnTriggerEnter(Collider other)

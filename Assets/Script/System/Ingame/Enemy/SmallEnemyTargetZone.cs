@@ -8,10 +8,10 @@ public class SmallEnemyTargetZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        OnTriggerEnterEvent.Invoke(other);
+        OnTriggerEnterEvent?.Invoke(other);
     }
     private void OnTriggerExit(Collider other)
     {
-        OnTriggerExitEvent.Invoke(other);
+        OnTriggerExitEvent?.Invoke(other);
     }
 }

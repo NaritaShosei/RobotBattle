@@ -13,6 +13,7 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
     protected void OnStart()
     {
         _camera = Camera.main;
+        Start_B();
     }
 
     public bool IsTargetInView()
