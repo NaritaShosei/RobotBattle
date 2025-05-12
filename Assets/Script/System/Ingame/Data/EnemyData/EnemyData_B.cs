@@ -27,8 +27,8 @@ public class EnemyData_B : CharacterData_SB
     public float MinDistance => _minDistance;
 
     [SerializeField, Header("ダッシュに移行する距離")]
-    float _dashMInDistance = 200;
-    public float DashMinDistance => _dashMInDistance;
+    float _dashMinDistance = 200;
+    public float DashMinDistance => _dashMinDistance;
     [SerializeField, Header("攻撃に移行する距離")]
     float _attackDistance = 200;
     public float AttackDistance => _attackDistance;

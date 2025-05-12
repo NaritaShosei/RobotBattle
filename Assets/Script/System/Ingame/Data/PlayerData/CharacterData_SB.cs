@@ -35,6 +35,9 @@ public class CharacterData_SB : CharacterData_B
 
     [SerializeField, Header("1秒間に回復するゲージ量")]
     private float _recoveryValue = 30;
+    /// <summary>
+    /// 1秒間に回復するゲージ量
+    /// </summary>
     public float RecoveryValue => _recoveryValue;
 
     [SerializeField, Header("ジャンプの消費ゲージ量")]
