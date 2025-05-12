@@ -8,7 +8,7 @@ namespace Script.System.Ingame
         protected DataType _data;
         [SerializeField] Transform _targetCenter;
         [SerializeField] DamageReactionCollider _damageReactionCollider;
-        public void HitDamage(Collider other)
+        public virtual void HitDamage(Collider other)
         {
             if (other.TryGetComponent(out Bullet_B component))
             {
@@ -48,7 +48,6 @@ namespace Script.System.Ingame
 
         protected virtual void Start_B()
         {
-            Debug.LogWarning("Start");
             _damageReactionCollider.OnTriggerEnterEvent += HitDamage;
         }
 

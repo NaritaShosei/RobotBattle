@@ -17,7 +17,7 @@ MonoBehaviour:
   _normalSpeed: 50
   _boostSpeed: 150
   _jumpPower: 125
-  _floatPower: 200
+  _floatPower: 500
   _dashDistance: 100
   _dashTime: 0.5
   _fallSpeed: 20
