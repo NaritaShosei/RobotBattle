@@ -35,6 +35,8 @@ public class BossEnemy : Enemy_B<EnemyData_B>
         //Debug用
         a.text = _data.Gauge.ToString();
 
+        GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
+
         var dirToPlayer = _player.transform.position - transform.position;
         transform.forward = new Vector3(dirToPlayer.x, 0, dirToPlayer.z);
 
@@ -61,25 +63,10 @@ public class BossEnemy : Enemy_B<EnemyData_B>
                 _isDodged = false;
             }
         }
-        else
-        {
-        }
+
         if (CanMove)
         {
             Move(_player.transform.position);
-        }
-
-        if (_canJump && !_isJumping && _player.transform.position.y > transform.position.y)
-        {
-            StartJump();
-        }
-        if (_isJumping)
-        {
-
-            if (_data.JumpTimer + _data.JumpDuration <= Time.time)
-            {
-                _isJumping = false;
-            }
         }
         if (_data.JumpTimer + _data.JumpDuration + _data.JumpInterval <= Time.time)
         {
@@ -94,9 +81,33 @@ public class BossEnemy : Enemy_B<EnemyData_B>
     private void FixedUpdate()
     {
         _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
+
+        if (_canJump && !_isJumping && _player.transform.position.y > transform.position.y)
+        {
+            _isJumping = true;
+            _canJump = false;
+        }
+
         if (_isJumping)
         {
-            _rb.AddForce(Vector3.up * _data.JumpPower, ForceMode.Acceleration); // Impulseより連続的に加速感ある
+            if (_player.transform.position.y > transform.position.y)
+            {
+                _rb.AddForce(Vector3.up * _data.FloatPower, ForceMode.Acceleration); // Impulseより連続的に加速感ある
+
+                if (!GaugeValueChange(-_data.JumpValue * Time.fixedDeltaTime))
+                {
+                    _isJumping = false;
+                    _data.JumpTimer = Time.time;
+                }
+            }
+            else
+            {
+                _isJumping = false;
+            }
+        }
+        if (!_canJump && (Time.time >= _data.JumpInterval + _data.JumpTimer))
+        {
+            _canJump = true;
         }
     }
     void Move(Vector3 target)
@@ -126,15 +137,18 @@ public class BossEnemy : Enemy_B<EnemyData_B>
         _data.DashTimer = 0;
         _startPos = transform.position;
         //カメラの左側にいたら右に避ける、右側にいたら左に避ける
-        var dir = _camera.WorldToViewportPoint(transform.position).x <= 0.5f ? _camera.transform.right : -_camera.transform.right;
-        _targetPos = transform.position + dir * (_data.DashDistance);
-    }
-    void StartJump()
-    {
-        if (!GaugeValueChange(-_data.JumpValue)) return;
-        _isJumping = true;
-        _canJump = false;
-        _data.JumpTimer = Time.time;
+        Vector3 dir = _camera.WorldToViewportPoint(transform.position).x <= 0.5f ? _camera.transform.right : -_camera.transform.right;
+        Vector3 candidateTarget = transform.position + dir * _data.DashDistance;
+
+        Vector3 viewportPos = _camera.WorldToViewportPoint(candidateTarget);
+
+        if (viewportPos.x < 0 || viewportPos.x > 1)
+        {
+            viewportPos.x = Mathf.Clamp(viewportPos.x, 0.1f, 0.9f);
+            candidateTarget = _camera.ViewportToWorldPoint(viewportPos);
+        }
+        Debug.Log(viewportPos.x);
+        _targetPos = candidateTarget;
     }
 
     /// <summary>
