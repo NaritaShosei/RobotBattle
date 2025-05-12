@@ -40,7 +40,6 @@ public class BossEnemy : Enemy_B<EnemyData_B>
 
         _playerDistance = dirToPlayer.magnitude;
 
-        _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
 
         if (IsAttack)
         {
@@ -76,7 +75,6 @@ public class BossEnemy : Enemy_B<EnemyData_B>
         }
         if (_isJumping)
         {
-            _rb.AddForce(Vector3.up * _data.JumpPower, ForceMode.Acceleration); // Impulseより連続的に加速感ある
 
             if (_data.JumpTimer + _data.JumpDuration <= Time.time)
             {
@@ -93,7 +91,14 @@ public class BossEnemy : Enemy_B<EnemyData_B>
             _dodgeZone.Collider.enabled = true;
         }
     }
-
+    private void FixedUpdate()
+    {
+        _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
+        if (_isJumping)
+        {
+            _rb.AddForce(Vector3.up * _data.JumpPower, ForceMode.Acceleration); // Impulseより連続的に加速感ある
+        }
+    }
     void Move(Vector3 target)
     {
         Vector3 dir = target - transform.position;
