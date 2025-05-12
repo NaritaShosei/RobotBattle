@@ -260,6 +260,12 @@ public class PlayerController : Character_B<PlayerData>
         }
     }
 
+    public override void HitDamage(Collider other)
+    {
+        if (_isGuard) return;
+        base.HitDamage(other);
+    }
+
     protected override void OnHealthChanged(float health)
     {
         _healthPresenter.GaugeUpdate(health);
