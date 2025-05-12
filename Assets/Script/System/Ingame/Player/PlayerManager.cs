@@ -5,14 +5,16 @@ public class PlayerManager : MonoBehaviour
 {
 
     public PlayerState State { get; private set; } = PlayerState.Idle;
-
+    /// <summary>
+    /// 状態遷移時に呼び出すAction
+    /// UIとかに使うかもしれない
+    /// </summary>
     Action<PlayerState, PlayerState> OnStateChanged;
 
     public void SetState(PlayerState newState)
     {
         if (State == newState)
         {
-            Debug.Log("同じ状態に遷移しようとしています");
             return;
         }
 
@@ -21,13 +23,11 @@ public class PlayerManager : MonoBehaviour
         //攻撃中はガードできない
         if (State == PlayerState.Attack && newState == PlayerState.Guard)
         {
-            Debug.Log("攻撃");
             canTransition = false;
         }
 
         if (State == PlayerState.Guard && newState == PlayerState.Attack)
         {
-            Debug.Log("ガード");
             canTransition = false;
         }
 
@@ -43,7 +43,6 @@ public class PlayerManager : MonoBehaviour
 
     public bool IsState(PlayerState state)
     {
-        Debug.Log($"State => {State} : state=> {state}");
         return State == state;
     }
 }

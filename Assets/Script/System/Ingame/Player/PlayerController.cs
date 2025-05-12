@@ -60,7 +60,6 @@ public class PlayerController : Character_B<PlayerData>
 
     void Update()
     {
-        Debug.LogError(_isGuard);
         if (!_isDashed && !_isJumped)
         {
             GaugeValueChange(_data.RecoveryValue * Time.deltaTime);

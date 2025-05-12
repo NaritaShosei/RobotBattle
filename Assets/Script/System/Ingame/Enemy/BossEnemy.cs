@@ -147,7 +147,6 @@ public class BossEnemy : Enemy_B<EnemyData_B>
             viewportPos.x = Mathf.Clamp(viewportPos.x, 0.1f, 0.9f);
             candidateTarget = _camera.ViewportToWorldPoint(viewportPos);
         }
-        Debug.Log(viewportPos.x);
         _targetPos = candidateTarget;
     }
 
