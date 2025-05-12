@@ -44,10 +44,6 @@ public class PlayerController : Character_B<PlayerData>
     HPGaugePresenter _healthPresenter;
     GaugePresenter _gaugePresenter;
 
-    /// <summary>
-    /// Debug用
-    /// </summary>
-    [SerializeField] Text b;
     void Start()
     {
         _input = ServiceLocator.GetInstance<InputBuffer>();
@@ -64,11 +60,7 @@ public class PlayerController : Character_B<PlayerData>
 
     void Update()
     {
-        //Debug用
-        b.text = "health" + _data.Health.ToString();
-
-        _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
-
+        Debug.LogError(_isGuard);
         if (!_isDashed && !_isJumped)
         {
             GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
@@ -86,10 +78,6 @@ public class PlayerController : Character_B<PlayerData>
             if (!GaugeValueChange(-_data.JumpValue * Time.deltaTime))
             {
                 _isJumped = false;
-            }
-            else
-            {
-                _rb.AddForce(Vector3.up * _data.FloatPower, ForceMode.Acceleration);
             }
         }
 
@@ -133,10 +121,14 @@ public class PlayerController : Character_B<PlayerData>
 
     private void FixedUpdate()
     {
-
+        _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
         if (_isDashed)
         {
             _rb.MovePosition(_newPos);
+        }
+        if (_isJumped)
+        {
+            _rb.AddForce(Vector3.up * _data.FloatPower, ForceMode.Acceleration);
         }
     }
 
@@ -242,13 +234,18 @@ public class PlayerController : Character_B<PlayerData>
     {
         if (context.phase == InputActionPhase.Started)
         {
-            if (_data.Gauge >= _data.GuardMinValue)
+            //ゲージが残ってるかつIdle状態のときのみガード可能
+            if (_data.Gauge >= _data.GuardMinValue && _playerManager.IsState(PlayerState.Idle))
             {
+                Debug.Log("ガード開始");
                 _isGuard = true;
+                _playerManager.SetState(PlayerState.Guard);
             }
         }
-        if (context.phase == InputActionPhase.Canceled)
+        if (context.phase == InputActionPhase.Canceled && _playerManager.IsState(PlayerState.Guard))
         {
+            Debug.Log("ガード終了");
+            _playerManager.SetState(PlayerState.Idle);
             _isGuard = false;
         }
     }

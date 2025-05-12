@@ -36,22 +36,44 @@ public class PlayerAttack : MonoBehaviour
     {
         _presenter.CountUpdate(_currentWeapon.Count);
     }
-    //TODO:武器変更処理はできてはいるが、直観的ではない部分があるので要・修正
+    //TODO:すぐ切り替わってしまうので遅らせる処理が必要
     void WeaponChange(InputAction.CallbackContext context)
     {
-        _currentWeapon.IsAttack = false;
-        Debug.LogWarning("武装変更");
-        _index++;
-        _currentWeapon = _weapons[_index % _weapons.Count];
-        _currentWeapon.IsAttack = _isInput;
+        if (_playerManager.IsState(PlayerState.Idle))
+        {
+            _currentWeapon.IsAttack = false;
+            Debug.LogWarning("武装変更");
+            _index++;
+            _currentWeapon = _weapons[_index % _weapons.Count];
+            _currentWeapon.IsAttack = _isInput;
 
-        _presenter.SwapWeapon();
+            _presenter.SwapWeapon();
+        }
     }
 
     void Attack(InputAction.CallbackContext context)
     {
         _isInput = context.phase == InputActionPhase.Started;
-        _currentWeapon.SetAttack(_isInput);
+
+        if (_playerManager.IsState(PlayerState.Guard))
+        {
+            Debug.Log("Guard Now !!");
+            return;
+        }
+
+        if (_playerManager.IsState(PlayerState.Idle) && _isInput)
+        {
+            _playerManager.SetState(PlayerState.Attack);
+
+            _currentWeapon.SetAttack(_isInput);
+        }
+
+        else if (_playerManager.IsState(PlayerState.Attack) && !_isInput)
+        {
+            _playerManager.SetState(PlayerState.Idle);
+
+            _currentWeapon.SetAttack(_isInput);
+        }
     }
 
     //TODO:リロード処理を呼び出す
