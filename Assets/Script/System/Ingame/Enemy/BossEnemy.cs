@@ -68,10 +68,6 @@ public class BossEnemy : Enemy_B<EnemyData_B>
         {
             Move(_player.transform.position);
         }
-        if (_data.JumpTimer + _data.JumpDuration + _data.JumpInterval <= Time.time)
-        {
-            _canJump = true;
-        }
 
         if (_data.DodgeTimer + _data.DodgeInterval <= Time.time)
         {

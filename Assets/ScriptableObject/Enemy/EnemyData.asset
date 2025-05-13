@@ -28,5 +28,5 @@ MonoBehaviour:
   _jumpDuration: 0.5
   _jumInterval: 0.5
   _minDistance: 100
-  _dashMInDistance: 200
+  _dashMinDistance: 200
   _attackDistance: 200
