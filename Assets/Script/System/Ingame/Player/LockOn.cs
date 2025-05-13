@@ -22,20 +22,18 @@ public class LockOn : MonoBehaviour
     Camera _camera;
 
     IEnemy _lockOnEnemy;
-    List<IEnemy> _enemies;
 
     void Start()
     {
         _camera = Camera.main;
-        _enemies = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IEnemy>().ToList();
     }
 
     void Update()
     {
         float bestScore = float.MinValue;
         _lockOnEnemy = null;
-
-        foreach (var enemy in _enemies.Where(x => x.IsTargetInView()))
+        //EnemyListをEnemyManagerから参照する方針に変更する
+        foreach (var enemy in EnemyManager.Instance.Enemies.Where(x => x.IsTargetInView()))
         {
             Vector3 enemyPos = enemy.GetTargetCenter().position;
 

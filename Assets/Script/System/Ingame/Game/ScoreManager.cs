@@ -5,10 +5,10 @@ public class ScoreManager : MonoBehaviour
 
     ScorePresenter _presenter;
     int _score;
-    public static ScoreManager instance { get; private set; }
+    public static ScoreManager Instance { get; private set; }
     void Start()
     {
-        instance = this;
+        Instance = this;
         _presenter = new ScorePresenter(GameUIManager.Instance.ScoreView);
         _presenter.ScoreUpdate(_score);
     }
