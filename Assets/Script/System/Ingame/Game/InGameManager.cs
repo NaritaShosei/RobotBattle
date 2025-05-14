@@ -20,7 +20,6 @@ public class InGameManager : MonoBehaviour
         _timePresenter = new TimePresenter(model, view, _player);
     }
 
-    // Update is called once per frame
     void Update()
     {
         _timePresenter?.Update(Time.deltaTime);
