@@ -22,6 +22,9 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] GameResultView _gameResultView;
     public GameResultView GameResultView => _gameResultView;
 
+    [SerializeField] CrosshairView _crosshairView;
+    public CrosshairView CrosshairView => _crosshairView;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
