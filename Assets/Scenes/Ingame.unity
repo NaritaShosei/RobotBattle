@@ -1729,7 +1729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1155244318}
-  _maxTime: 1
+  _maxTime: 60
 --- !u!4 &1177678969
 Transform:
   m_ObjectHideFlags: 0

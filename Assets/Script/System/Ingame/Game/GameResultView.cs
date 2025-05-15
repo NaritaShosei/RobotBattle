@@ -49,6 +49,10 @@ public class GameResultView : MonoBehaviour
     {
         _timeText.enabled = true;
         _gameOverTypeText.enabled = false;
-        _timeText.text = time.ToString();
+
+        int minutes = Mathf.FloorToInt(time / 60);
+        int seconds = Mathf.FloorToInt(time % 60);
+
+        _timeText.text = $"{minutes:00}:{seconds:00}";
     }
 }

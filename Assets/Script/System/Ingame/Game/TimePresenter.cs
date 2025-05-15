@@ -22,6 +22,12 @@ public class TimePresenter
             return;
         }
 
+        if (EnemyManager.Instance.IsEnemyAllDefeated)
+        {
+            _resultPresenter.SetGameClear(_model.CurrentTime, ScoreManager.Instance.Score);
+            return;
+        }
+
         _model.UpdateTime(deltaTime);
         UpdateView();
 
