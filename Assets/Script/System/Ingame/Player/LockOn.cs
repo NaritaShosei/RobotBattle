@@ -23,9 +23,12 @@ public class LockOn : MonoBehaviour
 
     IEnemy _lockOnEnemy;
 
+    CrosshairPresenter _presenter;
     void Start()
     {
         _camera = Camera.main;
+        _presenter = new CrosshairPresenter(GameUIManager.Instance.CrosshairView);
+        _presenter.Initialize();
     }
 
     void Update()
@@ -73,6 +76,15 @@ public class LockOn : MonoBehaviour
                 bestScore = score;
                 _lockOnEnemy = enemy;
             }
+
+        }
+        if (_lockOnEnemy != null)
+        {
+            _presenter.UpdateLockOn(true, _lockOnEnemy.GetTargetCenter().position);
+        }
+        else
+        {
+            _presenter.UpdateLockOn(false, Vector3.zero);
         }
     }
 
