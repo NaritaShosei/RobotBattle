@@ -16,6 +16,11 @@ public class GameResultModel
         GameOverType = gameOverType;
     }
 
+    public void SetGameClear()
+    {
+        ResultType = ResultType.GameClear;
+    }
+
     public void SetTime(float time)
     {
         ClearTime = time;
