@@ -20,7 +20,6 @@ public class BossEnemy : Enemy_B<EnemyData_B>
     bool CanMove => _data.MinDistance <= _playerDistance;
     bool IsDash => _data.DashMinDistance <= _playerDistance;
     bool IsAttack => _data.AttackDistance >= _playerDistance;
-    [SerializeField] Text a;
     void Start()
     {
         OnStart();
@@ -32,8 +31,6 @@ public class BossEnemy : Enemy_B<EnemyData_B>
 
     private void Update()
     {
-        //Debug用
-        a.text = _data.Gauge.ToString();
 
         GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
 

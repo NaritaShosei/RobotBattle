@@ -5,6 +5,7 @@ public class ScoreManager : MonoBehaviour
 
     ScorePresenter _presenter;
     int _score;
+    public int Score => _score;
     public static ScoreManager Instance { get; private set; }
     void Start()
     {

@@ -10,14 +10,21 @@ public class InGameManager : MonoBehaviour
     int _maxTime;
 
     TimePresenter _timePresenter;
+    GameResultPresenter _gameResultPresenter;
 
     void Start()
     {
-        var model = new TimeModel(_maxTime);
+        var timeModel = new TimeModel(_maxTime);
 
-        var view = GameUIManager.Instance.TimeView;
+        var timeView = GameUIManager.Instance.TimeView;
 
-        _timePresenter = new TimePresenter(model, view, _player);
+        var resultModel = new GameResultModel();
+
+        var resultView = GameUIManager.Instance.GameResultView;
+
+        _gameResultPresenter = new GameResultPresenter(resultModel, resultView);
+
+        _timePresenter = new TimePresenter(timeModel, timeView, _player, _gameResultPresenter);
     }
 
     void Update()
