@@ -265,6 +265,12 @@ public class PlayerController : Character_B<PlayerData>
         base.HitDamage(other);
     }
 
+    protected override void Dead()
+    {
+        base.Dead();
+        _playerManager.SetState(PlayerState.Dead);
+    }
+
     protected override void OnHealthChanged(float health)
     {
         _healthPresenter.GaugeUpdate(health);

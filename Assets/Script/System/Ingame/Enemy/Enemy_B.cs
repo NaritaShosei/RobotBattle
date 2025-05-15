@@ -40,7 +40,8 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
     protected override void Dead()
     {
         base.Dead();
-        ScoreManager.instance.AddScore(_scoreData.Score);
+        ScoreManager.Instance.AddScore(_scoreData.Score);
+        EnemyManager.Instance.Remove(this);
         gameObject.SetActive(false);
     }
 

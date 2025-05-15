@@ -19,8 +19,17 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] ScoreView _scoreView;
     public ScoreView ScoreView => _scoreView;
 
+    [SerializeField] GameResultView _gameResultView;
+    public GameResultView GameResultView => _gameResultView;
+
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+
         Instance = this;
     }
 }
