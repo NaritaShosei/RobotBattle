@@ -1,5 +1,4 @@
-﻿using SymphonyFrameWork.System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class LongRangeAttack_B : MonoBehaviour

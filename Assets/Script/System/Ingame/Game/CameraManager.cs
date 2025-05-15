@@ -1,7 +1,6 @@
 ﻿using SymphonyFrameWork.System;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class CameraManager : MonoBehaviour
 {
