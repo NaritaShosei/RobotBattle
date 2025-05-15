@@ -25,6 +25,7 @@ public class TimePresenter
         if (_player.State == PlayerState.Dead)
         {
             _resultPresenter.SetGameOver(GameOverType.Death, ScoreManager.Instance.Score);
+            return;
         }
 
         if (EnemyManager.Instance.IsEnemyAllDefeated)
