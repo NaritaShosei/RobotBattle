@@ -124,6 +124,11 @@ public class LockOn : MonoBehaviour
         return _lockOnEnemy;
     }
 
+    public Vector2 GetCrosshairPos()
+    {
+        return _presenter.GetCrosshairPos();
+    }
+
     void OnDrawGizmos()
     {
         if (_camera == null) _camera = Camera.main;

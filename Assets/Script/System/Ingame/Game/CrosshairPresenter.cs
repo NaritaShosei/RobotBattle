@@ -24,4 +24,9 @@ public class CrosshairPresenter
         }
     }
 
+    public Vector2 GetCrosshairPos()
+    {
+        return _view.CrosshairPos;
+    }
+
 }

@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerWeapon : LongRangeAttack_B
 {
     [SerializeField]
+    Transform _player;
+
+    [SerializeField]
     Sprite _weaponIcon;
     public Sprite Icon => _weaponIcon;
 
@@ -13,6 +16,8 @@ public class PlayerWeapon : LongRangeAttack_B
     [SerializeField]
     LockOn _lockOn;
 
+    Camera _camera;
+
     bool _isAttack;
     bool _isReload;
     public bool IsAttack { get => _isAttack; set => _isAttack = value; }
@@ -20,6 +25,7 @@ public class PlayerWeapon : LongRangeAttack_B
     void Start()
     {
         Start_B();
+        _camera = Camera.main;
     }
 
     void Update()
@@ -39,13 +45,33 @@ public class PlayerWeapon : LongRangeAttack_B
 
                     var enemy = _lockOn.GetTarget();
 
-                    //TODO:クロスヘアの座標からRayCastを飛ばして、その方向に弾が向くようにする
-                    if (enemy == null)
-                    {
-                        bullet.transform.forward = transform.forward;
-                    }
                     bullet.SetTarget(enemy);
                     _count--;
+
+                    if (enemy == null)
+                    {
+                        Vector2 crosshairPos = _lockOn.GetCrosshairPos();
+
+                        Ray ray = _camera.ScreenPointToRay(crosshairPos);
+                        float dis = 1000;
+
+                        if (Physics.Raycast(ray, out RaycastHit hit, dis))
+                        {
+                            float playerDis = Vector3.Distance(ray.origin, _player.position);
+                            if (hit.distance > playerDis)
+                            {
+                                bullet.transform.forward = hit.point - _muzzle.transform.position;
+                                return;
+                            }
+                        }
+                        Vector3 origin = ray.origin;
+                        Vector3 direction = ray.direction.normalized;
+
+                        Vector3 endPos = origin + direction * dis;
+
+                        bullet.transform.forward = endPos - _muzzle.transform.position;
+                    }
+
                 }
             }
         }
