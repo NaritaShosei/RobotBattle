@@ -17,9 +17,14 @@ public class TimePresenter
 
     public void Update(float deltaTime)
     {
-        if (_player.State == PlayerState.Dead || _model.IsTimeOver)
+        if (_model.IsTimeOver)
         {
             return;
+        }
+
+        if (_player.State == PlayerState.Dead)
+        {
+            _resultPresenter.SetGameOver(GameOverType.Death, ScoreManager.Instance.Score);
         }
 
         if (EnemyManager.Instance.IsEnemyAllDefeated)
