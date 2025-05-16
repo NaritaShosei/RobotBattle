@@ -184,7 +184,6 @@ MonoBehaviour:
   _dataBase: {fileID: 11400000, guid: e850416b047e55047a39aa83ef92063e, type: 2}
   _dodgeZone: {fileID: 2003289670768544717}
   _bulletParent: {fileID: 0}
-  a: {fileID: 0}
 --- !u!114 &838447219257471581
 MonoBehaviour:
   m_ObjectHideFlags: 0

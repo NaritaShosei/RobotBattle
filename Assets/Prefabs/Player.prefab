@@ -374,7 +374,6 @@ MonoBehaviour:
   _playerManager: {fileID: 3745475575074223026}
   _dataBase: {fileID: 11400000, guid: 5b581689816f33d4b8b93f4429a042da, type: 2}
   _collider: {fileID: 2090573823658293401}
-  b: {fileID: 0}
 --- !u!114 &4026496614081201743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,6 +409,7 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 256
+  _player: {fileID: 7053778544467440685}
   _weaponIcon: {fileID: 21300000, guid: afcc63084ae8abc48bb18daf9be92d68, type: 3}
   _lockOn: {fileID: 3004881229010939093}
 --- !u!114 &3579147038130567872
@@ -431,6 +431,7 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 256
+  _player: {fileID: 7053778544467440685}
   _weaponIcon: {fileID: 21300000, guid: 7347b64c685fc3648afd309f7eedd5e1, type: 3}
   _lockOn: {fileID: 3004881229010939093}
 --- !u!114 &3004881229010939093
