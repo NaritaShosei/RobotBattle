@@ -1676,10 +1676,6 @@ PrefabInstance:
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 7026685107550484750, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
-      propertyPath: a
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7026685107550484750, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
       propertyPath: _bulletParent
       value: 
       objectReference: {fileID: 104793615}
@@ -2628,11 +2624,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1649777917}
   m_CullTransparentMesh: 1
---- !u!4 &1773201717 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7053778544467440685, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
-  m_PrefabInstance: {fileID: 3019013742801692727}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1897281093
 GameObject:
   m_ObjectHideFlags: 0
@@ -3327,10 +3318,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1428941960916367485, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
-      propertyPath: _player
-      value: 
-      objectReference: {fileID: 1773201717}
-    - target: {fileID: 1428941960916367485, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: _bulletParent
       value: 
       objectReference: {fileID: 104793615}
@@ -3338,14 +3325,6 @@ PrefabInstance:
       propertyPath: _bulletParent
       value: 
       objectReference: {fileID: 104793615}
-    - target: {fileID: 3573825822341839908, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
-      propertyPath: b
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3579147038130567872, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
-      propertyPath: _player
-      value: 
-      objectReference: {fileID: 1773201717}
     - target: {fileID: 3579147038130567872, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: _bulletParent
       value: 
