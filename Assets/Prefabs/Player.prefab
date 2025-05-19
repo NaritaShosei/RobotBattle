@@ -374,6 +374,7 @@ MonoBehaviour:
   _playerManager: {fileID: 3745475575074223026}
   _dataBase: {fileID: 11400000, guid: 5b581689816f33d4b8b93f4429a042da, type: 2}
   _collider: {fileID: 2090573823658293401}
+  _rotateSpeed: 10
 --- !u!114 &4026496614081201743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,7 +460,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7891633603548667430}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: e57e6c48569e94f4aa3627fbd035dacc, type: 2}
   m_CullingMode: 0
@@ -879,7 +880,8 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e57e6c48569e94f4aa3627fbd035dacc, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8155533566884809010, guid: 7db4fdf40e93e1f46bfd95dd54089326, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8155533566875756218, guid: 7db4fdf40e93e1f46bfd95dd54089326, type: 3}
