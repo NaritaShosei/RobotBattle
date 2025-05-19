@@ -12,6 +12,10 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     List<PlayerWeapon> _weapons = new();
 
+
+    [SerializeField]
+    AnimationController _anim;
+
     PlayerWeapon _currentWeapon;
     int _index;
     InputBuffer _input;
@@ -61,19 +65,27 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
 
+        //攻撃開始
         if (_playerManager.IsState(PlayerState.Idle) && _isInput)
         {
             _playerManager.SetState(PlayerState.Attack);
 
-            _currentWeapon.SetAttack(_isInput);
+            _anim.SetBool("IsMissileAttack", true);
         }
 
+        //攻撃終了
         else if (_playerManager.IsState(PlayerState.Attack) && !_isInput)
         {
             _playerManager.SetState(PlayerState.Idle);
 
-            _currentWeapon.SetAttack(_isInput);
+            _anim.SetBool("IsMissileAttack", false);
         }
+    }
+
+    //AnimationEventで呼び出す、攻撃開始、終了の処理
+    void IsAttack()
+    {
+        _currentWeapon.SetAttack(_isInput);
     }
 
     //TODO:リロード処理を呼び出す
