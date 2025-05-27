@@ -1,7 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
-
+using RootMotion.FinalIK;
+using static UnityEngine.EventSystems.EventTrigger;
 public class PlayerWeapon : LongRangeAttack_B
 {
     [SerializeField]
@@ -21,16 +22,21 @@ public class PlayerWeapon : LongRangeAttack_B
     bool _isAttack;
     bool _isReload;
     public bool IsAttack { get => _isAttack; set => _isAttack = value; }
+    IEnemy _enemy;
+    AimIK _aimIK;
 
     void Start()
     {
         Start_B();
         _camera = Camera.main;
+        _aimIK = _player.GetComponent<AimIK>();
     }
 
     void Update()
     {
+
         if (_isReload) return;
+
         if (IsAttack)
         {
             if (_bulletPool.Count != 0 && _count != 0)
@@ -43,12 +49,12 @@ public class PlayerWeapon : LongRangeAttack_B
                     bullet.gameObject.SetActive(true);
                     bullet.SetPosition(_muzzle.position);
 
-                    var enemy = _lockOn.GetTarget();
+                    _enemy = _lockOn.GetTarget();
 
-                    bullet.SetTarget(enemy);
+                    bullet.SetTarget(_enemy);
                     _count--;
 
-                    if (enemy == null)
+                    if (_enemy == null)
                     {
                         Vector2 crosshairPos = _lockOn.GetCrosshairPos();
 
@@ -71,9 +77,21 @@ public class PlayerWeapon : LongRangeAttack_B
 
                         bullet.transform.forward = endPos - _muzzle.transform.position;
                     }
-
                 }
             }
+        }
+    }
+    private void LateUpdate()
+    {
+        if (_isAttack)
+        {
+            _aimIK.enabled = true;
+            if (_enemy == null) return;
+            _aimIK.solver.target.position = _enemy.GetTargetCenter().position;
+        }
+        else
+        {
+            _aimIK.enabled = false;
         }
     }
 

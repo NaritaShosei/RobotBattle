@@ -71,6 +71,9 @@ public class PlayerAttack : MonoBehaviour
             _playerManager.SetState(PlayerState.Attack);
 
             _anim.SetBool("IsMissileAttack", true);
+            // レイヤー切り替え
+            _anim.SetWeight(AnimationLayer.Base, 0);
+            _anim.SetWeight(AnimationLayer.Attack, 1);
         }
 
         //攻撃終了
@@ -79,6 +82,9 @@ public class PlayerAttack : MonoBehaviour
             _playerManager.SetState(PlayerState.Idle);
 
             _anim.SetBool("IsMissileAttack", false);
+            _anim.SetWeight(AnimationLayer.Base, 1);
+            _anim.SetWeight(AnimationLayer.Attack, 0);
+            _currentWeapon.SetAttack(_isInput);
         }
     }
 
@@ -86,6 +92,7 @@ public class PlayerAttack : MonoBehaviour
     void IsAttack()
     {
         _currentWeapon.SetAttack(_isInput);
+        Debug.Log($"isInput => {_isInput}");
     }
 
     //TODO:リロード処理を呼び出す

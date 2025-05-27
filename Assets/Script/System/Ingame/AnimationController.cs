@@ -41,4 +41,15 @@ public class AnimationController : MonoBehaviour
         }
         // _animator.SetBool("死", true);
     }
+
+    public void SetWeight(AnimationLayer layer, float weight)
+    {
+        _animator.SetLayerWeight((int)layer, weight);
+    }
+
+}
+public enum AnimationLayer
+{
+    Base = 0,
+    Attack = 1,
 }
