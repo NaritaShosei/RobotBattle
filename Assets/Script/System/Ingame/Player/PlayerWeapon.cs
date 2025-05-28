@@ -24,6 +24,7 @@ public class PlayerWeapon : LongRangeAttack_B
     public bool IsAttack { get => _isAttack; set => _isAttack = value; }
     IEnemy _enemy;
     AimIK _aimIK;
+    Vector3 _aimTargetPos;
 
     void Start()
     {
@@ -50,7 +51,6 @@ public class PlayerWeapon : LongRangeAttack_B
                     bullet.SetPosition(_muzzle.position);
 
                     _enemy = _lockOn.GetTarget();
-
                     bullet.SetTarget(_enemy);
                     _count--;
 
@@ -67,6 +67,7 @@ public class PlayerWeapon : LongRangeAttack_B
                             if (hit.distance > playerDis)
                             {
                                 bullet.transform.forward = hit.point - _muzzle.transform.position;
+                                _aimTargetPos = hit.point;
                                 return;
                             }
                         }
@@ -76,7 +77,11 @@ public class PlayerWeapon : LongRangeAttack_B
                         Vector3 endPos = origin + direction * dis;
 
                         bullet.transform.forward = endPos - _muzzle.transform.position;
+
+                        _aimTargetPos = endPos;
+                        return;
                     }
+                    _aimTargetPos = _enemy.GetTransform().position;
                 }
             }
         }
@@ -86,8 +91,7 @@ public class PlayerWeapon : LongRangeAttack_B
         if (_isAttack)
         {
             _aimIK.enabled = true;
-            if (_enemy == null) return;
-            _aimIK.solver.target.position = _enemy.GetTargetCenter().position;
+            _aimIK.solver.target.position = _aimTargetPos;
         }
         else
         {

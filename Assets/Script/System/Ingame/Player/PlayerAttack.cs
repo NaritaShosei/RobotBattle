@@ -27,6 +27,7 @@ public class PlayerAttack : MonoBehaviour
     {
         _presenter = new WeaponPresenter(GameUIManager.Instance.WeaponView);
         _currentWeapon = _weapons[0];
+        _weapons[1].enabled = false;
         _input = ServiceLocator.GetInstance<InputBuffer>();
         _input.AttackAction.started += Attack;
         _input.AttackAction.canceled += Attack;
@@ -46,10 +47,12 @@ public class PlayerAttack : MonoBehaviour
         if (_playerManager.IsState(PlayerState.Idle))
         {
             _currentWeapon.IsAttack = false;
+            _currentWeapon.enabled = false;
             Debug.LogWarning("武装変更");
             _index++;
             _currentWeapon = _weapons[_index % _weapons.Count];
             _currentWeapon.IsAttack = _isInput;
+            _currentWeapon.enabled = true;
 
             _presenter.SwapWeapon();
         }
