@@ -1,4 +1,5 @@
-﻿using SymphonyFrameWork.System;
+﻿using RootMotion.FinalIK;
+using SymphonyFrameWork.System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,6 +23,7 @@ public class PlayerAttack : MonoBehaviour
     bool _isInput;
 
     WeaponPresenter _presenter;
+    AimIK _aimIK;
 
     void Start()
     {
@@ -33,13 +35,18 @@ public class PlayerAttack : MonoBehaviour
         _input.AttackAction.canceled += Attack;
         _input.WeaponChangeAction.started += WeaponChange;
         _input.ReloadAction.started += Reload;
-
+        _aimIK = GetComponent<AimIK>();
+        _aimIK.enabled = false;
         _presenter.Initialize(_currentWeapon, _weapons[1]);
     }
 
     void Update()
     {
         _presenter.CountUpdate(_currentWeapon.Count);
+    }
+    private void LateUpdate()
+    {
+        _aimIK.solver.target.position = _currentWeapon.GetTargetPos();
     }
     //TODO:すぐ切り替わってしまうので遅らせる処理が必要
     void WeaponChange(InputAction.CallbackContext context)
@@ -77,6 +84,7 @@ public class PlayerAttack : MonoBehaviour
             // レイヤー切り替え
             _anim.SetWeight(AnimationLayer.Base, 0);
             _anim.SetWeight(AnimationLayer.Attack, 1);
+            _currentWeapon.IKEnable(true);
         }
 
         //攻撃終了
@@ -88,6 +96,7 @@ public class PlayerAttack : MonoBehaviour
             _anim.SetWeight(AnimationLayer.Base, 1);
             _anim.SetWeight(AnimationLayer.Attack, 0);
             _currentWeapon.SetAttack(_isInput);
+            _currentWeapon.IKEnable(false);
         }
     }
 
