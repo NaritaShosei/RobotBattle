@@ -3433,6 +3433,10 @@ PrefabInstance:
       propertyPath: _bulletParent
       value: 
       objectReference: {fileID: 104793615}
+    - target: {fileID: 4026496614081201743, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: _duration
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 5463683229749639859, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: m_Controller
       value: 

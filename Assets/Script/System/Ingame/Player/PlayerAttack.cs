@@ -25,6 +25,10 @@ public class PlayerAttack : MonoBehaviour
     WeaponPresenter _presenter;
     AimIK _aimIK;
 
+    float _timer = 0;
+    [SerializeField]
+    float _duration = 0.5f;
+
     void Start()
     {
         _presenter = new WeaponPresenter(GameUIManager.Instance.WeaponView);
@@ -43,6 +47,15 @@ public class PlayerAttack : MonoBehaviour
     void Update()
     {
         _presenter.CountUpdate(_currentWeapon.Count);
+
+        if (_timer < _duration)
+        {
+            _timer += Time.deltaTime;
+            float t = _timer / _duration;
+            float currentWeight = Mathf.Lerp(0f, 0.846f, t);
+
+            _aimIK.solver.IKPositionWeight = currentWeight;
+        }
     }
     private void LateUpdate()
     {
@@ -85,6 +98,7 @@ public class PlayerAttack : MonoBehaviour
             _anim.SetWeight(AnimationLayer.Base, 0);
             _anim.SetWeight(AnimationLayer.Attack, 1);
             _currentWeapon.IKEnable(true);
+            _timer = 0;
         }
 
         //攻撃終了

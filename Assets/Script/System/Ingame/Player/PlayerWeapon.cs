@@ -60,7 +60,7 @@ public class PlayerWeapon : LongRangeAttack_B
                 _enemy = _lockOn.GetTarget();
                 bullet.SetTarget(_enemy);
                 _count--;
-                if (_enemy != null)
+                if (_enemy == null)
                 {
                     bullet.transform.forward = _aimTargetPos - _muzzle.position;
                 }
