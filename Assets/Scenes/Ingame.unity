@@ -3690,7 +3690,7 @@ MonoBehaviour:
       sqrMag: 0
       axis: {x: 0, y: 0, z: 0}
     - transform: {fileID: 1530336151}
-      weight: 0.654
+      weight: 0.597
       solverPosition: {x: 0, y: 0, z: 0}
       solverRotation: {x: 0, y: 0, z: 0, w: 0}
       defaultLocalPosition: {x: 5.077197e-10, y: 0.3097736, z: -0.00000009179167}
@@ -3699,7 +3699,7 @@ MonoBehaviour:
       sqrMag: 0
       axis: {x: 0, y: 0, z: 0}
     - transform: {fileID: 436346294}
-      weight: 0.832
+      weight: 0.698
       solverPosition: {x: 0, y: 0, z: 0}
       solverRotation: {x: 0, y: 0, z: 0, w: 0}
       defaultLocalPosition: {x: -0.14276081, y: 0.6697634, z: -0.51002306}
