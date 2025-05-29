@@ -1,7 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
-
+using RootMotion.FinalIK;
+using static UnityEngine.EventSystems.EventTrigger;
 public class PlayerWeapon : LongRangeAttack_B
 {
     [SerializeField]
@@ -21,60 +22,88 @@ public class PlayerWeapon : LongRangeAttack_B
     bool _isAttack;
     bool _isReload;
     public bool IsAttack { get => _isAttack; set => _isAttack = value; }
+    IEnemy _enemy;
+    AimIK _aimIK;
+    Vector3 _aimTargetPos;
 
     void Start()
     {
         Start_B();
         _camera = Camera.main;
+        _aimIK = _player.GetComponent<AimIK>();
     }
 
     void Update()
     {
+
         if (_isReload) return;
+
+        TargetSet();
+
         if (IsAttack)
         {
-            if (_bulletPool.Count != 0 && _count != 0)
+            Attack();
+        }
+    }
+    void Attack()
+    {
+        if (_bulletPool.Count != 0 && _count != 0)
+        {
+            float rate = 1 / _data.AttackRate;
+            if (Time.time > _time + rate)
             {
-                float rate = 1 / _data.AttackRate;
-                if (Time.time > _time + rate)
+                _time = Time.time;
+                var bullet = _bulletPool.Dequeue();
+                bullet.gameObject.SetActive(true);
+                bullet.SetPosition(_muzzle.position);
+
+                _enemy = _lockOn.GetTarget();
+                bullet.SetTarget(_enemy);
+                _count--;
+                if (_enemy == null)
                 {
-                    _time = Time.time;
-                    var bullet = _bulletPool.Dequeue();
-                    bullet.gameObject.SetActive(true);
-                    bullet.SetPosition(_muzzle.position);
-
-                    var enemy = _lockOn.GetTarget();
-
-                    bullet.SetTarget(enemy);
-                    _count--;
-
-                    if (enemy == null)
-                    {
-                        Vector2 crosshairPos = _lockOn.GetCrosshairPos();
-
-                        Ray ray = _camera.ScreenPointToRay(crosshairPos);
-                        float dis = 1000;
-
-                        if (Physics.Raycast(ray, out RaycastHit hit, dis))
-                        {
-                            float playerDis = Vector3.Distance(ray.origin, _player.position);
-                            if (hit.distance > playerDis)
-                            {
-                                bullet.transform.forward = hit.point - _muzzle.transform.position;
-                                return;
-                            }
-                        }
-                        Vector3 origin = ray.origin;
-                        Vector3 direction = ray.direction.normalized;
-
-                        Vector3 endPos = origin + direction * dis;
-
-                        bullet.transform.forward = endPos - _muzzle.transform.position;
-                    }
-
+                    bullet.transform.forward = _aimTargetPos - _muzzle.position;
                 }
             }
         }
+    }
+
+    void TargetSet()
+    {
+        _enemy = _lockOn.GetTarget();
+
+        if (_enemy == null)
+        {
+            Vector2 crosshairPos = _lockOn.GetCrosshairPos();
+
+            Ray ray = _camera.ScreenPointToRay(crosshairPos);
+            float dis = 1000;
+
+            if (Physics.Raycast(ray, out RaycastHit hit, dis))
+            {
+                float playerDis = Vector3.Distance(ray.origin, _player.position);
+                if (hit.distance > playerDis)
+                {
+                    _aimTargetPos = hit.point;
+                    return;
+                }
+            }
+            Vector3 origin = ray.origin;
+            Vector3 direction = ray.direction.normalized;
+
+            Vector3 endPos = origin + direction * dis;
+
+
+            _aimTargetPos = endPos;
+            return;
+        }
+        _aimTargetPos = _enemy.GetTransform().position;
+    }
+
+
+    public Vector3 GetTargetPos()
+    {
+        return _aimTargetPos;
     }
 
     public void SetAttack(bool value)
@@ -95,5 +124,10 @@ public class PlayerWeapon : LongRangeAttack_B
         _count = _data.BulletCount;
         Debug.LogWarning("Reload To Complete" + _count);
         _isReload = false;
+    }
+
+    public void IKEnable(bool enable)
+    {
+        _aimIK.enabled = enable;
     }
 }

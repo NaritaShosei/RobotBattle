@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BeamBulletData
   m_EditorClassIdentifier: 
   _attackPower: 10
-  _guardBreakValue: 0
+  _guardBreakValue: 50
   _moveSpeed: 500
   _minDistance: 20
   _enableTime: 3.84

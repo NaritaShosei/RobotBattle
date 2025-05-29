@@ -3,13 +3,12 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-
     public PlayerState State { get; private set; } = PlayerState.Idle;
     /// <summary>
     /// 状態遷移時に呼び出すAction
     /// UIとかに使うかもしれない
     /// </summary>
-    Action<PlayerState, PlayerState> OnStateChanged;
+    public Action<PlayerState, PlayerState> OnStateChanged;
 
     public void SetState(PlayerState newState)
     {

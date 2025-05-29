@@ -13,6 +13,8 @@ public class PlayerController : Character_B<PlayerData>
     PlayerData _dataBase;
     [SerializeField]
     GuardCollider _collider;
+    [SerializeField]
+    float _rotateSpeed = 10;
     Rigidbody _rb;
     InputBuffer _input;
     /// <summary>
@@ -115,7 +117,8 @@ public class PlayerController : Character_B<PlayerData>
         }
         var cam = Camera.main.transform.forward;
         cam.y = 0;
-        transform.forward = cam;
+        cam.Normalize();
+        transform.forward = Vector3.Slerp(transform.forward, cam, _rotateSpeed * Time.deltaTime);
     }
 
     private void FixedUpdate()
