@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -48,7 +49,7 @@ public class PlayerAttack : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // ServiceLocator.GetInstance<SceneChanger>().ChangeScene(SceneListEnum.Ingame);
+            SceneManager.LoadScene("InGame");
         }
 
         _presenter.CountUpdate(_currentWeapon.Count);
