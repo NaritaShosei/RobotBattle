@@ -1,4 +1,4 @@
-﻿using SymphonyFrameWork.System;
+﻿
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -15,13 +15,12 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     bool _invertY;
     InputBuffer _input;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
-        _input = ServiceLocator.GetInstance<InputBuffer>();
+        _input = ServiceLocator.Get<InputBuffer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         Cursor.lockState = CursorLockMode.Locked;

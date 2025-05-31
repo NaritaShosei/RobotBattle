@@ -1,5 +1,4 @@
 ﻿using Script.System.Ingame;
-using SymphonyFrameWork.System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -48,7 +47,7 @@ public class PlayerController : Character_B<PlayerData>
 
     void Start()
     {
-        _input = ServiceLocator.GetInstance<InputBuffer>();
+         _input = ServiceLocator.Get<InputBuffer>();
         _rb = GetComponent<Rigidbody>();
         Initialize(_dataBase);
         _currentSpeed = _data.NormalSpeed;
@@ -290,6 +289,7 @@ public class PlayerController : Character_B<PlayerData>
 
     void AddAction()
     {
+        Debug.Log("InputEventが登録されました");
         _collider.OnTriggerEnterEvent += OnGuard;
         _input.MoveAction.performed += OnMoveInput;
         _input.MoveAction.canceled += OnMoveInput;
@@ -303,6 +303,7 @@ public class PlayerController : Character_B<PlayerData>
 
     void RemoveAction()
     {
+        Debug.Log("InputEventが破棄されました");
         _collider.OnTriggerEnterEvent -= OnGuard;
         _input.MoveAction.performed -= OnMoveInput;
         _input.MoveAction.canceled -= OnMoveInput;

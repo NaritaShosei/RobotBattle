@@ -37,5 +37,11 @@ public class InputBuffer : MonoBehaviour
         DashAction = _playerInput.actions["Dash"];
         WeaponChangeAction = _playerInput.actions["WeaponChange"];
         ReloadAction = _playerInput.actions["Reload"];
+
+    }
+    private void Start()
+    {
+        ServiceLocator.Set<InputBuffer>(this);
+
     }
 }
