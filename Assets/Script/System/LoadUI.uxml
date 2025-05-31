@@ -1,5 +1,0 @@
-<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:VisualElement style="flex-grow: 1; background-color: rgb(26, 26, 26); flex-direction: column-reverse;">
-        <engine:VisualElement name="load-icon" style="background-image: url(&quot;project://database/Assets/AssetTools/FreeImage/%E2%80%94Pngtree%E2%80%94not%20loaded%20during%20loading_6083139.png?fileID=2800000&amp;guid=93999e35563c6a34f8ea032f704df7d7&amp;type=3#—Pngtree—not loaded during loading_6083139&quot;); -unity-background-scale-mode: scale-to-fit; bottom: 5%; right: 5%; position: absolute; width: 10%; height: 15%;" />
-    </engine:VisualElement>
-</engine:UXML>
