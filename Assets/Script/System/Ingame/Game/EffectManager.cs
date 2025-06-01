@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EffectManager : MonoBehaviour
@@ -30,6 +31,7 @@ public class EffectManager : MonoBehaviour
             effect.gameObject.SetActive(false);
             _pool.Enqueue(effect);
         }
+        StartCoroutine(ReturnPool());
     }
 
     public void PlayExplosion(Vector3 pos)
@@ -48,15 +50,21 @@ public class EffectManager : MonoBehaviour
         effect.transform.position = pos;
         effect.gameObject.SetActive(true);
         _particles.Add(effect);
-
+    }
+    IEnumerator ReturnPool()
+    {
         //プールに戻す処理
         //Updateでやると重いのでここでやる
-        for (int i = _particles.Count - 1; i >= 0; i--)
+        while (true)
         {
-            if (_particles[i].gameObject.activeSelf == false)
+            for (int i = _particles.Count - 1; i >= 0; i--)
             {
-                _pool.Enqueue(_particles[i]);
-                _particles.RemoveAt(i);
+                if (_particles[i].gameObject.activeSelf == false)
+                {
+                    _pool.Enqueue(_particles[i]);
+                    _particles.RemoveAt(i);
+                }
+                yield return new WaitForSeconds(0.1f);
             }
         }
     }
