@@ -7,19 +7,14 @@ public class EffectManager : MonoBehaviour
     [SerializeField] Transform _parent;
 
     [SerializeField] ParticleSystem _explosion;
-
+    //エフェクトを保持するプール
     Queue<ParticleSystem> _pool = new();
+    //生成済みエフェクトを保持するリスト
     List<ParticleSystem> _particles = new();
-    public static EffectManager Instance { get; private set; }
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-            return;
-        }
-        Instance = this;
+        ServiceLocator.Set(this);
     }
 
     private void Start()
@@ -64,8 +59,8 @@ public class EffectManager : MonoBehaviour
                     _pool.Enqueue(_particles[i]);
                     _particles.RemoveAt(i);
                 }
-                yield return new WaitForSeconds(0.1f);
             }
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }
