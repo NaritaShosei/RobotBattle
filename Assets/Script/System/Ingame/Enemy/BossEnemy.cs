@@ -31,7 +31,7 @@ public class BossEnemy : Enemy_B<EnemyData_B>
 
     private void Update()
     {
-
+        if (_gameManager.IsPaused) { return; }
         GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
 
         var dirToPlayer = _player.transform.position - transform.position;
@@ -73,6 +73,7 @@ public class BossEnemy : Enemy_B<EnemyData_B>
     }
     private void FixedUpdate()
     {
+        if (_gameManager.IsPaused) { return; }
         _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
 
         if (_canJump && !_isJumping && _player.transform.position.y > transform.position.y)

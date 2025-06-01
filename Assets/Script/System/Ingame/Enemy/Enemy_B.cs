@@ -10,8 +10,10 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
     public Action<PlayerController> OnAttackEvent;
     protected PlayerController _player;
     protected Camera _camera;
+    protected InGameManager _gameManager;
     protected void OnStart()
     {
+        _gameManager = ServiceLocator.Get<InGameManager>();
         _camera = Camera.main;
         Start_B();
     }
@@ -41,7 +43,7 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
     {
         base.Dead();
         ScoreManager.Instance.AddScore(_scoreData.Score);
-        EnemyManager.Instance.Remove(this);
+        ServiceLocator.Get<EnemyManager>().Remove(this);
         gameObject.SetActive(false);
     }
 
