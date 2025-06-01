@@ -31,7 +31,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Start()
     {
-        _presenter = new WeaponPresenter(GameUIManager.Instance.WeaponView);
+        _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
         _currentWeapon = _weapons[0];
         _weapons[1].enabled = false;
         _input = ServiceLocator.Get<InputBuffer>();

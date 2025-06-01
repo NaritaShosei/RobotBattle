@@ -2,7 +2,6 @@
 
 public class GameUIManager : MonoBehaviour
 {
-    public static GameUIManager Instance { get; private set; }
 
     [SerializeField] TimeView _timeView;
     public TimeView TimeView => _timeView;
@@ -27,12 +26,6 @@ public class GameUIManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-            return;
-        }
-
-        Instance = this;
+        ServiceLocator.Set(this);
     }
 }

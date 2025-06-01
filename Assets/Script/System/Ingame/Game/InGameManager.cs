@@ -16,11 +16,11 @@ public class InGameManager : MonoBehaviour
     {
         var timeModel = new TimeModel(_maxTime);
 
-        var timeView = GameUIManager.Instance.TimeView;
+        var timeView = ServiceLocator.Get<GameUIManager>().TimeView;
 
         var resultModel = new GameResultModel();
 
-        var resultView = GameUIManager.Instance.GameResultView;
+        var resultView = ServiceLocator.Get<GameUIManager>().GameResultView;
 
         _gameResultPresenter = new GameResultPresenter(resultModel, resultView);
 

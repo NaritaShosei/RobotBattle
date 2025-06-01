@@ -22,9 +22,11 @@ public class HPGaugeView : MonoBehaviour
         float value = currentValue / _maxHealth;
         _gauge.fillAmount = value;
 
-        _sequence?.Kill();
+        if (_gauge.fillAmount > 0)
+        {
+            _sequence?.Kill();
+        }
 
-        //Enemyにも使えるようにSetLinkを使う
         _sequence = DOTween.Sequence().
                     SetLink(gameObject).
                     SetDelay(0.75f).

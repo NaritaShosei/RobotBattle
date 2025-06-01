@@ -47,32 +47,45 @@ public class PlayerController : Character_B<PlayerData>
 
     void Start()
     {
-         _input = ServiceLocator.Get<InputBuffer>();
+        _input = ServiceLocator.Get<InputBuffer>();
         _rb = GetComponent<Rigidbody>();
         Initialize(_dataBase);
         _currentSpeed = _data.NormalSpeed;
         AddAction();
-        _healthPresenter = new HPGaugePresenter(GameUIManager.Instance.HPGaugeView);
+        _healthPresenter = new HPGaugePresenter(ServiceLocator.Get<GameUIManager>().HPGaugeView);
         _healthPresenter.Initialize(_data.Health);
-        _gaugePresenter = new GaugePresenter(GameUIManager.Instance.GaugeView);
+        _gaugePresenter = new GaugePresenter(ServiceLocator.Get<GameUIManager>().GaugeView);
         _gaugePresenter.Initialize(_data.Gauge);
         Start_B();
     }
 
     void Update()
     {
-        if (!_isDashed && !_isJumped)
-        {
-            GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
-        }
         if (_isGuard)
         {
             _collider.GuardVisible(true);
         }
+
         else if (!_isGuard)
         {
             _collider.GuardVisible(false);
         }
+
+        if (_playerManager.IsState(PlayerState.Dead))
+        {
+            _isBoost = false;
+            _isDashed = false;
+            _isGuard = false;
+            _isJumped = false;
+            
+            return;
+        }
+
+        if (!_isDashed && !_isJumped)
+        {
+            GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
+        }
+
         if (_isJumped)
         {
             if (!GaugeValueChange(-_data.JumpValue * Time.deltaTime))
