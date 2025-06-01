@@ -6,10 +6,14 @@ public class ScoreManager : MonoBehaviour
     ScorePresenter _presenter;
     int _score;
     public int Score => _score;
-    public static ScoreManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        ServiceLocator.Set(this);
+    }
+
     void Start()
     {
-        Instance = this;
         _presenter = new ScorePresenter(ServiceLocator.Get<GameUIManager>().ScoreView);
         _presenter.ScoreUpdate(_score);
     }

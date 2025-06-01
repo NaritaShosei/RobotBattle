@@ -32,7 +32,9 @@ public class InGameManager : MonoBehaviour
 
         var enemyManager = ServiceLocator.Get<EnemyManager>();
 
-        _timePresenter = new TimePresenter(timeModel, timeView, _player, gameResultPresenter, enemyManager);
+        var scoreManager = ServiceLocator.Get<ScoreManager>();
+
+        _timePresenter = new TimePresenter(timeModel, timeView, _player, gameResultPresenter, enemyManager, scoreManager);
 
         _timePresenter?.Initialize();
     }
