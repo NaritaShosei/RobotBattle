@@ -11,13 +11,21 @@ public static class ServiceLocator
         if (_service.ContainsKey(typeof(T)))
         {
             _service[typeof(T)] = service;
+            Debug.Log($"{typeof(T)}を上書きしました");
             return;
         }
         _service.Add(typeof(T), service);
+        Debug.Log($"{typeof(T)}を登録しました");
     }
 
     public static T Get<T>()
     {
-        return (T)_service[typeof(T)];
+        if (_service.TryGetValue(typeof(T), out var service))
+        {
+            Debug.Log($"{typeof(T)}を取得しました");
+            return (T)service;
+        }
+        Debug.LogError($"{typeof(T)}の登録がありません");
+        return default;
     }
 }
