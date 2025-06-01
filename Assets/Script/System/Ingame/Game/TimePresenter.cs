@@ -6,13 +6,19 @@ public class TimePresenter
     readonly TimeView _view;
     readonly PlayerManager _player;
     readonly GameResultPresenter _resultPresenter;
+    readonly EnemyManager _enemyManager;
 
-    public TimePresenter(TimeModel model, TimeView view, PlayerManager player, GameResultPresenter resultPresenter)
+    public TimePresenter(TimeModel model, TimeView view, PlayerManager player, GameResultPresenter resultPresenter, EnemyManager enemyManager)
     {
         _model = model;
         _view = view;
         _player = player;
         _resultPresenter = resultPresenter;
+        _enemyManager = enemyManager;
+    }
+    public void Initialize()
+    {
+        UpdateView();   
     }
 
     public void Update(float deltaTime)
@@ -28,7 +34,7 @@ public class TimePresenter
             return;
         }
 
-        if (EnemyManager.Instance.IsEnemyAllDefeated)
+        if (_enemyManager.IsEnemyAllDefeated)
         {
             _resultPresenter.SetGameClear(_model.CurrentTime, ScoreManager.Instance.Score);
             return;

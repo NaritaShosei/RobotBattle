@@ -29,6 +29,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     float _duration = 0.5f;
 
+    InGameManager _gameManager;
+
     void Start()
     {
         _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
@@ -42,15 +44,18 @@ public class PlayerAttack : MonoBehaviour
         _aimIK = GetComponent<AimIK>();
         _aimIK.enabled = false;
         _presenter.Initialize(_currentWeapon, _weapons[1]);
+        _gameManager = ServiceLocator.Get<InGameManager>();
     }
 
     void Update()
     {
-
+        //Debug Only
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene("InGame");
         }
+
+        if (_gameManager.IsPaused) { return; }
 
         _presenter.CountUpdate(_currentWeapon.Count);
 
@@ -65,11 +70,13 @@ public class PlayerAttack : MonoBehaviour
     }
     private void LateUpdate()
     {
+        if (_gameManager.IsPaused) { return; }
         _aimIK.solver.target.position = _currentWeapon.GetTargetPos();
     }
     //TODO:すぐ切り替わってしまうので遅らせる処理が必要
     void WeaponChange(InputAction.CallbackContext context)
     {
+        if (_gameManager.IsPaused) { return; }
         if (_playerManager.IsState(PlayerState.Idle))
         {
             _currentWeapon.IsAttack = false;
@@ -86,6 +93,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Attack(InputAction.CallbackContext context)
     {
+        if (_gameManager.IsPaused) { return; }
         _isInput = context.phase == InputActionPhase.Started;
 
         if (_playerManager.IsState(PlayerState.Guard))
@@ -123,6 +131,7 @@ public class PlayerAttack : MonoBehaviour
     //AnimationEventで呼び出す、攻撃開始、終了の処理
     void IsAttack()
     {
+        if (_gameManager.IsPaused) { return; }
         _currentWeapon.SetAttack(_isInput);
         Debug.Log($"isInput => {_isInput}");
     }
@@ -130,6 +139,7 @@ public class PlayerAttack : MonoBehaviour
     //TODO:リロード処理を呼び出す
     void Reload(InputAction.CallbackContext context)
     {
+        if (_gameManager.IsPaused) { return; }
         _currentWeapon.Reload().Forget();
     }
 

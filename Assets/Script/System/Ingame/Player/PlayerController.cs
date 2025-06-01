@@ -44,10 +44,11 @@ public class PlayerController : Character_B<PlayerData>
 
     HPGaugePresenter _healthPresenter;
     GaugePresenter _gaugePresenter;
-
+    InGameManager _gameManager;
     void Start()
     {
         _input = ServiceLocator.Get<InputBuffer>();
+        _gameManager = ServiceLocator.Get<InGameManager>();
         _rb = GetComponent<Rigidbody>();
         Initialize(_dataBase);
         _currentSpeed = _data.NormalSpeed;
@@ -61,6 +62,7 @@ public class PlayerController : Character_B<PlayerData>
 
     void Update()
     {
+        if (_gameManager.IsPaused) { return; }
         if (_isGuard)
         {
             _collider.GuardVisible(true);
@@ -77,7 +79,7 @@ public class PlayerController : Character_B<PlayerData>
             _isDashed = false;
             _isGuard = false;
             _isJumped = false;
-            
+
             return;
         }
 
@@ -135,6 +137,7 @@ public class PlayerController : Character_B<PlayerData>
 
     private void FixedUpdate()
     {
+        if (_gameManager.IsPaused) { return; }
         _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
         if (_isDashed)
         {
@@ -169,6 +172,7 @@ public class PlayerController : Character_B<PlayerData>
     }
     void OnMoveInput(InputAction.CallbackContext context)
     {
+        if (_gameManager.IsPaused) { return; }
         var input = context.ReadValue<Vector2>();
         if (context.phase == InputActionPhase.Performed)
         {
@@ -186,6 +190,7 @@ public class PlayerController : Character_B<PlayerData>
 
     void Move(float speed)
     {
+        if (_gameManager.IsPaused) { return; }
         _camForward = Camera.main.transform.forward;
         _camRight = Camera.main.transform.right;
         _camForward.y = _camRight.y = 0;
@@ -201,6 +206,7 @@ public class PlayerController : Character_B<PlayerData>
 
     void Jump(InputAction.CallbackContext context)
     {
+        if (_gameManager.IsPaused) { return; }
         if (context.phase == InputActionPhase.Started)
         {
             if (!GaugeValueChange(-_data.JumpValue)) return;
@@ -215,6 +221,7 @@ public class PlayerController : Character_B<PlayerData>
 
     void Dash(InputAction.CallbackContext context)
     {
+        if (_gameManager.IsPaused) { return; }
         if (context.phase == InputActionPhase.Started && !_isDashed)
         {
             if (!GaugeValueChange(-_data.DashValue)) return;
@@ -246,6 +253,7 @@ public class PlayerController : Character_B<PlayerData>
 
     void Guard(InputAction.CallbackContext context)
     {
+        if (_gameManager.IsPaused) { return; }
         if (context.phase == InputActionPhase.Started)
         {
             //ゲージが残ってるかつIdle状態のときのみガード可能
@@ -265,6 +273,7 @@ public class PlayerController : Character_B<PlayerData>
     }
     void OnGuard(Collider other)
     {
+        if (_gameManager.IsPaused) { return; }
         if (other.TryGetComponent(out Bullet_B bullet))
         {
             if (!GaugeValueChange(-bullet.GuardBreakValue))

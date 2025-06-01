@@ -17,6 +17,7 @@ public class SmallEnemy : Enemy_B<CharacterData_B>
 
     void Update()
     {
+        if (_gameManager.IsPaused) { return; }
         if (_player)
         {
             _muzzleModel.forward = _player.GetTargetCenter().position - _muzzleModel.transform.position;
