@@ -27,7 +27,7 @@ public class LockOn : MonoBehaviour
     void Start()
     {
         _camera = Camera.main;
-        _presenter = new CrosshairPresenter(GameUIManager.Instance.CrosshairView);
+        _presenter = new CrosshairPresenter(ServiceLocator.Get<GameUIManager>().CrosshairView);
         _presenter.Initialize();
     }
 

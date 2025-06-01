@@ -10,7 +10,7 @@ public class ScoreManager : MonoBehaviour
     void Start()
     {
         Instance = this;
-        _presenter = new ScorePresenter(GameUIManager.Instance.ScoreView);
+        _presenter = new ScorePresenter(ServiceLocator.Get<GameUIManager>().ScoreView);
         _presenter.ScoreUpdate(_score);
     }
 

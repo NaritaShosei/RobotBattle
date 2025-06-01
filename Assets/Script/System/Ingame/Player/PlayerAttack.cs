@@ -1,8 +1,8 @@
 ﻿using RootMotion.FinalIK;
-using SymphonyFrameWork.System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -31,10 +31,10 @@ public class PlayerAttack : MonoBehaviour
 
     void Start()
     {
-        _presenter = new WeaponPresenter(GameUIManager.Instance.WeaponView);
+        _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
         _currentWeapon = _weapons[0];
         _weapons[1].enabled = false;
-        _input = ServiceLocator.GetInstance<InputBuffer>();
+        _input = ServiceLocator.Get<InputBuffer>();
         _input.AttackAction.started += Attack;
         _input.AttackAction.canceled += Attack;
         _input.WeaponChangeAction.started += WeaponChange;
@@ -46,6 +46,12 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("InGame");
+        }
+
         _presenter.CountUpdate(_currentWeapon.Count);
 
         if (_timer < _duration)
