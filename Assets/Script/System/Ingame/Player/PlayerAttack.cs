@@ -31,16 +31,20 @@ public class PlayerAttack : MonoBehaviour
 
     InGameManager _gameManager;
 
-    void Start()
+    private void Awake()
     {
-        _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
-        _currentWeapon = _weapons[0];
-        _weapons[1].enabled = false;
         _input = ServiceLocator.Get<InputBuffer>();
         _input.AttackAction.started += Attack;
         _input.AttackAction.canceled += Attack;
         _input.WeaponChangeAction.started += WeaponChange;
         _input.ReloadAction.started += Reload;
+    }
+
+    void Start()
+    {
+        _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
+        _currentWeapon = _weapons[0];
+        _weapons[1].enabled = false;
         _aimIK = GetComponent<AimIK>();
         _aimIK.enabled = false;
         _presenter.Initialize(_currentWeapon, _weapons[1]);

@@ -8,6 +8,8 @@ public class InputBuffer : MonoBehaviour
 {
     private PlayerInput _playerInput;
 
+    private InputActionMap _playerMap;
+    private InputActionMap _uiMap;
     public InputAction MoveAction { get; private set; }
     public InputAction LookAction { get; private set; }
     public InputAction JumpAction { get; private set; }
@@ -16,8 +18,11 @@ public class InputBuffer : MonoBehaviour
     public InputAction DashAction { get; private set; }
     public InputAction WeaponChangeAction { get; private set; }
     public InputAction ReloadAction { get; private set; }
+    public InputAction UISelectAction { get; private set; }
 
+    Action _playerAction;
 
+    ModeType _currentMode;
     private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
@@ -28,6 +33,22 @@ public class InputBuffer : MonoBehaviour
             _playerInput.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
         }
 
+        _playerMap = _playerInput.actions.FindActionMap("Player", true);
+        _uiMap = _playerInput.actions.FindActionMap("UI", true);
+
+        _playerMap.Enable();
+        _uiMap.Enable();
+
+        GetPlayerAction();
+        ServiceLocator.Set(this);
+    }
+    private void Start()
+    {
+        SwitchInputMode(ModeType.UI);
+    }
+
+    void GetPlayerAction()
+    {
         //それぞれのアクションを取得
         MoveAction = _playerInput.actions["Move"];
         LookAction = _playerInput.actions["Look"];
@@ -37,11 +58,40 @@ public class InputBuffer : MonoBehaviour
         DashAction = _playerInput.actions["Dash"];
         WeaponChangeAction = _playerInput.actions["WeaponChange"];
         ReloadAction = _playerInput.actions["Reload"];
-
+        UISelectAction = _playerInput.actions["Navigate"];
     }
-    private void Start()
+
+    public void AddAction(Action action)
     {
-        ServiceLocator.Set<InputBuffer>(this);
-
+        _playerAction += action;
     }
+
+
+    public void SwitchInputMode(ModeType mode)
+    {
+        if (_playerInput == null) { return; }
+        if (_currentMode == mode) { return; }
+
+        switch (mode)
+        {
+            case ModeType.Player:
+                _playerInput.SwitchCurrentActionMap("Player");
+                _playerAction?.Invoke();
+                GetPlayerAction();
+                break;
+            case ModeType.UI:
+                _playerInput.SwitchCurrentActionMap("UI");
+                Debug.LogWarning("UI");
+                break;
+        }
+
+        _currentMode = mode;
+    }
+
+
+}
+public enum ModeType
+{
+    Player,
+    UI,
 }

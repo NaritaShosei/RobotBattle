@@ -45,14 +45,18 @@ public class PlayerController : Character_B<PlayerData>
     HPGaugePresenter _healthPresenter;
     GaugePresenter _gaugePresenter;
     InGameManager _gameManager;
-    void Start()
+    private void OnEnable()
     {
         _input = ServiceLocator.Get<InputBuffer>();
+        AddAction();
+    }
+
+    void Start()
+    {
         _gameManager = ServiceLocator.Get<InGameManager>();
         _rb = GetComponent<Rigidbody>();
         Initialize(_dataBase);
         _currentSpeed = _data.NormalSpeed;
-        AddAction();
         _healthPresenter = new HPGaugePresenter(ServiceLocator.Get<GameUIManager>().HPGaugeView);
         _healthPresenter.Initialize(_data.Health);
         _gaugePresenter = new GaugePresenter(ServiceLocator.Get<GameUIManager>().GaugeView);

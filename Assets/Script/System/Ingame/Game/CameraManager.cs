@@ -16,7 +16,7 @@ public class CameraManager : MonoBehaviour
     bool _invertY;
     InputBuffer _input;
 
-    void Start()
+    void OnEnable()
     {
         _input = ServiceLocator.Get<InputBuffer>();
     }
