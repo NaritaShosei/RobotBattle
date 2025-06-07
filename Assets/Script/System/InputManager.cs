@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 [DefaultExecutionOrder(-1000)]
 [RequireComponent(typeof(PlayerInput))]
-public class InputBuffer : MonoBehaviour
+public class InputManager : MonoBehaviour
 {
     private PlayerInput _playerInput;
 
@@ -70,7 +70,6 @@ public class InputBuffer : MonoBehaviour
     public void SwitchInputMode(ModeType mode)
     {
         if (_playerInput == null) { return; }
-        if (_currentMode == mode) { return; }
 
         switch (mode)
         {
