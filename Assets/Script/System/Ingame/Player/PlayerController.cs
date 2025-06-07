@@ -15,7 +15,7 @@ public class PlayerController : Character_B<PlayerData>
     [SerializeField]
     float _rotateSpeed = 10;
     Rigidbody _rb;
-    InputBuffer _input;
+    InputManager _input;
     /// <summary>
     /// 衝突中のオブジェクト
     /// </summary>
@@ -47,7 +47,7 @@ public class PlayerController : Character_B<PlayerData>
     InGameManager _gameManager;
     private void OnEnable()
     {
-        _input = ServiceLocator.Get<InputBuffer>();
+        _input = ServiceLocator.Get<InputManager>();
         AddAction();
     }
 
@@ -61,6 +61,7 @@ public class PlayerController : Character_B<PlayerData>
         _healthPresenter.Initialize(_data.Health);
         _gaugePresenter = new GaugePresenter(ServiceLocator.Get<GameUIManager>().GaugeView);
         _gaugePresenter.Initialize(_data.Gauge);
+        _collider.GuardVisible(false);
         Start_B();
     }
 

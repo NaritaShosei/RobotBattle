@@ -19,7 +19,7 @@ public class PlayerAttack : MonoBehaviour
 
     PlayerWeapon _currentWeapon;
     int _index;
-    InputBuffer _input;
+    InputManager _input;
     bool _isInput;
 
     WeaponPresenter _presenter;
@@ -33,7 +33,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Awake()
     {
-        _input = ServiceLocator.Get<InputBuffer>();
+        _input = ServiceLocator.Get<InputManager>();
         _input.AttackAction.started += Attack;
         _input.AttackAction.canceled += Attack;
         _input.WeaponChangeAction.started += WeaponChange;
