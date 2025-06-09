@@ -67,17 +67,13 @@ public class PlayerController : Character_B<PlayerData>
 
     void Update()
     {
+        //ポーズ中は何もしない
         if (_gameManager.IsPaused) { return; }
-        if (_isGuard)
-        {
-            _collider.GuardVisible(true);
-        }
 
-        else if (!_isGuard)
-        {
-            _collider.GuardVisible(false);
-        }
+        //ガードのコライダーのon・off
+        GuardVisibleChange();
 
+        //Playerが死亡したらすべてのフラグをおろして処理を抜ける
         if (_playerManager.IsState(PlayerState.Dead))
         {
             _isBoost = false;
@@ -88,11 +84,13 @@ public class PlayerController : Character_B<PlayerData>
             return;
         }
 
+        //ダッシュとジャンプ両方していなかったらゲージを回復
         if (!_isDashed && !_isJumped)
         {
             GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
         }
 
+        //ジャンプ中にゲージがなくなったらジャンプを解除
         if (_isJumped)
         {
             if (!GaugeValueChange(-_data.JumpValue * Time.deltaTime))
@@ -101,8 +99,10 @@ public class PlayerController : Character_B<PlayerData>
             }
         }
 
+        //ブースト中にゲージがなくなったらブーストを解除
         if (_isBoost)
         {
+            //入力がなかったらゲージをへらさない
             if (_velocity != Vector2.zero)
             {
                 if (!GaugeValueChange(-_data.DashValue * Time.deltaTime))
@@ -112,28 +112,17 @@ public class PlayerController : Character_B<PlayerData>
             }
         }
 
+        //ダッシュフラグが立っていたらダッシュ
         if (_isDashed)
         {
-            _data.DashTimer += Time.deltaTime;
-
-            var t = Mathf.Clamp01(_data.DashTimer / _data.DashTime);
-
-            if (!_conflictObj)
-            {
-                _newPos = Vector3.Lerp(_dashStartPos, _dashTargetPos, t);
-            }
-
-            if (t >= 1)
-            {
-                _conflictObj = null;
-                _isDashed = false;
-            }
+            Dash();
         }
-
+        //ダッシュフラグがおりていたら通常の移動
         else if (!_isDashed)
         {
             Move(_isBoost ? _data.BoostSpeed : _data.NormalSpeed);
         }
+        //少し遅らせてカメラのほうを向く
         var cam = Camera.main.transform.forward;
         cam.y = 0;
         cam.Normalize();
@@ -143,7 +132,11 @@ public class PlayerController : Character_B<PlayerData>
     private void FixedUpdate()
     {
         if (_gameManager.IsPaused) { return; }
+
+        //AddForceなどはFixedUpdateで
+
         _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
+
         if (_isDashed)
         {
             _rb.MovePosition(_newPos);
@@ -156,6 +149,7 @@ public class PlayerController : Character_B<PlayerData>
 
     private void OnCollisionEnter(Collision collision)
     {
+        //ダッシュ中に床以外のオブジェクトにぶつかったらダッシュの目的地を今いる座標に
         if (!collision.gameObject.CompareTag("Plane"))
         {
             if (!_conflictObj && _isDashed)
@@ -167,6 +161,7 @@ public class PlayerController : Character_B<PlayerData>
     }
     private void OnCollisionExit(Collision collision)
     {
+        //ぶつかっているオブジェクトを解除
         if (!collision.gameObject.CompareTag("Plane"))
         {
             if (_conflictObj)
@@ -177,16 +172,21 @@ public class PlayerController : Character_B<PlayerData>
     }
     void OnMoveInput(InputAction.CallbackContext context)
     {
+        //移動の入力感知
         if (_gameManager.IsPaused) { return; }
+
         var input = context.ReadValue<Vector2>();
+
         if (context.phase == InputActionPhase.Performed)
         {
             _velocity = input;
         }
+
         else if (context.phase == InputActionPhase.Canceled)
         {
             _velocity = Vector2.zero;
         }
+
         if (_velocity.magnitude > 1)
         {
             _velocity = _velocity.normalized;
@@ -196,20 +196,25 @@ public class PlayerController : Character_B<PlayerData>
     void Move(float speed)
     {
         if (_gameManager.IsPaused) { return; }
+
+        //カメラのYを無視した正面と右の取得
         _camForward = Camera.main.transform.forward;
         _camRight = Camera.main.transform.right;
         _camForward.y = _camRight.y = 0;
         _camForward.Normalize();
         _camRight.Normalize();
-        _moveDir = _camForward * _velocity.y + _camRight * _velocity.x * 1.5f;
 
+        //カメラの正面に合わせた移動方向
+        _moveDir = _camForward * _velocity.y + _camRight * _velocity.x;
+
+        //velocityに代入
         var vel = _moveDir * speed;
         var currentVel = _rb.linearVelocity;
         vel.y = currentVel.y;
         _rb.linearVelocity = vel;
     }
 
-    void Jump(InputAction.CallbackContext context)
+    void OnJump(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
         if (context.phase == InputActionPhase.Started)
@@ -224,7 +229,7 @@ public class PlayerController : Character_B<PlayerData>
         }
     }
 
-    void Dash(InputAction.CallbackContext context)
+    void OnDash(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
         if (context.phase == InputActionPhase.Started && !_isDashed)
@@ -255,8 +260,25 @@ public class PlayerController : Character_B<PlayerData>
             _isBoost = false;
         }
     }
+    void Dash()
+    {
+        _data.DashTimer += Time.deltaTime;
 
-    void Guard(InputAction.CallbackContext context)
+        var t = Mathf.Clamp01(_data.DashTimer / _data.DashTime);
+
+        if (!_conflictObj)
+        {
+            _newPos = Vector3.Lerp(_dashStartPos, _dashTargetPos, t);
+        }
+
+        if (t >= 1)
+        {
+            _conflictObj = null;
+            _isDashed = false;
+        }
+    }
+
+    void OnGuard(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
         if (context.phase == InputActionPhase.Started)
@@ -276,7 +298,21 @@ public class PlayerController : Character_B<PlayerData>
             _isGuard = false;
         }
     }
-    void OnGuard(Collider other)
+
+    void GuardVisibleChange()
+    {
+        if (_isGuard)
+        {
+            _collider.GuardVisible(true);
+        }
+
+        else if (!_isGuard)
+        {
+            _collider.GuardVisible(false);
+        }
+    }
+
+    void OnGuardHit(Collider other)
     {
         if (_gameManager.IsPaused) { return; }
         if (other.TryGetComponent(out Bullet_B bullet))
@@ -317,28 +353,28 @@ public class PlayerController : Character_B<PlayerData>
     void AddAction()
     {
         Debug.Log("InputEventが登録されました");
-        _collider.OnTriggerEnterEvent += OnGuard;
+        _collider.OnTriggerEnterEvent += OnGuardHit;
         _input.MoveAction.performed += OnMoveInput;
         _input.MoveAction.canceled += OnMoveInput;
-        _input.JumpAction.started += Jump;
-        _input.JumpAction.canceled += Jump;
-        _input.DashAction.started += Dash;
-        _input.DashAction.canceled += Dash;
-        _input.GuardAction.started += Guard;
-        _input.GuardAction.canceled += Guard;
+        _input.JumpAction.started += OnJump;
+        _input.JumpAction.canceled += OnJump;
+        _input.DashAction.started += OnDash;
+        _input.DashAction.canceled += OnDash;
+        _input.GuardAction.started += OnGuard;
+        _input.GuardAction.canceled += OnGuard;
     }
 
     void RemoveAction()
     {
         Debug.Log("InputEventが破棄されました");
-        _collider.OnTriggerEnterEvent -= OnGuard;
+        _collider.OnTriggerEnterEvent -= OnGuardHit;
         _input.MoveAction.performed -= OnMoveInput;
         _input.MoveAction.canceled -= OnMoveInput;
-        _input.JumpAction.started -= Jump;
-        _input.JumpAction.canceled -= Jump;
-        _input.DashAction.started -= Dash;
-        _input.DashAction.canceled -= Dash;
-        _input.GuardAction.started -= Guard;
-        _input.GuardAction.canceled -= Guard;
+        _input.JumpAction.started -= OnJump;
+        _input.JumpAction.canceled -= OnJump;
+        _input.DashAction.started -= OnDash;
+        _input.DashAction.canceled -= OnDash;
+        _input.GuardAction.started -= OnGuard;
+        _input.GuardAction.canceled -= OnGuard;
     }
 }

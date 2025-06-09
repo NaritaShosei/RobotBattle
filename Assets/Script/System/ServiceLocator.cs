@@ -11,7 +11,7 @@ public static class ServiceLocator
         if (_service.ContainsKey(typeof(T)))
         {
             _service[typeof(T)] = service;
-            Debug.Log($"{typeof(T)}を上書きしました");
+            Debug.LogWarning($"{typeof(T)}を上書きしました");
             return;
         }
         _service.Add(typeof(T), service);

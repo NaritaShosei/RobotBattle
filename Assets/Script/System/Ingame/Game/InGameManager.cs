@@ -45,7 +45,7 @@ public class InGameManager : MonoBehaviour
 
         _timePresenter?.Update(Time.deltaTime);
     }
-
+    [ContextMenu(nameof(PauseResume))]
     public void PauseResume()
     {
         _isPaused = !_isPaused;
