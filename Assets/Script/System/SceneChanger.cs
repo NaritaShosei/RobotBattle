@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-public static class SceneChanger
+public class SceneChanger : MonoBehaviour
 {
-    public static void LoadScene(SceneType type)
+    public const int TITLE = 0;
+    public const int INGAME = 1;
+    private void Awake()
     {
-        SceneManager.LoadScene((int)type);
+        ServiceLocator.Set(this);
     }
-}
 
-public enum SceneType
-{
-    Title = 0,
-    Ingame = 1,
+    public static void LoadScene(int sceneNumber)
+    {
+        SceneManager.LoadScene(sceneNumber);
+    }
 }

@@ -1,8 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
-using System;
-using UnityEngine;
 using RootMotion.FinalIK;
-using static UnityEngine.EventSystems.EventTrigger;
+using UnityEngine;
 public class PlayerWeapon : LongRangeAttack_B
 {
     [SerializeField]
@@ -77,6 +75,7 @@ public class PlayerWeapon : LongRangeAttack_B
             Vector2 crosshairPos = _lockOn.GetCrosshairPos();
 
             Ray ray = _camera.ScreenPointToRay(crosshairPos);
+            //マジックナンバー
             float dis = 1000;
 
             if (Physics.Raycast(ray, out RaycastHit hit, dis))
@@ -123,6 +122,8 @@ public class PlayerWeapon : LongRangeAttack_B
         if (_count == _data.BulletCount) return;
         _isReload = true;
         Debug.LogWarning("Reload" + _count);
+
+        // 1000ミリ秒に変換
         await UniTask.Delay((int)(_data.ReloadInterval * 1000));
         _count = _data.BulletCount;
         Debug.LogWarning("Reload To Complete" + _count);

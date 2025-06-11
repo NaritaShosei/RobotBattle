@@ -67,6 +67,7 @@ public class LockOn : MonoBehaviour
 
             //スコア計算
             //指定ポイントからの距離とY成分を無視したPlayerとEnemyの距離のスコア倍率
+            //マジックナンバー
             float centerValue = 0.5f;
             float playerValue = 1.5f;
             //0で割らないように小さい数を足す

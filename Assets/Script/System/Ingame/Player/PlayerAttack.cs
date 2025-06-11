@@ -50,9 +50,10 @@ public class PlayerAttack : MonoBehaviour
         _aimIK = GetComponent<AimIK>();
         _aimIK.enabled = false;
 
+        _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
+
         _presenter.Initialize(_currentWeapon, _weapons[1]);
 
-        _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
         _gameManager = ServiceLocator.Get<InGameManager>();
     }
 
