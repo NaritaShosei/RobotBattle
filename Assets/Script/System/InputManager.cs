@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class InputManager : MonoBehaviour
 {
+    public const string PLAYER = "Player";
+    public const string UI = "UI";
+
     private PlayerInput _playerInput;
 
     private InputActionMap _playerMap;
@@ -18,11 +21,9 @@ public class InputManager : MonoBehaviour
     public InputAction DashAction { get; private set; }
     public InputAction WeaponChangeAction { get; private set; }
     public InputAction ReloadAction { get; private set; }
-    public InputAction UISelectAction { get; private set; }
+    public InputAction UINavigateAction { get; private set; }
+    public InputAction UISubmitAction { get; private set; }
 
-    Action _playerAction;
-
-    ModeType _currentMode;
     private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
@@ -39,15 +40,15 @@ public class InputManager : MonoBehaviour
         _playerMap.Enable();
         _uiMap.Enable();
 
-        GetPlayerAction();
+        GetAction();
         ServiceLocator.Set(this);
     }
     private void Start()
     {
-        SwitchInputMode(ModeType.UI);
+        SwitchInputMode(PLAYER);
     }
 
-    void GetPlayerAction()
+    void GetAction()
     {
         //それぞれのアクションを取得
         MoveAction = _playerInput.actions["Move"];
@@ -58,39 +59,16 @@ public class InputManager : MonoBehaviour
         DashAction = _playerInput.actions["Dash"];
         WeaponChangeAction = _playerInput.actions["WeaponChange"];
         ReloadAction = _playerInput.actions["Reload"];
-        UISelectAction = _playerInput.actions["Navigate"];
-    }
-
-    public void AddAction(Action action)
-    {
-        _playerAction += action;
+        UINavigateAction = _playerInput.actions["Navigate"];
+        UISubmitAction = _playerInput.actions["Submit"];
     }
 
 
-    public void SwitchInputMode(ModeType mode)
+    public void SwitchInputMode(string name)
     {
         if (_playerInput == null) { return; }
 
-        switch (mode)
-        {
-            case ModeType.Player:
-                _playerInput.SwitchCurrentActionMap("Player");
-                _playerAction?.Invoke();
-                GetPlayerAction();
-                break;
-            case ModeType.UI:
-                _playerInput.SwitchCurrentActionMap("UI");
-                Debug.LogWarning("UI");
-                break;
-        }
-
-        _currentMode = mode;
+        _playerInput.SwitchCurrentActionMap(name);
+        GetAction();
     }
-
-
-}
-public enum ModeType
-{
-    Player,
-    UI,
 }
