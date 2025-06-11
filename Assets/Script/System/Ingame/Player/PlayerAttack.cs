@@ -28,7 +28,8 @@ public class PlayerAttack : MonoBehaviour
     float _timer = 0;
     [SerializeField]
     float _duration = 0.5f;
-
+    [SerializeField]
+    float _ikWeight = 0.846f;
     InGameManager _gameManager;
 
     private void Awake()
@@ -77,7 +78,7 @@ public class PlayerAttack : MonoBehaviour
             float t = _timer / _duration;
 
             //マジックナンバー
-            float currentWeight = Mathf.Lerp(0f, 0.846f, t);
+            float currentWeight = Mathf.Lerp(0f, _ikWeight, t);
 
             _aimIK.solver.IKPositionWeight = currentWeight;
         }
