@@ -10,7 +10,13 @@ public class InGameManager : MonoBehaviour
     int _maxTime;
 
     TimePresenter _timePresenter;
-    GameResultPresenter _gameResultPresenter;
+
+    bool _isPaused = true;
+    public bool IsPaused => _isPaused;
+    private void Awake()
+    {
+        ServiceLocator.Set(this);
+    }
 
     void Start()
     {
@@ -22,13 +28,26 @@ public class InGameManager : MonoBehaviour
 
         var resultView = ServiceLocator.Get<GameUIManager>().GameResultView;
 
-        _gameResultPresenter = new GameResultPresenter(resultModel, resultView);
+        var gameResultPresenter = new GameResultPresenter(resultModel, resultView);
 
-        _timePresenter = new TimePresenter(timeModel, timeView, _player, _gameResultPresenter);
+        var enemyManager = ServiceLocator.Get<EnemyManager>();
+
+        var scoreManager = ServiceLocator.Get<ScoreManager>();
+
+        _timePresenter = new TimePresenter(timeModel, timeView, _player, gameResultPresenter, enemyManager, scoreManager);
+
+        _timePresenter?.Initialize();
     }
 
     void Update()
     {
+        if (_isPaused) { return; }
+
         _timePresenter?.Update(Time.deltaTime);
+    }
+    [ContextMenu(nameof(PauseResume))]
+    public void PauseResume()
+    {
+        _isPaused = !_isPaused;
     }
 }

@@ -35,7 +35,7 @@ public class ChaseBullet : Bullet_B
 
     protected override void Conflict(Collider other)
     {
-        EffectManager.Instance.PlayExplosion(transform.position);
+        ServiceLocator.Get<EffectManager>().PlayExplosion(transform.position);
         _isConflictReturned = true;
         gameObject.SetActive(false);
     }

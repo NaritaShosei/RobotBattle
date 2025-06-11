@@ -14,11 +14,11 @@ public class CameraManager : MonoBehaviour
     float _cameraSensitivityY = 2;
     [SerializeField]
     bool _invertY;
-    InputBuffer _input;
+    InputManager _input;
 
-    void Start()
+    void OnEnable()
     {
-        _input = ServiceLocator.Get<InputBuffer>();
+        _input = ServiceLocator.Get<InputManager>();
     }
 
     void Update()

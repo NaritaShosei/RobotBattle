@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public static EnemyManager Instance { get; private set; }
-
     List<IEnemy> _enemies = new();
     public List<IEnemy> Enemies => _enemies;
     public bool IsEnemyAllDefeated => _enemies.Count == 0;
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-            return;
-        }
-        Instance = this;
+        ServiceLocator.Set(this);
     }
 
     void Start()

@@ -24,19 +24,22 @@ public class LockOn : MonoBehaviour
     IEnemy _lockOnEnemy;
 
     CrosshairPresenter _presenter;
+
+    EnemyManager _enemyManager;
     void Start()
     {
         _camera = Camera.main;
         _presenter = new CrosshairPresenter(ServiceLocator.Get<GameUIManager>().CrosshairView);
         _presenter.Initialize();
+        _enemyManager = ServiceLocator.Get<EnemyManager>();
     }
 
     void Update()
     {
         float bestScore = float.MinValue;
         _lockOnEnemy = null;
-        //EnemyListをEnemyManagerから参照する方針に変更する
-        foreach (var enemy in EnemyManager.Instance.Enemies.Where(x => x.IsTargetInView()))
+        //EnemyListをEnemyManagerから参照する
+        foreach (var enemy in _enemyManager.Enemies.Where(x => x.IsTargetInView()))
         {
             Vector3 enemyPos = enemy.GetTargetCenter().position;
 

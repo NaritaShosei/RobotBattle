@@ -6,13 +6,20 @@ public class TimePresenter
     readonly TimeView _view;
     readonly PlayerManager _player;
     readonly GameResultPresenter _resultPresenter;
-
-    public TimePresenter(TimeModel model, TimeView view, PlayerManager player, GameResultPresenter resultPresenter)
+    readonly EnemyManager _enemyManager;
+    readonly ScoreManager _scoreManager;
+    public TimePresenter(TimeModel model, TimeView view, PlayerManager player, GameResultPresenter resultPresenter, EnemyManager enemyManager, ScoreManager scoreManager)
     {
         _model = model;
         _view = view;
         _player = player;
         _resultPresenter = resultPresenter;
+        _enemyManager = enemyManager;
+        _scoreManager = scoreManager;
+    }
+    public void Initialize()
+    {
+        UpdateView();
     }
 
     public void Update(float deltaTime)
@@ -24,13 +31,13 @@ public class TimePresenter
 
         if (_player.State == PlayerState.Dead)
         {
-            _resultPresenter.SetGameOver(GameOverType.Death, ScoreManager.Instance.Score);
+            _resultPresenter.SetGameOver(GameOverType.Death, _scoreManager.Score);
             return;
         }
 
-        if (EnemyManager.Instance.IsEnemyAllDefeated)
+        if (_enemyManager.IsEnemyAllDefeated)
         {
-            _resultPresenter.SetGameClear(_model.CurrentTime, ScoreManager.Instance.Score);
+            _resultPresenter.SetGameClear(_model.CurrentTime, _scoreManager.Score);
             return;
         }
 
@@ -40,7 +47,7 @@ public class TimePresenter
         if (_model.IsTimeOver)
         {
             //時間切れになった際のコールバックなど
-            _resultPresenter.SetGameOver(GameOverType.TimeOver, ScoreManager.Instance.Score);
+            _resultPresenter.SetGameOver(GameOverType.TimeOver, _scoreManager.Score);
         }
     }
 

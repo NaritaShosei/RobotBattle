@@ -23,6 +23,7 @@ public class WeaponUISlotView : MonoBehaviour
     {
         _bulletCountText.text = $"{count:000}/{_maxCount:000}";
     }
+    //TODO:マジックナンバーをやめよう
     public void AnimateToFront()
     {
         _bulletCountText.enabled = true;
