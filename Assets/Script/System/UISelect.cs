@@ -84,7 +84,10 @@ public class UISelect : MonoBehaviour
 
     void Submit(InputAction.CallbackContext context)
     {
+        //選択中のImageの色を黄色に
         _selects[_selectIndex].color = Color.yellow;
+
+        //決定
         if (_selects[_selectIndex].TryGetComponent(out UISubmitBase component))
         {
             component.Submit();
@@ -94,6 +97,7 @@ public class UISelect : MonoBehaviour
             Debug.LogError("Submit Filed");
         }
     }
+
     /// <summary>
     /// インデックスを移動させる。
     /// </summary>

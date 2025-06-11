@@ -15,9 +15,13 @@ public class EnemyManager : MonoBehaviour
 
     void Start()
     {
+        //EnemyをすべてListに格納
         _enemies = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IEnemy>().ToList();
     }
-
+    /// <summary>
+    /// Listから除外
+    /// </summary>
+    /// <param name="enemy">除外するEnemy</param>
     public void Remove(IEnemy enemy)
     {
         if (_enemies.Contains(enemy))

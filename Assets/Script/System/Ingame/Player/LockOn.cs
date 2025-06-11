@@ -82,6 +82,8 @@ public class LockOn : MonoBehaviour
             }
 
         }
+
+        //UIに反映
         if (_lockOnEnemy != null)
         {
             _presenter.UpdateLockOn(true, _lockOnEnemy.GetTargetCenter().position);
@@ -123,16 +125,26 @@ public class LockOn : MonoBehaviour
 
         return true;
     }
+
+    /// <summary>
+    /// ロックオン中のEnemyの取得
+    /// </summary>
+    /// <returns></returns>
     public IEnemy GetTarget()
     {
         return _lockOnEnemy;
     }
 
+    /// <summary>
+    /// クロスヘアの座標取得
+    /// </summary>
+    /// <returns></returns>
     public Vector2 GetCrosshairPos()
     {
         return _presenter.GetCrosshairPos();
     }
 
+    //OnDrawGizmosはAIに生成させました
     void OnDrawGizmos()
     {
         if (_camera == null) _camera = Camera.main;
