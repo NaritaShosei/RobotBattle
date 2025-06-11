@@ -42,12 +42,17 @@ public class PlayerAttack : MonoBehaviour
 
     void Start()
     {
-        _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
+        //初期装備の設定
         _currentWeapon = _weapons[0];
         _weapons[1].enabled = false;
+
+        //IKの設定
         _aimIK = GetComponent<AimIK>();
         _aimIK.enabled = false;
+
         _presenter.Initialize(_currentWeapon, _weapons[1]);
+
+        _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
         _gameManager = ServiceLocator.Get<InGameManager>();
     }
 
@@ -61,12 +66,16 @@ public class PlayerAttack : MonoBehaviour
 
         if (_gameManager.IsPaused) { return; }
 
+        //残弾数を渡す
         _presenter.CountUpdate(_currentWeapon.Count);
 
+        //腕のIKの線形補間
         if (_timer < _duration)
         {
             _timer += Time.deltaTime;
             float t = _timer / _duration;
+
+            //マジックナンバー
             float currentWeight = Mathf.Lerp(0f, 0.846f, t);
 
             _aimIK.solver.IKPositionWeight = currentWeight;
@@ -75,22 +84,31 @@ public class PlayerAttack : MonoBehaviour
     private void LateUpdate()
     {
         if (_gameManager.IsPaused) { return; }
+
+        //IKのtargetの座標を設定する
         _aimIK.solver.target.position = _currentWeapon.GetTargetPos();
     }
+
     //TODO:すぐ切り替わってしまうので遅らせる処理が必要
     void WeaponChange(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
+
+        //Idle状態の時のみ武器変更可能
         if (_playerManager.IsState(PlayerState.Idle))
         {
+            //装備中の武器を無効化
             _currentWeapon.IsAttack = false;
             _currentWeapon.enabled = false;
+
             Debug.LogWarning("武装変更");
-            _index++;
-            _currentWeapon = _weapons[_index % _weapons.Count];
+
+            //次の武器を装備
+            _currentWeapon = _weapons[(_index + 1) % _weapons.Count];
             _currentWeapon.IsAttack = _isInput;
             _currentWeapon.enabled = true;
 
+            //UIに武器変更の情報を渡す
             _presenter.SwapWeapon();
         }
     }
@@ -98,6 +116,7 @@ public class PlayerAttack : MonoBehaviour
     void Attack(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
+
         _isInput = context.phase == InputActionPhase.Started;
 
         if (_playerManager.IsState(PlayerState.Guard))
@@ -111,11 +130,14 @@ public class PlayerAttack : MonoBehaviour
         {
             _playerManager.SetState(PlayerState.Attack);
 
+            //
             _anim.SetBool("IsMissileAttack", true);
+
             // レイヤー切り替え
-            _anim.SetWeight(AnimationLayer.Base, 0);
             _anim.SetWeight(AnimationLayer.Attack, 1);
             _currentWeapon.IKEnable(true);
+
+            //IKの線形補間の時間初期化
             _timer = 0;
         }
 
@@ -125,8 +147,10 @@ public class PlayerAttack : MonoBehaviour
             _playerManager.SetState(PlayerState.Idle);
 
             _anim.SetBool("IsMissileAttack", false);
-            _anim.SetWeight(AnimationLayer.Base, 1);
+
+            // レイヤー切り替え
             _anim.SetWeight(AnimationLayer.Attack, 0);
+
             _currentWeapon.SetAttack(_isInput);
             _currentWeapon.IKEnable(false);
         }
@@ -140,10 +164,10 @@ public class PlayerAttack : MonoBehaviour
         Debug.Log($"isInput => {_isInput}");
     }
 
-    //TODO:リロード処理を呼び出す
     void Reload(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
+
         _currentWeapon.Reload().Forget();
     }
 

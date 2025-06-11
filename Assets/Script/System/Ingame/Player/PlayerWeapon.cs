@@ -100,7 +100,10 @@ public class PlayerWeapon : LongRangeAttack_B
         _aimTargetPos = _enemy.GetTransform().position;
     }
 
-
+    /// <summary>
+    /// ロックオン中のtargetを取得する
+    /// </summary>
+    /// <returns></returns>
     public Vector3 GetTargetPos()
     {
         return _aimTargetPos;

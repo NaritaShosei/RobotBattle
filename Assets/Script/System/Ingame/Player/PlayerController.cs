@@ -1,7 +1,6 @@
 ﻿using Script.System.Ingame;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : Character_B<PlayerData>
@@ -217,12 +216,16 @@ public class PlayerController : Character_B<PlayerData>
     void OnJump(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
+
+        //ボタンを押した瞬間強めに上昇
         if (context.phase == InputActionPhase.Started)
         {
             if (!GaugeValueChange(-_data.JumpValue)) return;
+            //マジックナンバー
             _isJumped = true;
             _rb.AddForce(Vector3.up * _data.JumpPower * 5, ForceMode.Impulse);
         }
+
         else if (context.phase == InputActionPhase.Canceled)
         {
             _isJumped = false;
@@ -232,19 +235,30 @@ public class PlayerController : Character_B<PlayerData>
     void OnDash(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
+
         if (context.phase == InputActionPhase.Started && !_isDashed)
         {
             if (!GaugeValueChange(-_data.DashValue)) return;
+
+            //線形補間のstartの登録
             _isBoost = true;
             _data.DashTimer = 0;
             _dashStartPos = transform.position;
+
+            //入力がなかったらカメラの正面方向
             Vector3 moveDir = _velocity != Vector2.zero ? _moveDir : _camForward;
             moveDir.Normalize();
+
+            //マジックナンバー
             var rayCastDis = 8;
             _isDashed = true;
+
+            //Raycastを飛ばす
             if (Physics.Raycast(GetTargetCenter().position, moveDir, out RaycastHit hit, rayCastDis))
             {
+                //hitしたらなにかにぶつかっているのでダッシュしない
                 var dir = (transform.position - hit.point).normalized;
+                //マジックナンバー
                 var newPos = hit.point + dir * 10;
                 newPos.y = transform.position.y;
                 _newPos = newPos;
@@ -252,9 +266,11 @@ public class PlayerController : Character_B<PlayerData>
             }
             else
             {
+                //線形補間のtargetの設定
                 _dashTargetPos = transform.position + moveDir * _data.DashDistance;
             }
         }
+
         if (context.phase == InputActionPhase.Canceled)
         {
             _isBoost = false;
@@ -266,8 +282,10 @@ public class PlayerController : Character_B<PlayerData>
 
         var t = Mathf.Clamp01(_data.DashTimer / _data.DashTime);
 
+        //なにもぶつかっていなければダッシュ
         if (!_conflictObj)
         {
+            //線形補間
             _newPos = Vector3.Lerp(_dashStartPos, _dashTargetPos, t);
         }
 
@@ -281,6 +299,7 @@ public class PlayerController : Character_B<PlayerData>
     void OnGuard(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
+
         if (context.phase == InputActionPhase.Started)
         {
             //ゲージが残ってるかつIdle状態のときのみガード可能
@@ -291,6 +310,7 @@ public class PlayerController : Character_B<PlayerData>
                 _playerManager.SetState(PlayerState.Guard);
             }
         }
+
         if (context.phase == InputActionPhase.Canceled && _playerManager.IsState(PlayerState.Guard))
         {
             Debug.Log("ガード終了");
@@ -312,9 +332,14 @@ public class PlayerController : Character_B<PlayerData>
         }
     }
 
+    /// <summary>
+    /// ガード成功時にゲージを減らす
+    /// </summary>
+    /// <param name="other"></param>
     void OnGuardHit(Collider other)
     {
         if (_gameManager.IsPaused) { return; }
+
         if (other.TryGetComponent(out Bullet_B bullet))
         {
             if (!GaugeValueChange(-bullet.GuardBreakValue))
