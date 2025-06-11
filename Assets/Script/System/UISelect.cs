@@ -19,7 +19,8 @@ public class UISelect : MonoBehaviour
     private void OnEnable()
     {
         _input = ServiceLocator.Get<InputManager>();
-        _input.UISelectAction.started += Navigate;
+        _input.UINavigateAction.started += Navigate;
+        _input.UISubmitAction.started += Submit;
         if (_selects.Length <= 0) { return; }
 
         switch (_sortType)
@@ -38,7 +39,8 @@ public class UISelect : MonoBehaviour
     }
     private void OnDisable()
     {
-        _input.UISelectAction.started -= Navigate;
+        _input.UINavigateAction.started -= Navigate;
+        _input.UISubmitAction.started -= Submit;
     }
 
     void Navigate(InputAction.CallbackContext context)
@@ -82,7 +84,15 @@ public class UISelect : MonoBehaviour
 
     void Submit(InputAction.CallbackContext context)
     {
-
+        _selects[_selectIndex].color = Color.yellow;
+        if (_selects[_selectIndex].TryGetComponent(out UISubmitBase component))
+        {
+            component.Submit();
+        }
+        else
+        {
+            Debug.LogError("Submit Filed");
+        }
     }
     /// <summary>
     /// インデックスを移動させる。
