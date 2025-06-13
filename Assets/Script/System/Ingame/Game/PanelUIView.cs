@@ -1,15 +1,18 @@
 ﻿using DG.Tweening;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PanelUIView : MonoBehaviour
 {
-    [SerializeField]
-    CanvasGroup _uiPanel;
-    [SerializeField]
-    float _duration = 0.5f;
-    public void Fade(float alpha, Action onComplete)
+    public void Fade(CanvasGroup fadeTarget, float alpha, float duration, Action onComplete = null)
     {
-        _uiPanel.DOFade(alpha, _duration).OnComplete(() => onComplete?.Invoke());
+        if (!fadeTarget) return;
+        fadeTarget.DOFade(alpha, duration).OnComplete(() => onComplete?.Invoke());
+    }
+    public void Fade(Image fadeTarget, float alpha, float duration, Action onComplete = null)
+    {
+        if (!fadeTarget) return;
+        fadeTarget.DOFade(alpha, duration).OnComplete(() => onComplete?.Invoke());
     }
 }
