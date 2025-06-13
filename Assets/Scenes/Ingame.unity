@@ -992,8 +992,7 @@ MonoBehaviour:
   _events:
     m_PersistentCalls:
       m_Calls: []
-  _image: {fileID: 0}
-  _canvasGroup: {fileID: 0}
+  _targetType: 0
   _alpha: 0
   _duration: 0.5
 --- !u!1 &394076127
@@ -1384,7 +1383,7 @@ GameObject:
   - component: {fileID: 545587962}
   - component: {fileID: 545587963}
   m_Layer: 5
-  m_Name: StartPanel
+  m_Name: PanelUIView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1491,6 +1490,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f547730b51417a74e8b2de314bd61b04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _image: {fileID: 308637549}
+  _canvasGroup: {fileID: 545587962}
 --- !u!1 &567696708
 GameObject:
   m_ObjectHideFlags: 0
@@ -3369,8 +3370,7 @@ MonoBehaviour:
           m_StringArgument: Player
           m_BoolArgument: 0
         m_CallState: 2
-  _image: {fileID: 0}
-  _canvasGroup: {fileID: 545587962}
+  _targetType: 0
   _alpha: 0
   _duration: 0.5
 --- !u!1 &1897281093
@@ -3806,8 +3806,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _image: {fileID: 308637549}
-  _canvasGroup: {fileID: 0}
+  _targetType: 1
   _alpha: 1
   _duration: 0.5
 --- !u!1 &2059043473
