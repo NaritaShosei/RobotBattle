@@ -77,7 +77,6 @@ public class PlayerAttack : MonoBehaviour
             _timer += Time.deltaTime;
             float t = _timer / _duration;
 
-            //マジックナンバー
             float currentWeight = Mathf.Lerp(0f, _ikWeight, t);
 
             _aimIK.solver.IKPositionWeight = currentWeight;

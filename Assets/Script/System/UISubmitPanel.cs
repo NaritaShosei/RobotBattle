@@ -7,7 +7,7 @@ public class UISubmitPanel : UISubmitBase
     public override void Submit()
     {
         //TODO : DOFade とかやりたい
-        _events?.Invoke();
+        ServiceLocator.Get<GameUIManager>().PanelUIView.Fade(0, () => _events?.Invoke());
         Debug.Log("UI Submit");
     }
 }

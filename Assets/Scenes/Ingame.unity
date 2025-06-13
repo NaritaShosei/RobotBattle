@@ -1124,6 +1124,7 @@ MonoBehaviour:
   _scoreView: {fileID: 932168507}
   _gameResultView: {fileID: 2003054849}
   _crosshairView: {fileID: 1201057055}
+  _panelUIView: {fileID: 545587963}
 --- !u!1 &405096444
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,6 +1221,8 @@ GameObject:
   - component: {fileID: 545587961}
   - component: {fileID: 545587960}
   - component: {fileID: 545587959}
+  - component: {fileID: 545587962}
+  - component: {fileID: 545587963}
   m_Layer: 5
   m_Name: StartPanel
   m_TagString: Untagged
@@ -1304,6 +1307,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 545587957}
   m_CullTransparentMesh: 1
+--- !u!225 &545587962
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545587957}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
+--- !u!114 &545587963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545587957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f547730b51417a74e8b2de314bd61b04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiPanel: {fileID: 545587962}
+  _duration: 0.5
 --- !u!1 &567696708
 GameObject:
   m_ObjectHideFlags: 0

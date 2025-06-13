@@ -24,6 +24,9 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] CrosshairView _crosshairView;
     public CrosshairView CrosshairView => _crosshairView;
 
+    [SerializeField] PanelUIView _panelUIView;
+    public PanelUIView PanelUIView => _panelUIView;
+
     private void Awake()
     {
         ServiceLocator.Set(this);
