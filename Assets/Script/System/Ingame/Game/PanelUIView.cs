@@ -5,18 +5,19 @@ using UnityEngine.UI;
 
 public class PanelUIView : MonoBehaviour
 {
-    [SerializeField] Image _image;
-    [SerializeField] CanvasGroup _canvasGroup;
+    [SerializeField] Image _fadePanel;
+    [SerializeField] CanvasGroup _startPanel;
 
     public void Fade(TargetType type, float alpha, float duration, Action onComplete = null)
     {
         switch (type)
         {
             case TargetType.Image:
-                _image.DOFade(alpha, duration).OnComplete(() => onComplete?.Invoke());
+                _fadePanel.DOFade(alpha, duration).OnComplete(() => onComplete?.Invoke());
                 break;
+
             case TargetType.CanvasGroup:
-                _canvasGroup.DOFade(alpha, duration).OnComplete(() => onComplete?.Invoke());
+                _startPanel.DOFade(alpha, duration).OnComplete(() => onComplete?.Invoke());
                 break;
         }
 
