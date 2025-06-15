@@ -10,6 +10,8 @@ public class UISubmitPanel : UISubmitBase
     [SerializeField] float _duration = 0.5f;
     public override void Submit()
     {
+        if (_targetType == TargetType.None) { _events.Invoke(); return; }
+
         var view = ServiceLocator.Get<GameUIManager>().PanelUIView;
 
         view.Fade(_targetType, _alpha, _duration, () => _events?.Invoke());

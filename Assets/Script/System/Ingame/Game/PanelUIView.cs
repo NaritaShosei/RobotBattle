@@ -25,6 +25,7 @@ public class PanelUIView : MonoBehaviour
 }
 public enum TargetType
 {
+    None,
     CanvasGroup,
     Image,
 }

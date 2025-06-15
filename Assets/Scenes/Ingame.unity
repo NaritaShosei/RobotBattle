@@ -3384,7 +3384,7 @@ MonoBehaviour:
           m_StringArgument: Player
           m_BoolArgument: 0
         m_CallState: 2
-  _targetType: 0
+  _targetType: 1
   _alpha: 0
   _duration: 0.5
 --- !u!1 &1897281093
@@ -3820,7 +3820,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _targetType: 1
+  _targetType: 2
   _alpha: 1
   _duration: 0.5
 --- !u!1 &2059043473
