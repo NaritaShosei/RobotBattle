@@ -124,8 +124,8 @@ public class PlayerController : Character_B<PlayerData>
         //少し遅らせてカメラのほうを向く
         var cam = Camera.main.transform.forward;
         cam.y = 0;
-        cam.Normalize();
-        transform.forward = Vector3.Slerp(transform.forward, cam, _rotateSpeed * Time.deltaTime);
+        var camDir = cam.normalized;
+        transform.forward = Vector3.Slerp(transform.forward, camDir, _rotateSpeed * Time.deltaTime);
     }
 
     private void FixedUpdate()
@@ -200,11 +200,11 @@ public class PlayerController : Character_B<PlayerData>
         _camForward = Camera.main.transform.forward;
         _camRight = Camera.main.transform.right;
         _camForward.y = _camRight.y = 0;
-        _camForward.Normalize();
-        _camRight.Normalize();
+        var forwardDir = _camForward.normalized;
+        var rightDir = _camRight.normalized;
 
         //カメラの正面に合わせた移動方向
-        _moveDir = _camForward * _velocity.y + _camRight * _velocity.x;
+        _moveDir = forwardDir * _velocity.y + rightDir * _velocity.x;
 
         //velocityに代入
         var vel = _moveDir * speed;
@@ -246,8 +246,8 @@ public class PlayerController : Character_B<PlayerData>
             _dashStartPos = transform.position;
 
             //入力がなかったらカメラの正面方向
-            Vector3 moveDir = _velocity != Vector2.zero ? _moveDir : _camForward;
-            moveDir.Normalize();
+            Vector3 moveVel = _velocity != Vector2.zero ? _moveDir : _camForward;
+            Vector3 moveDir = moveVel.normalized;
 
             //マジックナンバー
             var rayCastDis = 8;

@@ -106,8 +106,8 @@ public class BossEnemy : Enemy_B<EnemyData_B>
     }
     void Move(Vector3 target)
     {
-        Vector3 dir = target - transform.position;
-        dir.Normalize();
+        Vector3 vec = target - transform.position;
+        Vector3 dir = vec.normalized;
 
         var currentVel = _rb.linearVelocity;
 
