@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
-
-public class GameResultPresenter
+﻿public class GameResultPresenter
 {
     GameResultModel _model;
     GameResultView _view;
