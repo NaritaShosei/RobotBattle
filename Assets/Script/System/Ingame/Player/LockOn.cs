@@ -19,6 +19,13 @@ public class LockOn : MonoBehaviour
     [SerializeField, Range(0, 180)]
     float _viewAngle = 60;
 
+
+    //指定ポイントからの距離とY成分を無視したPlayerとEnemyの距離のスコア倍率
+    [SerializeField]
+    float _centerValue = 0.5f;
+    [SerializeField]
+    float _playerValue = 1.5f;
+
     Camera _camera;
 
     IEnemy _lockOnEnemy;
@@ -66,13 +73,9 @@ public class LockOn : MonoBehaviour
                                                                         - new Vector3(enemyPos.x, 0, enemyPos.z)).magnitude;
 
             //スコア計算
-            //指定ポイントからの距離とY成分を無視したPlayerとEnemyの距離のスコア倍率
-            //マジックナンバー
-            float centerValue = 0.5f;
-            float playerValue = 1.5f;
             //0で割らないように小さい数を足す
-            float score = (1 / (disToCenter + 0.001f)) * centerValue +
-                          (1 / (playerDis + 0.001f)) * playerValue;
+            float score = (1 / (disToCenter + 0.001f)) * _centerValue +
+                          (1 / (playerDis + 0.001f)) * _playerValue;
 
             //プレイヤーからの近さをより優先しつつ、画面中央への近さも考慮する
             if (score > bestScore)
