@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 30
   _maxGauge: 500
-  _normalSpeed: 50
-  _boostSpeed: 150
-  _jumpPower: 125
-  _floatPower: 500
-  _dashDistance: 100
+  _normalSpeed: 18
+  _boostSpeed: 45
+  _jumpPower: 23
+  _floatPower: 100
+  _dashDistance: 40
   _dashTime: 0.5
   _fallSpeed: 20
   _recoveryValue: 30
@@ -27,6 +27,6 @@ MonoBehaviour:
   _dodgeInterval: 5
   _jumpDuration: 0.5
   _jumInterval: 0.5
-  _minDistance: 100
-  _dashMinDistance: 200
-  _attackDistance: 200
+  _minDistance: 30.94
+  _dashMinDistance: 100
+  _attackDistance: 100
