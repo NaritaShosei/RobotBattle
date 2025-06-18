@@ -9,8 +9,6 @@ public class LongRangeAttack_B : MonoBehaviour
 
     [SerializeField] protected Transform _muzzle;
 
-    [SerializeField] protected Transform _bulletParent;
-
     [SerializeField] protected LayerMask _layer;
 
     protected BulletManager _bulletManager;
