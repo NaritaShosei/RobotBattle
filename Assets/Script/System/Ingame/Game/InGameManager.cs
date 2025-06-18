@@ -13,7 +13,7 @@ public class InGameManager : MonoBehaviour
     GameResultPresenter _gameResultPresenter;
     EnemyManager _enemyManager;
     ScoreManager _scoreManager;
-    InputManager _inputManager;
+
     bool _isPaused = true;
     public bool IsPaused => _isPaused;
 
