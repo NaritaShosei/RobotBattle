@@ -34,6 +34,7 @@ public class InputManager : MonoBehaviour
             _playerInput.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
         }
 
+        //UIとPlayerのActionMapを両方有効化
         _playerMap = _playerInput.actions.FindActionMap("Player", true);
         _uiMap = _playerInput.actions.FindActionMap("UI", true);
 
@@ -41,16 +42,20 @@ public class InputManager : MonoBehaviour
         _uiMap.Enable();
 
         GetAction();
+
         ServiceLocator.Set(this);
     }
     private void Start()
     {
-        SwitchInputMode(PLAYER);
+        //ActionMapの切り替え
+        SwitchInputMode(UI);
     }
 
+    /// <summary>
+    /// それぞれのアクションを取得
+    /// </summary>
     void GetAction()
     {
-        //それぞれのアクションを取得
         MoveAction = _playerInput.actions["Move"];
         LookAction = _playerInput.actions["Look"];
         JumpAction = _playerInput.actions["Jump"];
@@ -63,12 +68,25 @@ public class InputManager : MonoBehaviour
         UISubmitAction = _playerInput.actions["Submit"];
     }
 
-
+    /// <summary>
+    /// ActionMapの切り替え
+    /// </summary>
+    /// <param name="name">ActionMapの名前</param>
     public void SwitchInputMode(string name)
     {
         if (_playerInput == null) { return; }
 
+        //両方無効化
+        _playerMap.Disable();
+        _uiMap.Disable();
+
+        //切り替え
         _playerInput.SwitchCurrentActionMap(name);
+
+        if (name == PLAYER) { _playerMap.Enable(); }
+        else if (name == UI) { _uiMap.Enable(); }
+
         GetAction();
+        Debug.Log($"switch to {name}");
     }
 }

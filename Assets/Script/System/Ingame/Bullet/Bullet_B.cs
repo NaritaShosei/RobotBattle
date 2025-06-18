@@ -6,7 +6,7 @@ public abstract class Bullet_B : MonoBehaviour
 {
     protected IFightable _target;
     [SerializeField] protected BulletData _bulletData;
-    public Action<Bullet_B> ReturnPoolEvent;
+    public Action ReturnPoolEvent;
     protected float _timer;
 
     protected bool _isTimeReturned;
@@ -28,7 +28,7 @@ public abstract class Bullet_B : MonoBehaviour
     {
         if (_isTimeReturned || _isConflictReturned)
         {
-            ReturnPoolEvent?.Invoke(this);
+            ReturnPoolEvent?.Invoke();
         }
     }
     void Update()

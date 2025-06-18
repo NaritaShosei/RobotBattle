@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &856575841783495820
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8323111248549760683}
+  m_Layer: 10
+  m_Name: TargetCenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8323111248549760683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856575841783495820}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 6.61, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 362356832563821023}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &987488958414586042
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,10 +95,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10.95
-  m_Height: 45.19
+  m_Radius: 3.58
+  m_Height: 9.22
   m_Direction: 1
-  m_Center: {x: 0, y: 19.1, z: 0}
+  m_Center: {x: 0, y: 4.6, z: 0}
 --- !u!1 &1854634386015235221
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +125,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6.38, y: 6.38, z: 6.38}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 263053392785496746}
@@ -137,6 +168,7 @@ Transform:
   - {fileID: 6383513133264773971}
   - {fileID: 6460085175228565454}
   - {fileID: 1893247446237380772}
+  - {fileID: 8323111248549760683}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &7905519778175362313
@@ -178,7 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8474cd302a0fd5e47a422a90d5fee26f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetCenter: {fileID: 6383513133264773971}
+  _targetCenter: {fileID: 8323111248549760683}
   _damageReactionCollider: {fileID: 1405634303213005174}
   _scoreData: {fileID: 11400000, guid: a73c94b7c9e274b46aa9802f7f7c9b07, type: 2}
   _dataBase: {fileID: 11400000, guid: e850416b047e55047a39aa83ef92063e, type: 2}
@@ -222,10 +254,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10.04
-  m_Height: 39.253525
+  m_Radius: 1.9
+  m_Height: 9.51
   m_Direction: 1
-  m_Center: {x: 0, y: 19.533237, z: 0}
+  m_Center: {x: 0, y: 4.7, z: 0}
 --- !u!1 &6560517811549232731
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,7 +283,7 @@ Transform:
   m_GameObject: {fileID: 6560517811549232731}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 29.3, z: 6.6}
+  m_LocalPosition: {x: 0, y: 6.92, z: -2.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -284,7 +316,7 @@ Transform:
   m_GameObject: {fileID: 9218425098210280918}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 16.6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -322,10 +354,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 11.45
-  m_Height: 46.93
+  m_Radius: 5.78
+  m_Height: 0
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 4.86, z: 0}
 --- !u!1001 &263053392785883210
 PrefabInstance:
   m_ObjectHideFlags: 0

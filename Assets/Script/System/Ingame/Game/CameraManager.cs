@@ -23,22 +23,29 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {
+        //カーソルのロック
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        //inputの取得
         var input = _input.LookAction.ReadValue<Vector2>();
 
         if (input.sqrMagnitude > 1)
         {
             input = input.normalized;
         }
-        _freeLookCamera.HorizontalAxis.Value += input.x
-            * (_invertX ? _cameraSensitivityX : -_cameraSensitivityX);
 
+        //横移動
+        _freeLookCamera.HorizontalAxis.Value += input.x
+             //反転設定の適応
+             * (_invertX ? _cameraSensitivityX : -_cameraSensitivityX);
+
+        //縦移動
         _freeLookCamera.VerticalAxis.Value = Mathf.Clamp(
-        _freeLookCamera.VerticalAxis.Value += input.y
-        * (_invertY ? _cameraSensitivityY : -_cameraSensitivityY),
-        _freeLookCamera.VerticalAxis.Range.x,//Rangeの範囲内に固定する
-        _freeLookCamera.VerticalAxis.Range.y);
+             _freeLookCamera.VerticalAxis.Value += input.y
+             //反転設定の適応
+             * (_invertY ? _cameraSensitivityY : -_cameraSensitivityY),
+             _freeLookCamera.VerticalAxis.Range.x,//Rangeの範囲内に固定する
+             _freeLookCamera.VerticalAxis.Range.y);
     }
 }
