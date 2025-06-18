@@ -66,6 +66,8 @@ public class PlayerAttack : MonoBehaviour
             SceneManager.LoadScene("InGame");
         }
 
+        if (_gameManager.IsGameEnd) { _currentWeapon.IsAttack = false; return; }
+
         if (_gameManager.IsPaused) { return; }
 
         //残弾数を渡す
