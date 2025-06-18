@@ -18,7 +18,7 @@ public class BulletManager : MonoBehaviour
     /// <param name="key"></param>
     /// <param name="bullet">弾</param>
     /// <param name="count">最大数</param>
-    public void SetPool(LongRangeAttack_B key, Bullet_B bullet, int count)
+    public void SetPool(LongRangeAttack_B key, Bullet_B bullet, int count, LayerMask layer)
     {
         if (!_pools.ContainsKey(key))
         {
@@ -26,10 +26,14 @@ public class BulletManager : MonoBehaviour
 
             GameObject parent = new GameObject($"{key.gameObject.name}Pool");
 
+            parent.transform.SetParent(transform);
             //countの分作成
             for (int i = 0; i < count; i++)
             {
                 var b = Instantiate(bullet, parent.transform);
+                b.ReturnPoolEvent = () => ReturnPool(key, b);
+                b.gameObject.SetActive(false);
+                b.gameObject.layer = Mathf.RoundToInt(Mathf.Log(layer.value, 2));
                 pool.Enqueue(b);
             }
 
@@ -66,5 +70,14 @@ public class BulletManager : MonoBehaviour
         {
             _pools[key].Enqueue(bullet);
         }
+    }
+
+    public bool IsPoolCount(LongRangeAttack_B key)
+    {
+        if (_pools.TryGetValue(key, out Queue<Bullet_B> pool))
+        {
+            return pool.Count > 0;
+        }
+        return false;
     }
 }

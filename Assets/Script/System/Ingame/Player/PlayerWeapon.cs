@@ -45,13 +45,13 @@ public class PlayerWeapon : LongRangeAttack_B
     }
     void Attack()
     {
-        if (_bulletPool.Count != 0 && _count != 0)
+        if (_bulletManager.IsPoolCount(this) && _count != 0)
         {
             float rate = 1 / _data.AttackRate;
             if (Time.time > _time + rate)
             {
                 _time = Time.time;
-                var bullet = _bulletPool.Dequeue();
+                var bullet = _bulletManager.GetBullet(this);
                 bullet.gameObject.SetActive(true);
                 bullet.SetPosition(_muzzle.position);
 

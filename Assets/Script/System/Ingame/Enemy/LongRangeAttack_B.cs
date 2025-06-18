@@ -12,7 +12,8 @@ public class LongRangeAttack_B : MonoBehaviour
     [SerializeField] protected Transform _bulletParent;
 
     [SerializeField] protected LayerMask _layer;
-    protected Queue<Bullet_B> _bulletPool = new();
+
+    protected BulletManager _bulletManager;
     protected float _time;
     protected int _count;
 
@@ -23,19 +24,9 @@ public class LongRangeAttack_B : MonoBehaviour
 
     void OnStart()
     {
+        _bulletManager = ServiceLocator.Get<BulletManager>();
         _time = Time.time;
         _count = _data.BulletCount;
-        for (int i = 0; i < _data.BulletCount * 1.5f; i++)
-        {
-            var bullet = Instantiate(_bullet, _bulletParent);
-            bullet.ReturnPoolEvent = OnReturnPool;
-            bullet.gameObject.SetActive(false);
-            _bulletPool.Enqueue(bullet);
-            bullet.gameObject.layer = Mathf.RoundToInt(Mathf.Log(_layer.value, 2));
-        }
-    }
-    void OnReturnPool(Bullet_B bullet)
-    {
-        _bulletPool.Enqueue(bullet);
+        _bulletManager.SetPool(this, _bullet, _count, _layer);
     }
 }
