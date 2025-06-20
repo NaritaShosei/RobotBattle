@@ -74,7 +74,7 @@ public class BossEnemy : Enemy_B<EnemyData_B>
     private void FixedUpdate()
     {
         if (_gameManager.IsPaused) { return; }
-        _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
+        _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Force);
 
         if (_canJump && !_isJumping && _player.transform.position.y > transform.position.y)
         {
@@ -86,7 +86,7 @@ public class BossEnemy : Enemy_B<EnemyData_B>
         {
             if (_player.transform.position.y > transform.position.y)
             {
-                _rb.AddForce(Vector3.up * _data.FloatPower, ForceMode.Acceleration); // Impulseより連続的に加速感ある
+                _rb.AddForce(Vector3.up * _data.FloatPower, ForceMode.Force); // Impulseより連続的に加速感ある
 
                 if (!GaugeValueChange(-_data.JumpValue * Time.fixedDeltaTime))
                 {

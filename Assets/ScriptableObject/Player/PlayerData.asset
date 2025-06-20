@@ -17,10 +17,10 @@ MonoBehaviour:
   _normalSpeed: 20
   _boostSpeed: 60
   _jumpPower: 10
-  _floatPower: 100
+  _floatPower: 110
   _dashDistance: 50
   _dashTime: 0.5
-  _fallSpeed: 20
+  _fallSpeed: 2
   _recoveryValue: 30
   _jumpValue: 50
   _dashValue: 50
