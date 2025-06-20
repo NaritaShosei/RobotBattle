@@ -119,6 +119,9 @@ public class LockOn : MonoBehaviour
             //子オブジェクトを含めBulletなら無視
             if (hit.transform == _bulletParent || hit.transform.IsChildOf(_bulletParent)) continue;
 
+            //Enemyが重なっていたら無視
+            if (hit.transform.root.TryGetComponent(out IEnemy _)) { continue; }
+
             //それ以外でEnemyより手前ならfalse
             if (hit.distance < disToEnemy)
             {
