@@ -15,14 +15,16 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     bool _invertY;
     InputManager _input;
-
-    void OnEnable()
+    InGameManager _inGameManager;
+    void Start()
     {
         _input = ServiceLocator.Get<InputManager>();
+        _inGameManager = ServiceLocator.Get<InGameManager>();
     }
 
     void Update()
     {
+        if (_inGameManager.IsGameEnd || _inGameManager.IsPaused) { return; }
         //カーソルのロック
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
