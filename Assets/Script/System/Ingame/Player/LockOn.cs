@@ -8,12 +8,6 @@ public class LockOn : MonoBehaviour
     Transform _player;
 
     [SerializeField]
-    Transform _bulletParent;
-
-    [SerializeField, Header("0～1の間 Debug Only")]
-    Vector2 _lockOnCenterScreenPos = new Vector2(0.5f, 0.55f);
-
-    [SerializeField]
     float _maxDistance;
 
     [SerializeField, Range(0, 180)]
@@ -66,7 +60,10 @@ public class LockOn : MonoBehaviour
             //指定ポイントからの距離計算
             Vector3 viewportPosition = _camera.WorldToViewportPoint(enemyPos);
             Vector2 screenPos = new Vector2(viewportPosition.x, viewportPosition.y);
-            float disToCenter = Vector2.Distance(screenPos, _lockOnCenterScreenPos);
+
+            Vector2 crosshairPos = (Vector2)_camera.WorldToViewportPoint(_presenter.GetCrosshairPos());
+
+            float disToCenter = Vector2.Distance(screenPos, crosshairPos);
 
             //Y成分を無視したPlayerとEnemyの距離
             float playerDis = (new Vector3(_player.transform.position.x, 0, _player.transform.position.z)
@@ -117,7 +114,7 @@ public class LockOn : MonoBehaviour
             if (hit.transform == enemy.GetTargetCenter() || hit.transform.IsChildOf(enemy.GetTransform())) continue;
 
             //子オブジェクトを含めBulletなら無視
-            if (hit.transform == _bulletParent || hit.transform.IsChildOf(_bulletParent)) continue;
+            if (hit.transform.TryGetComponent(out Bullet_B _) || hit.transform.root.TryGetComponent(out BulletManager _)) continue;
 
             //Enemyが重なっていたら無視
             if (hit.transform.root.TryGetComponent(out IEnemy _)) { continue; }
