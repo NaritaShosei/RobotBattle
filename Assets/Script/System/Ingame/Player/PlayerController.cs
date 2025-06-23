@@ -134,7 +134,7 @@ public class PlayerController : Character_B<PlayerData>
 
         //AddForceなどはFixedUpdateで
 
-        _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Acceleration);
+        _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Force);
 
         if (_isDashed)
         {
@@ -142,7 +142,7 @@ public class PlayerController : Character_B<PlayerData>
         }
         if (_isJumped)
         {
-            _rb.AddForce(Vector3.up * _data.FloatPower, ForceMode.Acceleration);
+            _rb.AddForce(Vector3.up * _data.FloatPower, ForceMode.Force);
         }
     }
 

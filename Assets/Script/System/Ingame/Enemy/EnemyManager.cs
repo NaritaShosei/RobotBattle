@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    //TODO:敵の仕様変更
     List<IEnemy> _enemies = new();
     public List<IEnemy> Enemies => _enemies;
     public bool IsEnemyAllDefeated => _enemies.Count == 0;

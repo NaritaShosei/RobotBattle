@@ -60,11 +60,15 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+#if UNITY_EDITOR
         //Debug Only
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene("InGame");
         }
+#endif
+
+        if (_gameManager.IsGameEnd) { _currentWeapon.IsAttack = false; return; }
 
         if (_gameManager.IsPaused) { return; }
 
