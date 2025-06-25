@@ -11,6 +11,7 @@ public class WeaponUISlotView : MonoBehaviour
     RectTransform _rectTransform;
     [SerializeField]
     CanvasGroup _canvasGroup;
+
     int _maxCount;
     public void SetContent(int count, Sprite icon)
     {
@@ -23,21 +24,15 @@ public class WeaponUISlotView : MonoBehaviour
     {
         _bulletCountText.text = $"{count:000}/{_maxCount:000}";
     }
-    //TODO:マジックナンバーをやめよう
-    public void AnimateToFront()
-    {
-        _bulletCountText.enabled = true;
-        _rectTransform.DOAnchorPosX(100, 0.5f);
-        _rectTransform.DOScale(Vector3.one * 1.2f, 0.5f);
-        _canvasGroup.DOFade(1, 0.5f);
-        _rectTransform.SetAsLastSibling();
-    }
 
-    public void AnimateToBack()
+    public void Animate(bool enabled, float posX, float scale, float alpha, float duration)
     {
-        _bulletCountText.enabled = false;
-        _rectTransform.DOAnchorPosX(-100, 0.5f);
-        _rectTransform.DOScale(Vector3.one * 0.8f, 0.5f);
-        _canvasGroup.DOFade(0.5f, 0.5f);
+        _bulletCountText.enabled = enabled;
+        _rectTransform.DOAnchorPosX(posX, duration);
+        _rectTransform.DOScale(Vector3.one * scale, duration);
+        _canvasGroup.DOFade(alpha, duration);
+
+        if (!enabled) { return; }
+        _rectTransform.SetAsLastSibling();
     }
 }
