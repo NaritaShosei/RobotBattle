@@ -9,9 +9,9 @@ public class WeaponPresenter
     {
         _view = view;
     }
-    public void Initialize(PlayerWeapon weaponA, PlayerWeapon weaponB)
+    public void Initialize((int count, Sprite icon) weaponA, (int count, Sprite icon) weaponB)
     {
-        _view.Initialize(weaponA, weaponB);
+        _view.Initialize((weaponA.count, weaponA.icon), (weaponB.count, weaponB.icon));
     }
 
     public void CountUpdate(int count)

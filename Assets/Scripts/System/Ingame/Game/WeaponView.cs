@@ -18,10 +18,10 @@ public class WeaponView : MonoBehaviour
 
     bool _isAFront;
 
-    public void Initialize(PlayerWeapon weaponA, PlayerWeapon weaponB)
+    public void Initialize((int count, Sprite icon) weaponA, (int count, Sprite icon) weaponB)
     {
-        _slotA.SetContent(weaponA.Count, weaponA.Icon);
-        _slotB.SetContent(weaponB.Count, weaponB.Icon);
+        _slotA.SetContent(weaponA.count, weaponA.icon);
+        _slotB.SetContent(weaponB.count, weaponB.icon);
 
 
         _slotA.Animate(true, _frontPosX, _frontScale, _frontAlpha, _duration);

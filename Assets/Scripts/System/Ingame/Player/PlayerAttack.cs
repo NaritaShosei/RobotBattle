@@ -20,7 +20,6 @@ public class PlayerAttack : MonoBehaviour
     PlayerWeapon _currentWeapon;
     int _index;
     InputManager _input;
-    bool _isInput;
 
     WeaponPresenter _presenter;
     AimIK _aimIK;
@@ -53,7 +52,7 @@ public class PlayerAttack : MonoBehaviour
 
         _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
 
-        _presenter.Initialize(_currentWeapon, _weapons[1]);
+        _presenter.Initialize((_currentWeapon.Count, _currentWeapon.Icon), (_weapons[1].Count, _weapons[1].Icon));
 
         _gameManager = ServiceLocator.Get<InGameManager>();
     }
@@ -109,8 +108,9 @@ public class PlayerAttack : MonoBehaviour
             Debug.LogWarning("武装変更");
 
             //次の武器を装備
-            _currentWeapon = _weapons[(_index + 1) % _weapons.Count];
-            _currentWeapon.IsAttack = _isInput;
+
+            _currentWeapon = _weapons[_index++ % _weapons.Count];
+            _currentWeapon.IsAttack = false;
             _currentWeapon.enabled = true;
 
             //UIに武器変更の情報を渡す
@@ -122,7 +122,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (_gameManager.IsPaused) { return; }
 
-        _isInput = context.phase == InputActionPhase.Started;
+        bool isInput = context.phase == InputActionPhase.Started;
 
         if (_playerManager.IsState(PlayerState.Guard))
         {
@@ -131,7 +131,7 @@ public class PlayerAttack : MonoBehaviour
         }
 
         //攻撃開始
-        if (_playerManager.IsState(PlayerState.Idle) && _isInput)
+        if (_playerManager.IsState(PlayerState.Idle) && isInput)
         {
             _playerManager.SetState(PlayerState.Attack);
 
@@ -147,7 +147,7 @@ public class PlayerAttack : MonoBehaviour
         }
 
         //攻撃終了
-        else if (_playerManager.IsState(PlayerState.Attack) && !_isInput)
+        else if (_playerManager.IsState(PlayerState.Attack) && !isInput)
         {
             _playerManager.SetState(PlayerState.Idle);
 
@@ -156,7 +156,7 @@ public class PlayerAttack : MonoBehaviour
             // レイヤー切り替え
             _anim.SetWeight(AnimationLayer.Attack, 0);
 
-            _currentWeapon.SetAttack(_isInput);
+            _currentWeapon.SetAttack(false);
             _currentWeapon.IKEnable(false);
         }
     }
@@ -165,8 +165,7 @@ public class PlayerAttack : MonoBehaviour
     void IsAttack()
     {
         if (_gameManager.IsPaused) { return; }
-        _currentWeapon.SetAttack(_isInput);
-        Debug.Log($"isInput => {_isInput}");
+        _currentWeapon.SetAttack(true);
     }
 
     void Reload(InputAction.CallbackContext context)
