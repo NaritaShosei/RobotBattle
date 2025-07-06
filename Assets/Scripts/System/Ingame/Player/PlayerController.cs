@@ -54,13 +54,16 @@ public class PlayerController : Character_B<PlayerData>
     {
         _gameManager = ServiceLocator.Get<InGameManager>();
         _rb = GetComponent<Rigidbody>();
+
         Initialize(_dataBase);
+
         _currentSpeed = _data.NormalSpeed;
         _healthPresenter = new HPGaugePresenter(ServiceLocator.Get<GameUIManager>().HPGaugeView);
         _healthPresenter.Initialize(_data.Health);
         _gaugePresenter = new GaugePresenter(ServiceLocator.Get<GameUIManager>().GaugeView);
         _gaugePresenter.Initialize(_data.Gauge);
         _collider.GuardVisible(false);
+
         Start_B();
     }
 
@@ -299,6 +302,7 @@ public class PlayerController : Character_B<PlayerData>
     void OnGuard(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
+
 
         if (context.phase == InputActionPhase.Started)
         {

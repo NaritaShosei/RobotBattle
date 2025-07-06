@@ -111,7 +111,7 @@ public class PlayerWeapon : LongRangeAttack_B
     public void SetAttack(bool value)
     {
         IsAttack = value;
-        if (value && _count <= 0)
+        if (value && _count <= 0 && enabled)
         {
             Reload().Forget();
         }
