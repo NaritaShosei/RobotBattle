@@ -20,7 +20,6 @@ public class UISubmitPanel : UISubmitBase
 
     private void OnEnable()
     {
-        OnClick += Submit;
         OnMouseEnter += Select;
         OnMouseExit += Exit;
         OnClick += SubmitView;
@@ -32,7 +31,6 @@ public class UISubmitPanel : UISubmitBase
 
     private void OnDisable()
     {
-        OnClick -= Submit;
         OnMouseEnter -= Select;
         OnMouseExit -= Exit;
         OnClick -= SubmitView;
@@ -62,7 +60,7 @@ public class UISubmitPanel : UISubmitBase
     public void SubmitView()
     {
         Sequence seq = DOTween.Sequence();
-        seq.Append(transform.DOScale(_submitScale, _scaleDuration)).Append(transform.DOScale(_exitScale, _scaleDuration)).SetLink(gameObject);
+        seq.Append(transform.DOScale(_submitScale, _scaleDuration)).Append(transform.DOScale(_exitScale, _scaleDuration)).OnComplete(() => Submit()).SetLink(gameObject);
         _image.color = _submitColor;
     }
 }

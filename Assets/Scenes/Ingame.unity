@@ -1058,7 +1058,7 @@ MonoBehaviour:
   _selectScale: {x: 0.8, y: 0.8, z: 0.8}
   _exitScale: {x: 0.6578948, y: 0.6578948, z: 0.6578948}
   _submitScale: {x: 0.4, y: 0.4, z: 0.4}
-  _scaleDuration: 0.5
+  _scaleDuration: 0.1
   _submitColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   _selectColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &394076127
@@ -3903,7 +3903,7 @@ MonoBehaviour:
   _selectScale: {x: 0.8, y: 0.8, z: 0.8}
   _exitScale: {x: 0.6578948, y: 0.6578948, z: 0.6578948}
   _submitScale: {x: 0.4, y: 0.4, z: 0.4}
-  _scaleDuration: 0.5
+  _scaleDuration: 0.1
   _submitColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   _selectColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1666814756
@@ -4543,7 +4543,7 @@ MonoBehaviour:
   _selectScale: {x: 0.8, y: 0.8, z: 0.8}
   _exitScale: {x: 0.6578948, y: 0.6578948, z: 0.6578948}
   _submitScale: {x: 0.4, y: 0.4, z: 0.4}
-  _scaleDuration: 0.5
+  _scaleDuration: 0.1
   _submitColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   _selectColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &2059043473
