@@ -46,12 +46,13 @@ public class PlayerController : Character_B<PlayerData>
     InGameManager _gameManager;
     private void OnEnable()
     {
-        _input = ServiceLocator.Get<InputManager>();
-        AddAction();
     }
 
     void Start()
     {
+        _input = ServiceLocator.Get<InputManager>();
+        AddAction();
+
         _gameManager = ServiceLocator.Get<InGameManager>();
         _rb = GetComponent<Rigidbody>();
 

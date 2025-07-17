@@ -18,9 +18,6 @@ public class UISelect : MonoBehaviour
 
     private void OnEnable()
     {
-        _input = ServiceLocator.Get<InputManager>();
-        _input.UINavigateAction.started += Navigate;
-        _input.UISubmitAction.started += Submit;
         if (_selects.Length <= 0) { return; }
 
         switch (_sortType)
@@ -38,6 +35,10 @@ public class UISelect : MonoBehaviour
 
     private void Start()
     {
+        _input = ServiceLocator.Get<InputManager>();
+        _input.UINavigateAction.started += Navigate;
+        _input.UISubmitAction.started += Submit;
+
         //選択しているImageの色を変更
         _selects[_selectIndex].OnMouseEnter?.Invoke();
     }

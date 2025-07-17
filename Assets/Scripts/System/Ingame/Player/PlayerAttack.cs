@@ -33,15 +33,16 @@ public class PlayerAttack : MonoBehaviour
 
     private void Awake()
     {
+    }
+
+    void Start()
+    {
         _input = ServiceLocator.Get<InputManager>();
         _input.AttackAction.started += Attack;
         _input.AttackAction.canceled += Attack;
         _input.WeaponChangeAction.started += WeaponChange;
         _input.ReloadAction.started += Reload;
-    }
 
-    void Start()
-    {
         //初期装備の設定
         _currentWeapon = _weapons[0];
         _weapons[1].enabled = false;
