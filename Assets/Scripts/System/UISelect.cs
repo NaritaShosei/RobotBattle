@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UISelect : MonoBehaviour
 {
-    [SerializeField] Image[] _selects;
+    [SerializeField] UISubmitPanel[] _selects;
     int _selectIndex;
     InputManager _input;
     [SerializeField] SortType _sortType;
@@ -35,7 +35,7 @@ public class UISelect : MonoBehaviour
                 break;
         }
         //選択しているImageの色を変更
-        _selects[_selectIndex].color = Color.red;
+        _selects[_selectIndex].Select();
     }
     private void OnDisable()
     {
@@ -46,7 +46,7 @@ public class UISelect : MonoBehaviour
     void Navigate(InputAction.CallbackContext context)
     {
         //現在のインデックスのImageの色を白に
-        _selects[_selectIndex].color = Color.white;
+        _selects[_selectIndex].Exit();
 
         //入力を保持
         Vector2 input = context.ReadValue<Vector2>();
@@ -79,23 +79,16 @@ public class UISelect : MonoBehaviour
         }
         Debug.Log($"現在の添字{_selectIndex}");
         //移動したインデックスに対応するImageの色を赤に
-        _selects[_selectIndex].color = Color.red;
+        _selects[_selectIndex].Select();
     }
 
     void Submit(InputAction.CallbackContext context)
     {
         //選択中のImageの色を黄色に
-        _selects[_selectIndex].color = Color.yellow;
+        _selects[_selectIndex].SubmitView();
 
         //決定
-        if (_selects[_selectIndex].TryGetComponent(out UISubmitBase component))
-        {
-            component.Submit();
-        }
-        else
-        {
-            Debug.LogError("Submit Filed");
-        }
+        _selects[_selectIndex].Submit();
     }
 
     /// <summary>

@@ -1533,7 +1533,7 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 1
   m_Interactable: 1
-  m_BlocksRaycasts: 0
+  m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!114 &545587963
 MonoBehaviour:
@@ -2951,6 +2951,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slotA: {fileID: 1516244884}
   _slotB: {fileID: 602733256}
+  _frontPosX: 100
+  _backPosX: -100
+  _duration: 0.5
+  _frontScale: 1.2
+  _backScale: 0.8
+  _frontAlpha: 1
+  _backAlpha: 0.5
 --- !u!1001 &1378148668
 PrefabInstance:
   m_ObjectHideFlags: 0
