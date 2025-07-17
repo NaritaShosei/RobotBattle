@@ -28,8 +28,6 @@ public class UISubmitPanel : UISubmitBase
         {
             _baseColor = _image.color;
         }
-
-
     }
 
     private void OnDisable()

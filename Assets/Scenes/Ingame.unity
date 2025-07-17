@@ -1053,8 +1053,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _targetType: 3
-  _alpha: 1
-  _duration: 0.5
+  _fadeAlpha: 0
+  _fadeDuration: 0.5
+  _selectScale: {x: 0.8, y: 0.8, z: 0.8}
+  _exitScale: {x: 0.6578948, y: 0.6578948, z: 0.6578948}
+  _submitScale: {x: 0.4, y: 0.4, z: 0.4}
+  _scaleDuration: 0.5
+  _submitColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  _selectColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &394076127
 GameObject:
   m_ObjectHideFlags: 0
@@ -1481,9 +1487,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _selects:
-  - {fileID: 1657233710}
-  - {fileID: 387637089}
-  - {fileID: 2055978474}
+  - {fileID: 1657233713}
+  - {fileID: 2055978476}
+  - {fileID: 387637091}
   _sortType: 0
 --- !u!114 &545587960
 MonoBehaviour:
@@ -2822,7 +2828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _selects:
-  - {fileID: 1502297611}
+  - {fileID: 0}
   _sortType: 0
 --- !u!1 &1266216728
 GameObject:
@@ -3388,8 +3394,14 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _targetType: 2
-  _alpha: 1
-  _duration: 0.5
+  _fadeAlpha: 0
+  _fadeDuration: 0.5
+  _selectScale: {x: 1, y: 1, z: 1}
+  _exitScale: {x: 1, y: 1, z: 1}
+  _submitScale: {x: 1, y: 1, z: 1}
+  _scaleDuration: 0.5
+  _submitColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  _selectColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &1502297611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3886,8 +3898,14 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   _targetType: 1
-  _alpha: 0
-  _duration: 0.5
+  _fadeAlpha: 0
+  _fadeDuration: 0.5
+  _selectScale: {x: 0.8, y: 0.8, z: 0.8}
+  _exitScale: {x: 0.6578948, y: 0.6578948, z: 0.6578948}
+  _submitScale: {x: 0.4, y: 0.4, z: 0.4}
+  _scaleDuration: 0.5
+  _submitColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  _selectColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1666814756
 GameObject:
   m_ObjectHideFlags: 0
@@ -4520,8 +4538,14 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _targetType: 2
-  _alpha: 1
-  _duration: 0.5
+  _fadeAlpha: 0
+  _fadeDuration: 0.5
+  _selectScale: {x: 0.8, y: 0.8, z: 0.8}
+  _exitScale: {x: 0.6578948, y: 0.6578948, z: 0.6578948}
+  _submitScale: {x: 0.4, y: 0.4, z: 0.4}
+  _scaleDuration: 0.5
+  _submitColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  _selectColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &2059043473
 GameObject:
   m_ObjectHideFlags: 0

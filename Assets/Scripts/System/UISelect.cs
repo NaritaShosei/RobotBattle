@@ -34,9 +34,14 @@ public class UISelect : MonoBehaviour
                 _selects = _selects.OrderBy(x => x.transform.position.x).ToArray();
                 break;
         }
+    }
+
+    private void Start()
+    {
         //選択しているImageの色を変更
         _selects[_selectIndex].Select();
     }
+
     private void OnDisable()
     {
         _input.UINavigateAction.started -= Navigate;
