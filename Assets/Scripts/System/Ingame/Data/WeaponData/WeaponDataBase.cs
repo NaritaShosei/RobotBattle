@@ -4,12 +4,18 @@ using UnityEngine;
 public class WeaponDatabase : ScriptableObject
 {
     [SerializeField] private WeaponData[] _weapons;
+    [Header("初期開放武器はここにも追加")]
+    [SerializeField] private WeaponData[] _initialOpenWeapon;
     private Dictionary<int, WeaponData> _weaponDict;
 
     private void OnValidate()
     {
         InitializeDictionary();
-        Debug.Log(_weaponDict.Count);
+    }
+
+    private void Awake()
+    {
+        InitializeInitialOpenWeapons();
     }
 
     private void InitializeDictionary()
@@ -22,6 +28,16 @@ public class WeaponDatabase : ScriptableObject
                 _weaponDict[weapon.WeaponID] = weapon;
             }
         }
+    }
+
+    private void InitializeInitialOpenWeapons()
+    {
+        var data = SaveLoadService.Load<EquipmentData>();
+        foreach (var weapon in _initialOpenWeapon)
+        {
+            data.UnlockWeapon(weapon.WeaponID);
+        }
+        SaveLoadService.Save(data);
     }
 
     public WeaponData GetWeapon(int weaponId)
