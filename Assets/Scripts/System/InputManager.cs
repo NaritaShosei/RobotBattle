@@ -83,8 +83,22 @@ public class InputManager : MonoBehaviour
         //切り替え
         _playerInput.SwitchCurrentActionMap(name);
 
-        if (name == PLAYER) { _playerMap.Enable(); }
-        else if (name == UI) { _uiMap.Enable(); }
+        if (name == PLAYER)
+        {
+            _playerMap.Enable();
+            //カーソルのロック
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
+        else if (name == UI)
+        {
+            _uiMap.Enable();
+            //カーソルのロック
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
 
         GetAction();
         Debug.Log($"switch to {name}");

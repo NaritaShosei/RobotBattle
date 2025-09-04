@@ -443,7 +443,6 @@ MonoBehaviour:
   _data: {fileID: 11400000, guid: 2b88c8056234f104188b2923875adbd7, type: 2}
   _bullet: {fileID: 1930764663170779167, guid: beb06f7ff0d3af348a90099e4de7dbee, type: 3}
   _muzzle: {fileID: 7491277428339497934}
-  _bulletParent: {fileID: 0}
   _layer:
     serializedVersion: 2
     m_Bits: 256
@@ -465,7 +464,6 @@ MonoBehaviour:
   _data: {fileID: 11400000, guid: 2b88c8056234f104188b2923875adbd7, type: 2}
   _bullet: {fileID: 7544377930784953706, guid: b71227c7f80bc7a44b9d12f4d78566fe, type: 3}
   _muzzle: {fileID: 7491277428339497934}
-  _bulletParent: {fileID: 0}
   _layer:
     serializedVersion: 2
     m_Bits: 256
@@ -485,10 +483,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 7053778544467440685}
-  _bulletParent: {fileID: 0}
-  _lockOnCenterScreenPos: {x: 0.5, y: 0.55}
   _maxDistance: 100
   _viewAngle: 110
+  _centerValue: 0.5
+  _playerValue: 1.5
 --- !u!95 &5463683229749639859
 Animator:
   serializedVersion: 7

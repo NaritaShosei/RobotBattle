@@ -25,10 +25,7 @@ public class CameraManager : MonoBehaviour
     void Update()
     {
         if (_inGameManager.IsGameEnd || _inGameManager.IsPaused) { return; }
-        //カーソルのロック
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
+       
         //inputの取得
         var input = _input.LookAction.ReadValue<Vector2>();
 
