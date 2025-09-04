@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: WeaponData 1
   m_EditorClassIdentifier: 
   _weaponID: 111
-  _weaponName: "\u30D3\u30FC\u30E0"
-  _weaponIcon: {fileID: 21300000, guid: afcc63084ae8abc48bb18daf9be92d68, type: 3}
-  _weaponMoney: 0
+  _weaponName: "\u30DF\u30B5\u30A4\u30EB"
+  _weaponIcon: {fileID: 21300000, guid: 7347b64c685fc3648afd309f7eedd5e1, type: 3}
+  _weaponMoney: 500
   _attackPower: 1
   _attackRate: 1
   _range: 10

@@ -11,11 +11,11 @@ public class WeaponManager : MonoBehaviour, IPointerClickHandler
         ServiceLocator.Set(this);
     }
 
-    public void SetMainWeapon(WeaponCellView view)
+    public void SetMainWeapon(WeaponCell view)
     {
         //MainWeapon = view.Weapon;
     }
-    public void SetSubWeapon(WeaponCellView view)
+    public void SetSubWeapon(WeaponCell view)
     {
         //SubWeapon = view.Weapon;
     }
@@ -24,7 +24,7 @@ public class WeaponManager : MonoBehaviour, IPointerClickHandler
     {
         var obj = eventData.pointerCurrentRaycast.gameObject;
 
-        if (obj.TryGetComponent(out WeaponCellView view))
+        if (obj.TryGetComponent(out WeaponCell view))
         {
 
         }
