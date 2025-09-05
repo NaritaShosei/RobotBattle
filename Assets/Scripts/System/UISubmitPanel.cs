@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class UISubmitPanel : UISubmitBase
 {
     [SerializeField] UnityEvent _events;
-    [SerializeField] TargetType _targetType;
     [SerializeField, Range(0, 1)] float _fadeAlpha = 0;
     [SerializeField] float _fadeDuration = 0.5f;
     [SerializeField] Vector3 _selectScale = Vector3.one;
@@ -39,11 +38,11 @@ public class UISubmitPanel : UISubmitBase
     public override void Submit()
     {
         IsClicked = true;
-        if (_targetType == TargetType.None) { _events.Invoke(); return; }
+       // if (_targetType == TargetType.None) { _events.Invoke(); return; }
 
         var view = ServiceLocator.Get<GameUIManager>().PanelUIView;
 
-        view.Fade(_targetType, _fadeAlpha, _fadeDuration, () => _events?.Invoke());
+      //  view.Fade(_targetType, _fadeAlpha, _fadeDuration, () => _events?.Invoke());
         Debug.Log("UI Submit");
     }
 

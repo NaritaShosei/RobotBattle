@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] private WeaponDatabase _weaponDatabase;
+    private WeaponDatabase _weaponDatabase;
     [SerializeField] private WeaponCell _weaponCell;
     [SerializeField] private Transform _cellParent;
     [SerializeField] private WeaponExplanation _explanation;
@@ -17,6 +17,7 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
     private void Start()
     {
         SetUI();
+        _weaponDatabase = ServiceLocator.Get<WeaponManager>().DataBase;
     }
 
     private void SetUI()

@@ -1,32 +1,13 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 
-public class WeaponManager : MonoBehaviour, IPointerClickHandler
+public class WeaponManager : MonoBehaviour
 {
-    public LongRangeAttack_B MainWeapon { get; private set; }
-    public LongRangeAttack_B SubWeapon { get; private set; } 
+    [SerializeField] private WeaponDatabase _dataBase;
+
+    public WeaponDatabase DataBase => _dataBase;
+
     private void Awake()
     {
         ServiceLocator.Set(this);
-    }
-
-    public void SetMainWeapon(WeaponCell view)
-    {
-        //MainWeapon = view.Weapon;
-    }
-    public void SetSubWeapon(WeaponCell view)
-    {
-        //SubWeapon = view.Weapon;
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        var obj = eventData.pointerCurrentRaycast.gameObject;
-
-        if (obj.TryGetComponent(out WeaponCell view))
-        {
-
-        }
     }
 }

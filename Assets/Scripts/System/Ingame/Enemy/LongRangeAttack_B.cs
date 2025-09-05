@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class LongRangeAttack_B : MonoBehaviour
 {
-    [SerializeField] protected AttackData _data;
+    [SerializeField] protected WeaponData _data;
 
     [SerializeField] protected Bullet_B _bullet;
 
@@ -26,5 +26,10 @@ public class LongRangeAttack_B : MonoBehaviour
         _time = Time.time;
         _count = _data.BulletCount;
         _bulletManager.SetPool(this, _bullet, _count, _layer);
+    }
+
+    public void Initialize(WeaponData data)
+    {
+        _data = data;
     }
 }
