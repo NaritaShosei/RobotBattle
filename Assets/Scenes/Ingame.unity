@@ -1052,7 +1052,6 @@ MonoBehaviour:
   _events:
     m_PersistentCalls:
       m_Calls: []
-  _targetType: 3
   _fadeAlpha: 0
   _fadeDuration: 0.5
   _selectScale: {x: 0.8, y: 0.8, z: 0.8}
@@ -1553,9 +1552,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f547730b51417a74e8b2de314bd61b04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fadePanel: {fileID: 308637549}
-  _startPanel: {fileID: 545587962}
-  _settingPanel: {fileID: 1604369032}
 --- !u!1 &567696708
 GameObject:
   m_ObjectHideFlags: 0
@@ -3322,7 +3318,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _targetType: 2
   _fadeAlpha: 0
   _fadeDuration: 0.5
   _selectScale: {x: 1, y: 1, z: 1}
@@ -3826,7 +3821,6 @@ MonoBehaviour:
           m_StringArgument: Player
           m_BoolArgument: 1
         m_CallState: 2
-  _targetType: 1
   _fadeAlpha: 0
   _fadeDuration: 0.5
   _selectScale: {x: 0.8, y: 0.8, z: 0.8}
@@ -4466,7 +4460,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _targetType: 2
   _fadeAlpha: 0
   _fadeDuration: 0.5
   _selectScale: {x: 0.8, y: 0.8, z: 0.8}
