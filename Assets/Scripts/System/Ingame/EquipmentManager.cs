@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class EquipmentManager : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class EquipmentManager : MonoBehaviour
         _subID = data.CurrentLoadout.SecondWeaponId;
     }
 
-    public void SpawnWeapon(EquipmentType type,Transform parent)
+    public WeaponBase SpawnWeapon(EquipmentType type, Transform parent)
     {
         int id = type switch
         {
@@ -22,14 +23,18 @@ public class EquipmentManager : MonoBehaviour
         };
 
         var weaponData = ServiceLocator.Get<WeaponManager>().DataBase.GetWeapon(id);
-        if (weaponData?.WeaponPrefab == null) { Debug.LogWarning("プレハブが設定されていません"); return; }
+        if (weaponData?.WeaponPrefab == null) { Debug.LogWarning("プレハブが設定されていません"); return null; }
 
         var weaponObj = Instantiate(weaponData.WeaponPrefab, parent);
-        //var weaponComponent = weaponObj.GetComponent<WeaponBase>();
 
-        //if (!weaponComponent) { Debug.LogWarning("プレハブにWeaponBaseがアタッチされていません"); return; }
+        if (weaponObj.TryGetComponent(out WeaponBase weaponComponent))
+        {
+            Debug.LogWarning("プレハブにWeaponBaseがアタッチされていません"); return null;
+        }
 
-        //weaponComponent.Initialize(weaponData);
+        weaponComponent.Initialize(weaponData);
+
+        return weaponComponent;
     }
 }
 public enum EquipmentType

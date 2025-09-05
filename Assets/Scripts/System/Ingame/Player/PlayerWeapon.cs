@@ -3,16 +3,8 @@ using RootMotion.FinalIK;
 using UnityEngine;
 public class PlayerWeapon : LongRangeAttack_B
 {
-    [SerializeField]
-    Transform _player;
-
-    [SerializeField]
-    Sprite _weaponIcon;
-    public Sprite Icon => _weaponIcon;
-
     public int Count => _count;
 
-    [SerializeField]
     LockOn _lockOn;
 
     Camera _camera;
@@ -24,13 +16,14 @@ public class PlayerWeapon : LongRangeAttack_B
     AimIK _aimIK;
     Vector3 _aimTargetPos;
 
-    void Start()
+
+    protected override void OnInitialize()
     {
+        base.OnInitialize();
         Start_B();
         _camera = Camera.main;
-        _aimIK = _player.GetComponent<AimIK>();
+        _lockOn = ServiceLocator.Get<LockOn>();
     }
-
     void Update()
     {
 
@@ -43,7 +36,7 @@ public class PlayerWeapon : LongRangeAttack_B
             Attack();
         }
     }
-    void Attack()
+    public override void Attack()
     {
         if (_bulletManager.IsPoolCount(this) && _count != 0)
         {
@@ -80,7 +73,7 @@ public class PlayerWeapon : LongRangeAttack_B
 
             if (Physics.Raycast(ray, out RaycastHit hit, dis))
             {
-                float playerDis = Vector3.Distance(ray.origin, _player.position);
+                float playerDis = Vector3.Distance(ray.origin, transform.position);
                 if (hit.distance > playerDis)
                 {
                     _aimTargetPos = hit.point;

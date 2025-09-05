@@ -19,4 +19,7 @@ MonoBehaviour:
   _attackPower: 1
   _attackRate: 1
   _range: 10
-  _weaponPrefab: {fileID: 0}
+  _reloadInterval: 1.5
+  _count: 10
+  _guardBreak: 50
+  _weaponPrefab: {fileID: 2824113696263175264, guid: 4f94439a6e55e3340829449ca41bbfa0, type: 3}
