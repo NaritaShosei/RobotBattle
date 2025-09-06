@@ -3,7 +3,6 @@ using RootMotion.FinalIK;
 using UnityEngine;
 public class PlayerWeapon : LongRangeAttack_B
 {
-    public int Count => _count;
 
     LockOn _lockOn;
 
@@ -96,20 +95,19 @@ public class PlayerWeapon : LongRangeAttack_B
     /// ロックオン中のtargetを取得する
     /// </summary>
     /// <returns></returns>
-    public Vector3 GetTargetPos()
+    public override Vector3 GetTargetPos()
     {
         return _aimTargetPos;
     }
-
-    public void SetAttack(bool value)
+    public override void SetAttack(bool value)
     {
         IsAttack = value;
         if (value && _count <= 0 && enabled)
         {
-            Reload().Forget();
+            Reload();
         }
     }
-    public async UniTaskVoid Reload()
+    protected override async UniTask OnReload()
     {
         if (_isReload) return;
         if (_count == _data.BulletCount) return;
@@ -122,9 +120,9 @@ public class PlayerWeapon : LongRangeAttack_B
         Debug.LogWarning("Reload To Complete" + _count);
         _isReload = false;
     }
-
-    public void IKEnable(bool enable)
+    public override void IKEnable(bool enable)
     {
         _aimIK.enabled = enable;
     }
 }
+

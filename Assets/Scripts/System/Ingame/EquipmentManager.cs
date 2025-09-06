@@ -27,7 +27,7 @@ public class EquipmentManager : MonoBehaviour
 
         var weaponObj = Instantiate(weaponData.WeaponPrefab, parent);
 
-        if (weaponObj.TryGetComponent(out WeaponBase weaponComponent))
+        if (!weaponObj.TryGetComponent(out WeaponBase weaponComponent))
         {
             Debug.LogWarning("プレハブにWeaponBaseがアタッチされていません"); return null;
         }

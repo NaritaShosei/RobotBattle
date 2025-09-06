@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LongRangeAttack_B : WeaponBase
@@ -14,9 +15,27 @@ public class LongRangeAttack_B : WeaponBase
     protected float _time;
     protected int _count;
 
-    public override void Attack()
+    public override int Count => _count;
+
+    public override void Attack() { }
+
+    public override Vector3 GetTargetPos()
     {
-        throw new System.NotImplementedException();
+        return default;
+    }
+
+    public override void IKEnable(bool enable) { }
+
+    public override void Reload()
+    {
+        OnReload().Forget();
+    }
+
+    protected virtual async UniTask OnReload() { }
+
+    public override void SetAttack(bool value)
+    {
+
     }
 
     protected void Start_B()

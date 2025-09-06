@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class EnemyLongRangeAttack : LongRangeAttack_B
 {
+    [SerializeField] private WeaponData _weaponData;
     IEnemy _enemy;
     bool _isAttacked;
     void Start()
     {
+        Initialize(_weaponData);
         Start_B();
         _isAttacked = true;
     }

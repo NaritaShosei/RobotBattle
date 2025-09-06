@@ -211,6 +211,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 838447219257471581, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: a75e1d0b52be3584aabb9c17925b8012, type: 2}
     - target: {fileID: 2166134176414654115, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -2230,6 +2234,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 838447219257471581, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: a75e1d0b52be3584aabb9c17925b8012, type: 2}
+    - target: {fileID: 838447219257471581, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
       propertyPath: _bulletParent
       value: 
       objectReference: {fileID: 104793615}
@@ -3016,6 +3024,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3048632961333670187, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: a75e1d0b52be3584aabb9c17925b8012, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4189,6 +4201,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3048632961333670187, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: a75e1d0b52be3584aabb9c17925b8012, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4246,6 +4262,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3048632961333670187, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: a75e1d0b52be3584aabb9c17925b8012, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4674,6 +4694,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3048632961333670187, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: a75e1d0b52be3584aabb9c17925b8012, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5176,6 +5200,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3048632961333670187, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: a75e1d0b52be3584aabb9c17925b8012, type: 2}
     - target: {fileID: 3048632961333670187, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
       propertyPath: _bulletParent
       value: 

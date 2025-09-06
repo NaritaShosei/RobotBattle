@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 public abstract class WeaponBase : MonoBehaviour
 {
@@ -14,4 +15,9 @@ public abstract class WeaponBase : MonoBehaviour
 
     protected virtual void OnInitialize() { }
     public abstract void Attack();
+    public abstract void SetAttack(bool value);
+    public abstract void Reload();
+    public abstract int Count { get; }
+    public abstract Vector3 GetTargetPos();
+    public abstract void IKEnable(bool enable);
 }

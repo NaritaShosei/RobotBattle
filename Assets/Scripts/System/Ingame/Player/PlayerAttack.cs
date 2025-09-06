@@ -10,14 +10,13 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     PlayerManager _playerManager;
 
-    [SerializeField]
-    List<PlayerWeapon> _weapons = new();
+    List<WeaponBase> _weapons = new();
 
 
     [SerializeField]
     AnimationController _anim;
 
-    PlayerWeapon _currentWeapon;
+    WeaponBase _currentWeapon;
     int _index;
     InputManager _input;
 
@@ -31,9 +30,8 @@ public class PlayerAttack : MonoBehaviour
     float _ikWeight = 0.846f;
     InGameManager _gameManager;
 
-    private void Awake()
-    {
-    }
+    [SerializeField] private Transform _mainParent;
+    [SerializeField] private Transform _subParent;
 
     void Start()
     {
@@ -42,6 +40,11 @@ public class PlayerAttack : MonoBehaviour
         _input.AttackAction.canceled += Attack;
         _input.WeaponChangeAction.started += WeaponChange;
         _input.ReloadAction.started += Reload;
+
+        var manager = ServiceLocator.Get<EquipmentManager>();
+
+        _weapons.Add(manager.SpawnWeapon(EquipmentType.Main, _mainParent));
+        _weapons.Add(manager.SpawnWeapon(EquipmentType.Sub, _subParent));
 
         //初期装備の設定
         _currentWeapon = _weapons[0];
@@ -53,9 +56,10 @@ public class PlayerAttack : MonoBehaviour
 
         _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
 
-        _presenter.Initialize((_currentWeapon.Count, _currentWeapon.Icon), (_weapons[1].Count, _weapons[1].Icon));
+        _presenter.Initialize((_currentWeapon.Data.BulletCount, _currentWeapon.Data.WeaponIcon), (_weapons[1].Data.BulletCount, _weapons[1].Data.WeaponIcon));
 
         _gameManager = ServiceLocator.Get<InGameManager>();
+        Debug.LogWarning(_gameManager);
     }
 
     void Update()
@@ -68,7 +72,7 @@ public class PlayerAttack : MonoBehaviour
         }
 #endif
 
-        if (_gameManager.IsGameEnd) { _currentWeapon.IsAttack = false; return; }
+        if (_gameManager.IsGameEnd) { _currentWeapon.SetAttack(false); return; }
 
         if (_gameManager.IsPaused) { return; }
 
@@ -103,7 +107,7 @@ public class PlayerAttack : MonoBehaviour
         if (_playerManager.IsState(PlayerState.Idle))
         {
             //装備中の武器を無効化
-            _currentWeapon.IsAttack = false;
+            _currentWeapon.SetAttack(false);
             _currentWeapon.enabled = false;
 
             Debug.LogWarning("武装変更");
@@ -111,7 +115,7 @@ public class PlayerAttack : MonoBehaviour
             //次の武器を装備
 
             _currentWeapon = _weapons[_index++ % _weapons.Count];
-            _currentWeapon.IsAttack = false;
+            _currentWeapon.SetAttack(false);
             _currentWeapon.enabled = true;
 
             //UIに武器変更の情報を渡す
@@ -173,7 +177,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (_gameManager.IsPaused) { return; }
 
-        _currentWeapon.Reload().Forget();
+        _currentWeapon.Reload();
     }
 
     private void OnDisable()

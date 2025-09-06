@@ -27,6 +27,10 @@ public class LockOn : MonoBehaviour
     CrosshairPresenter _presenter;
 
     EnemyManager _enemyManager;
+    private void Awake()
+    {
+        ServiceLocator.Set(this);
+    }
     void Start()
     {
         _camera = Camera.main;
