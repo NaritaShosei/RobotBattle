@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using RootMotion.FinalIK;
 using UnityEngine;
 
 public abstract class WeaponBase : MonoBehaviour
@@ -19,5 +20,5 @@ public abstract class WeaponBase : MonoBehaviour
     public abstract void Reload();
     public abstract int Count { get; }
     public abstract Vector3 GetTargetPos();
-    public abstract void IKEnable(bool enable);
+    public abstract void IKEnable(AimIK ik, bool enable);
 }

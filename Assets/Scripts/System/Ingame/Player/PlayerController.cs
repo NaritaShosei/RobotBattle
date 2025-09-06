@@ -43,7 +43,7 @@ public class PlayerController : Character_B<PlayerData>
 
     HPGaugePresenter _healthPresenter;
     GaugePresenter _gaugePresenter;
-    InGameManager _gameManager;
+    IngameManager _gameManager;
     private void OnEnable()
     {
     }
@@ -53,7 +53,7 @@ public class PlayerController : Character_B<PlayerData>
         _input = ServiceLocator.Get<InputManager>();
         AddAction();
 
-        _gameManager = ServiceLocator.Get<InGameManager>();
+        _gameManager = ServiceLocator.Get<IngameManager>();
         _rb = GetComponent<Rigidbody>();
 
         Initialize(_dataBase);

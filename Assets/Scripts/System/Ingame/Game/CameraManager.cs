@@ -15,11 +15,11 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     bool _invertY;
     InputManager _input;
-    InGameManager _inGameManager;
+    IngameManager _inGameManager;
     void Start()
     {
         _input = ServiceLocator.Get<InputManager>();
-        _inGameManager = ServiceLocator.Get<InGameManager>();
+        _inGameManager = ServiceLocator.Get<IngameManager>();
     }
 
     void Update()

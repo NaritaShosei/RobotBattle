@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1412426406570949387}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 2375372603350638066}
   - component: {fileID: 1985820696237555039}
   - component: {fileID: 6115230344392606276}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: WeaponBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}

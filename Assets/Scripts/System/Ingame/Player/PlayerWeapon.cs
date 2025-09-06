@@ -120,9 +120,9 @@ public class PlayerWeapon : LongRangeAttack_B
         Debug.LogWarning("Reload To Complete" + _count);
         _isReload = false;
     }
-    public override void IKEnable(bool enable)
+    public override void IKEnable(AimIK ik, bool enable)
     {
-        _aimIK.enabled = enable;
+        ik.enabled = enable;
     }
 }
 

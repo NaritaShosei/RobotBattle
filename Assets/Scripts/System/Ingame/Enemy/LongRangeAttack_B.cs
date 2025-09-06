@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using RootMotion.FinalIK;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ public class LongRangeAttack_B : WeaponBase
         return default;
     }
 
-    public override void IKEnable(bool enable) { }
+    public override void IKEnable(AimIK ik, bool enable) { }
 
     public override void Reload()
     {

@@ -10,10 +10,10 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
     public Action<PlayerController> OnAttackEvent;
     protected PlayerController _player;
     protected Camera _camera;
-    protected InGameManager _gameManager;
+    protected IngameManager _gameManager;
     protected void OnStart()
     {
-        _gameManager = ServiceLocator.Get<InGameManager>();
+        _gameManager = ServiceLocator.Get<IngameManager>();
         _camera = Camera.main;
         Start_B();
     }

@@ -1,4 +1,6 @@
-﻿using RootMotion.FinalIK;
+﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using RootMotion.FinalIK;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,14 +12,12 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     PlayerManager _playerManager;
 
-    List<WeaponBase> _weapons = new();
-
-
     [SerializeField]
     AnimationController _anim;
 
-    WeaponBase _currentWeapon;
-    int _index;
+    private WeaponBase _mainWeapon;
+    private WeaponBase _subWeapon;
+
     InputManager _input;
 
     WeaponPresenter _presenter;
@@ -28,7 +28,9 @@ public class PlayerAttack : MonoBehaviour
     float _duration = 0.5f;
     [SerializeField]
     float _ikWeight = 0.846f;
-    InGameManager _gameManager;
+    [SerializeField]
+    private float _swapDuration = 0.5f;
+    IngameManager _gameManager;
 
     [SerializeField] private Transform _mainParent;
     [SerializeField] private Transform _subParent;
@@ -43,12 +45,9 @@ public class PlayerAttack : MonoBehaviour
 
         var manager = ServiceLocator.Get<EquipmentManager>();
 
-        _weapons.Add(manager.SpawnWeapon(EquipmentType.Main, _mainParent));
-        _weapons.Add(manager.SpawnWeapon(EquipmentType.Sub, _subParent));
-
         //初期装備の設定
-        _currentWeapon = _weapons[0];
-        _weapons[1].enabled = false;
+        _mainWeapon = manager.SpawnWeapon(EquipmentType.Main, _mainParent);
+        _subWeapon = manager.SpawnWeapon(EquipmentType.Sub, _subParent);
 
         //IKの設定
         _aimIK = GetComponent<AimIK>();
@@ -56,9 +55,9 @@ public class PlayerAttack : MonoBehaviour
 
         _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
 
-        _presenter.Initialize((_currentWeapon.Data.BulletCount, _currentWeapon.Data.WeaponIcon), (_weapons[1].Data.BulletCount, _weapons[1].Data.WeaponIcon));
+        _presenter.Initialize((_mainWeapon.Data.BulletCount, _mainWeapon.Data.WeaponIcon), (_subWeapon.Data.BulletCount, _subWeapon.Data.WeaponIcon));
 
-        _gameManager = ServiceLocator.Get<InGameManager>();
+        _gameManager = ServiceLocator.Get<IngameManager>();
         Debug.LogWarning(_gameManager);
     }
 
@@ -72,12 +71,12 @@ public class PlayerAttack : MonoBehaviour
         }
 #endif
 
-        if (_gameManager.IsGameEnd) { _currentWeapon.SetAttack(false); return; }
+        if (_gameManager.IsGameEnd) { _mainWeapon.SetAttack(false); return; }
 
         if (_gameManager.IsPaused) { return; }
 
         //残弾数を渡す
-        _presenter.CountUpdate(_currentWeapon.Count);
+        _presenter.CountUpdate(_mainWeapon.Count);
 
         //腕のIKの線形補間
         if (_timer < _duration)
@@ -95,32 +94,53 @@ public class PlayerAttack : MonoBehaviour
         if (_gameManager.IsPaused) { return; }
 
         //IKのtargetの座標を設定する
-        _aimIK.solver.target.position = _currentWeapon.GetTargetPos();
+        _aimIK.solver.target.position = _mainWeapon.GetTargetPos();
     }
 
     //TODO:すぐ切り替わってしまうので遅らせる処理が必要
-    void WeaponChange(InputAction.CallbackContext context)
+    async void WeaponChange(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
 
         //Idle状態の時のみ武器変更可能
         if (_playerManager.IsState(PlayerState.Idle))
         {
+            _playerManager.SetState(PlayerState.WeaponChange);
+
             //装備中の武器を無効化
-            _currentWeapon.SetAttack(false);
-            _currentWeapon.enabled = false;
+            _mainWeapon.SetAttack(false);
+            _mainWeapon.enabled = false;
+
+            await WeaponSwap();
 
             Debug.LogWarning("武装変更");
 
             //次の武器を装備
+            _playerManager.SetState(PlayerState.Idle);
 
-            _currentWeapon = _weapons[_index++ % _weapons.Count];
-            _currentWeapon.SetAttack(false);
-            _currentWeapon.enabled = true;
+
+            _mainWeapon = _subWeapon;
+            var weapon = _mainWeapon;
+            _subWeapon = weapon;
+
+            _mainWeapon.SetAttack(false);
+            _mainWeapon.enabled = true;
 
             //UIに武器変更の情報を渡す
             _presenter.SwapWeapon();
         }
+    }
+
+    private async UniTask WeaponSwap()
+    {
+        var seq = DOTween.Sequence();
+
+        _mainWeapon.transform.SetParent(_subParent);
+        _subWeapon.transform.SetParent(_mainParent);
+
+        await seq.Append(_mainWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
+            Append(_subWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
+            AsyncWaitForCompletion();
     }
 
     void Attack(InputAction.CallbackContext context)
@@ -145,7 +165,7 @@ public class PlayerAttack : MonoBehaviour
 
             // レイヤー切り替え
             _anim.SetWeight(AnimationLayer.Attack, 1);
-            _currentWeapon.IKEnable(true);
+            _mainWeapon.IKEnable(_aimIK, true);
 
             //IKの線形補間の時間初期化
             _timer = 0;
@@ -161,8 +181,8 @@ public class PlayerAttack : MonoBehaviour
             // レイヤー切り替え
             _anim.SetWeight(AnimationLayer.Attack, 0);
 
-            _currentWeapon.SetAttack(false);
-            _currentWeapon.IKEnable(false);
+            _mainWeapon.SetAttack(false);
+            _mainWeapon.IKEnable(_aimIK, false);
         }
     }
 
@@ -170,14 +190,14 @@ public class PlayerAttack : MonoBehaviour
     void IsAttack()
     {
         if (_gameManager.IsPaused) { return; }
-        _currentWeapon.SetAttack(true);
+        _mainWeapon.SetAttack(true);
     }
 
     void Reload(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
 
-        _currentWeapon.Reload();
+        _mainWeapon.Reload();
     }
 
     private void OnDisable()

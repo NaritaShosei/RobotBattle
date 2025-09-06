@@ -40,8 +40,4 @@ public class SmallEnemy : Enemy_B<CharacterData_B>
             _player = null;
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.LogError("SmallEnemy" + _data.Health);
-    }
 }

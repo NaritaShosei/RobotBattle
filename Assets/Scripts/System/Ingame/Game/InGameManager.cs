@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class InGameManager : MonoBehaviour
+public class IngameManager : MonoBehaviour
 {
 
     [SerializeField]
