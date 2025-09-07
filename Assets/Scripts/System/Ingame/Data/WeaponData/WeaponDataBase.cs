@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 [CreateAssetMenu(menuName = "WeaponDatabase", fileName = "WeaponDatabase")]
 public class WeaponDatabase : ScriptableObject
@@ -13,11 +14,6 @@ public class WeaponDatabase : ScriptableObject
         InitializeDictionary();
     }
 
-    private void Awake()
-    {
-        InitializeInitialOpenWeapons();
-    }
-
     private void InitializeDictionary()
     {
         _weaponDict = new Dictionary<int, WeaponData>();
@@ -30,9 +26,9 @@ public class WeaponDatabase : ScriptableObject
         }
     }
 
-    private void InitializeInitialOpenWeapons()
+    public void InitializeInitialOpenWeapons()
     {
-        var data = SaveLoadService.Load<EquipmentData>();
+        var data = new EquipmentData();
         foreach (var weapon in _initialOpenWeapon)
         {
             data.UnlockWeapon(weapon.WeaponID);
@@ -47,4 +43,22 @@ public class WeaponDatabase : ScriptableObject
     }
 
     public WeaponData[] GetAllWeapons() => _weapons;
+
+#if UNITY_EDITOR
+    [CustomEditor(typeof(WeaponDatabase))]
+    public class NoteDataLoad : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            DrawDefaultInspector();
+            GUILayout.Space(10);
+            WeaponDatabase dataBase = (WeaponDatabase)target;
+
+            if (GUILayout.Button("Initialize Unlock Weapons"))
+            {
+                dataBase.InitializeInitialOpenWeapons();
+            }
+        }
+    }
+#endif
 }
