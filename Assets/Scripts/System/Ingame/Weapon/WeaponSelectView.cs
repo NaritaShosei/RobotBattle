@@ -26,19 +26,21 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
 
     private void SetUI()
     {
-        foreach (var data in _weaponDatabase.GetAllWeapons())
+        foreach (var id in _selector.GetUnlockIDs())
         {
+            var data = _weaponDatabase.GetWeapon(id);
+
             var cell = Instantiate(_weaponCell, _cellParent);
-            cell.Initialize(data.WeaponIcon, data.WeaponMoney, data.WeaponID);
+            cell.Initialize(data.WeaponIcon, "cost", data.WeaponCost, data.WeaponID);
             _cells.Add(cell);
         }
 
-        int id = _type switch
+        int equippedID = _type switch
         {
             EquipmentType.Main => _selector.PlayerData.CurrentLoadout.PrimaryWeaponId,
             EquipmentType.Sub => _selector.PlayerData.CurrentLoadout.SecondWeaponId,
         };
-        _currentCell = _cells.First(cell => cell.Id == id);
+        _currentCell = _cells.First(cell => cell.Id == equippedID);
         _currentCell.Select();
         SetExplanation(_currentCell.Id);
     }
