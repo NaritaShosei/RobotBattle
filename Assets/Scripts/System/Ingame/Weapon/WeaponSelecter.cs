@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class WeaponSelector : MonoBehaviour
 {
@@ -19,4 +20,6 @@ public class WeaponSelector : MonoBehaviour
 
         return result;
     }
+
+    public List<int> GetUnlockIDs() => _playerData.UnlockedWeaponIds;
 }
