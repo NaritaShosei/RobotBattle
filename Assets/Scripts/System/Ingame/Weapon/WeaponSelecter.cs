@@ -3,6 +3,7 @@
 public class WeaponSelector : MonoBehaviour
 {
     private EquipmentData _playerData;
+    public EquipmentData PlayerData => _playerData;
 
     private void Awake()
     {
@@ -10,10 +11,12 @@ public class WeaponSelector : MonoBehaviour
         _playerData = SaveLoadService.Load<EquipmentData>();
     }
 
-    public void SelectWeapon(int id)
+    public bool SelectWeapon(EquipmentType type, int id)
     {
-        _playerData.EquipWeapon(id);
+        bool result = _playerData.EquipWeapon(type, id);
 
         SaveLoadService.Save(_playerData);
+
+        return result;
     }
 }

@@ -39,6 +39,8 @@ public class EquipmentManager : MonoBehaviour
 }
 public enum EquipmentType
 {
+    [InspectorName("メイン")]
     Main,
+    [InspectorName("サブ")]
     Sub,
 }

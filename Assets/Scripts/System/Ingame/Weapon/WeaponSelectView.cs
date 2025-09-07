@@ -1,10 +1,12 @@
 ﻿using DG.Tweening;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
 {
+    [SerializeField] private EquipmentType _type;
     private WeaponDatabase _weaponDatabase;
     [SerializeField] private WeaponCell _weaponCell;
     [SerializeField] private Transform _cellParent;
@@ -13,10 +15,12 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
     private List<WeaponCell> _cells = new();
     [Header("アニメーション設定")]
     [SerializeField] private float _animationDuration = 0.2f;
+    private WeaponSelector _selector;
 
     private void Start()
     {
         _weaponDatabase = ServiceLocator.Get<WeaponManager>().DataBase;
+        _selector = ServiceLocator.Get<WeaponSelector>();
         SetUI();
     }
 
@@ -28,7 +32,13 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
             cell.Initialize(data.WeaponIcon, data.WeaponMoney, data.WeaponID);
             _cells.Add(cell);
         }
-        _currentCell = _cells[0];
+
+        int id = _type switch
+        {
+            EquipmentType.Main => _selector.PlayerData.CurrentLoadout.PrimaryWeaponId,
+            EquipmentType.Sub => _selector.PlayerData.CurrentLoadout.SecondWeaponId,
+        };
+        _currentCell = _cells.First(cell => cell.Id == id);
         _currentCell.Select();
         SetExplanation(_currentCell.Id);
     }
@@ -36,7 +46,9 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
     private void SetExplanation(int id)
     {
         var data = _weaponDatabase.GetWeapon(id);
-        _explanation.Set(data.WeaponName, data.AttackPower, data.AttackRate);
+
+        if (data != null)
+            _explanation.Set(data.WeaponName, data.AttackPower, data.AttackRate);
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -45,10 +57,17 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
         if (eventData.pointerCurrentRaycast.gameObject.TryGetComponent(out WeaponCell cell))
         {
             Debug.Log(cell.gameObject.name);
-            _currentCell?.UnSelect();
-            ServiceLocator.Get<WeaponSelector>().SelectWeapon(cell.Id);
+
+            _currentCell.UnSelect();
+
+            bool result = _selector.SelectWeapon(_type, cell.Id);
+
+            string str = result ? "武器の装備に成功しました" : "武器の装備に失敗しました。";
+            Debug.LogWarning(str);
+
             _currentCell = cell;
             _currentCell.Select();
+
             SetExplanation(_currentCell.Id);
         }
     }
