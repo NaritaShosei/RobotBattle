@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GameResultView : MonoBehaviour
@@ -12,6 +13,19 @@ public class GameResultView : MonoBehaviour
     [SerializeField] Text _gameOverTypeText;
 
     [SerializeField] Text _timeText;
+
+    [SerializeField] private BasicButton _button;
+
+    private void Start()
+    {
+        _button.OnClick += OnClick;
+    }
+
+    private async void OnClick()
+    {
+        await ServiceLocator.Get<FadePanel>().Fade(1);
+        SceneChanger.LoadScene(SceneChanger.TITLE);
+    }
 
     public void ShowUI()
     {

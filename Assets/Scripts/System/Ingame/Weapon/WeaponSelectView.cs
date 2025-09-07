@@ -16,8 +16,8 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
 
     private void Start()
     {
-        SetUI();
         _weaponDatabase = ServiceLocator.Get<WeaponManager>().DataBase;
+        SetUI();
     }
 
     private void SetUI()

@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 
 public class IngameStartUI : MonoBehaviour
@@ -9,6 +10,7 @@ public class IngameStartUI : MonoBehaviour
 
     private void Start()
     {
+        ServiceLocator.Get<FadePanel>().Fade(0).Forget();
         _startButton.OnClick += OnStart;
     }
 
@@ -18,6 +20,7 @@ public class IngameStartUI : MonoBehaviour
         {
             ServiceLocator.Get<InputManager>().SwitchInputMode(InputManager.PLAYER);
             ServiceLocator.Get<IngameManager>().PauseResume();
+            _group.blocksRaycasts = false;
         });
     }
 }
