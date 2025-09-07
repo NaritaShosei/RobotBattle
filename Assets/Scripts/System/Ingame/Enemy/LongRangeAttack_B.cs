@@ -27,9 +27,9 @@ public class LongRangeAttack_B : WeaponBase
 
     public override void IKEnable(AimIK ik, bool enable) { }
 
-    public override void Reload()
+    public override async void Reload()
     {
-        OnReload().Forget();
+        await OnReload();
     }
 
     protected virtual async UniTask OnReload() { }

@@ -41,16 +41,12 @@ public class EnemyLongRangeAttack : LongRangeAttack_B
             if (_count <= 0)
             {
                 _isAttacked = false;
-                Reload().Forget();
+                Reload();
             }
         }
     }
 
-    void Update()
-    {
-
-    }
-    async UniTaskVoid Reload()
+    protected override async UniTask OnReload()
     {
         await UniTask.Delay((int)(_data.ReloadInterval * 1000));
         _count = _data.BulletCount;

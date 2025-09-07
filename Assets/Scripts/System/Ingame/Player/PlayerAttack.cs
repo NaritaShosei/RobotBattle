@@ -58,7 +58,6 @@ public class PlayerAttack : MonoBehaviour
         _presenter.Initialize((_mainWeapon.Data.BulletCount, _mainWeapon.Data.WeaponIcon), (_subWeapon.Data.BulletCount, _subWeapon.Data.WeaponIcon));
 
         _gameManager = ServiceLocator.Get<IngameManager>();
-        Debug.LogWarning(_gameManager);
     }
 
     void Update()
@@ -111,7 +110,10 @@ public class PlayerAttack : MonoBehaviour
             _mainWeapon.SetAttack(false);
             _mainWeapon.enabled = false;
 
-            await WeaponSwap();
+            //UIに武器変更の情報を渡す
+            _presenter.SwapWeapon();
+
+            await SwapWeapon();
 
             Debug.LogWarning("武装変更");
 
@@ -119,19 +121,16 @@ public class PlayerAttack : MonoBehaviour
             _playerManager.SetState(PlayerState.Idle);
 
 
-            _mainWeapon = _subWeapon;
             var weapon = _mainWeapon;
+            _mainWeapon = _subWeapon;
             _subWeapon = weapon;
 
             _mainWeapon.SetAttack(false);
             _mainWeapon.enabled = true;
-
-            //UIに武器変更の情報を渡す
-            _presenter.SwapWeapon();
         }
     }
 
-    private async UniTask WeaponSwap()
+    private async UniTask SwapWeapon()
     {
         var seq = DOTween.Sequence();
 
@@ -139,7 +138,7 @@ public class PlayerAttack : MonoBehaviour
         _subWeapon.transform.SetParent(_mainParent);
 
         await seq.Append(_mainWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
-            Append(_subWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
+            Join(_subWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
             AsyncWaitForCompletion();
     }
 
