@@ -235,7 +235,7 @@ RectTransform:
   m_GameObject: {fileID: 2668874765913070310}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8552483808706619020}
@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c600b3a53239448b462056748b8a21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponDatabase: {fileID: 11400000, guid: 7af1bd47d87d7b942b3d89ea0e0542f1, type: 2}
+  _type: 0
   _weaponCell: {fileID: 5093535920955505880, guid: 6bbd913e49a7bb141a3792dce506ad2e, type: 3}
   _cellParent: {fileID: 558220520836802501}
   _explanation: {fileID: 20021323702667405}
@@ -776,8 +776,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4901341016043794261}
   m_HandleRect: {fileID: 318078457771214556}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.46418852
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1454,7 +1454,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0.0002792458, y: 0}
+  m_AnchoredPosition: {x: 0.0002792458, y: 179552.64}
   m_SizeDelta: {x: 332.5, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &358145175105906072

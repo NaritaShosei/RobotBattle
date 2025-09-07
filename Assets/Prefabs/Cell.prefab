@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 942511737954423254}
   - component: {fileID: 6020972667292575875}
   m_Layer: 5
-  m_Name: $
+  m_Name: ExplanationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -215,10 +215,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: $
+  m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 06fd4777ed08c0b41bcb1eacfa640965, type: 2}
-  m_sharedMaterial: {fileID: -2943628856675868376, guid: 06fd4777ed08c0b41bcb1eacfa640965, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -298,7 +298,7 @@ GameObject:
   - component: {fileID: 5070937150600635903}
   - component: {fileID: 2945582871138933093}
   m_Layer: 5
-  m_Name: MoneyValue
+  m_Name: ValueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -353,8 +353,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0000000
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 06fd4777ed08c0b41bcb1eacfa640965, type: 2}
-  m_sharedMaterial: {fileID: -2943628856675868376, guid: 06fd4777ed08c0b41bcb1eacfa640965, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -485,7 +485,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _icon: {fileID: 1800865096464419957}
-  _moneyText: {fileID: 2945582871138933093}
+  _valueText: {fileID: 2945582871138933093}
+  _explanationText: {fileID: 6020972667292575875}
   _selectPanel: {fileID: 897932629695090720}
 --- !u!114 &897932629695090720
 MonoBehaviour:
