@@ -1,0 +1,38 @@
+﻿using DG.Tweening;
+using UnityEngine;
+using UnityEngine.UI;
+public class WeaponUISlotView : MonoBehaviour
+{
+    [SerializeField]
+    Text _bulletCountText;
+    [SerializeField]
+    Image _iconImage;
+    [SerializeField]
+    RectTransform _rectTransform;
+    [SerializeField]
+    CanvasGroup _canvasGroup;
+
+    int _maxCount;
+    public void SetContent(int count, Sprite icon)
+    {
+        _iconImage.sprite = icon;
+        _maxCount = count;
+        _bulletCountText.text = $"{count:000}/{_maxCount:000}";
+    }
+
+    public void SetCount(int count)
+    {
+        _bulletCountText.text = $"{count:000}/{_maxCount:000}";
+    }
+
+    public void Animate(bool enabled, float posX, float scale, float alpha, float duration)
+    {
+        _bulletCountText.enabled = enabled;
+        _rectTransform.DOAnchorPosX(posX, duration);
+        _rectTransform.DOScale(Vector3.one * scale, duration);
+        _canvasGroup.DOFade(alpha, duration);
+
+        if (!enabled) { return; }
+        _rectTransform.SetAsLastSibling();
+    }
+}
