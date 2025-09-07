@@ -11,23 +11,35 @@ public class EquipmentData
     public List<int> UnlockedWeaponIds => _unlockedWeaponIDs;
 
     // 武器のアンロック
-    public void UnlockWeapon(int weaponId)
+    public bool UnlockWeapon(int weaponId)
     {
         if (!_unlockedWeaponIDs.Contains(weaponId))
         {
             _unlockedWeaponIDs.Add(weaponId);
+            return true;
         }
+        return false;
     }
 
     // 装備変更
-    public bool EquipWeapon(int weaponId)
+    public bool EquipWeapon(EquipmentType type, int weaponId)
     {
         if (!_unlockedWeaponIDs.Contains(weaponId)) return false;
 
-        _currentLoadout.PrimaryWeaponId = weaponId;
+        switch (type)
+        {
+            case EquipmentType.Main:
+                _currentLoadout.PrimaryWeaponId = weaponId;
+                break;
+            case EquipmentType.Sub:
+                _currentLoadout.SecondWeaponId = weaponId;
+                break;
+        }
+
         return true;
     }
 }
+
 [System.Serializable]
 public class PlayerEquipment
 {
