@@ -15,8 +15,6 @@ MonoBehaviour:
   _weapons:
   - {fileID: 11400000, guid: a75e1d0b52be3584aabb9c17925b8012, type: 2}
   - {fileID: 11400000, guid: c77e607b703bf9d4299d242a3b4ed134, type: 2}
-  - {fileID: 11400000, guid: 1fb8afd2c4f0be34bbc3ebad172b2cda, type: 2}
   _initialOpenWeapon:
   - {fileID: 11400000, guid: c77e607b703bf9d4299d242a3b4ed134, type: 2}
   - {fileID: 11400000, guid: a75e1d0b52be3584aabb9c17925b8012, type: 2}
-  - {fileID: 11400000, guid: 1fb8afd2c4f0be34bbc3ebad172b2cda, type: 2}
