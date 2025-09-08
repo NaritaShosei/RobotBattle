@@ -549,6 +549,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 8534239770580995055, guid: 99c9790520c565e4c949c51702361a72, type: 3}
+      propertyPath: m_text
+      value: "\u30B5\u30D6\u88C5\u5099"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8534239770580995055, guid: 99c9790520c565e4c949c51702361a72, type: 3}
+      propertyPath: m_fontSize
+      value: 52.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8534239770580995055, guid: 99c9790520c565e4c949c51702361a72, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 52.6
+      objectReference: {fileID: 0}
     - target: {fileID: 8636669189938096238, guid: 99c9790520c565e4c949c51702361a72, type: 3}
       propertyPath: m_Name
       value: SubWeaponMenu
@@ -745,7 +757,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 558220520836802501, guid: c69289c9bc959974a8bd80d4a30ff85c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 146012.72
+      value: 292201.8
       objectReference: {fileID: 0}
     - target: {fileID: 2668874765913070310, guid: c69289c9bc959974a8bd80d4a30ff85c, type: 3}
       propertyPath: m_Name
@@ -782,10 +794,6 @@ PrefabInstance:
     - target: {fileID: 3757607190046293072, guid: c69289c9bc959974a8bd80d4a30ff85c, type: 3}
       propertyPath: m_SizeDelta.y
       value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3757607190046293072, guid: c69289c9bc959974a8bd80d4a30ff85c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3757607190046293072, guid: c69289c9bc959974a8bd80d4a30ff85c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -849,10 +857,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9194990359275798913, guid: c69289c9bc959974a8bd80d4a30ff85c, type: 3}
       propertyPath: m_Size
-      value: 0.46418852
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194990359275798913, guid: c69289c9bc959974a8bd80d4a30ff85c, type: 3}
-      propertyPath: m_Value
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -898,7 +902,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 558220520836802501, guid: c69289c9bc959974a8bd80d4a30ff85c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 146336.9
+      value: 294889.5
       objectReference: {fileID: 0}
     - target: {fileID: 2668874765913070310, guid: c69289c9bc959974a8bd80d4a30ff85c, type: 3}
       propertyPath: m_Name
@@ -935,10 +939,6 @@ PrefabInstance:
     - target: {fileID: 3757607190046293072, guid: c69289c9bc959974a8bd80d4a30ff85c, type: 3}
       propertyPath: m_SizeDelta.y
       value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3757607190046293072, guid: c69289c9bc959974a8bd80d4a30ff85c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3757607190046293072, guid: c69289c9bc959974a8bd80d4a30ff85c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -998,10 +998,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9194990359275798913, guid: c69289c9bc959974a8bd80d4a30ff85c, type: 3}
       propertyPath: m_Size
-      value: 0.46418852
-      objectReference: {fileID: 0}
-    - target: {fileID: 9194990359275798913, guid: c69289c9bc959974a8bd80d4a30ff85c, type: 3}
-      propertyPath: m_Value
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1344,11 +1340,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8534239770580995055, guid: 99c9790520c565e4c949c51702361a72, type: 3}
       propertyPath: m_fontSize
-      value: 48.7
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 8534239770580995055, guid: 99c9790520c565e4c949c51702361a72, type: 3}
       propertyPath: m_fontSizeBase
-      value: 48.7
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 8636669189938096238, guid: 99c9790520c565e4c949c51702361a72, type: 3}
       propertyPath: m_Name

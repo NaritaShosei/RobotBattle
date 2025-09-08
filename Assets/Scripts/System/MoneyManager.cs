@@ -6,7 +6,7 @@ public class MoneyManager : MonoBehaviour
 
     private void Awake()
     {
-        MoneyData = new MoneyData();
+        MoneyData = SaveLoadService.Load<MoneyData>();
         ServiceLocator.Set(this);
     }
 }
@@ -23,7 +23,7 @@ public class MoneyData
     {
         Money -= money;
     }
-    public bool IsUseMoney(int money)
+    public bool CanUseMoney(int money)
     {
         return (Money - money) >= 0;
     }
