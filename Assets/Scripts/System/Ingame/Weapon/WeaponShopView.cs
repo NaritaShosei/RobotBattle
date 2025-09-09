@@ -92,7 +92,10 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
             return;
         }
 
+        // 購入した武器を削除
         _cells.Remove(_currentCell);
+        Destroy(_currentCell.gameObject);
+
         ResetUI();
         SetUI();
         Debug.Log("購入できた");
