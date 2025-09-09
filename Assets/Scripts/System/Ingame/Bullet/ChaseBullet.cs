@@ -4,6 +4,7 @@ using UnityEngine;
 public class ChaseBullet : Bullet_B
 {
     bool _isChased = true;
+    [SerializeField] private float _minDistance = 10;
 
     protected override void OnEnable_B()
     {
@@ -14,7 +15,7 @@ public class ChaseBullet : Bullet_B
     protected override void OnUpdate()
     {
         _timer += Time.deltaTime;
-        if (_target != null && (_target.GetTargetCenter().position - transform.position).sqrMagnitude >= _bulletData.MinDistance * _bulletData.MinDistance && _isChased)
+        if (_target != null && (_target.GetTargetCenter().position - transform.position).sqrMagnitude >= _minDistance * _minDistance && _isChased)
         {
             var dir = _target.GetTargetCenter().position - transform.position;
             transform.forward = dir;
@@ -24,9 +25,9 @@ public class ChaseBullet : Bullet_B
             _isChased = false;
         }
 
-        transform.position += transform.forward * _bulletData.MoveSpeed * Time.deltaTime;
+        transform.position += transform.forward * _weaponData.AttackSpeed * Time.deltaTime;
 
-        if (_timer >= _bulletData.EnableTime)
+        if (_timer >= _enableTime)
         {
             _isTimeReturned = true;
             gameObject.SetActive(false);

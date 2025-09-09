@@ -110,13 +110,13 @@ public class PlayerWeapon : LongRangeAttack_B
     protected override async UniTask OnReload()
     {
         if (_isReload) return;
-        if (_count == _data.BulletCount) return;
+        if (_count == _data.AttackCapacity) return;
         _isReload = true;
         Debug.LogWarning("Reload" + _count);
 
         // 1000ミリ秒に変換
-        await UniTask.Delay((int)(_data.ReloadInterval * 1000));
-        _count = _data.BulletCount;
+        await UniTask.Delay((int)(_data.CoolTime * 1000));
+        _count = _data.AttackCapacity;
         Debug.LogWarning("Reload To Complete" + _count);
         _isReload = false;
     }

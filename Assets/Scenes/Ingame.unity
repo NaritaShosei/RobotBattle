@@ -2679,7 +2679,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2682460374896523822, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -487
+      value: -287
       objectReference: {fileID: 0}
     - target: {fileID: 2682460374896523822, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3726,7 +3726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2682460374896523822, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 445
+      value: 245
       objectReference: {fileID: 0}
     - target: {fileID: 2682460374896523822, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3787,7 +3787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2682460374896523822, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 482
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 2682460374896523822, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3795,7 +3795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2682460374896523822, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 469
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 2682460374896523822, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4590,7 +4590,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2682460374896523822, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 523
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 2682460374896523822, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
       propertyPath: m_LocalRotation.w

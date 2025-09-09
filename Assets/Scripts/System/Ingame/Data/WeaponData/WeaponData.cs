@@ -14,9 +14,10 @@ public class WeaponData : ScriptableObject
     [SerializeField] private float _attackPower = 1;
     [SerializeField] private float _attackRate = 1;
     [SerializeField] private float _range = 10;
-    [SerializeField] private float _reloadInterval = 1.5f;
-    [SerializeField] private int _count = 10; // 装弾数
+    [SerializeField] private float _coolTime = 1.5f;
+    [SerializeField] private int _capacity = 10; // 装弾数
     [SerializeField] private float _guardBreak = 50;
+    [SerializeField] private float _speed = 100;
 
     [Header("プレハブ")]
     [SerializeField] private GameObject _weaponPrefab;
@@ -28,8 +29,9 @@ public class WeaponData : ScriptableObject
     public float AttackPower => _attackPower;
     public float AttackRate => _attackRate;
     public float Range => _range;
-    public float ReloadInterval => _reloadInterval;
-    public int BulletCount => _count;
+    public float CoolTime => _coolTime;
+    public int AttackCapacity => _capacity;
+    public float AttackSpeed => _speed;
     public float GuardBreakValue => _guardBreak;
     public GameObject WeaponPrefab => _weaponPrefab;
 
