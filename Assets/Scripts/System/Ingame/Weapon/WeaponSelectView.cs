@@ -22,6 +22,7 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
         _weaponDatabase = ServiceLocator.Get<WeaponManager>().DataBase;
         _selector = ServiceLocator.Get<WeaponSelector>();
         SetUI();
+        _selector.OnUnlock += SetUI;
     }
 
     private void SetUI()
@@ -31,7 +32,7 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
             var data = _weaponDatabase.GetWeapon(id);
 
             var cell = Instantiate(_weaponCell, _cellParent);
-            cell.Initialize(data.WeaponIcon, "cost", data.WeaponCost, data.WeaponID);
+            cell.Initialize(data.WeaponIcon, "cost", data.WeaponCost, data);
             _cells.Add(cell);
         }
 
@@ -40,9 +41,9 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
             EquipmentType.Main => _selector.PlayerData.CurrentLoadout.PrimaryWeaponId,
             EquipmentType.Sub => _selector.PlayerData.CurrentLoadout.SecondWeaponId,
         };
-        _currentCell = _cells.First(cell => cell.Id == equippedID);
+        _currentCell = _cells.First(cell => cell.WeaponData.WeaponID == equippedID);
         _currentCell.Select();
-        SetExplanation(_currentCell.Id);
+        SetExplanation(_currentCell.WeaponData.WeaponID);
     }
 
     private void SetExplanation(int id)
@@ -62,12 +63,12 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
 
             _currentCell.UnSelect();
 
-            _selector.SelectWeapon(_type, cell.Id);
 
             _currentCell = cell;
             _currentCell.Select();
 
-            SetExplanation(_currentCell.Id);
+            _selector.SelectWeapon(_type, _currentCell.WeaponData.WeaponID);
+            SetExplanation(_currentCell.WeaponData.WeaponID);
         }
     }
     /// <summary>

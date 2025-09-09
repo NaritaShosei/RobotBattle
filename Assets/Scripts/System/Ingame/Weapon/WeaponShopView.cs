@@ -11,6 +11,7 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
     [SerializeField] private WeaponCell _weaponCell;
     [SerializeField] private Transform _cellParent;
     [SerializeField] private WeaponExplanation _explanation;
+    [SerializeField] private GameObject _failedPopupPanel;
     private WeaponCell _currentCell;
     private List<WeaponCell> _cells = new();
     [Header("アニメーション設定")]
@@ -19,6 +20,7 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
 
     private void Start()
     {
+        _failedPopupPanel.SetActive(false);
         _weaponDatabase = ServiceLocator.Get<WeaponManager>().DataBase;
         _selector = ServiceLocator.Get<WeaponSelector>();
         SetUI();
@@ -27,7 +29,7 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
     private void SetUI()
     {
         int[] unlockedIds = _selector.GetUnlockIDs().ToArray();
-        int[] allIds =_weaponDatabase.GetAllWeapons().Select(d => d.WeaponID).ToArray();
+        int[] allIds = _weaponDatabase.GetAllWeapons().Select(d => d.WeaponID).ToArray();
 
         int[] lockedIds = allIds.Except(unlockedIds).ToArray();
 
@@ -36,13 +38,13 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
             var data = _weaponDatabase.GetWeapon(id);
 
             var cell = Instantiate(_weaponCell, _cellParent);
-            cell.Initialize(data.WeaponIcon, "$", data.WeaponMoney, data.WeaponID);
+            cell.Initialize(data.WeaponIcon, "$", data.WeaponMoney, data);
             _cells.Add(cell);
         }
 
         _currentCell = _cells[0];
         _currentCell.Select();
-        SetExplanation(_currentCell.Id);
+        SetExplanation(_currentCell.WeaponData.WeaponID);
     }
 
     private void SetExplanation(int id)
@@ -65,9 +67,23 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
             _currentCell = cell;
             _currentCell.Select();
 
-            SetExplanation(_currentCell.Id);
+            SetExplanation(_currentCell.WeaponData.WeaponID);
         }
     }
+
+    public void BuyWeapon()
+    {
+        if (!_selector.TryBuyWeapon(_currentCell.WeaponData))
+        {
+            _failedPopupPanel.SetActive(true);
+            return;
+        }
+
+        _cells.Remove(_currentCell);
+
+        SetUI();
+    }
+
     /// <summary>
     /// ボタンクリック時のアニメーション
     /// </summary>
