@@ -44,6 +44,8 @@ public class WeaponSelector : MonoBehaviour
 
         OnUnlock?.Invoke();
 
+        SaveLoadService.Save(_playerData);
+
         return true;
     }
 

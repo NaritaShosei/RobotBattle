@@ -48,7 +48,7 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
     private void ResetUI()
     {
         foreach (var cell in _cells)
-            Destroy(cell);
+            Destroy(cell.gameObject);
 
         _cells.Clear();
 

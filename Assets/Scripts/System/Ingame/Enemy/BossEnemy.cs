@@ -129,6 +129,7 @@ public class BossEnemy : Enemy_B<EnemyData_B>
         _isDodged = true;
         _data.DashTimer = 0;
         _startPos = transform.position;
+
         //カメラの左側にいたら右に避ける、右側にいたら左に避ける
         Vector3 dir = _camera.WorldToViewportPoint(transform.position).x <= 0.5f ? _camera.transform.right : -_camera.transform.right;
         Vector3 candidateTarget = transform.position + dir * _data.DashDistance;

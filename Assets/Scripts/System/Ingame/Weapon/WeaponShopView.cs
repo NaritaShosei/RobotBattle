@@ -1,10 +1,8 @@
 ﻿using DG.Tweening;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Rendering;
 
 public class WeaponShopView : MonoBehaviour, IPointerClickHandler
 {
@@ -56,7 +54,7 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
     private void ResetUI()
     {
         foreach (var cell in _cells)
-            Destroy(cell);
+            Destroy(cell.gameObject);
 
         _cells.Clear();
     }
