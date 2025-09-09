@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
 public class WeaponShopView : MonoBehaviour, IPointerClickHandler
 {
@@ -33,10 +34,15 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
 
         int[] lockedIds = allIds.Except(unlockedIds).ToArray();
 
+        List<WeaponData> weapons = new ();
+
         foreach (var id in lockedIds)
         {
-            var data = _weaponDatabase.GetWeapon(id);
+            weapons.Add( _weaponDatabase.GetWeapon(id));
+        }
 
+        foreach (var data in weapons.OrderBy(d => d.WeaponMoney))
+        {
             var cell = Instantiate(_weaponCell, _cellParent);
             cell.Initialize(data.WeaponIcon, "$", data.WeaponMoney, data);
             _cells.Add(cell);
@@ -45,6 +51,14 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
         _currentCell = _cells[0];
         _currentCell.Select();
         SetExplanation(_currentCell.WeaponData.WeaponID);
+    }
+
+    private void ResetUI()
+    {
+        foreach (var cell in _cells)
+            Destroy(cell);
+
+        _cells.Clear();
     }
 
     private void SetExplanation(int id)
@@ -75,13 +89,15 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
     {
         if (!_selector.TryBuyWeapon(_currentCell.WeaponData))
         {
+            Debug.Log("購入できない");
             _failedPopupPanel.SetActive(true);
             return;
         }
 
         _cells.Remove(_currentCell);
-
+        ResetUI();
         SetUI();
+        Debug.Log("購入できた");
     }
 
     /// <summary>

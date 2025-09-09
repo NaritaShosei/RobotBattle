@@ -22,7 +22,7 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
         _weaponDatabase = ServiceLocator.Get<WeaponManager>().DataBase;
         _selector = ServiceLocator.Get<WeaponSelector>();
         SetUI();
-        _selector.OnUnlock += SetUI;
+        _selector.OnUnlock += ResetUI;
     }
 
     private void SetUI()
@@ -44,6 +44,15 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
         _currentCell = _cells.First(cell => cell.WeaponData.WeaponID == equippedID);
         _currentCell.Select();
         SetExplanation(_currentCell.WeaponData.WeaponID);
+    }
+    private void ResetUI()
+    {
+        foreach (var cell in _cells)
+            Destroy(cell);
+
+        _cells.Clear();
+
+        SetUI();
     }
 
     private void SetExplanation(int id)

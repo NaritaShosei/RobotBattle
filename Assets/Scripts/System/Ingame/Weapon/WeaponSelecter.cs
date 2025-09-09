@@ -34,11 +34,11 @@ public class WeaponSelector : MonoBehaviour
     public bool TryBuyWeapon(WeaponData data)
     {
         // お金が足りなかったら買えない
-        if (!_moneyManager.MoneyData.CanUseMoney(data.WeaponMoney))
+        if (!_moneyManager.CanUseMoney(data.WeaponMoney))
             return false;
 
         // 購入できたら武器をアンロック
-        _moneyManager.MoneyData.UseMoney(data.WeaponMoney);
+        _moneyManager.UseMoney(data.WeaponMoney);
 
         _playerData.UnlockWeapon(data.WeaponID);
 

@@ -44,7 +44,7 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
         base.Dead();
         ServiceLocator.Get<ScoreManager>().AddScore(_scoreData.Score);
         ServiceLocator.Get<EnemyManager>().Remove(this);
-        ServiceLocator.Get<MoneyManager>().MoneyData.AddMoney(_scoreData.Money);
+        ServiceLocator.Get<MoneyManager>().AddMoney(_scoreData.Money);
         gameObject.SetActive(false);
     }
 
