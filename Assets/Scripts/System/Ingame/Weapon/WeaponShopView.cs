@@ -34,17 +34,17 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
 
         int[] lockedIds = allIds.Except(unlockedIds).ToArray();
 
-        List<WeaponData> weapons = new ();
+        List<WeaponData> weapons = new();
 
         foreach (var id in lockedIds)
         {
-            weapons.Add( _weaponDatabase.GetWeapon(id));
+            weapons.Add(_weaponDatabase.GetWeapon(id));
         }
 
         foreach (var data in weapons.OrderBy(d => d.WeaponMoney))
         {
             var cell = Instantiate(_weaponCell, _cellParent);
-            cell.Initialize(data.WeaponIcon, "$", data.WeaponMoney, data);
+            cell.Initialize(data.WeaponIcon, data.WeaponName, "$", data.WeaponMoney, data);
             _cells.Add(cell);
         }
 

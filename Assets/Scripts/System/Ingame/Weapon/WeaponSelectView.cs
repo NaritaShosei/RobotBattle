@@ -32,7 +32,7 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
             var data = _weaponDatabase.GetWeapon(id);
 
             var cell = Instantiate(_weaponCell, _cellParent);
-            cell.Initialize(data.WeaponIcon, "cost", data.WeaponCost, data);
+            cell.Initialize(data.WeaponIcon,data.WeaponName ,"cost", data.WeaponCost, data);
             _cells.Add(cell);
         }
 
