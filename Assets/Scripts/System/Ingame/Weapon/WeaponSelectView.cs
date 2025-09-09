@@ -62,10 +62,7 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
 
             _currentCell.UnSelect();
 
-            bool result = _selector.SelectWeapon(_type, cell.Id);
-
-            string str = result ? "武器の装備に成功しました" : "武器の装備に失敗しました。";
-            Debug.LogWarning(str);
+            _selector.SelectWeapon(_type, cell.Id);
 
             _currentCell = cell;
             _currentCell.Select();

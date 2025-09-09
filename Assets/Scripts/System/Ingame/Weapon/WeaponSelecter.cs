@@ -6,6 +6,9 @@ public class WeaponSelector : MonoBehaviour
     private EquipmentData _playerData;
     public EquipmentData PlayerData => _playerData;
 
+    // アンロック時に発火するイベント
+    public event System.Action OnUnlock;
+
     private void Awake()
     {
         ServiceLocator.Set(this);
