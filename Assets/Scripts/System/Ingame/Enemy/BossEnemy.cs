@@ -9,6 +9,14 @@ public class BossEnemy : Enemy_B<EnemyData_B>
 
     [SerializeField] EnemyData_B _dataBase;
     [SerializeField] EnemyDodgeZone _dodgeZone;
+    [SerializeField] EnemyDodgeClampData _dodgeClampData;
+
+    [System.Serializable]
+    public struct EnemyDodgeClampData
+    {
+        public float Min;
+        public float Max;
+    }
 
     float _playerDistance;
     Vector3 _startPos;
@@ -124,22 +132,28 @@ public class BossEnemy : Enemy_B<EnemyData_B>
         if (!other.TryGetComponent(out MonoBehaviour _)) return;
 
         if (!GaugeValueChange(-_data.DashValue)) return;
+
         _dodgeZone.Collider.enabled = false;
+
         _data.DodgeTimer = Time.time;
+
         _isDodged = true;
+
         _data.DashTimer = 0;
+
         _startPos = transform.position;
 
         //カメラの左側にいたら右に避ける、右側にいたら左に避ける
-        Vector3 dir = _camera.WorldToViewportPoint(transform.position).x <= 0.5f ? _camera.transform.right : -_camera.transform.right;
+        Vector3 dir = _camera.WorldToViewportPoint(transform.position).x <= 0.5f ?
+            _camera.transform.right : -_camera.transform.right;
+
         Vector3 candidateTarget = transform.position + dir * _data.DashDistance;
 
         Vector3 viewportPos = _camera.WorldToViewportPoint(candidateTarget);
 
         if (viewportPos.x < 0 || viewportPos.x > 1)
         {
-            //マジックナンバー
-            viewportPos.x = Mathf.Clamp(viewportPos.x, 0.1f, 0.9f);
+            viewportPos.x = Mathf.Clamp(viewportPos.x, _dodgeClampData.Min, _dodgeClampData.Max);
             candidateTarget = _camera.ViewportToWorldPoint(viewportPos);
         }
         _targetPos = candidateTarget;
