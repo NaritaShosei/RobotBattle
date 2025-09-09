@@ -8,15 +8,15 @@ public class WeaponCell : MonoBehaviour
     [SerializeField] private TMP_Text _valueText;
     [SerializeField] private TMP_Text _explanationText;
     [SerializeField] private Image _selectPanel;
-    private int _id;
-    public int Id => _id;
+    private WeaponData _weaponData;
+    public WeaponData WeaponData => _weaponData;
 
-    public void Initialize(Sprite icon, string explanation, int value, int id)
+    public void Initialize(Sprite icon, string explanation, int value, WeaponData data)
     {
         _icon.sprite = icon;
         _valueText.text = $"{value}";
         _explanationText.text = explanation;
-        _id = id;
+        _weaponData = data;
     }
 
     public void Select()

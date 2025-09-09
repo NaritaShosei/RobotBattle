@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f47f08e9c447d654ebc9e486ffec7333, type: 3}
+  m_Name: Test2
+  m_EditorClassIdentifier: 
+  _weaponID: 561
+  _weaponName: "\u8D85\u96FB\u78C1\u7832"
+  _weaponIcon: {fileID: 21300000, guid: afcc63084ae8abc48bb18daf9be92d68, type: 3}
+  _weaponMoney: 50000
+  _weaponCost: 5
+  _attackPower: 80
+  _attackRate: 3
+  _range: 10
+  _coolTime: 3
+  _capacity: 2
+  _guardBreak: 50
+  _speed: 100
+  _weaponPrefab: {fileID: 8394636388324156513, guid: 1de5c6e1700b1ec438798eb5ea0e5778, type: 3}

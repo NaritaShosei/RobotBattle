@@ -228,13 +228,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c95dab13358b514e9a06688e51d15b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _data: {fileID: 11400000, guid: 5950c4c586f138444848f56c6e1dd67f, type: 2}
   _bullet: {fileID: 1930764663170779167, guid: beb06f7ff0d3af348a90099e4de7dbee, type: 3}
   _muzzle: {fileID: 6460085175228565454}
-  _bulletParent: {fileID: 0}
   _layer:
     serializedVersion: 2
     m_Bits: 512
+  _weaponData: {fileID: 11400000, guid: c77e607b703bf9d4299d242a3b4ed134, type: 2}
 --- !u!136 &822170660464013586
 CapsuleCollider:
   m_ObjectHideFlags: 0

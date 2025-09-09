@@ -15,9 +15,9 @@ public class BeamBullet : Bullet_B
     {
         _timer += Time.deltaTime;
 
-        transform.position += transform.forward * _bulletData.MoveSpeed * Time.deltaTime;
+        transform.position += transform.forward * _weaponData.AttackSpeed * Time.deltaTime;
 
-        if (_timer >= _bulletData.EnableTime)
+        if (_timer >= _enableTime)
         {
             _isTimeReturned = true;
             gameObject.SetActive(false);

@@ -257,8 +257,11 @@ public class PlayerController : Character_B<PlayerData>
             var rayCastDis = 8;
             _isDashed = true;
 
-            //Raycastを飛ばす
-            if (Physics.Raycast(GetTargetCenter().position, moveDir, out RaycastHit hit, rayCastDis))
+            // レイヤーを除外
+            int layerMask = ~LayerMask.GetMask("Weapon"); 
+
+            // Raycastを飛ばす
+            if (Physics.Raycast(GetTargetCenter().position, moveDir, out RaycastHit hit, rayCastDis, layerMask))
             {
                 //hitしたらなにかにぶつかっているのでダッシュしない
                 var dir = (transform.position - hit.point).normalized;

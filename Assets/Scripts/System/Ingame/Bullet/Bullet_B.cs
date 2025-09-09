@@ -4,16 +4,23 @@ using UnityEngine;
 
 public abstract class Bullet_B : MonoBehaviour
 {
+    [SerializeField] protected float _enableTime = 1.5f;
     protected IFightable _target;
-    [SerializeField] protected BulletData _bulletData;
     public Action ReturnPoolEvent;
     protected float _timer;
 
     protected bool _isTimeReturned;
     protected bool _isConflictReturned;
-    public float GuardBreakValue => _bulletData.GuardBreakValue;
+    public float GuardBreakValue => _weaponData.GuardBreakValue;
 
-    public float AttackPower => _bulletData.AttackPower;
+    public float AttackPower => _weaponData.AttackPower;
+
+    protected WeaponData _weaponData;
+
+    public virtual void Initialize(WeaponData data)
+    {
+        _weaponData = data;
+    }
 
     private void OnEnable() => OnEnable_B();
 

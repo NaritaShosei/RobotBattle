@@ -1,16 +1,18 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
-public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
+public class WeaponShopView : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] private EquipmentType _type;
     private WeaponDatabase _weaponDatabase;
     [SerializeField] private WeaponCell _weaponCell;
     [SerializeField] private Transform _cellParent;
     [SerializeField] private WeaponExplanation _explanation;
+    [SerializeField] private GameObject _failedPopupPanel;
     private WeaponCell _currentCell;
     private List<WeaponCell> _cells = new();
     [Header("アニメーション設定")]
@@ -19,40 +21,44 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
 
     private void Start()
     {
+        _failedPopupPanel.SetActive(false);
         _weaponDatabase = ServiceLocator.Get<WeaponManager>().DataBase;
         _selector = ServiceLocator.Get<WeaponSelector>();
         SetUI();
-        _selector.OnUnlock += ResetUI;
     }
 
     private void SetUI()
     {
-        foreach (var id in _selector.GetUnlockIDs())
-        {
-            var data = _weaponDatabase.GetWeapon(id);
+        int[] unlockedIds = _selector.GetUnlockIDs().ToArray();
+        int[] allIds = _weaponDatabase.GetAllWeapons().Select(d => d.WeaponID).ToArray();
 
+        int[] lockedIds = allIds.Except(unlockedIds).ToArray();
+
+        List<WeaponData> weapons = new ();
+
+        foreach (var id in lockedIds)
+        {
+            weapons.Add( _weaponDatabase.GetWeapon(id));
+        }
+
+        foreach (var data in weapons.OrderBy(d => d.WeaponMoney))
+        {
             var cell = Instantiate(_weaponCell, _cellParent);
-            cell.Initialize(data.WeaponIcon, "cost", data.WeaponCost, data);
+            cell.Initialize(data.WeaponIcon, "$", data.WeaponMoney, data);
             _cells.Add(cell);
         }
 
-        int equippedID = _type switch
-        {
-            EquipmentType.Main => _selector.PlayerData.CurrentLoadout.PrimaryWeaponId,
-            EquipmentType.Sub => _selector.PlayerData.CurrentLoadout.SecondWeaponId,
-        };
-        _currentCell = _cells.First(cell => cell.WeaponData.WeaponID == equippedID);
+        _currentCell = _cells[0];
         _currentCell.Select();
         SetExplanation(_currentCell.WeaponData.WeaponID);
     }
+
     private void ResetUI()
     {
         foreach (var cell in _cells)
             Destroy(cell);
 
         _cells.Clear();
-
-        SetUI();
     }
 
     private void SetExplanation(int id)
@@ -72,14 +78,28 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
 
             _currentCell.UnSelect();
 
-
             _currentCell = cell;
             _currentCell.Select();
 
-            _selector.SelectWeapon(_type, _currentCell.WeaponData.WeaponID);
             SetExplanation(_currentCell.WeaponData.WeaponID);
         }
     }
+
+    public void BuyWeapon()
+    {
+        if (!_selector.TryBuyWeapon(_currentCell.WeaponData))
+        {
+            Debug.Log("購入できない");
+            _failedPopupPanel.SetActive(true);
+            return;
+        }
+
+        _cells.Remove(_currentCell);
+        ResetUI();
+        SetUI();
+        Debug.Log("購入できた");
+    }
+
     /// <summary>
     /// ボタンクリック時のアニメーション
     /// </summary>

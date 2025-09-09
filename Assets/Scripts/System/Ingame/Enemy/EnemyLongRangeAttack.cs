@@ -48,8 +48,8 @@ public class EnemyLongRangeAttack : LongRangeAttack_B
 
     protected override async UniTask OnReload()
     {
-        await UniTask.Delay((int)(_data.ReloadInterval * 1000));
-        _count = _data.BulletCount;
+        await UniTask.Delay((int)(_data.CoolTime * 1000));
+        _count = _data.AttackCapacity;
         _isAttacked = true;
     }
     private void OnDisable()

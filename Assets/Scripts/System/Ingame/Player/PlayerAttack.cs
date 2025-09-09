@@ -55,7 +55,7 @@ public class PlayerAttack : MonoBehaviour
 
         _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
 
-        _presenter.Initialize((_mainWeapon.Data.BulletCount, _mainWeapon.Data.WeaponIcon), (_subWeapon.Data.BulletCount, _subWeapon.Data.WeaponIcon));
+        _presenter.Initialize((_mainWeapon.Data.AttackCapacity, _mainWeapon.Data.WeaponIcon), (_subWeapon.Data.AttackCapacity, _subWeapon.Data.WeaponIcon));
 
         _gameManager = ServiceLocator.Get<IngameManager>();
     }

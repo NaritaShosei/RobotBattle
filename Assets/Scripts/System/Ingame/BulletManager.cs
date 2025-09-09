@@ -18,7 +18,7 @@ public class BulletManager : MonoBehaviour
     /// <param name="key"></param>
     /// <param name="bullet">弾</param>
     /// <param name="count">最大数</param>
-    public void SetPool(LongRangeAttack_B key, Bullet_B bullet, int count, LayerMask layer)
+    public Bullet_B[] SetPool(LongRangeAttack_B key, Bullet_B bullet, int count, LayerMask layer)
     {
         if (!_pools.ContainsKey(key))
         {
@@ -39,6 +39,7 @@ public class BulletManager : MonoBehaviour
 
             _pools.Add(key, pool);
         }
+        return _pools[key].ToArray();
     }
 
     /// <summary>

@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using RootMotion.FinalIK;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,7 +49,8 @@ public class LongRangeAttack_B : WeaponBase
     {
         _bulletManager = ServiceLocator.Get<BulletManager>();
         _time = Time.time;
-        _count = _data.BulletCount;
-        _bulletManager.SetPool(this, _bullet, _count, _layer);
+        _count = _data.AttackCapacity;
+        var bullets = _bulletManager.SetPool(this, _bullet, _count, _layer);
+        Array.ForEach(bullets, b => b.Initialize(_data));
     }
 }

@@ -9,7 +9,6 @@ public class BossEnemy : Enemy_B<EnemyData_B>
 
     [SerializeField] EnemyData_B _dataBase;
     [SerializeField] EnemyDodgeZone _dodgeZone;
-    [SerializeField] Transform _bulletParent;
 
     float _playerDistance;
     Vector3 _startPos;
