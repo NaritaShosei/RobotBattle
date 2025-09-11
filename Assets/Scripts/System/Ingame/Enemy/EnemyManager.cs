@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    //TODO:敵の仕様変更
+    [SerializeField] private List<EnemySpawner> _spawners = new();
+
     List<IEnemy> _enemies = new();
     public List<IEnemy> Enemies => _enemies;
     public bool IsEnemyAllDefeated => _enemies.Count == 0;
@@ -19,6 +20,7 @@ public class EnemyManager : MonoBehaviour
         //EnemyをすべてListに格納
         _enemies = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IEnemy>().ToList();
     }
+
     /// <summary>
     /// Listから除外
     /// </summary>
@@ -28,6 +30,18 @@ public class EnemyManager : MonoBehaviour
         if (_enemies.Contains(enemy))
         {
             _enemies.Remove(enemy);
+        }
+    }
+
+    /// <summary>
+    /// Listに追加
+    /// </summary>
+    /// <param name="enemy">追加するEnemy</param>
+    public void Add(IEnemy enemy)
+    {
+        if (!_enemies.Contains(enemy))
+        {
+            _enemies.Add(enemy);
         }
     }
 }
