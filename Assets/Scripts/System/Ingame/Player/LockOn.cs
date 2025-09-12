@@ -22,7 +22,7 @@ public class LockOn : MonoBehaviour
 
     Camera _camera;
 
-    IEnemy _lockOnEnemy;
+    ILockOnTarget _lockOnTarget;
 
     CrosshairPresenter _presenter;
 
@@ -42,7 +42,7 @@ public class LockOn : MonoBehaviour
     void Update()
     {
         float bestScore = float.MinValue;
-        _lockOnEnemy = null;
+        _lockOnTarget = null;
         //EnemyListをEnemyManagerから参照する
         foreach (var enemy in _enemyManager.Enemies.Where(x => x.IsTargetInView()))
         {
@@ -82,15 +82,15 @@ public class LockOn : MonoBehaviour
             if (score > bestScore)
             {
                 bestScore = score;
-                _lockOnEnemy = enemy;
+                _lockOnTarget = enemy;
             }
 
         }
 
         //UIに反映
-        if (_lockOnEnemy != null)
+        if (_lockOnTarget != null)
         {
-            _presenter.UpdateLockOn(true, _lockOnEnemy.GetTargetCenter().position);
+            _presenter.UpdateLockOn(true, _lockOnTarget.GetTargetCenter().position);
         }
         else
         {
@@ -98,7 +98,7 @@ public class LockOn : MonoBehaviour
         }
     }
 
-    bool IsVisible(IEnemy enemy)
+    bool IsVisible(ILockOnTarget enemy)
     {
         //方向、距離計算
         var dirToEnemy = enemy.GetTargetCenter().position - _camera.transform.position;
@@ -137,9 +137,9 @@ public class LockOn : MonoBehaviour
     /// ロックオン中のEnemyの取得
     /// </summary>
     /// <returns></returns>
-    public IEnemy GetTarget()
+    public ILockOnTarget GetTarget()
     {
-        return _lockOnEnemy;
+        return _lockOnTarget;
     }
 
     /// <summary>

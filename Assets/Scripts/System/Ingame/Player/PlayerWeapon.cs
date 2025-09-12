@@ -11,7 +11,7 @@ public class PlayerWeapon : LongRangeAttack_B
     bool _isAttack;
     bool _isReload;
     public bool IsAttack { get => _isAttack; set => _isAttack = value; }
-    IEnemy _enemy;
+    ILockOnTarget _enemy;
     AimIK _aimIK;
     Vector3 _aimTargetPos;
 
@@ -48,7 +48,7 @@ public class PlayerWeapon : LongRangeAttack_B
                 bullet.SetPosition(_muzzle.position);
 
                 _enemy = _lockOn.GetTarget();
-                bullet.SetTarget(_enemy);
+                bullet.SetTarget(_enemy as IFightable);
                 _count--;
                 if (_enemy == null)
                 {

@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Bullet_B : MonoBehaviour
 {
     [SerializeField] protected float _enableTime = 1.5f;
-    protected IFightable _target;
+    protected ILockOnTarget _target;
     public Action ReturnPoolEvent;
     protected float _timer;
 
@@ -57,7 +57,7 @@ public abstract class Bullet_B : MonoBehaviour
     /// </summary>
     /// <param name="other"></param>
     protected abstract void Conflict(Collider other);
-    public virtual void SetTarget(IFightable target)
+    public virtual void SetTarget(ILockOnTarget target)
     {
         _target = target;
         if (_target != null)
