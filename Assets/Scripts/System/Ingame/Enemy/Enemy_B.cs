@@ -18,7 +18,7 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
         Start_B();
     }
 
-    public bool IsTargetInView()
+    public override bool IsTargetInView()
     {
         Vector3 viewportPosition = _camera.WorldToViewportPoint(GetTargetCenter().position);
 
@@ -49,11 +49,5 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
     }
 
 }
-public interface IEnemy : IFightable
-{
-    void AddOnAttackEvent(Action<PlayerController> action);
-    void RemoveOnAttackEvent(Action<PlayerController> action);
 
-    bool IsTargetInView();
-}
 

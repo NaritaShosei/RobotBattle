@@ -79,11 +79,9 @@ namespace Script.System.Ingame
             return transform;
         }
 
-    }
-    public interface IFightable
-    {
-        Transform GetTransform();
-        Transform GetTargetCenter();
-        void HitDamage(Collider other);
+        public virtual bool IsTargetInView()
+        {
+            return true;
+        }
     }
 }
