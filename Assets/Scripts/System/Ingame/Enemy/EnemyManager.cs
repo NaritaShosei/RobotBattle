@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField] private List<EnemySpawner> _spawners = new();
+    [SerializeField] private List<GameObject> _spawnEnemies = new();
 
-    List<IEnemy> _enemies = new();
-    public List<IEnemy> Enemies => _enemies;
+
+    List<ILockOnTarget> _enemies = new();
+    public List<ILockOnTarget> Enemies => _enemies;
     public bool IsEnemyAllDefeated => _enemies.Count == 0;
 
     private void Awake()
@@ -15,17 +18,32 @@ public class EnemyManager : MonoBehaviour
         ServiceLocator.Set(this);
     }
 
-    void Start()
+    private void Start()
     {
         //EnemyをすべてListに格納
-        _enemies = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IEnemy>().ToList();
+        _enemies = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<ILockOnTarget>().ToList();
+
+        // PlayerもILockOnTargetを継承してしまっているので直す必要がある
+        for (int i = 0; i < _enemies.Count; i++)
+        {
+            if (_enemies[i].GetTransform().TryGetComponent(out PlayerController _))
+            {
+                _enemies.RemoveAt(i);
+                break;
+            }
+        }
+
+        foreach (var spawner in _spawners)
+        {
+            //       SpawnLoop(spawner);
+        }
     }
 
     /// <summary>
     /// Listから除外
     /// </summary>
     /// <param name="enemy">除外するEnemy</param>
-    public void Remove(IEnemy enemy)
+    public void Remove(ILockOnTarget enemy)
     {
         if (_enemies.Contains(enemy))
         {
@@ -37,7 +55,7 @@ public class EnemyManager : MonoBehaviour
     /// Listに追加
     /// </summary>
     /// <param name="enemy">追加するEnemy</param>
-    public void Add(IEnemy enemy)
+    public void Add(ILockOnTarget enemy)
     {
         if (!_enemies.Contains(enemy))
         {
