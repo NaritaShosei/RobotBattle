@@ -36,3 +36,11 @@ public interface ISpawner : IFightable
     event Action<ISpawner> OnDestroyed;
     event Action<IEnemy> OnEnemySpawned;
 }
+
+/// <summary>
+/// 攻撃する武器
+/// </summary>
+public interface IWeapon
+{
+    float GetAttackPower();
+}
