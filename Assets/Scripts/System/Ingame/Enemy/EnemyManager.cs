@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -18,25 +19,64 @@ public class EnemyManager : MonoBehaviour
         ServiceLocator.Set(this);
     }
 
-    private void Start()
+    private async void Start()
     {
-        //EnemyをすべてListに格納
-        _enemies = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<ILockOnTarget>().ToList();
-
-        // PlayerもILockOnTargetを継承してしまっているので直す必要がある
-        for (int i = 0; i < _enemies.Count; i++)
+        InitializeEnemies();
+        try
         {
-            if (_enemies[i].GetTransform().TryGetComponent(out PlayerController _))
-            {
-                _enemies.RemoveAt(i);
-                break;
-            }
+            await WaitUntilGameResumed();
+            await StartSpawnersAsync();
         }
+        catch { }
+    }
+
+    /// <summary>
+    /// 既存の敵をリストに登録（Playerを除外）
+    /// </summary>
+    private void InitializeEnemies()
+    {
+        _enemies = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
+            .OfType<ILockOnTarget>()
+            .ToList();
+
+        // Playerを除外
+        _enemies.RemoveAll(e => e.GetTransform().TryGetComponent<PlayerController>(out _));
+    }
+
+    /// <summary>
+    /// ポーズ解除まで待機
+    /// </summary>
+    private async UniTask WaitUntilGameResumed()
+    {
+        await UniTask.WaitUntil(
+            () => !ServiceLocator.Get<IngameManager>().IsPaused,
+            cancellationToken: destroyCancellationToken
+        );
+    }
+
+    /// <summary>
+    /// 各Spawnerの初期化とSpawn開始
+    /// </summary>
+    private async UniTask StartSpawnersAsync()
+    {
+        List<UniTask> tasks = new();
 
         foreach (var spawner in _spawners)
         {
-            //       SpawnLoop(spawner);
+            SetupSpawner(spawner);
+            tasks.Add(spawner.Spawn(_spawnEnemies));
         }
+
+        await UniTask.WhenAll(tasks);
+    }
+
+    /// <summary>
+    /// Spawnerのイベント登録
+    /// </summary>
+    private void SetupSpawner(EnemySpawner spawner)
+    {
+        spawner.OnEnemySpawned += (enemy) => Add(enemy);
+        spawner.OnDestroyed += (enemySpawner) => Remove(enemySpawner);
     }
 
     /// <summary>
