@@ -10,9 +10,9 @@ namespace Script.System.Ingame
         [SerializeField] DamageReactionCollider _damageReactionCollider;
         public virtual void HitDamage(Collider other)
         {
-            if (other.TryGetComponent(out Bullet_B component))
+            if (other.TryGetComponent(out IWeapon component))
             {
-                _data.Health -= component.AttackPower;
+                _data.Health -= component.GetAttackPower();
                 if (_data.Health <= 0)
                 {
                     Dead();
