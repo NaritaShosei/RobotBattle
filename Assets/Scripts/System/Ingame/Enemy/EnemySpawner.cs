@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour, ISpawner
 {
     [Header("生成データ")]
     [SerializeField] private Transform _spawnTransform;
-    [SerializeField] private SpawnerData _spawnerData;
+    [SerializeField] private SpawnerData _data;
 
 
     [Header("ロックオンのターゲットになるTransform")]
@@ -23,16 +23,16 @@ public class EnemySpawner : MonoBehaviour, ISpawner
     private void Start()
     {
         _camera = Camera.main;
-        _spawnerData.Health = _spawnerData.MaxHealth;
+        _data.Health = _data.MaxHealth;
     }
 
-    public async UniTask<GameObject> Spawn(List<GameObject> enemies)
+    public async UniTask Spawn(List<GameObject> enemies)
     {
         while (true)
         {
-            float randInterval = Random.Range(_spawnerData.MinInterval, _spawnerData.MaxInterval);
+            float randInterval = Random.Range(_data.MinInterval, _data.MaxInterval);
 
-            await UniTask.Delay((int)(randInterval * 1000));
+            await UniTask.Delay((int)(randInterval * 1000), cancellationToken: destroyCancellationToken);
 
             int randIndex = Random.Range(0, enemies.Count);
 
@@ -81,7 +81,21 @@ public class EnemySpawner : MonoBehaviour, ISpawner
 
     public void HitDamage(Collider other)
     {
-        throw new NotImplementedException();
+        if (other.TryGetComponent(out Bullet_B component))
+        {
+            _data.Health -= component.AttackPower;
+            if (_data.Health <= 0)
+            {
+                // 死亡処理
+                OnDestroyed?.Invoke(this);
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        HitDamage(other);
     }
 }
 
