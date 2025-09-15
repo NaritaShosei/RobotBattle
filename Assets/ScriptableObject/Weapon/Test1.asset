@@ -19,7 +19,7 @@ MonoBehaviour:
   _weaponCost: 10
   _attackPower: 100
   _attackRate: 0.1
-  _range: 10
+  _range: 100
   _coolTime: 10
   _capacity: 1
   _guardBreak: 50
