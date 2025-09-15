@@ -7,12 +7,10 @@ public class LockOn : MonoBehaviour
     [SerializeField]
     Transform _player;
 
-    [SerializeField]
-    float _maxDistance;
-
     [SerializeField, Range(0, 180)]
     float _viewAngle = 60;
 
+    private float _maxDistance;
 
     //指定ポイントからの距離とY成分を無視したPlayerとEnemyの距離のスコア倍率
     [SerializeField]
@@ -131,6 +129,15 @@ public class LockOn : MonoBehaviour
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// 武器ごとの射程距離を反映
+    /// </summary>
+    /// <param name="range"></param>
+    public void SetRange(float range)
+    {
+        _maxDistance = range;
     }
 
     /// <summary>

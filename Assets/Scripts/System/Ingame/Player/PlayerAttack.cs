@@ -30,8 +30,11 @@ public class PlayerAttack : MonoBehaviour
     float _ikWeight = 0.846f;
     [SerializeField]
     private float _swapDuration = 0.5f;
-    IngameManager _gameManager;
 
+    private IngameManager _gameManager;
+    private LockOn _lockOn;
+
+    [Header("武器を装備する位置")]
     [SerializeField] private Transform _mainParent;
     [SerializeField] private Transform _subParent;
 
@@ -58,6 +61,9 @@ public class PlayerAttack : MonoBehaviour
         _presenter.Initialize((_mainWeapon.Data.AttackCapacity, _mainWeapon.Data.WeaponIcon), (_subWeapon.Data.AttackCapacity, _subWeapon.Data.WeaponIcon));
 
         _gameManager = ServiceLocator.Get<IngameManager>();
+
+        _lockOn = ServiceLocator.Get<LockOn>();
+        _lockOn.SetRange(_mainWeapon.Data.Range);
     }
 
     void Update()
@@ -96,7 +102,6 @@ public class PlayerAttack : MonoBehaviour
         _aimIK.solver.target.position = _mainWeapon.GetTargetPos();
     }
 
-    //TODO:すぐ切り替わってしまうので遅らせる処理が必要
     async void WeaponChange(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
@@ -120,13 +125,13 @@ public class PlayerAttack : MonoBehaviour
             //次の武器を装備
             _playerManager.SetState(PlayerState.Idle);
 
-
             var weapon = _mainWeapon;
             _mainWeapon = _subWeapon;
             _subWeapon = weapon;
 
             _mainWeapon.SetAttack(false);
             _mainWeapon.enabled = true;
+            _lockOn.SetRange(_mainWeapon.Data.Range);
         }
     }
 
