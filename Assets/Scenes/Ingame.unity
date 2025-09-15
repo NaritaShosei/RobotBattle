@@ -219,6 +219,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7026685107550484750, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
+      propertyPath: _dropData
+      value: 
+      objectReference: {fileID: 11400000, guid: a73c94b7c9e274b46aa9802f7f7c9b07, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1568,6 +1572,7 @@ MonoBehaviour:
   _spawnTransform: {fileID: 715512225}
   _data: {fileID: 11400000, guid: ccc30ee857878f14facf3473ee2e3d98, type: 2}
   _target: {fileID: 715512225}
+  _dropData: {fileID: 11400000, guid: 169760712a1f98344891eeebf02ee876, type: 2}
 --- !u!4 &715512225
 Transform:
   m_ObjectHideFlags: 0
@@ -2255,6 +2260,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 7026685107550484750, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
+      propertyPath: _dropData
+      value: 
+      objectReference: {fileID: 11400000, guid: a73c94b7c9e274b46aa9802f7f7c9b07, type: 2}
     - target: {fileID: 7026685107550484750, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
       propertyPath: _bulletParent
       value: 
@@ -3116,6 +3125,10 @@ PrefabInstance:
       propertyPath: _weaponData
       value: 
       objectReference: {fileID: 11400000, guid: a75e1d0b52be3584aabb9c17925b8012, type: 2}
+    - target: {fileID: 8000725474275371761, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
+      propertyPath: _dropData
+      value: 
+      objectReference: {fileID: 11400000, guid: a73c94b7c9e274b46aa9802f7f7c9b07, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4171,6 +4184,10 @@ PrefabInstance:
       propertyPath: _weaponData
       value: 
       objectReference: {fileID: 11400000, guid: a75e1d0b52be3584aabb9c17925b8012, type: 2}
+    - target: {fileID: 8000725474275371761, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
+      propertyPath: _dropData
+      value: 
+      objectReference: {fileID: 11400000, guid: a73c94b7c9e274b46aa9802f7f7c9b07, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4232,6 +4249,10 @@ PrefabInstance:
       propertyPath: _weaponData
       value: 
       objectReference: {fileID: 11400000, guid: a75e1d0b52be3584aabb9c17925b8012, type: 2}
+    - target: {fileID: 8000725474275371761, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
+      propertyPath: _dropData
+      value: 
+      objectReference: {fileID: 11400000, guid: a73c94b7c9e274b46aa9802f7f7c9b07, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4553,6 +4574,10 @@ PrefabInstance:
       propertyPath: _weaponData
       value: 
       objectReference: {fileID: 11400000, guid: a75e1d0b52be3584aabb9c17925b8012, type: 2}
+    - target: {fileID: 8000725474275371761, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
+      propertyPath: _dropData
+      value: 
+      objectReference: {fileID: 11400000, guid: a73c94b7c9e274b46aa9802f7f7c9b07, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5163,6 +5188,10 @@ PrefabInstance:
       propertyPath: _bulletParent
       value: 
       objectReference: {fileID: 104793615}
+    - target: {fileID: 8000725474275371761, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
+      propertyPath: _dropData
+      value: 
+      objectReference: {fileID: 11400000, guid: a73c94b7c9e274b46aa9802f7f7c9b07, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
