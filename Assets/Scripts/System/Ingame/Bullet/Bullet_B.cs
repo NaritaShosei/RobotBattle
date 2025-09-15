@@ -20,6 +20,11 @@ public abstract class Bullet_B : MonoBehaviour, IWeapon
     private Vector3 _startPos;
     private CancellationTokenSource _cts;
 
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+    }
+
     public virtual void Initialize(WeaponData data)
     {
         _weaponData = data;
