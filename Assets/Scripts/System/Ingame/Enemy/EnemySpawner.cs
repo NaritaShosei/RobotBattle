@@ -10,9 +10,11 @@ public class EnemySpawner : MonoBehaviour, ISpawner
     [SerializeField] private Transform _spawnTransform;
     [SerializeField] private SpawnerData _data;
 
-
     [Header("ロックオンのターゲットになるTransform")]
     [SerializeField] private Transform _target;
+
+    [Header("ドロップデータ")]
+    [SerializeField] private EnemyDropData _dropData;
 
     public event Action<IEnemy> OnEnemySpawned;
     public event Action<ISpawner> OnDestroyed;
@@ -88,9 +90,16 @@ public class EnemySpawner : MonoBehaviour, ISpawner
             {
                 // 死亡処理
                 OnDestroyed?.Invoke(this);
+                Dead();
                 Destroy(gameObject);
             }
         }
+    }
+
+    private void Dead()
+    {
+        ServiceLocator.Get<ScoreManager>().AddScore(_dropData.Score);
+        ServiceLocator.Get<MoneyManager>().AddMoney(_dropData.Money);
     }
 
     private void OnTriggerEnter(Collider other)

@@ -6,7 +6,7 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
     where DataType : CharacterData_B
 {
     [SerializeField]
-    EnemyDropData _scoreData;
+    EnemyDropData _dropData;
     public Action<PlayerController> OnAttackEvent;
     protected PlayerController _player;
     protected Camera _camera;
@@ -42,9 +42,9 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
     protected override void Dead()
     {
         base.Dead();
-        ServiceLocator.Get<ScoreManager>().AddScore(_scoreData.Score);
+        ServiceLocator.Get<ScoreManager>().AddScore(_dropData.Score);
         ServiceLocator.Get<EnemyManager>().Remove(this);
-        ServiceLocator.Get<MoneyManager>().AddMoney(_scoreData.Money);
+        ServiceLocator.Get<MoneyManager>().AddMoney(_dropData.Money);
         gameObject.SetActive(false);
     }
 
