@@ -44,9 +44,7 @@ public class PlayerController : Character_B<PlayerData>
     HPGaugePresenter _healthPresenter;
     GaugePresenter _gaugePresenter;
     IngameManager _gameManager;
-    private void OnEnable()
-    {
-    }
+    private Camera _camera;
 
     void Start()
     {
@@ -64,6 +62,8 @@ public class PlayerController : Character_B<PlayerData>
         _gaugePresenter = new GaugePresenter(ServiceLocator.Get<GameUIManager>().GaugeView);
         _gaugePresenter.Initialize(_data.Gauge);
         _collider.GuardVisible(false);
+
+        _camera = Camera.main;
 
         Start_B();
     }
@@ -125,11 +125,20 @@ public class PlayerController : Character_B<PlayerData>
         {
             Move(_isBoost ? _data.BoostSpeed : _data.NormalSpeed);
         }
-        //少し遅らせてカメラのほうを向く
-        var cam = Camera.main.transform.forward;
+
+        var cam = _camera.transform.forward;
         cam.y = 0;
-        var camDir = cam.normalized;
-        transform.forward = Vector3.Slerp(transform.forward, camDir, _rotateSpeed * Time.deltaTime);
+        cam.Normalize();
+
+        // 目標方向を更新
+        var _targetDir = cam;
+
+        // 回転の補間
+        if (_targetDir.sqrMagnitude > 0.001f)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(_targetDir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, _rotateSpeed * Time.deltaTime);
+        }
     }
 
     private void FixedUpdate()
@@ -201,8 +210,8 @@ public class PlayerController : Character_B<PlayerData>
         if (_gameManager.IsPaused) { return; }
 
         //カメラのYを無視した正面と右の取得
-        _camForward = Camera.main.transform.forward;
-        _camRight = Camera.main.transform.right;
+        _camForward = _camera.transform.forward;
+        _camRight = _camera.transform.right;
         _camForward.y = _camRight.y = 0;
         var forwardDir = _camForward.normalized;
         var rightDir = _camRight.normalized;
@@ -258,7 +267,7 @@ public class PlayerController : Character_B<PlayerData>
             _isDashed = true;
 
             // レイヤーを除外
-            int layerMask = ~LayerMask.GetMask("Weapon"); 
+            int layerMask = ~LayerMask.GetMask("Weapon");
 
             // Raycastを飛ばす
             if (Physics.Raycast(GetTargetCenter().position, moveDir, out RaycastHit hit, rayCastDis, layerMask))
@@ -357,7 +366,7 @@ public class PlayerController : Character_B<PlayerData>
         }
     }
 
-    public override void HitDamage(Collider other)
+    public override void HitDamage(IWeapon other)
     {
         if (_isGuard) return;
         base.HitDamage(other);

@@ -21,4 +21,7 @@ public abstract class WeaponBase : MonoBehaviour
     public abstract int Count { get; }
     public abstract Vector3 GetTargetPos();
     public abstract void IKEnable(AimIK ik, bool enable);
+    public virtual bool RequiresPlayerMovement() { return false; }
+    public virtual Vector3 GetDesiredPlayerPosition() { return Vector3.zero; }
+    public virtual bool IsTrackingActive() { return false; }
 }

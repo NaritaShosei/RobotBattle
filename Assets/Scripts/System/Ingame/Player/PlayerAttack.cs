@@ -30,8 +30,11 @@ public class PlayerAttack : MonoBehaviour
     float _ikWeight = 0.846f;
     [SerializeField]
     private float _swapDuration = 0.5f;
-    IngameManager _gameManager;
 
+    private IngameManager _gameManager;
+    private LockOn _lockOn;
+
+    [Header("武器を装備する位置")]
     [SerializeField] private Transform _mainParent;
     [SerializeField] private Transform _subParent;
 
@@ -58,13 +61,16 @@ public class PlayerAttack : MonoBehaviour
         _presenter.Initialize((_mainWeapon.Data.AttackCapacity, _mainWeapon.Data.WeaponIcon), (_subWeapon.Data.AttackCapacity, _subWeapon.Data.WeaponIcon));
 
         _gameManager = ServiceLocator.Get<IngameManager>();
+
+        _lockOn = ServiceLocator.Get<LockOn>();
+        _lockOn.SetRange(_mainWeapon.Data.Range);
     }
 
     void Update()
     {
 #if UNITY_EDITOR
         //Debug Only
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             SceneManager.LoadScene("InGame");
         }
@@ -96,7 +102,6 @@ public class PlayerAttack : MonoBehaviour
         _aimIK.solver.target.position = _mainWeapon.GetTargetPos();
     }
 
-    //TODO:すぐ切り替わってしまうので遅らせる処理が必要
     async void WeaponChange(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
@@ -113,6 +118,10 @@ public class PlayerAttack : MonoBehaviour
             //UIに武器変更の情報を渡す
             _presenter.SwapWeapon();
 
+            var weapon = _mainWeapon;
+            _mainWeapon = _subWeapon;
+            _subWeapon = weapon;
+
             await SwapWeapon();
 
             Debug.LogWarning("武装変更");
@@ -120,22 +129,18 @@ public class PlayerAttack : MonoBehaviour
             //次の武器を装備
             _playerManager.SetState(PlayerState.Idle);
 
-
-            var weapon = _mainWeapon;
-            _mainWeapon = _subWeapon;
-            _subWeapon = weapon;
-
             _mainWeapon.SetAttack(false);
             _mainWeapon.enabled = true;
+            _lockOn.SetRange(_mainWeapon.Data.Range);
         }
     }
 
     private async UniTask SwapWeapon()
     {
         var seq = DOTween.Sequence();
-
-        _mainWeapon.transform.SetParent(_subParent);
-        _subWeapon.transform.SetParent(_mainParent);
+        
+        _mainWeapon.transform.SetParent(_mainParent);
+        _subWeapon.transform.SetParent(_subParent);
 
         await seq.Append(_mainWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
             Join(_subWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
@@ -199,6 +204,7 @@ public class PlayerAttack : MonoBehaviour
         _mainWeapon.Reload();
     }
 
+    
     private void OnDisable()
     {
         _input.AttackAction.started -= Attack;

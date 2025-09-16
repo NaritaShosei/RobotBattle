@@ -8,17 +8,15 @@ namespace Script.System.Ingame
         protected DataType _data;
         [SerializeField] Transform _targetCenter;
         [SerializeField] DamageReactionCollider _damageReactionCollider;
-        public virtual void HitDamage(Collider other)
+        public virtual void HitDamage(IWeapon other)
         {
-            if (other.TryGetComponent(out Bullet_B component))
+            _data.Health -= other.GetAttackPower();
+            if (_data.Health <= 0)
             {
-                _data.Health -= component.AttackPower;
-                if (_data.Health <= 0)
-                {
-                    Dead();
-                }
+                Dead();
             }
         }
+
         /// <summary>
         /// 増やすときは正の値、減らすときは負の値
         /// </summary>
@@ -79,11 +77,9 @@ namespace Script.System.Ingame
             return transform;
         }
 
-    }
-    public interface IFightable
-    {
-        Transform GetTransform();
-        Transform GetTargetCenter();
-        void HitDamage(Collider other);
+        public virtual bool IsTargetInView()
+        {
+            return true;
+        }
     }
 }

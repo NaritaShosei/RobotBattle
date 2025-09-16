@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class TimeView : MonoBehaviour
 {
     [SerializeField]
-    Text _text;
+    TMP_Text _text;
 
     public void SetTime(float time)
     {

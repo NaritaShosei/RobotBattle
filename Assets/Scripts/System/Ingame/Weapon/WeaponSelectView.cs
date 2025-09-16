@@ -32,7 +32,7 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
             var data = _weaponDatabase.GetWeapon(id);
 
             var cell = Instantiate(_weaponCell, _cellParent);
-            cell.Initialize(data.WeaponIcon, "cost", data.WeaponCost, data);
+            cell.Initialize(data.WeaponIcon,data.WeaponName ,"cost", data.WeaponCost, data);
             _cells.Add(cell);
         }
 
@@ -48,7 +48,7 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
     private void ResetUI()
     {
         foreach (var cell in _cells)
-            Destroy(cell);
+            Destroy(cell.gameObject);
 
         _cells.Clear();
 

@@ -149,7 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetCenter: {fileID: 6392261997495639103}
   _damageReactionCollider: {fileID: 525258161263176096}
-  _scoreData: {fileID: 11400000, guid: a73c94b7c9e274b46aa9802f7f7c9b07, type: 2}
+  _dropData: {fileID: 11400000, guid: a73c94b7c9e274b46aa9802f7f7c9b07, type: 2}
   _dataBase: {fileID: 11400000, guid: 93f215ca294234444988c39b3d5670ab, type: 2}
   _collider: {fileID: 5270541378349135100}
   _muzzleModel: {fileID: 748242125317551226}

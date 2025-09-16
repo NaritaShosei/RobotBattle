@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using RootMotion.FinalIK;
 using UnityEngine;
-public class PlayerWeapon : LongRangeAttack_B
+public class PlayerLongRangeWeapon : LongRangeAttack_B
 {
 
     LockOn _lockOn;
@@ -11,8 +11,8 @@ public class PlayerWeapon : LongRangeAttack_B
     bool _isAttack;
     bool _isReload;
     public bool IsAttack { get => _isAttack; set => _isAttack = value; }
-    IEnemy _enemy;
-    AimIK _aimIK;
+    ILockOnTarget _enemy;
+
     Vector3 _aimTargetPos;
 
 
@@ -48,7 +48,7 @@ public class PlayerWeapon : LongRangeAttack_B
                 bullet.SetPosition(_muzzle.position);
 
                 _enemy = _lockOn.GetTarget();
-                bullet.SetTarget(_enemy);
+                bullet.SetTarget(_enemy as IFightable);
                 _count--;
                 if (_enemy == null)
                 {
@@ -60,36 +60,49 @@ public class PlayerWeapon : LongRangeAttack_B
 
     void TargetSet()
     {
+        // ロックオン対象を取得
         _enemy = _lockOn.GetTarget();
 
+        // ロックオン対象がいない場合
         if (_enemy == null)
         {
+            // クロスヘアのスクリーン座標を取得
             Vector2 crosshairPos = _lockOn.GetCrosshairPos();
 
+            // クロスヘア位置からレイを飛ばす
             Ray ray = _camera.ScreenPointToRay(crosshairPos);
-            //マジックナンバー
-            float dis = 1000;
 
+            // レイの最大距離
+            float dis = _data.Range;
+
+            // レイがヒットした場合
             if (Physics.Raycast(ray, out RaycastHit hit, dis))
             {
+                // プレイヤーからレイ発射点までの距離を算出
                 float playerDis = Vector3.Distance(ray.origin, transform.position);
+
+                // ヒットした位置がプレイヤーより前方にある場合のみ採用
                 if (hit.distance > playerDis)
                 {
+                    // 照準のターゲット座標をヒット地点に設定
                     _aimTargetPos = hit.point;
                     return;
                 }
             }
+
+            // 何にも当たらなかった場合はレイの終点をターゲットにする
             Vector3 origin = ray.origin;
             Vector3 direction = ray.direction.normalized;
-
             Vector3 endPos = origin + direction * dis;
-
 
             _aimTargetPos = endPos;
             return;
         }
+
+        // ロックオン対象がいる場合はその位置をターゲットにする
         _aimTargetPos = _enemy.GetTransform().position;
     }
+
 
     /// <summary>
     /// ロックオン中のtargetを取得する

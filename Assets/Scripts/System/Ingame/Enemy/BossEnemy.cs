@@ -9,6 +9,14 @@ public class BossEnemy : Enemy_B<EnemyData_B>
 
     [SerializeField] EnemyData_B _dataBase;
     [SerializeField] EnemyDodgeZone _dodgeZone;
+    [SerializeField] EnemyDodgeClampData _dodgeClampData;
+
+    [System.Serializable]
+    public struct EnemyDodgeClampData
+    {
+        public float Min;
+        public float Max;
+    }
 
     float _playerDistance;
     Vector3 _startPos;
@@ -124,23 +132,37 @@ public class BossEnemy : Enemy_B<EnemyData_B>
         if (!other.TryGetComponent(out MonoBehaviour _)) return;
 
         if (!GaugeValueChange(-_data.DashValue)) return;
+
         _dodgeZone.Collider.enabled = false;
+
         _data.DodgeTimer = Time.time;
+
         _isDodged = true;
+
         _data.DashTimer = 0;
+
         _startPos = transform.position;
-        //カメラの左側にいたら右に避ける、右側にいたら左に避ける
-        Vector3 dir = _camera.WorldToViewportPoint(transform.position).x <= 0.5f ? _camera.transform.right : -_camera.transform.right;
+
+        // カメラの左側にいたら右に避ける、右側にいたら左に避ける
+        Vector3 dir = _camera.WorldToViewportPoint(transform.position).x <= 0.5f ?
+            _camera.transform.right : -_camera.transform.right;
+
+        // 現在位置から回避方向に設定された距離分移動した候補位置を計算
         Vector3 candidateTarget = transform.position + dir * _data.DashDistance;
 
+        // 候補位置をビューポート座標に変換して画面内におさまるかチェック
         Vector3 viewportPos = _camera.WorldToViewportPoint(candidateTarget);
 
         if (viewportPos.x < 0 || viewportPos.x > 1)
         {
-            //マジックナンバー
-            viewportPos.x = Mathf.Clamp(viewportPos.x, 0.1f, 0.9f);
+            // ビューポートのX座標を設定された範囲内にクランプ
+            viewportPos.x = Mathf.Clamp(viewportPos.x, _dodgeClampData.Min, _dodgeClampData.Max);
+
+            // 補正されたビューポート座標をワールド座標に戻す
             candidateTarget = _camera.ViewportToWorldPoint(viewportPos);
         }
+
+        // 最終的な目標位置を設定
         _targetPos = candidateTarget;
     }
 

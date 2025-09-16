@@ -1,10 +1,8 @@
 ﻿using DG.Tweening;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Rendering;
 
 public class WeaponShopView : MonoBehaviour, IPointerClickHandler
 {
@@ -34,29 +32,35 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
 
         int[] lockedIds = allIds.Except(unlockedIds).ToArray();
 
-        List<WeaponData> weapons = new ();
+        List<WeaponData> weapons = new();
 
         foreach (var id in lockedIds)
         {
-            weapons.Add( _weaponDatabase.GetWeapon(id));
+            weapons.Add(_weaponDatabase.GetWeapon(id));
         }
 
         foreach (var data in weapons.OrderBy(d => d.WeaponMoney))
         {
             var cell = Instantiate(_weaponCell, _cellParent);
-            cell.Initialize(data.WeaponIcon, "$", data.WeaponMoney, data);
+            cell.Initialize(data.WeaponIcon, data.WeaponName, "$", data.WeaponMoney, data);
             _cells.Add(cell);
         }
 
-        _currentCell = _cells[0];
-        _currentCell.Select();
-        SetExplanation(_currentCell.WeaponData.WeaponID);
+        if (_currentCell != null)
+        {
+            _currentCell = _cells[0];
+            _currentCell.Select();
+            SetExplanation(_currentCell.WeaponData.WeaponID);
+            return;
+        }
+
+        SetNullExplanation();
     }
 
     private void ResetUI()
     {
         foreach (var cell in _cells)
-            Destroy(cell);
+            Destroy(cell.gameObject);
 
         _cells.Clear();
     }
@@ -67,6 +71,10 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
 
         if (data != null)
             _explanation.Set(data.WeaponName, data.AttackPower, data.AttackRate);
+    }
+    private void SetNullExplanation()
+    {
+        _explanation.Set("", 0, 0);
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -94,7 +102,10 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
             return;
         }
 
+        // 購入した武器を削除
         _cells.Remove(_currentCell);
+        Destroy(_currentCell.gameObject);
+
         ResetUI();
         SetUI();
         Debug.Log("購入できた");

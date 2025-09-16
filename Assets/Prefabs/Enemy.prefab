@@ -212,10 +212,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetCenter: {fileID: 8323111248549760683}
   _damageReactionCollider: {fileID: 1405634303213005174}
-  _scoreData: {fileID: 11400000, guid: a73c94b7c9e274b46aa9802f7f7c9b07, type: 2}
+  _dropData: {fileID: 11400000, guid: a73c94b7c9e274b46aa9802f7f7c9b07, type: 2}
   _dataBase: {fileID: 11400000, guid: e850416b047e55047a39aa83ef92063e, type: 2}
   _dodgeZone: {fileID: 2003289670768544717}
-  _bulletParent: {fileID: 0}
+  _dodgeClampData:
+    Min: 0.1
+    Max: 0.9
 --- !u!114 &838447219257471581
 MonoBehaviour:
   m_ObjectHideFlags: 0

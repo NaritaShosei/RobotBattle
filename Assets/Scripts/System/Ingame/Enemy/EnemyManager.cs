@@ -1,12 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    //TODO:敵の仕様変更
-    List<IEnemy> _enemies = new();
-    public List<IEnemy> Enemies => _enemies;
+    [SerializeField] private List<EnemySpawner> _spawners = new();
+    [SerializeField] private List<GameObject> _spawnEnemies = new();
+
+
+    List<ILockOnTarget> _enemies = new();
+    public List<ILockOnTarget> Enemies => _enemies;
     public bool IsEnemyAllDefeated => _enemies.Count == 0;
 
     private void Awake()
@@ -14,20 +19,87 @@ public class EnemyManager : MonoBehaviour
         ServiceLocator.Set(this);
     }
 
-    void Start()
+    private async void Start()
     {
-        //EnemyをすべてListに格納
-        _enemies = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IEnemy>().ToList();
+        InitializeEnemies();
+        try
+        {
+            await WaitUntilGameResumed();
+            await StartSpawnersAsync();
+        }
+        catch { }
     }
+
+    /// <summary>
+    /// 既存の敵をリストに登録（Playerを除外）
+    /// </summary>
+    private void InitializeEnemies()
+    {
+        _enemies = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
+            .OfType<ILockOnTarget>()
+            .ToList();
+
+        // Playerを除外
+        _enemies.RemoveAll(e => e.GetTransform().TryGetComponent<PlayerController>(out _));
+    }
+
+    /// <summary>
+    /// ポーズ解除まで待機
+    /// </summary>
+    private async UniTask WaitUntilGameResumed()
+    {
+        await UniTask.WaitUntil(
+            () => !ServiceLocator.Get<IngameManager>().IsPaused,
+            cancellationToken: destroyCancellationToken
+        );
+    }
+
+    /// <summary>
+    /// 各Spawnerの初期化とSpawn開始
+    /// </summary>
+    private async UniTask StartSpawnersAsync()
+    {
+        List<UniTask> tasks = new();
+
+        foreach (var spawner in _spawners)
+        {
+            SetupSpawner(spawner);
+            tasks.Add(spawner.Spawn(_spawnEnemies));
+        }
+
+        await UniTask.WhenAll(tasks);
+    }
+
+    /// <summary>
+    /// Spawnerのイベント登録
+    /// </summary>
+    private void SetupSpawner(EnemySpawner spawner)
+    {
+        spawner.OnEnemySpawned += (enemy) => Add(enemy);
+        spawner.OnDestroyed += (enemySpawner) => Remove(enemySpawner);
+    }
+
     /// <summary>
     /// Listから除外
     /// </summary>
     /// <param name="enemy">除外するEnemy</param>
-    public void Remove(IEnemy enemy)
+    public void Remove(ILockOnTarget enemy)
     {
         if (_enemies.Contains(enemy))
         {
             _enemies.Remove(enemy);
+        }
+    }
+
+    /// <summary>
+    /// Listに追加
+    /// </summary>
+    /// <param name="enemy">追加するEnemy</param>
+    public void Add(ILockOnTarget enemy)
+    {
+        if (!_enemies.Contains(enemy))
+        {
+            _enemies.Add(enemy);
         }
     }
 }
