@@ -366,7 +366,7 @@ public class PlayerController : Character_B<PlayerData>
         }
     }
 
-    public override void HitDamage(Collider other)
+    public override void HitDamage(IWeapon other)
     {
         if (_isGuard) return;
         base.HitDamage(other);

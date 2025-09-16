@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class DamageReactionCollider : MonoBehaviour
 {
-    public Action<Collider> OnTriggerEnterEvent;
+    public event Action<IWeapon> OnTriggerEnterEvent;
 
     private void OnTriggerEnter(Collider other)
     {
-        OnTriggerEnterEvent?.Invoke(other);
+        if (other.TryGetComponent(out IWeapon weapon))
+            OnTriggerEnterEvent?.Invoke(weapon);
     }
 }

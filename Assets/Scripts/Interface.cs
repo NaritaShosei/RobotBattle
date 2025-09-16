@@ -16,7 +16,7 @@ public interface ILockOnTarget
 /// </summary>
 public interface IFightable : ILockOnTarget
 {
-    void HitDamage(Collider other); // 攻撃を受けたとき
+    void HitDamage(IWeapon other); // 攻撃を受けたとき
 }
 
 /// <summary>

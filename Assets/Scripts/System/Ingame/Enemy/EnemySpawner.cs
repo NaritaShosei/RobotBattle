@@ -81,18 +81,21 @@ public class EnemySpawner : MonoBehaviour, ISpawner
         return _target;
     }
 
-    public void HitDamage(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out IWeapon component))
+        if (other.TryGetComponent(out IWeapon weapon))
+            HitDamage(weapon);
+    }
+
+    public void HitDamage(IWeapon other)
+    {
+        _data.Health -= other.GetAttackPower();
+        if (_data.Health <= 0)
         {
-            _data.Health -= component.GetAttackPower();
-            if (_data.Health <= 0)
-            {
-                // 死亡処理
-                OnDestroyed?.Invoke(this);
-                Dead();
-                Destroy(gameObject);
-            }
+            // 死亡処理
+            OnDestroyed?.Invoke(this);
+            Dead();
+            Destroy(gameObject);
         }
     }
 
@@ -102,10 +105,6 @@ public class EnemySpawner : MonoBehaviour, ISpawner
         ServiceLocator.Get<MoneyManager>().AddMoney(_dropData.Money);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        HitDamage(other);
-    }
 }
 
 [CreateAssetMenu(menuName = "SpawnerData", fileName = "SpawnerData")]
