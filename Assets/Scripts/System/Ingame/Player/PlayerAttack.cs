@@ -118,16 +118,16 @@ public class PlayerAttack : MonoBehaviour
             //UIに武器変更の情報を渡す
             _presenter.SwapWeapon();
 
+            var weapon = _mainWeapon;
+            _mainWeapon = _subWeapon;
+            _subWeapon = weapon;
+
             await SwapWeapon();
 
             Debug.LogWarning("武装変更");
 
             //次の武器を装備
             _playerManager.SetState(PlayerState.Idle);
-
-            var weapon = _mainWeapon;
-            _mainWeapon = _subWeapon;
-            _subWeapon = weapon;
 
             _mainWeapon.SetAttack(false);
             _mainWeapon.enabled = true;
@@ -138,9 +138,9 @@ public class PlayerAttack : MonoBehaviour
     private async UniTask SwapWeapon()
     {
         var seq = DOTween.Sequence();
-
-        _mainWeapon.transform.SetParent(_subParent);
-        _subWeapon.transform.SetParent(_mainParent);
+        
+        _mainWeapon.transform.SetParent(_mainParent);
+        _subWeapon.transform.SetParent(_subParent);
 
         await seq.Append(_mainWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
             Join(_subWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
