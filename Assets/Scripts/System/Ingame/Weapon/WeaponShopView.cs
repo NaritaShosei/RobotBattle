@@ -46,9 +46,15 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
             _cells.Add(cell);
         }
 
-        _currentCell = _cells[0];
-        _currentCell.Select();
-        SetExplanation(_currentCell.WeaponData.WeaponID);
+        if (_currentCell != null)
+        {
+            _currentCell = _cells[0];
+            _currentCell.Select();
+            SetExplanation(_currentCell.WeaponData.WeaponID);
+            return;
+        }
+
+        SetNullExplanation();
     }
 
     private void ResetUI()
@@ -65,6 +71,10 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
 
         if (data != null)
             _explanation.Set(data.WeaponName, data.AttackPower, data.AttackRate);
+    }
+    private void SetNullExplanation()
+    {
+        _explanation.Set("", 0, 0);
     }
 
     public void OnPointerClick(PointerEventData eventData)
