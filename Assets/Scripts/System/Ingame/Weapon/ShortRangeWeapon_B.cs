@@ -72,15 +72,19 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     {
         if (transform.root.TryGetComponent(out ILockOnTarget component))
         {
+            // Playerの中心を取得、攻撃の中心の計算
             var centerPos = component.GetTargetCenter().position;
+            var dir = component.GetTargetCenter().forward * (_data.Range * 0.5f);
+            var attackCenter = centerPos + dir;
 
-            var dir = component.GetTargetCenter().forward * _data.Range;
+            // 計算した場所で攻撃
+            var colls = Physics.OverlapSphere(attackCenter, _data.Range * 0.5f);
 
-            var colls = Physics.OverlapSphere(centerPos + dir, _data.Range);
-
+            // Player以外にダメージを与える
             foreach (var coll in colls)
             {
-                if (coll.TryGetComponent<IEnemy>(out var enemy))
+                if (coll.TryGetComponent<IFightable>(out var enemy)
+                    && enemy.GetTransform().root != component.GetTransform().root)
                 {
                     enemy.HitDamage(this);
                 }
