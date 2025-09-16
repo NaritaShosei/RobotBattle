@@ -70,7 +70,7 @@ public class PlayerAttack : MonoBehaviour
     {
 #if UNITY_EDITOR
         //Debug Only
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             SceneManager.LoadScene("InGame");
         }
@@ -204,6 +204,7 @@ public class PlayerAttack : MonoBehaviour
         _mainWeapon.Reload();
     }
 
+    
     private void OnDisable()
     {
         _input.AttackAction.started -= Attack;
