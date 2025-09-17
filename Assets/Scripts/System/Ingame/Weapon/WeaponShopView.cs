@@ -84,7 +84,8 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
         {
             Debug.Log(cell.gameObject.name);
 
-            _currentCell.UnSelect();
+            if (_currentCell)
+                _currentCell.UnSelect();
 
             _currentCell = cell;
             _currentCell.Select();
@@ -95,9 +96,13 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
 
     public void BuyWeapon()
     {
+        if (!_currentCell) { Debug.Log("購入可能な武器が存在しません"); return; }
+
         if (!_selector.TryBuyWeapon(_currentCell.WeaponData))
         {
             Debug.Log("購入できない");
+            // 購入失敗UIの表示
+            // 今はただ可視化してるだけなので演出が必要
             _failedPopupPanel.SetActive(true);
             return;
         }
