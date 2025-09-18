@@ -50,7 +50,7 @@ public class PlayerController : Character_B<PlayerData>
     [SerializeField] private float _maxAutoMoveTime = 3f;
 
     private bool _isAutoMoving = false;
-    private Vector3 _autoMoveTarget;
+    private Transform _autoMoveTarget;
     private float _autoMoveTimer = 0f;
     private System.Action _onAutoMoveComplete;
     private System.Action _onAutoMoveCanceled;
@@ -179,7 +179,7 @@ public class PlayerController : Character_B<PlayerData>
 
         // TargetCenterを基準とした距離チェック
         Vector3 currentCenter = GetTargetCenter().position;
-        float distanceToTarget = Vector3.Distance(currentCenter, _autoMoveTarget);
+        float distanceToTarget = Vector3.Distance(currentCenter, _autoMoveTarget.position);
 
         if (distanceToTarget <= ArriveThreshold)
         {
@@ -190,7 +190,7 @@ public class PlayerController : Character_B<PlayerData>
         else
         {
             // 目標地点に向かって移動
-            Vector3 direction = (_autoMoveTarget - currentCenter).normalized;
+            Vector3 direction = (_autoMoveTarget.position - currentCenter).normalized;
 
             // 移動方向を設定（既存のMove関数を利用するため）
             Vector3 moveDirection = direction * _data.BoostSpeed;
@@ -209,10 +209,10 @@ public class PlayerController : Character_B<PlayerData>
     /// <summary>
     /// 自動移動を開始
     /// </summary>
-    /// <param name="targetPosition">移動先の座標</param>
+    /// <param name="target">移動先の座標</param>
     /// <param name="onComplete">到達時のコールバック</param>
     /// <param name="onCanceled">キャンセル時のコールバック</param>
-    public void StartAutoMovement(Vector3 targetPosition, System.Action onComplete = null, System.Action onCanceled = null)
+    public void StartAutoMovement(Transform target, System.Action onComplete = null, System.Action onCanceled = null)
     {
         if (_isAutoMoving)
         {
@@ -220,7 +220,7 @@ public class PlayerController : Character_B<PlayerData>
             return;
         }
 
-        _autoMoveTarget = targetPosition;
+        _autoMoveTarget = target;
         _isAutoMoving = true;
         _autoMoveTimer = 0f;
         _onAutoMoveComplete = onComplete;
@@ -228,7 +228,7 @@ public class PlayerController : Character_B<PlayerData>
 
         _playerManager.SetState(PlayerState.MovingToTarget);
 
-        Debug.Log($"自動移動開始: 目標地点 {targetPosition}, 距離: {Vector3.Distance(transform.position, targetPosition):F2}m");
+        Debug.Log($"自動移動開始: 目標地点 {target}, 距離: {Vector3.Distance(transform.position, target.position):F2}m");
     }
 
     /// <summary>
@@ -631,15 +631,15 @@ public class PlayerController : Character_B<PlayerData>
         {
             // 移動目標を赤い球で表示
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(_autoMoveTarget, 0.5f);
+            Gizmos.DrawWireSphere(_autoMoveTarget.position, 0.5f);
 
             // 現在位置から目標までの線
             Gizmos.color = Color.yellow;
-            Gizmos.DrawLine(transform.position, _autoMoveTarget);
+            Gizmos.DrawLine(transform.position, _autoMoveTarget.position);
 
             // 到達判定範囲
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(_autoMoveTarget, _arriveThreshold);
+            Gizmos.DrawWireSphere(_autoMoveTarget.position, _arriveThreshold);
         }
     }
 }
