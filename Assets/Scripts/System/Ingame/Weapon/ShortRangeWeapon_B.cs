@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShortRangeWeapon_B : WeaponBase, IWeapon
 {
     [SerializeField, Tooltip("敵から離れる距離")] private float _weaponDistance = 3f;
+    [SerializeField, Tooltip("攻撃の半径")] private float _attackRadius = 3f;
 
     private ILockOnTarget _currentTarget;
     private ILockOnTarget _root;
@@ -18,6 +19,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     private int _count;
     public override int Count => _count;
 
+    // いらないかもだが一旦残しておく
     private bool _isAttack;
 
     private void Start()
@@ -54,10 +56,6 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     {
         // ターゲットの更新
         UpdateTarget();
-
-        if (!_isAttack) { return; }
-
-        Attack();
     }
 
     private void UpdateTarget()
@@ -84,11 +82,12 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     /// 攻撃時に移動したい座標
     /// </summary>
     /// <returns></returns>
-    public override Vector3 GetDesiredPlayerPosition()
+    public override Transform GetDesiredPlayerPosition()
     {
         if (_currentTarget != null)
-            return CalculateTrackingPosition();
-        return Vector3.zero;
+            return _currentTarget.GetTargetCenter();
+
+        return null;
     }
 
     /// <summary>
@@ -122,11 +121,12 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
 
         // Playerの中心を取得、攻撃の中心の計算
         var centerPos = _root.GetTargetCenter().position;
-        var dir = _root.GetTargetCenter().forward * (_data.Range * 0.5f);
+
+        var dir = _root.GetTargetCenter().forward * _attackRadius;
         var attackCenter = centerPos + dir;
 
         // 計算した場所で攻撃
-        var colls = Physics.OverlapSphere(attackCenter, _data.Range * 0.5f);
+        var colls = Physics.OverlapSphere(attackCenter, _attackRadius);
 
         // Player以外にダメージを与える
         foreach (var coll in colls)
@@ -136,6 +136,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
             {
                 enemy.HitDamage(this);
                 Debug.LogError("Attack Success");
+                ServiceLocator.Get<EffectManager>().PlayExplosion(enemy.GetTransform().position);
             }
         }
 
@@ -145,6 +146,9 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     public override void SetAttack(bool value)
     {
         _isAttack = value;
+
+        if (_isAttack)
+            Attack();
     }
 
     public override async void Reload()
@@ -187,7 +191,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
         if (Application.isPlaying && _currentTarget != null)
         {
             // 移動目標位置
-            Vector3 targetPos = CalculateTrackingPosition();
+            Vector3 targetPos = GetDesiredPlayerPosition().position;
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(targetPos, 0.5f);
 
@@ -196,10 +200,10 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
             {
                 var centerPos = component.GetTargetCenter().position;
                 var forward = component.GetTargetCenter().forward;
-                var attackCenter = centerPos + forward * (_data.Range * 0.5f);
+                var attackCenter = centerPos + forward * _attackRadius;
 
                 Gizmos.color = Color.red;
-                Gizmos.DrawWireSphere(attackCenter, _data.Range);
+                Gizmos.DrawWireSphere(attackCenter, _attackRadius);
             }
         }
     }
