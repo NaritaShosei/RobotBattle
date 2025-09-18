@@ -21,6 +21,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 80df4f39437045548925d41e3e0a32b8, type: 2}
   - {fileID: 11400000, guid: 09573cf09b5addc45b8684d3abdc0964, type: 2}
   - {fileID: 11400000, guid: 88390552d1729bf478a8d73e66346b00, type: 2}
+  - {fileID: 11400000, guid: ead804ce9cb88604799bd3033342add0, type: 2}
   _initialOpenWeapon:
   - {fileID: 11400000, guid: c77e607b703bf9d4299d242a3b4ed134, type: 2}
   - {fileID: 11400000, guid: a75e1d0b52be3584aabb9c17925b8012, type: 2}
+  - {fileID: 11400000, guid: ead804ce9cb88604799bd3033342add0, type: 2}
