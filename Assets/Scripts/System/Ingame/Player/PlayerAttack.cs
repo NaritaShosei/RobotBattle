@@ -161,12 +161,12 @@ public class PlayerAttack : MonoBehaviour
             if (_mainWeapon.RequiresPlayerMovement())
             {
                 // 移動が必要な場合（近接武器など）
-                Vector3 targetPosition = _mainWeapon.GetDesiredPlayerPosition();
+                Transform targetTransform = _mainWeapon.GetDesiredPlayerPosition();
 
-                if (targetPosition != Vector3.zero)
+                if (targetTransform)
                 {
                     // 既に十分近い場合は移動せずに攻撃
-                    float distance = Vector3.Distance(_playerController.GetTargetCenter().position, targetPosition);
+                    float distance = Vector3.Distance(_playerController.GetTargetCenter().position, targetTransform.position);
                     if (distance <= _playerController.ArriveThreshold)
                     {
                         StartActualAttack();
@@ -176,7 +176,7 @@ public class PlayerAttack : MonoBehaviour
                         // PlayerControllerに自動移動を依頼
                         _waitingForMovement = true;
                         _playerController.StartAutoMovement(
-                            targetPosition,
+                            targetTransform,
                             onComplete: OnAutoMoveComplete,
                             onCanceled: OnAutoMoveCanceled
                         );
