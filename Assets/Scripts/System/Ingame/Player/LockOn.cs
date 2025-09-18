@@ -40,19 +40,21 @@ public class LockOn : MonoBehaviour
     void Update()
     {
         float bestScore = float.MinValue;
+
         _lockOnTarget = null;
+
         //EnemyListをEnemyManagerから参照する
         foreach (var enemy in _enemyManager.Enemies.Where(x => x.IsTargetInView()))
         {
             Vector3 enemyPos = enemy.GetTargetCenter().position;
 
             //距離チェック
-            Vector3 dirToEnemy = enemyPos - _camera.transform.position;
+            Vector3 dirToEnemy = enemyPos - _player.position;
             if (dirToEnemy.magnitude > _maxDistance) continue;
 
 
             //視野角チェック
-            float angleToEnemy = Vector3.Angle(_camera.transform.forward, dirToEnemy);
+            float angleToEnemy = Vector3.Angle(_player.forward, dirToEnemy);
             if (angleToEnemy > _viewAngle * 0.5f) continue;
 
 
@@ -68,8 +70,8 @@ public class LockOn : MonoBehaviour
             float disToCenter = Vector2.Distance(screenPos, crosshairPos);
 
             //Y成分を無視したPlayerとEnemyの距離
-            float playerDis = (new Vector3(_player.transform.position.x, 0, _player.transform.position.z)
-                                                                        - new Vector3(enemyPos.x, 0, enemyPos.z)).magnitude;
+            float playerDis = (new Vector3(_player.position.x, 0, _player.position.z)
+                                     - new Vector3(enemyPos.x, 0, enemyPos.z)).magnitude;
 
             //スコア計算
             //0で割らないように小さい数を足す

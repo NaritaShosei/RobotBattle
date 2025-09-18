@@ -52,5 +52,7 @@ public enum PlayerState
     Reload,
     Guard,
     WeaponChange,
-    Dead
+    Dead,
+    MovingToTarget, // 追加：敵に接近中
+    AttackReady     // 追加：攻撃準備完了
 }
