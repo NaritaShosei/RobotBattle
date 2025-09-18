@@ -8,35 +8,31 @@ using UnityEngine.SceneManagement;
 
 public class PlayerAttack : MonoBehaviour
 {
-
-    [SerializeField]
-    PlayerManager _playerManager;
-
-    [SerializeField]
-    AnimationController _anim;
+    [SerializeField] PlayerManager _playerManager;
+    [SerializeField] AnimationController _anim;
 
     private WeaponBase _mainWeapon;
     private WeaponBase _subWeapon;
 
     InputManager _input;
-
     WeaponPresenter _presenter;
     AimIK _aimIK;
 
     float _timer = 0;
-    [SerializeField]
-    float _duration = 0.5f;
-    [SerializeField]
-    float _ikWeight = 0.846f;
-    [SerializeField]
-    private float _swapDuration = 0.5f;
+    [SerializeField] float _duration = 0.5f;
+    [SerializeField] float _ikWeight = 0.846f;
+    [SerializeField] private float _swapDuration = 0.5f;
 
     private IngameManager _gameManager;
     private LockOn _lockOn;
+    private PlayerController _playerController;
 
     [Header("武器を装備する位置")]
     [SerializeField] private Transform _mainParent;
     [SerializeField] private Transform _subParent;
+
+    // 攻撃待機状態
+    private bool _waitingForMovement = false;
 
     void Start()
     {
@@ -57,13 +53,14 @@ public class PlayerAttack : MonoBehaviour
         _aimIK.enabled = false;
 
         _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
-
         _presenter.Initialize((_mainWeapon.Data.AttackCapacity, _mainWeapon.Data.WeaponIcon), (_subWeapon.Data.AttackCapacity, _subWeapon.Data.WeaponIcon));
 
         _gameManager = ServiceLocator.Get<IngameManager>();
-
         _lockOn = ServiceLocator.Get<LockOn>();
         _lockOn.SetRange(_mainWeapon.Data.Range);
+
+        // PlayerControllerの参照を取得
+        _playerController = GetComponent<PlayerController>();
     }
 
     void Update()
@@ -77,7 +74,6 @@ public class PlayerAttack : MonoBehaviour
 #endif
 
         if (_gameManager.IsGameEnd) { _mainWeapon.SetAttack(false); return; }
-
         if (_gameManager.IsPaused) { return; }
 
         //残弾数を渡す
@@ -88,12 +84,11 @@ public class PlayerAttack : MonoBehaviour
         {
             _timer += Time.deltaTime;
             float t = _timer / _duration;
-
             float currentWeight = Mathf.Lerp(0f, _ikWeight, t);
-
             _aimIK.solver.IKPositionWeight = currentWeight;
         }
     }
+
     private void LateUpdate()
     {
         if (_gameManager.IsPaused) { return; }
@@ -138,7 +133,7 @@ public class PlayerAttack : MonoBehaviour
     private async UniTask SwapWeapon()
     {
         var seq = DOTween.Sequence();
-        
+
         _mainWeapon.transform.SetParent(_mainParent);
         _subWeapon.transform.SetParent(_subParent);
 
@@ -162,32 +157,122 @@ public class PlayerAttack : MonoBehaviour
         //攻撃開始
         if (_playerManager.IsState(PlayerState.Idle) && isInput)
         {
-            _playerManager.SetState(PlayerState.Attack);
+            // 武器がプレイヤーの移動を必要とするかチェック
+            if (_mainWeapon.RequiresPlayerMovement())
+            {
+                // 移動が必要な場合（近接武器など）
+                Vector3 targetPosition = _mainWeapon.GetDesiredPlayerPosition();
 
-            //
-            _anim.SetBool("IsMissileAttack", true);
-
-            // レイヤー切り替え
-            _anim.SetWeight(AnimationLayer.Attack, 1);
-            _mainWeapon.IKEnable(_aimIK, true);
-
-            //IKの線形補間の時間初期化
-            _timer = 0;
+                if (targetPosition != Vector3.zero)
+                {
+                    // 既に十分近い場合は移動せずに攻撃
+                    float distance = Vector3.Distance(_playerController.GetTargetCenter().position, targetPosition);
+                    if (distance <= _playerController.ArriveThreshold)
+                    {
+                        StartActualAttack();
+                    }
+                    else
+                    {
+                        // PlayerControllerに自動移動を依頼
+                        _waitingForMovement = true;
+                        _playerController.StartAutoMovement(
+                            targetPosition,
+                            onComplete: OnAutoMoveComplete,
+                            onCanceled: OnAutoMoveCanceled
+                        );
+                        Debug.Log($"敵に接近を開始: 距離 {distance:F2}m");
+                    }
+                }
+                else
+                {
+                    StartActualAttack();
+                    Debug.LogWarning("攻撃対象が見つかりません");
+                    return;
+                }
+            }
+            else
+            {
+                // 移動が不要な場合（遠距離武器など）
+                StartActualAttack();
+            }
         }
-
         //攻撃終了
-        else if (_playerManager.IsState(PlayerState.Attack) && !isInput)
+        else if ((_playerManager.IsState(PlayerState.Attack) ||
+                  _playerManager.IsState(PlayerState.MovingToTarget) ||
+                  _waitingForMovement) && !isInput)
         {
-            _playerManager.SetState(PlayerState.Idle);
-
-            _anim.SetBool("IsMissileAttack", false);
-
-            // レイヤー切り替え
-            _anim.SetWeight(AnimationLayer.Attack, 0);
-
-            _mainWeapon.SetAttack(false);
-            _mainWeapon.IKEnable(_aimIK, false);
+            // 移動中または攻撃中だった場合
+            if (_waitingForMovement || _playerController.IsAutoMoving)
+            {
+                // 自動移動をキャンセル
+                _playerController.CancelAutoMovement();
+                _waitingForMovement = false;
+                Debug.Log("攻撃をキャンセルしました");
+            }
+            else
+            {
+                // 攻撃終了
+                EndAttack();
+            }
         }
+    }
+
+    /// <summary>
+    /// 自動移動完了時のコールバック
+    /// </summary>
+    private void OnAutoMoveComplete()
+    {
+        _waitingForMovement = false;
+        Debug.Log("接近完了、攻撃開始");
+        StartActualAttack();
+    }
+
+    /// <summary>
+    /// 自動移動キャンセル時のコールバック
+    /// </summary>
+    private void OnAutoMoveCanceled()
+    {
+        _waitingForMovement = false;
+        Debug.Log("接近がキャンセルされました");
+        // Idle状態に戻る（PlayerControllerで既に設定済み）
+        StartActualAttack();
+    }
+
+    /// <summary>
+    /// 実際の攻撃開始処理
+    /// </summary>
+    private void StartActualAttack()
+    {
+        _playerManager.SetState(PlayerState.Attack);
+
+        _anim.SetBool("IsMissileAttack", true);
+
+        // レイヤー切り替え
+        _anim.SetWeight(AnimationLayer.Attack, 1);
+        _mainWeapon.IKEnable(_aimIK, true);
+
+        //IKの線形補間の時間初期化
+        _timer = 0;
+
+        Debug.Log("攻撃開始");
+    }
+
+    /// <summary>
+    /// 攻撃終了処理
+    /// </summary>
+    private void EndAttack()
+    {
+        _playerManager.SetState(PlayerState.Idle);
+
+        _anim.SetBool("IsMissileAttack", false);
+
+        // レイヤー切り替え
+        _anim.SetWeight(AnimationLayer.Attack, 0);
+
+        _mainWeapon.SetAttack(false);
+        _mainWeapon.IKEnable(_aimIK, false);
+
+        Debug.Log("攻撃終了");
     }
 
     //AnimationEventで呼び出す、攻撃開始、終了の処理
@@ -200,11 +285,14 @@ public class PlayerAttack : MonoBehaviour
     void Reload(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
-
         _mainWeapon.Reload();
     }
 
-    
+    /// <summary>
+    /// 現在移動待機中かどうか
+    /// </summary>
+    public bool IsWaitingForMovement => _waitingForMovement;
+
     private void OnDisable()
     {
         _input.AttackAction.started -= Attack;
