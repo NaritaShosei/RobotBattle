@@ -5,20 +5,19 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : Character_B<PlayerData>
 {
-    [SerializeField]
-    PlayerManager _playerManager;
-    [SerializeField]
-    PlayerData _dataBase;
-    [SerializeField]
-    GuardCollider _collider;
-    [SerializeField]
-    float _rotateSpeed = 10;
+    [SerializeField] PlayerManager _playerManager;
+    [SerializeField] PlayerData _dataBase;
+    [SerializeField] GuardCollider _collider;
+    [SerializeField] float _rotateSpeed = 10;
+
     Rigidbody _rb;
     InputManager _input;
+
     /// <summary>
     /// 衝突中のオブジェクト
     /// </summary>
     GameObject _conflictObj;
+
     /// <summary>
     /// 入力情報の保持
     /// </summary>
@@ -28,18 +27,33 @@ public class PlayerController : Character_B<PlayerData>
     Vector3 _moveDir;
     Vector3 _dashStartPos;
     Vector3 _dashTargetPos;
+
     /// <summary>
     /// 線形補完によって出されたダッシュ時の座標
     /// </summary>
     Vector3 _newPos;
+
     /// <summary>
     /// ブースト時のスピードを線形補完にするための変数
     /// </summary>
     float _currentSpeed;
+
     bool _isJumped;
     bool _isDashed;
     bool _isBoost;
     bool _isGuard;
+
+    // 自動移動関連
+    [Header("自動移動設定")]
+    [SerializeField] public float _arriveThreshold = 1.5f;
+    public float ArriveThreshold => _arriveThreshold; // PlayerAttackからアクセスするためpublic
+    [SerializeField] private float _maxAutoMoveTime = 3f;
+
+    private bool _isAutoMoving = false;
+    private Vector3 _autoMoveTarget;
+    private float _autoMoveTimer = 0f;
+    private System.Action _onAutoMoveComplete;
+    private System.Action _onAutoMoveCanceled;
 
     HPGaugePresenter _healthPresenter;
     GaugePresenter _gaugePresenter;
@@ -83,8 +97,15 @@ public class PlayerController : Character_B<PlayerData>
             _isDashed = false;
             _isGuard = false;
             _isJumped = false;
-
+            StopAutoMovement(); // 自動移動も停止
             return;
+        }
+
+        // 自動移動の処理
+        if (_isAutoMoving)
+        {
+            HandleAutoMovement();
+            return; // 自動移動中は通常の処理をスキップ
         }
 
         //ダッシュとジャンプ両方していなかったらゲージを回復
@@ -141,12 +162,183 @@ public class PlayerController : Character_B<PlayerData>
         }
     }
 
+    /// <summary>
+    /// 自動移動の処理
+    /// </summary>
+    private void HandleAutoMovement()
+    {
+        _autoMoveTimer += Time.deltaTime;
+
+        // タイムアウトチェック
+        if (_autoMoveTimer >= _maxAutoMoveTime)
+        {
+            Debug.LogWarning("自動移動がタイムアウトしました");
+            CancelAutoMovement();
+            return;
+        }
+
+        // TargetCenterを基準とした距離チェック
+        Vector3 currentCenter = GetTargetCenter().position;
+        float distanceToTarget = Vector3.Distance(currentCenter, _autoMoveTarget);
+
+        if (distanceToTarget <= ArriveThreshold)
+        {
+            // 目標地点に到達
+            Debug.Log("目標地点に到達しました");
+            CompleteAutoMovement();
+        }
+        else
+        {
+            // 目標地点に向かって移動
+            Vector3 direction = (_autoMoveTarget - currentCenter).normalized;
+
+            // 移動方向を設定（既存のMove関数を利用するため）
+            Vector3 moveDirection = direction * _data.BoostSpeed;
+
+            _rb.linearVelocity = moveDirection;
+
+            // プレイヤーを移動方向に向ける
+            if (direction.magnitude > 0.1f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotateSpeed * Time.deltaTime);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 自動移動を開始
+    /// </summary>
+    /// <param name="targetPosition">移動先の座標</param>
+    /// <param name="onComplete">到達時のコールバック</param>
+    /// <param name="onCanceled">キャンセル時のコールバック</param>
+    public void StartAutoMovement(Vector3 targetPosition, System.Action onComplete = null, System.Action onCanceled = null)
+    {
+        if (_isAutoMoving)
+        {
+            Debug.LogWarning("既に自動移動中です");
+            return;
+        }
+
+        _autoMoveTarget = targetPosition;
+        _isAutoMoving = true;
+        _autoMoveTimer = 0f;
+        _onAutoMoveComplete = onComplete;
+        _onAutoMoveCanceled = onCanceled;
+
+        _playerManager.SetState(PlayerState.MovingToTarget);
+
+        Debug.Log($"自動移動開始: 目標地点 {targetPosition}, 距離: {Vector3.Distance(transform.position, targetPosition):F2}m");
+    }
+
+    /// <summary>
+    /// 自動移動の完了処理
+    /// </summary>
+    private void CompleteAutoMovement()
+    {
+        Debug.Log("自動移動完了");
+
+        // 移動を停止
+        StopMovement();
+
+        var onComplete = _onAutoMoveComplete;
+        ResetAutoMovement();
+
+        // コールバック実行
+        onComplete?.Invoke();
+    }
+
+    /// <summary>
+    /// 自動移動のキャンセル処理
+    /// </summary>
+    public void CancelAutoMovement()
+    {
+        if (!_isAutoMoving) return;
+
+        Debug.Log("自動移動をキャンセルしました");
+
+        // 移動を停止
+        StopMovement();
+
+        // 物理的な速度を確実に停止
+        _rb.linearVelocity = new Vector3(0, _rb.linearVelocity.y, 0);
+
+        var onCanceled = _onAutoMoveCanceled;
+        ResetAutoMovement();
+
+        // コールバック実行
+        onCanceled?.Invoke();
+    }
+
+    /// <summary>
+    /// 自動移動を強制停止（外部から呼び出し用）
+    /// </summary>
+    public void StopAutoMovement()
+    {
+        if (_isAutoMoving)
+        {
+            CancelAutoMovement();
+        }
+    }
+
+    /// <summary>
+    /// 移動を停止
+    /// </summary>
+    private void StopMovement()
+    {
+        Vector3 velocity = _rb.linearVelocity;
+        velocity.x = 0;
+        velocity.z = 0;
+        _rb.linearVelocity = velocity;
+
+        // 入力状態もリセット（追加）
+        _velocity = Vector2.zero;
+        _moveDir = Vector3.zero;
+    }
+
+    /// <summary>
+    /// 自動移動関連の変数をリセット
+    /// </summary>
+    private void ResetAutoMovement()
+    {
+        _isAutoMoving = false;
+        _autoMoveTimer = 0f;
+        _onAutoMoveComplete = null;
+        _onAutoMoveCanceled = null;
+
+        // Idle状態に戻す（他の状態でなければ）
+        if (_playerManager.IsState(PlayerState.MovingToTarget))
+        {
+            _playerManager.SetState(PlayerState.Idle);
+        }
+
+        // 念のため入力状態を再度リセット
+        _velocity = Vector2.zero;
+        _moveDir = Vector3.zero;
+    }
+
+    /// <summary>
+    /// 自動移動中かどうか
+    /// </summary>
+    public bool IsAutoMoving => _isAutoMoving;
+
+    /// <summary>
+    /// 自動移動の進捗（0.0～1.0）
+    /// </summary>
+    public float AutoMovementProgress
+    {
+        get
+        {
+            if (!_isAutoMoving) return 0f;
+            return Mathf.Clamp01(_autoMoveTimer / _maxAutoMoveTime);
+        }
+    }
+
     private void FixedUpdate()
     {
         if (_gameManager.IsPaused) { return; }
 
         //AddForceなどはFixedUpdateで
-
         _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Force);
 
         if (_isDashed)
@@ -171,6 +363,7 @@ public class PlayerController : Character_B<PlayerData>
             }
         }
     }
+
     private void OnCollisionExit(Collision collision)
     {
         //ぶつかっているオブジェクトを解除
@@ -182,10 +375,14 @@ public class PlayerController : Character_B<PlayerData>
             }
         }
     }
+
     void OnMoveInput(InputAction.CallbackContext context)
     {
         //移動の入力感知
         if (_gameManager.IsPaused) { return; }
+
+        // 自動移動中は手動入力を無視
+        if (_isAutoMoving) return;
 
         var input = context.ReadValue<Vector2>();
 
@@ -193,7 +390,6 @@ public class PlayerController : Character_B<PlayerData>
         {
             _velocity = input;
         }
-
         else if (context.phase == InputActionPhase.Canceled)
         {
             _velocity = Vector2.zero;
@@ -230,6 +426,9 @@ public class PlayerController : Character_B<PlayerData>
     {
         if (_gameManager.IsPaused) { return; }
 
+        // 自動移動中はジャンプを無効
+        if (_isAutoMoving) return;
+
         //ボタンを押した瞬間強めに上昇
         if (context.phase == InputActionPhase.Started)
         {
@@ -238,7 +437,6 @@ public class PlayerController : Character_B<PlayerData>
             _isJumped = true;
             _rb.AddForce(Vector3.up * _data.JumpPower * 5, ForceMode.Impulse);
         }
-
         else if (context.phase == InputActionPhase.Canceled)
         {
             _isJumped = false;
@@ -248,6 +446,9 @@ public class PlayerController : Character_B<PlayerData>
     void OnDash(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
+
+        // 自動移動中はダッシュを無効
+        if (_isAutoMoving) return;
 
         if (context.phase == InputActionPhase.Started && !_isDashed)
         {
@@ -292,6 +493,7 @@ public class PlayerController : Character_B<PlayerData>
             _isBoost = false;
         }
     }
+
     void Dash()
     {
         _data.DashTimer += Time.deltaTime;
@@ -316,6 +518,8 @@ public class PlayerController : Character_B<PlayerData>
     {
         if (_gameManager.IsPaused) { return; }
 
+        // 自動移動中はガードを無効
+        if (_isAutoMoving) return;
 
         if (context.phase == InputActionPhase.Started)
         {
@@ -342,7 +546,6 @@ public class PlayerController : Character_B<PlayerData>
         {
             _collider.GuardVisible(true);
         }
-
         else if (!_isGuard)
         {
             _collider.GuardVisible(false);
@@ -387,6 +590,7 @@ public class PlayerController : Character_B<PlayerData>
     {
         _gaugePresenter.GaugeUpdate(value);
     }
+
     private void OnDisable()
     {
         RemoveAction();
@@ -418,5 +622,24 @@ public class PlayerController : Character_B<PlayerData>
         _input.DashAction.canceled -= OnDash;
         _input.GuardAction.started -= OnGuard;
         _input.GuardAction.canceled -= OnGuard;
+    }
+
+    // デバッグ用の可視化
+    private void OnDrawGizmos()
+    {
+        if (_isAutoMoving)
+        {
+            // 移動目標を赤い球で表示
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(_autoMoveTarget, 0.5f);
+
+            // 現在位置から目標までの線
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(transform.position, _autoMoveTarget);
+
+            // 到達判定範囲
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(_autoMoveTarget, _arriveThreshold);
+        }
     }
 }
