@@ -17,6 +17,8 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     private int _count;
     public override int Count => _count;
 
+    private bool _isAttack;
+
     private void Start()
     {
         _count = _data.AttackCapacity;
@@ -24,13 +26,48 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
         Start_B();
     }
 
+
     /// <summary>
     /// 派生先でStartで実行したい処理をここに
     /// </summary>
     protected virtual void Start_B() { }
 
+    private void Update()
+    {
+        Update_B();
+    }
+
+    /// <summary>
+    /// 派生先でUpdateで実行したい処理をここに
+    /// </summary>
+    protected virtual void Update_B()
+    {
+        if (!_isAttack) { return; }
+
+        // ターゲットの更新
+        UpdateTarget();
+        Attack();
+    }
+
+    private void UpdateTarget()
+    {
+        _currentTarget = _lockOn.GetTarget();
+        if (_currentTarget != null)
+        {
+            _targetPos = _currentTarget.GetTargetCenter().position;
+            _isTracking = true;
+        }
+        else
+        {
+            _isTracking = false;
+        }
+    }
+
+
     public override bool IsTrackingActive() => _isTracking;
-    public override bool RequiresPlayerMovement() => _isTracking;
+
+    // 近接武器なので常に true
+    public override bool RequiresPlayerMovement() => true;
 
     /// <summary>
     /// 攻撃時に移動したい座標
@@ -87,6 +124,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
                     && enemy.GetTransform().root != component.GetTransform().root)
                 {
                     enemy.HitDamage(this);
+                    Debug.LogError("Attack Cuccesu");
                 }
             }
         }
@@ -94,7 +132,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
 
     public override void SetAttack(bool value)
     {
-
+        _isAttack = value;
     }
 
     public override async void Reload()
