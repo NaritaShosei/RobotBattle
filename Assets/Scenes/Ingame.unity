@@ -4049,6 +4049,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1897281093}
   m_CullTransparentMesh: 1
+--- !u!4 &1965037184 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6634082531630241414, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+  m_PrefabInstance: {fileID: 3019013742801692727}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1989278285
 GameObject:
   m_ObjectHideFlags: 0
@@ -4947,6 +4952,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3004881229010939093, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 1965037184}
+    - target: {fileID: 3573825822341839908, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: _arriveThreshold
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6634082531630241414, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 27.029224
