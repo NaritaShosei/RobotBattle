@@ -7,6 +7,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     [SerializeField, Tooltip("敵から離れる距離")] private float _weaponDistance = 3f;
 
     private ILockOnTarget _currentTarget;
+    private ILockOnTarget _root;
 
     private Vector3 _targetPos;
 
@@ -22,7 +23,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     private void Start()
     {
         _count = _data.AttackCapacity;
-        _lockOn = ServiceLocator.Get<LockOn>();
+
         Start_B();
     }
 
@@ -30,7 +31,16 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     /// <summary>
     /// 派生先でStartで実行したい処理をここに
     /// </summary>
-    protected virtual void Start_B() { }
+    protected virtual void Start_B()
+    {
+        _lockOn = ServiceLocator.Get<LockOn>();
+
+        if (!transform.root.TryGetComponent(out _root))
+        {
+            Debug.Log("装備中のキャラクターがILockOnTargetを継承していません");
+        }
+
+    }
 
     private void Update()
     {
@@ -42,10 +52,11 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     /// </summary>
     protected virtual void Update_B()
     {
-        if (!_isAttack) { return; }
-
         // ターゲットの更新
         UpdateTarget();
+
+        if (!_isAttack) { return; }
+
         Attack();
     }
 
@@ -81,7 +92,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     }
 
     /// <summary>
-    /// 
+    /// 敵との最適な距離を計算
     /// </summary>
     /// <param name="target"></param>
     /// <returns></returns>
@@ -92,7 +103,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
         if (_currentTarget == null) return Vector3.zero;
 
         Vector3 enemyPos = _currentTarget.GetTargetCenter().position;
-        Vector3 playerPos = transform.position;
+        Vector3 playerPos = _root.GetTargetCenter().position;
 
         // 敵からプレイヤーへの方向ベクトル
         Vector3 dirToPlayer = (playerPos - enemyPos).normalized;
@@ -107,27 +118,28 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
 
     public override void Attack()
     {
-        if (transform.root.TryGetComponent(out ILockOnTarget component))
+        if (_count <= 0) { Reload(); return; }
+
+        // Playerの中心を取得、攻撃の中心の計算
+        var centerPos = _root.GetTargetCenter().position;
+        var dir = _root.GetTargetCenter().forward * (_data.Range * 0.5f);
+        var attackCenter = centerPos + dir;
+
+        // 計算した場所で攻撃
+        var colls = Physics.OverlapSphere(attackCenter, _data.Range * 0.5f);
+
+        // Player以外にダメージを与える
+        foreach (var coll in colls)
         {
-            // Playerの中心を取得、攻撃の中心の計算
-            var centerPos = component.GetTargetCenter().position;
-            var dir = component.GetTargetCenter().forward * (_data.Range * 0.5f);
-            var attackCenter = centerPos + dir;
-
-            // 計算した場所で攻撃
-            var colls = Physics.OverlapSphere(attackCenter, _data.Range * 0.5f);
-
-            // Player以外にダメージを与える
-            foreach (var coll in colls)
+            if (coll.TryGetComponent<IFightable>(out var enemy)
+                && enemy.GetTransform().root != _root.GetTransform().root)
             {
-                if (coll.TryGetComponent<IFightable>(out var enemy)
-                    && enemy.GetTransform().root != component.GetTransform().root)
-                {
-                    enemy.HitDamage(this);
-                    Debug.LogError("Attack Cuccesu");
-                }
+                enemy.HitDamage(this);
+                Debug.LogError("Attack Success");
             }
         }
+
+        _count--;
     }
 
     public override void SetAttack(bool value)
@@ -138,7 +150,19 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     public override async void Reload()
     {
         // 少し待って攻撃回数を回復
-        //  await 
+        if (_count >= _data.AttackCapacity)
+        {
+            Debug.Log("既に弾薬は満タンです");
+            return;
+        }
+
+        Debug.Log("リロード開始...");
+
+        // リロード時間を設定（近接武器なので短めに）
+        await Task.Delay((int)(_data.CoolTime * 1000));
+
+        _count = _data.AttackCapacity;
+        Debug.Log("リロード完了!");
     }
 
     public override Vector3 GetTargetPos()
@@ -154,5 +178,29 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     public float GetAttackPower()
     {
         return _data.AttackPower;
+    }
+    /// <summary>
+    /// デバッグ用：攻撃範囲の可視化
+    /// </summary>
+    private void OnDrawGizmos()
+    {
+        if (Application.isPlaying && _currentTarget != null)
+        {
+            // 移動目標位置
+            Vector3 targetPos = CalculateTrackingPosition();
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(targetPos, 0.5f);
+
+            // 攻撃範囲
+            if (transform.root.TryGetComponent(out ILockOnTarget component))
+            {
+                var centerPos = component.GetTargetCenter().position;
+                var forward = component.GetTargetCenter().forward;
+                var attackCenter = centerPos + forward * (_data.Range * 0.5f);
+
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireSphere(attackCenter, _data.Range);
+            }
+        }
     }
 }
