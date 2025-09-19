@@ -135,10 +135,8 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
                 && enemy.GetTransform().root != _root.GetTransform().root)
             {
                 enemy.HitDamage(this);
-                Debug.LogError("Attack Success");
-                ServiceLocator.Get<EffectManager>().PlayExplosion(enemy.GetTransform().position);
 
-                Debug.LogError("EFFECT PLAY");
+                ServiceLocator.Get<EffectManager>().PlayExplosion(enemy.GetTransform().position);
             }
         }
 
