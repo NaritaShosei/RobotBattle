@@ -288,11 +288,6 @@ public class PlayerAttack : MonoBehaviour
         _mainWeapon.Reload();
     }
 
-    /// <summary>
-    /// 現在移動待機中かどうか
-    /// </summary>
-    public bool IsWaitingForMovement => _waitingForMovement;
-
     private void OnDisable()
     {
         _input.AttackAction.started -= Attack;

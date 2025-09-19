@@ -1,5 +1,5 @@
-﻿using RootMotion.FinalIK;
-using System.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
+using RootMotion.FinalIK;
 using UnityEngine;
 
 public class ShortRangeWeapon_B : WeaponBase, IWeapon
@@ -76,7 +76,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     public override bool IsTrackingActive() => _isTracking;
 
     // 近接武器なので常に true
-    public override bool RequiresPlayerMovement() => true;
+    public override bool RequiresPlayerMovement() => _count > 0;
 
     /// <summary>
     /// 攻撃時に移動したい座標
@@ -137,6 +137,8 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
                 enemy.HitDamage(this);
                 Debug.LogError("Attack Success");
                 ServiceLocator.Get<EffectManager>().PlayExplosion(enemy.GetTransform().position);
+
+                Debug.LogError("EFFECT PLAY");
             }
         }
 
@@ -163,7 +165,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
         Debug.Log("リロード開始...");
 
         // リロード時間を設定（近接武器なので短めに）
-        await Task.Delay((int)(_data.CoolTime * 1000));
+        await UniTask.Delay((int)(_data.CoolTime * 1000));
 
         _count = _data.AttackCapacity;
         Debug.Log("リロード完了!");
