@@ -80,7 +80,8 @@ public abstract class Bullet_B : MonoBehaviour, IWeapon
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("IgnoreCollider")) return;
+        if (ServiceLocator.Get<IngameManager>().IsGameEnd) { return; }
+        if (other.CompareTag("IgnoreCollider")) { return; }
         Conflict(other);
     }
 

@@ -83,4 +83,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponDistance: 3
-  _attackRadius: 82.02
+  _attackRadius: 3
