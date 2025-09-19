@@ -17,7 +17,7 @@ MonoBehaviour:
   _weaponIcon: {fileID: 21300000, guid: afcc63084ae8abc48bb18daf9be92d68, type: 3}
   _weaponMoney: 0
   _weaponCost: 5
-  _attackPower: 10
+  _attackPower: 148.66
   _attackRate: 60
   _range: 100
   _coolTime: 1.5
