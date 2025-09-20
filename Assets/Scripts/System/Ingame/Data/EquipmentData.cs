@@ -45,6 +45,7 @@ public class PlayerEquipment
 {
     [SerializeField] private int _primaryWeaponId;      // メイン武器ID
     [SerializeField] private int _secondWeaponId;      // サブ武器ID
+    [SerializeField] private int _specialId;           // 必殺技ID
 
     public int PrimaryWeaponId
     {
@@ -56,5 +57,11 @@ public class PlayerEquipment
     {
         get => _secondWeaponId;
         set => _secondWeaponId = value;
+    }
+
+    public int SpecialID
+    {
+        get => _specialId;
+        set => _specialId = value;
     }
 }
