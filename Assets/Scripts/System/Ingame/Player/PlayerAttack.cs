@@ -180,7 +180,7 @@ public class PlayerAttack : MonoBehaviour
             if (_mainWeapon.RequiresPlayerMovement())
             {
                 // 移動が必要な場合（近接武器など）
-                Transform targetTransform = _mainWeapon.GetDesiredPlayerPosition();
+                Transform targetTransform = _mainWeapon.GetTarget();
 
                 if (targetTransform)
                 {
@@ -275,7 +275,7 @@ public class PlayerAttack : MonoBehaviour
         // 近接武器の場合、攻撃中も目標への回転を継続
         if (_mainWeapon.RequiresPlayerMovement())
         {
-            Transform target = _mainWeapon.GetDesiredPlayerPosition();
+            Transform target = _mainWeapon.GetTarget();
             if (target != null)
             {
                 _playerController.StartTargetRotation();

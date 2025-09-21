@@ -79,10 +79,10 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     public override bool RequiresPlayerMovement() => _count > 0;
 
     /// <summary>
-    /// 攻撃時に移動したい座標
+    /// 攻撃対象
     /// </summary>
     /// <returns></returns>
-    public override Transform GetDesiredPlayerPosition()
+    public override Transform GetTarget()
     {
         if (_currentTarget != null)
             return _currentTarget.GetTargetCenter();
@@ -190,20 +190,23 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     {
         if (Application.isPlaying && _currentTarget != null)
         {
-            // 移動目標位置
-            Vector3 targetPos = GetDesiredPlayerPosition().position;
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(targetPos, 0.5f);
-
-            // 攻撃範囲
-            if (transform.root.TryGetComponent(out ILockOnTarget component))
+            var targetTransform = GetTarget();
+            if (targetTransform != null)
             {
-                var centerPos = component.GetTargetCenter().position;
-                var forward = component.GetTargetCenter().forward;
-                var attackCenter = centerPos + forward * _attackRadius;
+                Vector3 targetPos = targetTransform.position;
+                Gizmos.color = Color.blue;
+                Gizmos.DrawWireSphere(targetPos, 0.5f);
 
-                Gizmos.color = Color.red;
-                Gizmos.DrawWireSphere(attackCenter, _attackRadius);
+                // 攻撃範囲
+                if (transform.root.TryGetComponent(out ILockOnTarget component))
+                {
+                    var centerPos = component.GetTargetCenter().position;
+                    var forward = component.GetTargetCenter().forward;
+                    var attackCenter = centerPos + forward * _attackRadius;
+
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawWireSphere(attackCenter, _attackRadius);
+                }
             }
         }
     }
