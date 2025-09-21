@@ -46,7 +46,7 @@ public class WeaponDatabase : ScriptableObject
 
 #if UNITY_EDITOR
     [CustomEditor(typeof(WeaponDatabase))]
-    public class NoteDataLoad : Editor
+    public class WeaponDataLoad : Editor
     {
         public override void OnInspectorGUI()
         {

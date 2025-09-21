@@ -47,7 +47,7 @@ public class SpecialDataBase : ScriptableObject
 
 #if UNITY_EDITOR
     [CustomEditor(typeof(SpecialDataBase))]
-    public class NoteDataLoad : Editor
+    public class SpecialDataLoad : Editor
     {
         public override void OnInspectorGUI()
         {
