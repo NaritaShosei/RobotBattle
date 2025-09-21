@@ -278,7 +278,7 @@ public class PlayerAttack : MonoBehaviour
             Transform target = _mainWeapon.GetDesiredPlayerPosition();
             if (target != null)
             {
-                _playerController.StartTargetRotation(target);
+                _playerController.StartTargetRotation();
                 _isRotatingDuringAttack = true;
                 Debug.Log("攻撃中の目標回転を開始");
             }

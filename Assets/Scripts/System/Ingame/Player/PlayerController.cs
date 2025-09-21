@@ -57,11 +57,11 @@ public class PlayerController : Character_B<PlayerData>
 
     // 攻撃中の回転制御用
     private bool _shouldRotateToTarget = false;
-    private Transform _rotationTarget;
+    private Vector3 _attackToRotationTargetDir;
 
-    HPGaugePresenter _healthPresenter;
-    GaugePresenter _gaugePresenter;
-    IngameManager _gameManager;
+    private HPGaugePresenter _healthPresenter;
+    private GaugePresenter _gaugePresenter;
+    private IngameManager _gameManager;
     private Camera _camera;
 
     void Start()
@@ -164,9 +164,9 @@ public class PlayerController : Character_B<PlayerData>
         Vector3 targetDirection;
 
         // 目標への回転が有効な場合
-        if (_shouldRotateToTarget && _rotationTarget)
+        if (_shouldRotateToTarget && _attackToRotationTargetDir != Vector3.zero)
         {
-            Vector3 directionToTarget = (_rotationTarget.position - transform.position).normalized;
+            Vector3 directionToTarget = (_attackToRotationTargetDir - transform.position).normalized;
             targetDirection = directionToTarget;
         }
         else
@@ -190,14 +190,13 @@ public class PlayerController : Character_B<PlayerData>
     /// 攻撃中の目標回転を開始
     /// </summary>
     /// <param name="target">回転する目標</param>
-    public void StartTargetRotation(Transform target)
+    public void StartTargetRotation()
     {
         _shouldRotateToTarget = true;
-        _rotationTarget = target;
 
         // 追尾中は重力を切る
         _rb.useGravity = false;
-        Debug.Log($"目標回転開始: {target.name}");
+        Debug.Log($"目標回転開始");
     }
 
     /// <summary>
@@ -206,7 +205,7 @@ public class PlayerController : Character_B<PlayerData>
     public void StopTargetRotation()
     {
         _shouldRotateToTarget = false;
-        _rotationTarget = null;
+        _attackToRotationTargetDir = Vector3.zero;
 
         // 追尾終了時に重力をかけなおす
         _rb.useGravity = true;
@@ -237,17 +236,20 @@ public class PlayerController : Character_B<PlayerData>
         Vector3 currentCenter = GetTargetCenter().position;
         float distanceToTarget = Vector3.Distance(currentCenter, _autoMoveTarget.position);
 
+        // 目標への方向を保持
+        Vector3 direction = (_autoMoveTarget.position - currentCenter).normalized;
+
         if (distanceToTarget <= ArriveThreshold)
         {
             // 目標地点に到達
             Debug.Log("目標地点に到達しました");
+            _attackToRotationTargetDir = direction;
             CompleteAutoMovement();
         }
         else
         {
-            // 目標地点に向かって移動
-            Vector3 direction = (_autoMoveTarget.position - currentCenter).normalized;
 
+            // 目標地点に向かって移動
             // 移動方向を設定（既存のMove関数を利用するため）
             Vector3 moveDirection = direction * _data.BoostSpeed;
 
@@ -700,11 +702,11 @@ public class PlayerController : Character_B<PlayerData>
         }
 
         // 回転目標の可視化
-        if (_shouldRotateToTarget && _rotationTarget != null)
+        if (_shouldRotateToTarget && _attackToRotationTargetDir != null)
         {
             Gizmos.color = Color.magenta;
-            Gizmos.DrawWireSphere(_rotationTarget.position, 0.3f);
-            Gizmos.DrawLine(transform.position, _rotationTarget.position);
+            Gizmos.DrawWireSphere(_attackToRotationTargetDir, 0.3f);
+            Gizmos.DrawLine(transform.position, _attackToRotationTargetDir);
         }
     }
 }
