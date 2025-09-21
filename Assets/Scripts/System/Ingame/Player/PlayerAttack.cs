@@ -33,6 +33,8 @@ public class PlayerAttack : MonoBehaviour
 
     // 攻撃待機状態
     private bool _waitingForMovement = false;
+    // 攻撃中の回転継続フラグ
+    private bool _isRotatingDuringAttack = false;
 
     void Start()
     {
@@ -73,7 +75,17 @@ public class PlayerAttack : MonoBehaviour
         }
 #endif
 
-        if (_gameManager.IsGameEnd) { _mainWeapon.SetAttack(false); return; }
+        if (_gameManager.IsGameEnd)
+        {
+            _mainWeapon.SetAttack(false);
+            // 攻撃終了時に回転も停止
+            if (_isRotatingDuringAttack)
+            {
+                _playerController.StopTargetRotation();
+                _isRotatingDuringAttack = false;
+            }
+            return;
+        }
         if (_gameManager.IsPaused) { return; }
 
         //残弾数を渡す
@@ -105,6 +117,13 @@ public class PlayerAttack : MonoBehaviour
         if (_playerManager.IsState(PlayerState.Idle))
         {
             _playerManager.SetState(PlayerState.WeaponChange);
+
+            // 回転制御を停止
+            if (_isRotatingDuringAttack)
+            {
+                _playerController.StopTargetRotation();
+                _isRotatingDuringAttack = false;
+            }
 
             //装備中の武器を無効化
             _mainWeapon.SetAttack(false);
@@ -235,7 +254,6 @@ public class PlayerAttack : MonoBehaviour
         _waitingForMovement = false;
         Debug.Log("接近がキャンセルされました");
         // Idle状態に戻る（PlayerControllerで既に設定済み）
-        StartActualAttack();
     }
 
     /// <summary>
@@ -254,7 +272,26 @@ public class PlayerAttack : MonoBehaviour
         //IKの線形補間の時間初期化
         _timer = 0;
 
+        // 近接武器の場合、攻撃中も目標への回転を継続
+        if (_mainWeapon.RequiresPlayerMovement())
+        {
+            Transform target = _mainWeapon.GetDesiredPlayerPosition();
+            if (target != null)
+            {
+                _playerController.StartTargetRotation(target);
+                _isRotatingDuringAttack = true;
+                Debug.Log("攻撃中の目標回転を開始");
+            }
+        }
+
         Debug.Log("攻撃開始");
+
+
+        // とりあえずのデバッグ用、のちに修正
+        if (_mainWeapon as ShortRangeWeapon_B)
+        {
+            Invoke(nameof(EndAttack), 1);
+        }
     }
 
     /// <summary>
@@ -271,6 +308,14 @@ public class PlayerAttack : MonoBehaviour
 
         _mainWeapon.SetAttack(false);
         _mainWeapon.IKEnable(_aimIK, false);
+
+        // 攻撃中の回転を停止
+        if (_isRotatingDuringAttack)
+        {
+            _playerController.StopTargetRotation();
+            _isRotatingDuringAttack = false;
+            Debug.Log("攻撃中の目標回転を停止");
+        }
 
         Debug.Log("攻撃終了");
     }
@@ -294,5 +339,12 @@ public class PlayerAttack : MonoBehaviour
         _input.AttackAction.canceled -= Attack;
         _input.WeaponChangeAction.started -= WeaponChange;
         _input.ReloadAction.started -= Reload;
+
+        // 無効化時に回転制御も停止
+        if (_isRotatingDuringAttack)
+        {
+            _playerController.StopTargetRotation();
+            _isRotatingDuringAttack = false;
+        }
     }
 }
