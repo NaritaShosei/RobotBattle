@@ -7,7 +7,8 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     [SerializeField, Tooltip("敵から離れる距離")] private float _weaponDistance = 3f;
     [SerializeField, Tooltip("攻撃の半径")] private float _attackRadius = 3f;
 
-    private ILockOnTarget _currentTarget;
+    private IEnemySource _currentTarget;
+    // Playerの参照
     private ILockOnTarget _root;
 
     private Vector3 _targetPos;

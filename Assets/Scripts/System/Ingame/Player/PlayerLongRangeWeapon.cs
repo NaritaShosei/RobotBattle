@@ -11,7 +11,7 @@ public class PlayerLongRangeWeapon : LongRangeAttack_B
     bool _isAttack;
     bool _isReload;
     public bool IsAttack { get => _isAttack; set => _isAttack = value; }
-    ILockOnTarget _enemy;
+    IEnemySource _enemy;
 
     Vector3 _aimTargetPos;
 
