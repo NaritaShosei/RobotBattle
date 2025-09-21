@@ -19,10 +19,15 @@ public interface IFightable : ILockOnTarget
     void HitDamage(IWeapon other); // 攻撃を受けたとき
 }
 
+public interface IEnemySource : IFightable
+{
+
+}
+
 /// <summary>
 /// 通常の敵
 /// </summary>
-public interface IEnemy : IFightable
+public interface IEnemy : IEnemySource
 {
     void AddOnAttackEvent(Action<PlayerController> action);
     void RemoveOnAttackEvent(Action<PlayerController> action);
@@ -31,7 +36,7 @@ public interface IEnemy : IFightable
 /// <summary>
 /// 敵スポナー
 /// </summary>
-public interface ISpawner : IFightable
+public interface ISpawner : IEnemySource
 {
     event Action<ISpawner> OnDestroyed;
     event Action<IEnemy> OnEnemySpawned;
