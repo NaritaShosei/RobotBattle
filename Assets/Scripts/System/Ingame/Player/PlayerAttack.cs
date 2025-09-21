@@ -89,6 +89,7 @@ public class PlayerAttack : MonoBehaviour
         if (_gameManager.IsPaused) { return; }
 
         //残弾数を渡す
+        // TODO:イベント駆動にしたほうがきれい
         _presenter.CountUpdate(_mainWeapon.Count);
 
         //腕のIKの線形補間
