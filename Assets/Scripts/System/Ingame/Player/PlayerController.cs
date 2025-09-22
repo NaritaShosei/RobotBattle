@@ -166,7 +166,7 @@ public class PlayerController : Character_B<PlayerData>
         // 目標への回転が有効な場合
         if (_shouldRotateToTarget && _attackToRotationTargetDir != Vector3.zero)
         {
-            Vector3 directionToTarget = (_attackToRotationTargetDir - transform.position).normalized;
+            Vector3 directionToTarget = _attackToRotationTargetDir.normalized;
             targetDirection = directionToTarget;
         }
         else
@@ -243,8 +243,8 @@ public class PlayerController : Character_B<PlayerData>
         {
             // 目標地点に到達
             Debug.Log("目標地点に到達しました");
-            _attackToRotationTargetDir = direction;
             CompleteAutoMovement();
+            _attackToRotationTargetDir = direction;
         }
         else
         {
@@ -267,7 +267,7 @@ public class PlayerController : Character_B<PlayerData>
     /// <summary>
     /// 自動移動を開始
     /// </summary>
-    /// <param name="target">移動先の座標</param>
+    /// <param name="target">移動先の標的</param>
     /// <param name="onComplete">到達時のコールバック</param>
     /// <param name="onCanceled">キャンセル時のコールバック</param>
     public void StartAutoMovement(Transform target, System.Action onComplete = null, System.Action onCanceled = null)
@@ -278,6 +278,7 @@ public class PlayerController : Character_B<PlayerData>
             return;
         }
 
+        // ターゲットは敵の中心を渡されている
         _autoMoveTarget = target;
         _isAutoMoving = true;
         _autoMoveTimer = 0f;
