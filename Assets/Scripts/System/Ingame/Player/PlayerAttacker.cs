@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttacker : MonoBehaviour
 {
     [SerializeField] PlayerManager _playerManager;
     [SerializeField] AnimationController _anim;
