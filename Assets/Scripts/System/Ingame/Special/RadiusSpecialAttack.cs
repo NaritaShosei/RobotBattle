@@ -3,39 +3,39 @@ using UnityEngine;
 
 public class RadiusSpecialAttack : SpecialAttackBase
 {
+    [SerializeField] private SphereCollider _collider;
+
+    private void Awake()
+    {
+        if (_collider == null)
+        {
+            _collider = GetComponent<SphereCollider>();
+        }
+
+        _collider.radius = Data.Range;
+        _collider.enabled = false;
+        _collider.isTrigger = true;
+    }
+
     [ContextMenu("範囲必殺技")]
     public override async UniTask SpecialAttack()
     {
-        float timer = 0;
+        _collider.enabled = true;
+
         try
         {
-            while (timer < Data.Duration)
-            {
-                // この必殺技は一旦Playerの中心に存在すること前提として作る
-                var colliders = Physics.OverlapSphere(transform.position, Data.Range * 0.5f);
-
-                foreach (var collider in colliders)
-                {
-                    if (collider.TryGetComponent(out IEnemySource enemy))
-                    {
-                        enemy.HitDamage(this);
-                        Debug.LogError(enemy.GetTargetCenter().gameObject.name);
-                    }
-                }
-
-                timer += Time.deltaTime;
-                await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: destroyCancellationToken);
-            }
+            await UniTask.Delay((int)(1000 * Data.Duration), cancellationToken: destroyCancellationToken);
         }
         catch { }
+
+        _collider.enabled = false;
     }
 
-    private void OnDrawGizmos()
+    private void OnTriggerEnter(Collider other)
     {
-        if (Application.isPlaying)
+        if (other.TryGetComponent(out IEnemySource enemy))
         {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, Data.Range * 0.5f);
+            enemy.HitDamage(this);
         }
     }
 }
