@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 [DefaultExecutionOrder(-1000)]
@@ -9,10 +8,10 @@ public class InputManager : MonoBehaviour
     public const string PLAYER = "Player";
     public const string UI = "UI";
 
-    private PlayerInput _playerInput;
+    private InputSystem_Actions _inputActions;
 
-    private InputActionMap _playerMap;
-    private InputActionMap _uiMap;
+    [SerializeField] private PlayerInput _playerInput;
+
     public InputAction MoveAction { get; private set; }
     public InputAction LookAction { get; private set; }
     public InputAction JumpAction { get; private set; }
@@ -26,25 +25,20 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        _playerInput = GetComponent<PlayerInput>();
+        _inputActions = new InputSystem_Actions();
 
-        //PlayerInputの設定を初期化
-        if (_playerInput)
-        {
-            _playerInput.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
-        }
+        if (!_playerInput)
+            _playerInput = GetComponent<PlayerInput>();
 
-        //UIとPlayerのActionMapを両方有効化
-        _playerMap = _playerInput.actions.FindActionMap("Player", true);
-        _uiMap = _playerInput.actions.FindActionMap("UI", true);
+        // 生成したアクションをPlayerInputにセット
+        _playerInput.actions = _inputActions.asset;
 
-        _playerMap.Enable();
-        _uiMap.Enable();
+        _playerInput.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
 
         GetAction();
-
         ServiceLocator.Set(this);
     }
+
     private void Start()
     {
         //ActionMapの切り替え
@@ -56,16 +50,17 @@ public class InputManager : MonoBehaviour
     /// </summary>
     void GetAction()
     {
-        MoveAction = _playerInput.actions["Move"];
-        LookAction = _playerInput.actions["Look"];
-        JumpAction = _playerInput.actions["Jump"];
-        GuardAction = _playerInput.actions["Guard"];
-        AttackAction = _playerInput.actions["Attack"];
-        DashAction = _playerInput.actions["Dash"];
-        WeaponChangeAction = _playerInput.actions["WeaponChange"];
-        ReloadAction = _playerInput.actions["Reload"];
-        UINavigateAction = _playerInput.actions["Navigate"];
-        UISubmitAction = _playerInput.actions["Submit"];
+        MoveAction = _inputActions.Player.Move;
+        LookAction = _inputActions.Player.Look;
+        JumpAction = _inputActions.Player.Jump;
+        GuardAction = _inputActions.Player.Guard;
+        AttackAction = _inputActions.Player.Attack;
+        DashAction = _inputActions.Player.Dash;
+        WeaponChangeAction = _inputActions.Player.WeaponChange;
+        ReloadAction = _inputActions.Player.Reload;
+
+        UINavigateAction = _inputActions.UI.Navigate;
+        UISubmitAction = _inputActions.UI.Submit;
     }
 
     /// <summary>
@@ -76,16 +71,12 @@ public class InputManager : MonoBehaviour
     {
         if (_playerInput == null) { return; }
 
-        //両方無効化
-        _playerMap.Disable();
-        _uiMap.Disable();
 
         //切り替え
         _playerInput.SwitchCurrentActionMap(name);
 
         if (name == PLAYER)
         {
-            _playerMap.Enable();
             //カーソルのロック
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -93,14 +84,11 @@ public class InputManager : MonoBehaviour
 
         else if (name == UI)
         {
-            _uiMap.Enable();
             //カーソルのロック
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
 
-
-        GetAction();
         Debug.Log($"switch to {name}");
     }
 }
