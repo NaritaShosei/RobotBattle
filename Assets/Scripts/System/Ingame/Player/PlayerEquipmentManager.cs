@@ -17,6 +17,8 @@ public class PlayerEquipmentManager : MonoBehaviour
             { EquipmentType.Right, _right },
             { EquipmentType.Center, _center }
         };
+
+        ServiceLocator.Set(this);
     }
 
     public Transform GetEquipmentParent(EquipmentType type)

@@ -64,8 +64,8 @@ public class PlayerAttacker : MonoBehaviour
         var manager = ServiceLocator.Get<EquipmentManager>();
 
         //初期装備の設定
-        _mainWeapon = manager.SpawnWeapon(WeaponType.Main, _mainParent);
-        _subWeapon = manager.SpawnWeapon(WeaponType.Sub, _subParent);
+        _mainWeapon = manager.SpawnWeapon(WeaponType.Main);
+        _subWeapon = manager.SpawnWeapon(WeaponType.Sub);
     }
 
     private void SetupInput()
