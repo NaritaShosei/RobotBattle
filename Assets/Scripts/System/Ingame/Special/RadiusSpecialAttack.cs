@@ -4,10 +4,11 @@ using UnityEngine;
 public class RadiusSpecialAttack : SpecialAttackBase
 {
     [SerializeField] private SphereCollider _collider;
+    [SerializeField] private GameObject _viewObj;
 
     private void Awake()
     {
-        if (_collider == null)
+        if (!_collider)
         {
             _collider = GetComponent<SphereCollider>();
         }
@@ -15,6 +16,11 @@ public class RadiusSpecialAttack : SpecialAttackBase
         _collider.radius = Data.Range;
         _collider.enabled = false;
         _collider.isTrigger = true;
+
+        if (_viewObj)
+        {
+            _viewObj.transform.localScale = Vector3.one * _collider.radius * 2;
+        }
     }
 
     [ContextMenu("範囲必殺技")]
