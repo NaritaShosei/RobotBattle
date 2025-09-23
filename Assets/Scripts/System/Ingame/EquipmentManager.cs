@@ -5,6 +5,8 @@ public class EquipmentManager : MonoBehaviour
 {
     private int _mainID;
     private int _subID;
+    private int _specialID;
+
 
     private void Awake()
     {
@@ -14,17 +16,33 @@ public class EquipmentManager : MonoBehaviour
         _subID = data.CurrentLoadout.SecondWeaponId;
     }
 
-    public WeaponBase SpawnWeapon(EquipmentType type, Transform parent)
+    private void Start()
     {
-        int id = type switch
-        {
-            EquipmentType.Main => _mainID,
-            EquipmentType.Sub => _subID,
-        };
 
-        var weaponData = ServiceLocator.Get<WeaponManager>().DataBase.GetWeapon(id);
+    }
+
+    public WeaponBase SpawnMainWeapon(PlayerEquipmentManager playerEquipmentManager)
+    {
+        var weaponData = ServiceLocator.Get<WeaponManager>().DataBase.GetWeapon(_mainID);
+
         if (weaponData?.WeaponPrefab == null) { Debug.LogWarning("プレハブが設定されていません"); return null; }
 
+        var parent = playerEquipmentManager.GetEquipmentParent(weaponData.EquipmentType);
+
+        return SpawnWeapon(weaponData, parent);
+    }
+
+    public WeaponBase SpawnSubWeapon(Transform parent)
+    {
+        var weaponData = ServiceLocator.Get<WeaponManager>().DataBase.GetWeapon(_subID);
+
+        if (weaponData?.WeaponPrefab == null) { Debug.LogWarning("プレハブが設定されていません"); return null; }
+
+        return SpawnWeapon(weaponData, parent);
+    }
+
+    private WeaponBase SpawnWeapon(WeaponData weaponData, Transform parent)
+    {
         var weaponObj = Instantiate(weaponData.WeaponPrefab, parent);
 
         if (!weaponObj.TryGetComponent(out WeaponBase weaponComponent))
@@ -36,8 +54,14 @@ public class EquipmentManager : MonoBehaviour
 
         return weaponComponent;
     }
+
+    public SpecialAttackBase SpawnSpecial(PlayerEquipmentManager playerEquipmentManager)
+    {
+        // データベースからIDで検索できる機能ができたら生成処理
+        return null;
+    }
 }
-public enum EquipmentType
+public enum WeaponType
 {
     [InspectorName("メイン")]
     Main,

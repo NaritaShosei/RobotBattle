@@ -20,7 +20,7 @@ public class LockOn : MonoBehaviour
 
     Camera _camera;
 
-    ILockOnTarget _lockOnTarget;
+    IEnemySource _lockOnTarget;
 
     CrosshairPresenter _presenter;
 
@@ -98,7 +98,7 @@ public class LockOn : MonoBehaviour
         }
     }
 
-    bool IsVisible(ILockOnTarget enemy)
+    bool IsVisible(IEnemySource enemy)
     {
         //方向、距離計算
         var dirToEnemy = enemy.GetTargetCenter().position - _camera.transform.position;
@@ -146,7 +146,7 @@ public class LockOn : MonoBehaviour
     /// ロックオン中のEnemyの取得
     /// </summary>
     /// <returns></returns>
-    public ILockOnTarget GetTarget()
+    public IEnemySource GetTarget()
     {
         return _lockOnTarget;
     }

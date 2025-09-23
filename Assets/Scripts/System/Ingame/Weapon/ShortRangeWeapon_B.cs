@@ -1,5 +1,5 @@
-﻿using RootMotion.FinalIK;
-using System.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
+using RootMotion.FinalIK;
 using UnityEngine;
 
 public class ShortRangeWeapon_B : WeaponBase, IWeapon
@@ -7,7 +7,8 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     [SerializeField, Tooltip("敵から離れる距離")] private float _weaponDistance = 3f;
     [SerializeField, Tooltip("攻撃の半径")] private float _attackRadius = 3f;
 
-    private ILockOnTarget _currentTarget;
+    private IEnemySource _currentTarget;
+    // Playerの参照
     private ILockOnTarget _root;
 
     private Vector3 _targetPos;
@@ -76,13 +77,13 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     public override bool IsTrackingActive() => _isTracking;
 
     // 近接武器なので常に true
-    public override bool RequiresPlayerMovement() => true;
+    public override bool RequiresPlayerMovement() => _count > 0;
 
     /// <summary>
-    /// 攻撃時に移動したい座標
+    /// 攻撃対象
     /// </summary>
     /// <returns></returns>
-    public override Transform GetDesiredPlayerPosition()
+    public override Transform GetTarget()
     {
         if (_currentTarget != null)
             return _currentTarget.GetTargetCenter();
@@ -135,7 +136,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
                 && enemy.GetTransform().root != _root.GetTransform().root)
             {
                 enemy.HitDamage(this);
-                Debug.LogError("Attack Success");
+
                 ServiceLocator.Get<EffectManager>().PlayExplosion(enemy.GetTransform().position);
             }
         }
@@ -163,7 +164,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
         Debug.Log("リロード開始...");
 
         // リロード時間を設定（近接武器なので短めに）
-        await Task.Delay((int)(_data.CoolTime * 1000));
+        await UniTask.Delay((int)(_data.CoolTime * 1000));
 
         _count = _data.AttackCapacity;
         Debug.Log("リロード完了!");
@@ -190,20 +191,23 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     {
         if (Application.isPlaying && _currentTarget != null)
         {
-            // 移動目標位置
-            Vector3 targetPos = GetDesiredPlayerPosition().position;
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(targetPos, 0.5f);
-
-            // 攻撃範囲
-            if (transform.root.TryGetComponent(out ILockOnTarget component))
+            var targetTransform = GetTarget();
+            if (targetTransform != null)
             {
-                var centerPos = component.GetTargetCenter().position;
-                var forward = component.GetTargetCenter().forward;
-                var attackCenter = centerPos + forward * _attackRadius;
+                Vector3 targetPos = targetTransform.position;
+                Gizmos.color = Color.blue;
+                Gizmos.DrawWireSphere(targetPos, 0.5f);
 
-                Gizmos.color = Color.red;
-                Gizmos.DrawWireSphere(attackCenter, _attackRadius);
+                // 攻撃範囲
+                if (transform.root.TryGetComponent(out ILockOnTarget component))
+                {
+                    var centerPos = component.GetTargetCenter().position;
+                    var forward = component.GetTargetCenter().forward;
+                    var attackCenter = centerPos + forward * _attackRadius;
+
+                    Gizmos.color = Color.red;
+                    Gizmos.DrawWireSphere(attackCenter, _attackRadius);
+                }
             }
         }
     }

@@ -47,12 +47,13 @@ public class PlayerManager : MonoBehaviour
 }
 public enum PlayerState
 {
-    Idle,
-    Attack,
-    Reload,
-    Guard,
-    WeaponChange,
-    Dead,
-    MovingToTarget, // 追加：敵に接近中
-    AttackReady     // 追加：攻撃準備完了
+    Idle,           // 通常状態
+    Attack,         // 攻撃
+    Reload,　　   　// リロード
+    Guard,          // ガード
+    WeaponChange,   // 武器交換
+    Dead,           // 死亡
+    MovingToTarget, // 自動移動
+    AttackReady,    // 攻撃待機
+    SpecialAttack   // 必殺技
 }

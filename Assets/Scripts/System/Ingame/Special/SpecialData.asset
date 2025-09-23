@@ -9,8 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 032255c9dd6f6d3448905a3b24f5d29a, type: 3}
-  m_Name: ChaseBulletData
+  m_Script: {fileID: 11500000, guid: c60c90c223ae1e54d91fd691e3cafcbf, type: 3}
+  m_Name: SpecialData
   m_EditorClassIdentifier: 
-  _attackPower: 1
-  _guardBreakValue: 50
+  _id: 0
+  _name: 
+  _icon: {fileID: 0}
+  _money: 0
+  _cost: 0
+  _attackPower: 20
+  _range: 20
+  _guardBreak: 50
+  _duration: 1
+  _prefab: {fileID: 0}

@@ -6,64 +6,96 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttacker : MonoBehaviour
 {
-    [SerializeField] PlayerManager _playerManager;
-    [SerializeField] AnimationController _anim;
+    [SerializeField] private PlayerManager _playerManager;
+    [SerializeField] private AnimationController _anim;
 
     private WeaponBase _mainWeapon;
     private WeaponBase _subWeapon;
+    private SpecialAttackBase _specialAttack;
 
-    InputManager _input;
-    WeaponPresenter _presenter;
-    AimIK _aimIK;
+    private InputManager _input;
+    private WeaponPresenter _presenter;
+    private AimIK _aimIK;
 
-    float _timer = 0;
-    [SerializeField] float _duration = 0.5f;
-    [SerializeField] float _ikWeight = 0.846f;
+    private float _timer = 0;
+    [SerializeField] private float _duration = 0.5f;
+    [SerializeField] private float _ikWeight = 0.846f;
     [SerializeField] private float _swapDuration = 0.5f;
 
     private IngameManager _gameManager;
     private LockOn _lockOn;
     private PlayerController _playerController;
+    private PlayerEquipmentManager _playerEquipmentManager;
 
-    [Header("武器を装備する位置")]
-    [SerializeField] private Transform _mainParent;
+    [Header("サブ武器を装備する位置")]
     [SerializeField] private Transform _subParent;
 
     // 攻撃待機状態
     private bool _waitingForMovement = false;
+    // 攻撃中の回転継続フラグ
+    private bool _isRotatingDuringAttack = false;
 
-    void Start()
+    private SpecialGauge _specialGauge;
+
+    private void Start()
+    {
+        InitializeReferences();
+        SetupWeapons();
+        SetupUI();
+        SetupIK();
+        SetupInput();
+
+        _specialGauge = new SpecialGauge();
+    }
+
+    #region 初期化処理
+    private void InitializeReferences()
     {
         _input = ServiceLocator.Get<InputManager>();
+        _gameManager = ServiceLocator.Get<IngameManager>();
+        _lockOn = ServiceLocator.Get<LockOn>();
+        _playerController = GetComponent<PlayerController>();
+        _playerEquipmentManager = ServiceLocator.Get<PlayerEquipmentManager>();
+    }
+
+    private void SetupWeapons()
+    {
+        var manager = ServiceLocator.Get<EquipmentManager>();
+
+        //初期装備の設定
+        _mainWeapon = manager.SpawnMainWeapon(_playerEquipmentManager);
+        _subWeapon = manager.SpawnSubWeapon(_subParent);
+    }
+
+    private void SetupInput()
+    {
         _input.AttackAction.started += Attack;
         _input.AttackAction.canceled += Attack;
         _input.WeaponChangeAction.started += WeaponChange;
         _input.ReloadAction.started += Reload;
+        _input.SpecialAction.started += Special;
+    }
 
-        var manager = ServiceLocator.Get<EquipmentManager>();
-
-        //初期装備の設定
-        _mainWeapon = manager.SpawnWeapon(EquipmentType.Main, _mainParent);
-        _subWeapon = manager.SpawnWeapon(EquipmentType.Sub, _subParent);
-
+    private void SetupIK()
+    {
         //IKの設定
         _aimIK = GetComponent<AimIK>();
         _aimIK.enabled = false;
+    }
 
+    private void SetupUI()
+    {
         _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
         _presenter.Initialize((_mainWeapon.Data.AttackCapacity, _mainWeapon.Data.WeaponIcon), (_subWeapon.Data.AttackCapacity, _subWeapon.Data.WeaponIcon));
 
-        _gameManager = ServiceLocator.Get<IngameManager>();
-        _lockOn = ServiceLocator.Get<LockOn>();
         _lockOn.SetRange(_mainWeapon.Data.Range);
-
-        // PlayerControllerの参照を取得
-        _playerController = GetComponent<PlayerController>();
     }
 
-    void Update()
+    #endregion
+
+    private void Update()
     {
 #if UNITY_EDITOR
         //Debug Only
@@ -73,10 +105,24 @@ public class PlayerAttack : MonoBehaviour
         }
 #endif
 
-        if (_gameManager.IsGameEnd) { _mainWeapon.SetAttack(false); return; }
+        if (_gameManager.IsGameEnd)
+        {
+            _mainWeapon.SetAttack(false);
+            // 攻撃終了時に回転も停止
+            if (_isRotatingDuringAttack)
+            {
+                _playerController.StopTargetRotation();
+                _isRotatingDuringAttack = false;
+            }
+            return;
+        }
         if (_gameManager.IsPaused) { return; }
 
+        // Debug用に適当なロジック
+        _specialGauge.UpdateValue(1);
+
         //残弾数を渡す
+        // TODO:イベント駆動にしたほうがきれい
         _presenter.CountUpdate(_mainWeapon.Count);
 
         //腕のIKの線形補間
@@ -106,6 +152,13 @@ public class PlayerAttack : MonoBehaviour
         {
             _playerManager.SetState(PlayerState.WeaponChange);
 
+            // 回転制御を停止
+            if (_isRotatingDuringAttack)
+            {
+                _playerController.StopTargetRotation();
+                _isRotatingDuringAttack = false;
+            }
+
             //装備中の武器を無効化
             _mainWeapon.SetAttack(false);
             _mainWeapon.enabled = false;
@@ -134,7 +187,9 @@ public class PlayerAttack : MonoBehaviour
     {
         var seq = DOTween.Sequence();
 
-        _mainWeapon.transform.SetParent(_mainParent);
+        var mainParent = _playerEquipmentManager.GetEquipmentParent(_mainWeapon.Data.EquipmentType);
+
+        _mainWeapon.transform.SetParent(mainParent);
         _subWeapon.transform.SetParent(_subParent);
 
         await seq.Append(_mainWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
@@ -142,7 +197,7 @@ public class PlayerAttack : MonoBehaviour
             AsyncWaitForCompletion();
     }
 
-    void Attack(InputAction.CallbackContext context)
+    private void Attack(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
 
@@ -161,7 +216,7 @@ public class PlayerAttack : MonoBehaviour
             if (_mainWeapon.RequiresPlayerMovement())
             {
                 // 移動が必要な場合（近接武器など）
-                Transform targetTransform = _mainWeapon.GetDesiredPlayerPosition();
+                Transform targetTransform = _mainWeapon.GetTarget();
 
                 if (targetTransform)
                 {
@@ -235,7 +290,6 @@ public class PlayerAttack : MonoBehaviour
         _waitingForMovement = false;
         Debug.Log("接近がキャンセルされました");
         // Idle状態に戻る（PlayerControllerで既に設定済み）
-        StartActualAttack();
     }
 
     /// <summary>
@@ -254,7 +308,26 @@ public class PlayerAttack : MonoBehaviour
         //IKの線形補間の時間初期化
         _timer = 0;
 
+        // 近接武器の場合、攻撃中も目標への回転を継続
+        if (_mainWeapon.RequiresPlayerMovement())
+        {
+            Transform target = _mainWeapon.GetTarget();
+            if (target != null)
+            {
+                _playerController.StartTargetRotation();
+                _isRotatingDuringAttack = true;
+                Debug.Log("攻撃中の目標回転を開始");
+            }
+        }
+
         Debug.Log("攻撃開始");
+
+
+        // とりあえずのデバッグ用、のちに修正
+        if (_mainWeapon as ShortRangeWeapon_B)
+        {
+            Invoke(nameof(EndAttack), 1);
+        }
     }
 
     /// <summary>
@@ -272,26 +345,34 @@ public class PlayerAttack : MonoBehaviour
         _mainWeapon.SetAttack(false);
         _mainWeapon.IKEnable(_aimIK, false);
 
+        // 攻撃中の回転を停止
+        if (_isRotatingDuringAttack)
+        {
+            _playerController.StopTargetRotation();
+            _isRotatingDuringAttack = false;
+            Debug.Log("攻撃中の目標回転を停止");
+        }
+
         Debug.Log("攻撃終了");
     }
 
     //AnimationEventで呼び出す、攻撃開始、終了の処理
-    void IsAttack()
+    private void IsAttack()
     {
         if (_gameManager.IsPaused) { return; }
         _mainWeapon.SetAttack(true);
     }
 
-    void Reload(InputAction.CallbackContext context)
+    private void Reload(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
         _mainWeapon.Reload();
     }
 
-    /// <summary>
-    /// 現在移動待機中かどうか
-    /// </summary>
-    public bool IsWaitingForMovement => _waitingForMovement;
+    private void Special(InputAction.CallbackContext context)
+    {
+
+    }
 
     private void OnDisable()
     {
@@ -299,5 +380,13 @@ public class PlayerAttack : MonoBehaviour
         _input.AttackAction.canceled -= Attack;
         _input.WeaponChangeAction.started -= WeaponChange;
         _input.ReloadAction.started -= Reload;
+        _input.SpecialAction.started -= Special;
+
+        // 無効化時に回転制御も停止
+        if (_isRotatingDuringAttack)
+        {
+            _playerController.StopTargetRotation();
+            _isRotatingDuringAttack = false;
+        }
     }
 }

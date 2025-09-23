@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] private EquipmentType _type;
+    [SerializeField] private WeaponType _type;
     private WeaponDatabase _weaponDatabase;
     [SerializeField] private WeaponCell _weaponCell;
     [SerializeField] private Transform _cellParent;
@@ -38,8 +38,8 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
 
         int equippedID = _type switch
         {
-            EquipmentType.Main => _selector.PlayerData.CurrentLoadout.PrimaryWeaponId,
-            EquipmentType.Sub => _selector.PlayerData.CurrentLoadout.SecondWeaponId,
+            WeaponType.Main => _selector.PlayerData.CurrentLoadout.PrimaryWeaponId,
+            WeaponType.Sub => _selector.PlayerData.CurrentLoadout.SecondWeaponId,
         };
         _currentCell = _cells.First(cell => cell.WeaponData.WeaponID == equippedID);
         _currentCell.Select();

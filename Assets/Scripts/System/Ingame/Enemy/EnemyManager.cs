@@ -10,8 +10,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private List<GameObject> _spawnEnemies = new();
 
 
-    List<ILockOnTarget> _enemies = new();
-    public List<ILockOnTarget> Enemies => _enemies;
+    List<IEnemySource> _enemies = new();
+    public List<IEnemySource> Enemies => _enemies;
     public bool IsEnemyAllDefeated => _enemies.Count == 0;
 
     private void Awake()
@@ -36,11 +36,8 @@ public class EnemyManager : MonoBehaviour
     private void InitializeEnemies()
     {
         _enemies = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
-            .OfType<ILockOnTarget>()
+            .OfType<IEnemySource>()
             .ToList();
-
-        // Playerを除外
-        _enemies.RemoveAll(e => e.GetTransform().TryGetComponent<PlayerController>(out _));
     }
 
     /// <summary>
@@ -83,7 +80,7 @@ public class EnemyManager : MonoBehaviour
     /// Listから除外
     /// </summary>
     /// <param name="enemy">除外するEnemy</param>
-    public void Remove(ILockOnTarget enemy)
+    public void Remove(IEnemySource enemy)
     {
         if (_enemies.Contains(enemy))
         {
@@ -95,7 +92,7 @@ public class EnemyManager : MonoBehaviour
     /// Listに追加
     /// </summary>
     /// <param name="enemy">追加するEnemy</param>
-    public void Add(ILockOnTarget enemy)
+    public void Add(IEnemySource enemy)
     {
         if (!_enemies.Contains(enemy))
         {

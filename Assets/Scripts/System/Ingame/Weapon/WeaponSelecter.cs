@@ -22,7 +22,7 @@ public class WeaponSelector : MonoBehaviour
         _moneyManager = ServiceLocator.Get<MoneyManager>();
     }
 
-    public bool SelectWeapon(EquipmentType type, int id)
+    public bool SelectWeapon(WeaponType type, int id)
     {
         bool result = _playerData.EquipWeapon(type, id);
 

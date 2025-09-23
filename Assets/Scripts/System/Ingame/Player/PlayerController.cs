@@ -55,9 +55,13 @@ public class PlayerController : Character_B<PlayerData>
     private System.Action _onAutoMoveComplete;
     private System.Action _onAutoMoveCanceled;
 
-    HPGaugePresenter _healthPresenter;
-    GaugePresenter _gaugePresenter;
-    IngameManager _gameManager;
+    // 攻撃中の回転制御用
+    private bool _shouldRotateToTarget = false;
+    private Vector3 _attackToRotationTargetDir;
+
+    private HPGaugePresenter _healthPresenter;
+    private GaugePresenter _gaugePresenter;
+    private IngameManager _gameManager;
     private Camera _camera;
 
     void Start()
@@ -98,6 +102,7 @@ public class PlayerController : Character_B<PlayerData>
             _isGuard = false;
             _isJumped = false;
             StopAutoMovement(); // 自動移動も停止
+            StopTargetRotation(); // 目標回転も停止
             return;
         }
 
@@ -147,20 +152,70 @@ public class PlayerController : Character_B<PlayerData>
             Move(_isBoost ? _data.BoostSpeed : _data.NormalSpeed);
         }
 
-        var cam = _camera.transform.forward;
-        cam.y = 0;
-        cam.Normalize();
+        // 回転処理
+        HandleRotation();
+    }
 
-        // 目標方向を更新
-        var _targetDir = cam;
+    /// <summary>
+    /// 回転処理を統合
+    /// </summary>
+    private void HandleRotation()
+    {
+        Vector3 targetDirection;
+
+        // 目標への回転が有効な場合
+        if (_shouldRotateToTarget && _attackToRotationTargetDir != Vector3.zero)
+        {
+            Vector3 directionToTarget = _attackToRotationTargetDir.normalized;
+            targetDirection = directionToTarget;
+        }
+        else
+        {
+            // 通常の回転（カメラ方向）
+            var cam = _camera.transform.forward;
+            cam.y = 0;
+            cam.Normalize();
+            targetDirection = cam;
+        }
 
         // 回転の補間
-        if (_targetDir.sqrMagnitude > 0.001f)
+        if (targetDirection.sqrMagnitude > 0.001f)
         {
-            Quaternion targetRot = Quaternion.LookRotation(_targetDir);
+            Quaternion targetRot = Quaternion.LookRotation(targetDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, _rotateSpeed * Time.deltaTime);
         }
     }
+
+    /// <summary>
+    /// 攻撃中の目標回転を開始
+    /// </summary>
+    /// <param name="target">回転する目標</param>
+    public void StartTargetRotation()
+    {
+        _shouldRotateToTarget = true;
+
+        // 追尾中は重力を切る
+        _rb.useGravity = false;
+        Debug.Log($"目標回転開始");
+    }
+
+    /// <summary>
+    /// 目標回転を停止
+    /// </summary>
+    public void StopTargetRotation()
+    {
+        _shouldRotateToTarget = false;
+        _attackToRotationTargetDir = Vector3.zero;
+
+        // 追尾終了時に重力をかけなおす
+        _rb.useGravity = true;
+        Debug.Log("目標回転停止");
+    }
+
+    /// <summary>
+    /// 現在目標に向かって回転中かどうか
+    /// </summary>
+    public bool IsRotatingToTarget => _shouldRotateToTarget;
 
     /// <summary>
     /// 自動移動の処理
@@ -181,17 +236,20 @@ public class PlayerController : Character_B<PlayerData>
         Vector3 currentCenter = GetTargetCenter().position;
         float distanceToTarget = Vector3.Distance(currentCenter, _autoMoveTarget.position);
 
+        // 目標への方向を保持
+        Vector3 direction = (_autoMoveTarget.position - currentCenter).normalized;
+
         if (distanceToTarget <= ArriveThreshold)
         {
             // 目標地点に到達
             Debug.Log("目標地点に到達しました");
             CompleteAutoMovement();
+            _attackToRotationTargetDir = direction;
         }
         else
         {
-            // 目標地点に向かって移動
-            Vector3 direction = (_autoMoveTarget.position - currentCenter).normalized;
 
+            // 目標地点に向かって移動
             // 移動方向を設定（既存のMove関数を利用するため）
             Vector3 moveDirection = direction * _data.BoostSpeed;
 
@@ -209,7 +267,7 @@ public class PlayerController : Character_B<PlayerData>
     /// <summary>
     /// 自動移動を開始
     /// </summary>
-    /// <param name="target">移動先の座標</param>
+    /// <param name="target">移動先の標的</param>
     /// <param name="onComplete">到達時のコールバック</param>
     /// <param name="onCanceled">キャンセル時のコールバック</param>
     public void StartAutoMovement(Transform target, System.Action onComplete = null, System.Action onCanceled = null)
@@ -220,6 +278,7 @@ public class PlayerController : Character_B<PlayerData>
             return;
         }
 
+        // ターゲットは敵の中心を渡されている
         _autoMoveTarget = target;
         _isAutoMoving = true;
         _autoMoveTimer = 0f;
@@ -339,7 +398,10 @@ public class PlayerController : Character_B<PlayerData>
         if (_gameManager.IsPaused) { return; }
 
         //AddForceなどはFixedUpdateで
-        _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Force);
+
+        // 重力
+        float fallSpeed = _rb.useGravity ? _data.FallSpeed : 0f;
+        _rb.AddForce(Vector3.down * fallSpeed, ForceMode.Force);
 
         if (_isDashed)
         {
@@ -426,20 +488,18 @@ public class PlayerController : Character_B<PlayerData>
     {
         if (_gameManager.IsPaused) { return; }
 
+        _isJumped = context.phase == InputActionPhase.Started;
+
         // 自動移動中はジャンプを無効
         if (_isAutoMoving) return;
 
         //ボタンを押した瞬間強めに上昇
-        if (context.phase == InputActionPhase.Started)
+        if (_isJumped)
         {
             if (!GaugeValueChange(-_data.JumpValue)) return;
             //マジックナンバー
             _isJumped = true;
             _rb.AddForce(Vector3.up * _data.JumpPower * 5, ForceMode.Impulse);
-        }
-        else if (context.phase == InputActionPhase.Canceled)
-        {
-            _isJumped = false;
         }
     }
 
@@ -640,6 +700,14 @@ public class PlayerController : Character_B<PlayerData>
             // 到達判定範囲
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(_autoMoveTarget.position, _arriveThreshold);
+        }
+
+        // 回転目標の可視化
+        if (_shouldRotateToTarget && _attackToRotationTargetDir != null)
+        {
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawWireSphere(_attackToRotationTargetDir, 0.3f);
+            Gizmos.DrawLine(transform.position, _attackToRotationTargetDir);
         }
     }
 }
