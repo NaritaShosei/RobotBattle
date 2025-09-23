@@ -13,6 +13,7 @@ public class PlayerAttacker : MonoBehaviour
 
     private WeaponBase _mainWeapon;
     private WeaponBase _subWeapon;
+    private SpecialAttackBase _specialAttack;
 
     InputManager _input;
     WeaponPresenter _presenter;
@@ -36,33 +37,55 @@ public class PlayerAttacker : MonoBehaviour
     // 攻撃中の回転継続フラグ
     private bool _isRotatingDuringAttack = false;
 
+    private SpecialGauge _specialGauge;
+
     void Start()
     {
-        _input = ServiceLocator.Get<InputManager>();
-        _input.AttackAction.started += Attack;
-        _input.AttackAction.canceled += Attack;
-        _input.WeaponChangeAction.started += WeaponChange;
-        _input.ReloadAction.started += Reload;
+        InitializeReferences();
+        SetupWeapons();
+        SetupUI();
+        SetupIK();
+        SetupInput();
+    }
 
+    private void InitializeReferences()
+    {
+        _input = ServiceLocator.Get<InputManager>();
+        _gameManager = ServiceLocator.Get<IngameManager>();
+        _lockOn = ServiceLocator.Get<LockOn>();
+        _playerController = GetComponent<PlayerController>();
+    }
+
+    private void SetupWeapons()
+    {
         var manager = ServiceLocator.Get<EquipmentManager>();
 
         //初期装備の設定
         _mainWeapon = manager.SpawnWeapon(EquipmentType.Main, _mainParent);
         _subWeapon = manager.SpawnWeapon(EquipmentType.Sub, _subParent);
+    }
 
+    private void SetupInput()
+    {
+        _input.AttackAction.started += Attack;
+        _input.AttackAction.canceled += Attack;
+        _input.WeaponChangeAction.started += WeaponChange;
+        _input.ReloadAction.started += Reload;
+    }
+
+    private void SetupIK()
+    {
         //IKの設定
         _aimIK = GetComponent<AimIK>();
         _aimIK.enabled = false;
+    }
 
+    private void SetupUI()
+    {
         _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
         _presenter.Initialize((_mainWeapon.Data.AttackCapacity, _mainWeapon.Data.WeaponIcon), (_subWeapon.Data.AttackCapacity, _subWeapon.Data.WeaponIcon));
 
-        _gameManager = ServiceLocator.Get<IngameManager>();
-        _lockOn = ServiceLocator.Get<LockOn>();
         _lockOn.SetRange(_mainWeapon.Data.Range);
-
-        // PlayerControllerの参照を取得
-        _playerController = GetComponent<PlayerController>();
     }
 
     void Update()
