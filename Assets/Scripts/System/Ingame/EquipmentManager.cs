@@ -14,12 +14,12 @@ public class EquipmentManager : MonoBehaviour
         _subID = data.CurrentLoadout.SecondWeaponId;
     }
 
-    public WeaponBase SpawnWeapon(EquipmentType type, Transform parent)
+    public WeaponBase SpawnWeapon(WeaponType type, Transform parent)
     {
         int id = type switch
         {
-            EquipmentType.Main => _mainID,
-            EquipmentType.Sub => _subID,
+            WeaponType.Main => _mainID,
+            WeaponType.Sub => _subID,
         };
 
         var weaponData = ServiceLocator.Get<WeaponManager>().DataBase.GetWeapon(id);
@@ -37,7 +37,7 @@ public class EquipmentManager : MonoBehaviour
         return weaponComponent;
     }
 }
-public enum EquipmentType
+public enum WeaponType
 {
     [InspectorName("メイン")]
     Main,

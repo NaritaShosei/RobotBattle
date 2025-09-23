@@ -22,16 +22,16 @@ public class EquipmentData
     }
 
     // 装備変更
-    public bool EquipWeapon(EquipmentType type, int weaponId)
+    public bool EquipWeapon(WeaponType type, int weaponId)
     {
         if (!_unlockedWeaponIDs.Contains(weaponId)) return false;
 
         switch (type)
         {
-            case EquipmentType.Main:
+            case WeaponType.Main:
                 _currentLoadout.PrimaryWeaponId = weaponId;
                 break;
-            case EquipmentType.Sub:
+            case WeaponType.Sub:
                 _currentLoadout.SecondWeaponId = weaponId;
                 break;
         }
