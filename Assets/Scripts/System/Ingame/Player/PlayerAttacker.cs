@@ -8,20 +8,20 @@ using UnityEngine.SceneManagement;
 
 public class PlayerAttacker : MonoBehaviour
 {
-    [SerializeField] PlayerManager _playerManager;
-    [SerializeField] AnimationController _anim;
+    [SerializeField] private PlayerManager _playerManager;
+    [SerializeField] private AnimationController _anim;
 
     private WeaponBase _mainWeapon;
     private WeaponBase _subWeapon;
     private SpecialAttackBase _specialAttack;
 
-    InputManager _input;
-    WeaponPresenter _presenter;
-    AimIK _aimIK;
+    private InputManager _input;
+    private WeaponPresenter _presenter;
+    private AimIK _aimIK;
 
-    float _timer = 0;
-    [SerializeField] float _duration = 0.5f;
-    [SerializeField] float _ikWeight = 0.846f;
+    private float _timer = 0;
+    [SerializeField] private float _duration = 0.5f;
+    [SerializeField] private float _ikWeight = 0.846f;
     [SerializeField] private float _swapDuration = 0.5f;
 
     private IngameManager _gameManager;
@@ -39,7 +39,7 @@ public class PlayerAttacker : MonoBehaviour
 
     private SpecialGauge _specialGauge;
 
-    void Start()
+    private void Start()
     {
         InitializeReferences();
         SetupWeapons();
@@ -93,7 +93,7 @@ public class PlayerAttacker : MonoBehaviour
 
     #endregion
 
-    void Update()
+    private void Update()
     {
 #if UNITY_EDITOR
         //Debug Only
@@ -193,7 +193,7 @@ public class PlayerAttacker : MonoBehaviour
             AsyncWaitForCompletion();
     }
 
-    void Attack(InputAction.CallbackContext context)
+    private void Attack(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
 
@@ -353,13 +353,13 @@ public class PlayerAttacker : MonoBehaviour
     }
 
     //AnimationEventで呼び出す、攻撃開始、終了の処理
-    void IsAttack()
+    private void IsAttack()
     {
         if (_gameManager.IsPaused) { return; }
         _mainWeapon.SetAttack(true);
     }
 
-    void Reload(InputAction.CallbackContext context)
+    private void Reload(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
         _mainWeapon.Reload();
