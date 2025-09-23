@@ -19,8 +19,9 @@ public class WeaponData : ScriptableObject
     [SerializeField] private float _guardBreak = 50;
     [SerializeField] private float _speed = 100;
 
-    [Header("プレハブ")]
+    [Header("装備情報")]
     [SerializeField] private GameObject _weaponPrefab;
+    [SerializeField] private EquipmentType _equipmentType;
     public int WeaponID => _weaponID;
     public string WeaponName => _weaponName;
     public Sprite WeaponIcon => _weaponIcon;
@@ -34,5 +35,6 @@ public class WeaponData : ScriptableObject
     public float AttackSpeed => _speed;
     public float GuardBreakValue => _guardBreak;
     public GameObject WeaponPrefab => _weaponPrefab;
+    public EquipmentType EquipmentType => _equipmentType;
 
 }

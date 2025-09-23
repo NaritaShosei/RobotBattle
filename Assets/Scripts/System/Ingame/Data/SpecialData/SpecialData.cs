@@ -17,8 +17,9 @@ public class SpecialData : ScriptableObject
     [SerializeField] private float _duration = 1f; // 持続時間
     [SerializeField] private float _requiredGauge; // 発動に必要なゲージ量
 
-    [Header("プレハブ")]
+    [Header("装備情報")]
     [SerializeField] private GameObject _prefab;
+    [SerializeField] private EquipmentType _equipmentType;
 
     public int ID => _id;
     public string Name => _name;
@@ -33,4 +34,5 @@ public class SpecialData : ScriptableObject
     public float RequiredGauge => _requiredGauge;
 
     public GameObject Prefab => _prefab;
+    public EquipmentType EquipmentType => _equipmentType;
 }
