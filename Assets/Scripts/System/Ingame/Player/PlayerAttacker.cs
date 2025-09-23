@@ -74,6 +74,7 @@ public class PlayerAttacker : MonoBehaviour
         _input.AttackAction.canceled += Attack;
         _input.WeaponChangeAction.started += WeaponChange;
         _input.ReloadAction.started += Reload;
+        _input.SpecialAction.started += Special;
     }
 
     private void SetupIK()
@@ -365,12 +366,18 @@ public class PlayerAttacker : MonoBehaviour
         _mainWeapon.Reload();
     }
 
+    private void Special(InputAction.CallbackContext context)
+    {
+
+    }
+
     private void OnDisable()
     {
         _input.AttackAction.started -= Attack;
         _input.AttackAction.canceled -= Attack;
         _input.WeaponChangeAction.started -= WeaponChange;
         _input.ReloadAction.started -= Reload;
+        _input.SpecialAction.started -= Special;
 
         // 無効化時に回転制御も停止
         if (_isRotatingDuringAttack)
