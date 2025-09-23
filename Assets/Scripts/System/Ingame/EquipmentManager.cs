@@ -6,7 +6,7 @@ public class EquipmentManager : MonoBehaviour
     private int _mainID;
     private int _subID;
     private int _specialID;
-    PlayerEquipmentManager _playerEquipmentManager;
+
 
     private void Awake()
     {
@@ -18,22 +18,31 @@ public class EquipmentManager : MonoBehaviour
 
     private void Start()
     {
-        _playerEquipmentManager = ServiceLocator.Get<PlayerEquipmentManager>();
+
     }
 
-    public WeaponBase SpawnWeapon(WeaponType type)
+    public WeaponBase SpawnMainWeapon(PlayerEquipmentManager playerEquipmentManager)
     {
-        int id = type switch
-        {
-            WeaponType.Main => _mainID,
-            WeaponType.Sub => _subID,
-        };
+        var weaponData = ServiceLocator.Get<WeaponManager>().DataBase.GetWeapon(_mainID);
 
-        var weaponData = ServiceLocator.Get<WeaponManager>().DataBase.GetWeapon(id);
         if (weaponData?.WeaponPrefab == null) { Debug.LogWarning("プレハブが設定されていません"); return null; }
 
-        var parent = _playerEquipmentManager.GetEquipmentParent(weaponData.EquipmentType);
+        var parent = playerEquipmentManager.GetEquipmentParent(weaponData.EquipmentType);
 
+        return SpawnWeapon(weaponData, parent);
+    }
+
+    public WeaponBase SpawnSubWeapon(Transform parent)
+    {
+        var weaponData = ServiceLocator.Get<WeaponManager>().DataBase.GetWeapon(_subID);
+
+        if (weaponData?.WeaponPrefab == null) { Debug.LogWarning("プレハブが設定されていません"); return null; }
+
+        return SpawnWeapon(weaponData, parent);
+    }
+
+    private WeaponBase SpawnWeapon(WeaponData weaponData, Transform parent)
+    {
         var weaponObj = Instantiate(weaponData.WeaponPrefab, parent);
 
         if (!weaponObj.TryGetComponent(out WeaponBase weaponComponent))
@@ -46,7 +55,7 @@ public class EquipmentManager : MonoBehaviour
         return weaponComponent;
     }
 
-    public SpecialAttackBase SpawnSpecial()
+    public SpecialAttackBase SpawnSpecial(PlayerEquipmentManager playerEquipmentManager)
     {
         // データベースからIDで検索できる機能ができたら生成処理
         return null;
