@@ -15,6 +15,7 @@ public class SpecialData : ScriptableObject
     [SerializeField] private float _range = 10f;
     [SerializeField] private float _guardBreak = 50f;
     [SerializeField] private float _duration = 1f; // 持続時間
+    [SerializeField] private float _requiredGauge; // 発動に必要なゲージ量
 
     [Header("プレハブ")]
     [SerializeField] private GameObject _prefab;
@@ -28,8 +29,8 @@ public class SpecialData : ScriptableObject
     public float AttackPower => _attackPower;
     public float Range => _range;
     public float GuardBreak => _guardBreak;
-
     public float Duration => _duration;
+    public float RequiredGauge => _requiredGauge;
 
     public GameObject Prefab => _prefab;
 }
