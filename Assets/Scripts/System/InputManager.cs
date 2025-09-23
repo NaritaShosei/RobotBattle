@@ -20,6 +20,7 @@ public class InputManager : MonoBehaviour
     public InputAction DashAction { get; private set; }
     public InputAction WeaponChangeAction { get; private set; }
     public InputAction ReloadAction { get; private set; }
+    public InputAction SpecialAction { get; private set; }
     public InputAction UINavigateAction { get; private set; }
     public InputAction UISubmitAction { get; private set; }
 
@@ -58,6 +59,7 @@ public class InputManager : MonoBehaviour
         DashAction = _inputActions.Player.Dash;
         WeaponChangeAction = _inputActions.Player.WeaponChange;
         ReloadAction = _inputActions.Player.Reload;
+        SpecialAction = _inputActions.Player.Special;
 
         UINavigateAction = _inputActions.UI.Navigate;
         UISubmitAction = _inputActions.UI.Submit;
