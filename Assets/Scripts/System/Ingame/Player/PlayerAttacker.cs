@@ -46,8 +46,11 @@ public class PlayerAttacker : MonoBehaviour
         SetupUI();
         SetupIK();
         SetupInput();
+
+        _specialGauge = new SpecialGauge();
     }
 
+    #region 初期化処理
     private void InitializeReferences()
     {
         _input = ServiceLocator.Get<InputManager>();
@@ -61,8 +64,8 @@ public class PlayerAttacker : MonoBehaviour
         var manager = ServiceLocator.Get<EquipmentManager>();
 
         //初期装備の設定
-        _mainWeapon = manager.SpawnWeapon(EquipmentType.Main, _mainParent);
-        _subWeapon = manager.SpawnWeapon(EquipmentType.Sub, _subParent);
+        _mainWeapon = manager.SpawnWeapon(WeaponType.Main, _mainParent);
+        _subWeapon = manager.SpawnWeapon(WeaponType.Sub, _subParent);
     }
 
     private void SetupInput()
@@ -88,6 +91,8 @@ public class PlayerAttacker : MonoBehaviour
         _lockOn.SetRange(_mainWeapon.Data.Range);
     }
 
+    #endregion
+
     void Update()
     {
 #if UNITY_EDITOR
@@ -110,6 +115,9 @@ public class PlayerAttacker : MonoBehaviour
             return;
         }
         if (_gameManager.IsPaused) { return; }
+
+        // Debug用に適当なロジック
+        _specialGauge.UpdateValue(1);
 
         //残弾数を渡す
         // TODO:イベント駆動にしたほうがきれい
