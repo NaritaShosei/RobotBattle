@@ -27,9 +27,9 @@ public class PlayerAttacker : MonoBehaviour
     private IngameManager _gameManager;
     private LockOn _lockOn;
     private PlayerController _playerController;
+    private PlayerEquipmentManager _playerEquipmentManager;
 
-    [Header("武器を装備する位置")]
-    [SerializeField] private Transform _mainParent;
+    [Header("サブ武器を装備する位置")]
     [SerializeField] private Transform _subParent;
 
     // 攻撃待機状態
@@ -57,6 +57,7 @@ public class PlayerAttacker : MonoBehaviour
         _gameManager = ServiceLocator.Get<IngameManager>();
         _lockOn = ServiceLocator.Get<LockOn>();
         _playerController = GetComponent<PlayerController>();
+        _playerEquipmentManager = ServiceLocator.Get<PlayerEquipmentManager>();
     }
 
     private void SetupWeapons()
@@ -64,8 +65,8 @@ public class PlayerAttacker : MonoBehaviour
         var manager = ServiceLocator.Get<EquipmentManager>();
 
         //初期装備の設定
-        _mainWeapon = manager.SpawnWeapon(WeaponType.Main);
-        _subWeapon = manager.SpawnWeapon(WeaponType.Sub);
+        _mainWeapon = manager.SpawnMainWeapon(_playerEquipmentManager);
+        _subWeapon = manager.SpawnSubWeapon(_subParent);
     }
 
     private void SetupInput()
@@ -186,7 +187,9 @@ public class PlayerAttacker : MonoBehaviour
     {
         var seq = DOTween.Sequence();
 
-        _mainWeapon.transform.SetParent(_mainParent);
+        var mainParent = _playerEquipmentManager.GetEquipmentParent(_mainWeapon.Data.EquipmentType);
+
+        _mainWeapon.transform.SetParent(mainParent);
         _subWeapon.transform.SetParent(_subParent);
 
         await seq.Append(_mainWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
