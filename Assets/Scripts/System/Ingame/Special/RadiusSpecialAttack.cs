@@ -6,7 +6,7 @@ public class RadiusSpecialAttack : SpecialAttackBase
     [SerializeField] private SphereCollider _collider;
     [SerializeField] private GameObject _viewObj;
 
-    private void Awake()
+    protected override void OnInitialize()
     {
         if (!_collider)
         {
@@ -24,7 +24,6 @@ public class RadiusSpecialAttack : SpecialAttackBase
         }
     }
 
-    [ContextMenu("範囲必殺技")]
     public override async UniTask SpecialAttack()
     {
         _collider.enabled = true;
