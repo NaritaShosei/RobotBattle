@@ -20,6 +20,7 @@ public class RadiusSpecialAttack : SpecialAttackBase
         if (_viewObj)
         {
             _viewObj.transform.localScale = Vector3.one * _collider.radius * 2;
+            _viewObj.SetActive(false);
         }
     }
 
@@ -28,6 +29,9 @@ public class RadiusSpecialAttack : SpecialAttackBase
     {
         _collider.enabled = true;
 
+        if (_viewObj)
+            _viewObj.SetActive(true);
+
         try
         {
             await UniTask.Delay((int)(1000 * Data.Duration), cancellationToken: destroyCancellationToken);
@@ -35,6 +39,9 @@ public class RadiusSpecialAttack : SpecialAttackBase
         catch { }
 
         _collider.enabled = false;
+
+        if (_viewObj)
+            _viewObj.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
