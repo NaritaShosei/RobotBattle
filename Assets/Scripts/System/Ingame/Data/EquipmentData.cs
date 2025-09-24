@@ -6,9 +6,11 @@ public class EquipmentData
 {
     [SerializeField] private PlayerEquipment _currentLoadout = new PlayerEquipment();
     [SerializeField] private List<int> _unlockedWeaponIDs = new List<int>();
+    [SerializeField] private List<int> _unlockedSpecialIDs = new List<int>();
 
     public PlayerEquipment CurrentLoadout => _currentLoadout;
     public List<int> UnlockedWeaponIds => _unlockedWeaponIDs;
+    public List<int> UnlockedSpecialIds => _unlockedSpecialIDs;
 
     // 武器のアンロック
     public bool UnlockWeapon(int weaponId)
@@ -16,6 +18,17 @@ public class EquipmentData
         if (!_unlockedWeaponIDs.Contains(weaponId))
         {
             _unlockedWeaponIDs.Add(weaponId);
+            return true;
+        }
+        return false;
+    }
+
+    // 必殺技のアンロック
+    public bool UnlockSpecial(int specialId)
+    {
+        if (!_unlockedSpecialIDs.Contains(specialId))
+        {
+            _unlockedSpecialIDs.Add(specialId);
             return true;
         }
         return false;
@@ -35,6 +48,15 @@ public class EquipmentData
                 _currentLoadout.SecondWeaponId = weaponId;
                 break;
         }
+
+        return true;
+    }
+
+    public bool EquipSpecial(int specialId)
+    {
+        if (!_unlockedSpecialIDs.Contains(specialId)) return false;
+
+        _currentLoadout.SpecialID = specialId;
 
         return true;
     }
