@@ -91,6 +91,14 @@ public class PlayerController : Character_B<PlayerData>
         //ポーズ中は何もしない
         if (_gameManager.IsPaused) { return; }
 
+        // 必殺技中は移動・回転を完全停止
+        if (_playerManager.IsState(PlayerState.SpecialAttack))
+        {
+            StopAllMovement(); // 新規メソッド
+            StopTargetRotation(); // 目標回転も停止
+            return;
+        }
+
         //ガードのコライダーのon・off
         GuardVisibleChange();
 
@@ -161,6 +169,8 @@ public class PlayerController : Character_B<PlayerData>
     /// </summary>
     private void HandleRotation()
     {
+        if (_playerManager.IsState(PlayerState.SpecialAttack)) return;
+
         Vector3 targetDirection;
 
         // 目標への回転が有効な場合
@@ -206,6 +216,10 @@ public class PlayerController : Character_B<PlayerData>
     {
         _shouldRotateToTarget = false;
         _attackToRotationTargetDir = Vector3.zero;
+
+        var forward = transform.forward;
+        forward.y = 0;
+        transform.forward = forward;
 
         // 追尾終了時に重力をかけなおす
         _rb.useGravity = true;
@@ -272,6 +286,8 @@ public class PlayerController : Character_B<PlayerData>
     /// <param name="onCanceled">キャンセル時のコールバック</param>
     public void StartAutoMovement(Transform target, System.Action onComplete = null, System.Action onCanceled = null)
     {
+        if (_playerManager.IsState(PlayerState.SpecialAttack)) return;
+
         if (_isAutoMoving)
         {
             Debug.LogWarning("既に自動移動中です");
@@ -354,6 +370,27 @@ public class PlayerController : Character_B<PlayerData>
         _velocity = Vector2.zero;
         _moveDir = Vector3.zero;
     }
+    /// <summary>
+    /// すべての移動要素を停止
+    /// </summary>
+    private void StopAllMovement()
+    {
+        // 入力をリセット
+        _velocity = Vector2.zero;
+        _moveDir = Vector3.zero;
+
+        // 各種フラグを停止
+        _isBoost = false;
+        _isDashed = false;
+        _isJumped = false;
+
+        // 物理的な移動も停止（Y軸は重力のため保持）
+        Vector3 currentVelocity = _rb.linearVelocity;
+        _rb.linearVelocity = new Vector3(0, currentVelocity.y, 0);
+
+        // 自動移動も停止
+        StopAutoMovement();
+    }
 
     /// <summary>
     /// 自動移動関連の変数をリセット
@@ -396,6 +433,14 @@ public class PlayerController : Character_B<PlayerData>
     private void FixedUpdate()
     {
         if (_gameManager.IsPaused) { return; }
+
+        if (_playerManager.IsState(PlayerState.SpecialAttack))
+        {
+            // 必殺技中は水平移動を完全に停止
+            Vector3 currentVelocity = _rb.linearVelocity;
+            _rb.linearVelocity = new Vector3(0, currentVelocity.y, 0);
+            return;
+        }
 
         //AddForceなどはFixedUpdateで
 
@@ -467,6 +512,8 @@ public class PlayerController : Character_B<PlayerData>
     {
         if (_gameManager.IsPaused) { return; }
 
+        if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
+
         //カメラのYを無視した正面と右の取得
         _camForward = _camera.transform.forward;
         _camRight = _camera.transform.right;
@@ -487,6 +534,7 @@ public class PlayerController : Character_B<PlayerData>
     void OnJump(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
+        if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
         _isJumped = context.phase == InputActionPhase.Started;
 
@@ -506,6 +554,8 @@ public class PlayerController : Character_B<PlayerData>
     void OnDash(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
+
+        if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
         // 自動移動中はダッシュを無効
         if (_isAutoMoving) return;
@@ -576,7 +626,7 @@ public class PlayerController : Character_B<PlayerData>
 
     void OnGuard(InputAction.CallbackContext context)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
         // 自動移動中はガードを無効
         if (_isAutoMoving) return;

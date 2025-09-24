@@ -2,9 +2,9 @@
 
 public class WeaponManager : MonoBehaviour
 {
-    [SerializeField] private WeaponDatabase _dataBase;
+    [SerializeField] private EquipmentDatabase _dataBase;
 
-    public WeaponDatabase DataBase => _dataBase;
+    public EquipmentDatabase DataBase => _dataBase;
 
     private void Awake()
     {

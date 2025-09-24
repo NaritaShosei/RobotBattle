@@ -20,7 +20,7 @@ public abstract class WeaponBase : MonoBehaviour
     public abstract void Reload();
     public abstract int Count { get; }
     public abstract Vector3 GetTargetPos();
-    public abstract void IKEnable(AimIK ik, bool enable);
+    public abstract bool  IKEnable();
     public virtual bool RequiresPlayerMovement() { return false; }
     public virtual Transform GetTarget() { return null; }
     public virtual bool IsTrackingActive() { return false; }

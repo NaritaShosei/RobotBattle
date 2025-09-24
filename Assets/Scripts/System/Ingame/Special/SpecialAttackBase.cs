@@ -3,8 +3,6 @@ using UnityEngine;
 
 public abstract class SpecialAttackBase : MonoBehaviour, IWeapon
 {
-    // DebugようにSerializeFieldにしている。後で削除
-    [SerializeField]
     private SpecialData _data;
     public SpecialData Data => _data;
 
@@ -16,7 +14,10 @@ public abstract class SpecialAttackBase : MonoBehaviour, IWeapon
     public void Initialize(SpecialData data)
     {
         _data = data;
+        OnInitialize();
     }
+
+    protected virtual void OnInitialize() { }
 
     /// <summary>
     /// 必殺技の発動

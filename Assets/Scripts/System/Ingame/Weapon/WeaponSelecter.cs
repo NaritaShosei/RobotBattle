@@ -40,7 +40,7 @@ public class WeaponSelector : MonoBehaviour
         // 購入できたら武器をアンロック
         _moneyManager.UseMoney(data.WeaponMoney);
 
-        _playerData.UnlockWeapon(data.WeaponID);
+        _playerData.UnlockWeapon(data.ID);
 
         OnUnlock?.Invoke();
 

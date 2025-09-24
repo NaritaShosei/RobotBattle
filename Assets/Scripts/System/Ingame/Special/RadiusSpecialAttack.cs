@@ -6,7 +6,7 @@ public class RadiusSpecialAttack : SpecialAttackBase
     [SerializeField] private SphereCollider _collider;
     [SerializeField] private GameObject _viewObj;
 
-    private void Awake()
+    protected override void OnInitialize()
     {
         if (!_collider)
         {
@@ -20,13 +20,16 @@ public class RadiusSpecialAttack : SpecialAttackBase
         if (_viewObj)
         {
             _viewObj.transform.localScale = Vector3.one * _collider.radius * 2;
+            _viewObj.SetActive(false);
         }
     }
 
-    [ContextMenu("範囲必殺技")]
     public override async UniTask SpecialAttack()
     {
         _collider.enabled = true;
+
+        if (_viewObj)
+            _viewObj.SetActive(true);
 
         try
         {
@@ -35,6 +38,9 @@ public class RadiusSpecialAttack : SpecialAttackBase
         catch { }
 
         _collider.enabled = false;
+
+        if (_viewObj)
+            _viewObj.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -42,6 +48,7 @@ public class RadiusSpecialAttack : SpecialAttackBase
         if (other.TryGetComponent(out IEnemySource enemy))
         {
             enemy.HitDamage(this);
+            ServiceLocator.Get<EffectManager>().PlayExplosion(enemy.GetTargetCenter().position);
         }
     }
 }

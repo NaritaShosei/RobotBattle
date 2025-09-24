@@ -2,6 +2,7 @@
 using DG.Tweening;
 using RootMotion.FinalIK;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -21,6 +22,7 @@ public class PlayerAttacker : MonoBehaviour
 
     private float _timer = 0;
     [SerializeField] private float _duration = 0.5f;
+    [SerializeField] private float _fadeOutDuration = 0.3f; // フェードアウト専用時間
     [SerializeField] private float _ikWeight = 0.846f;
     [SerializeField] private float _swapDuration = 0.5f;
 
@@ -37,17 +39,22 @@ public class PlayerAttacker : MonoBehaviour
     // 攻撃中の回転継続フラグ
     private bool _isRotatingDuringAttack = false;
 
+    // IK制御用の新しいフラグ
+    private bool _isIKActive = false;
+    private bool _shouldResetIK = false;
+    private bool _isIKFadingOut = false; // フェードアウト中フラグ
+    private float _currentIKWeight = 0f; // 現在のIKウェイト値を記録
+
     private SpecialGauge _specialGauge;
 
     private void Start()
     {
         InitializeReferences();
         SetupWeapons();
+        SetupSpecial();
         SetupUI();
         SetupIK();
         SetupInput();
-
-        _specialGauge = new SpecialGauge();
     }
 
     #region 初期化処理
@@ -69,6 +76,17 @@ public class PlayerAttacker : MonoBehaviour
         _subWeapon = manager.SpawnSubWeapon(_subParent);
     }
 
+    private void SetupSpecial()
+    {
+        _specialGauge = new SpecialGauge();
+
+        var manager = ServiceLocator.Get<EquipmentManager>();
+
+        _specialAttack = manager.SpawnSpecial(_playerEquipmentManager);
+
+        _specialGauge.Initialize(_specialAttack.Data.RequiredGauge);
+    }
+
     private void SetupInput()
     {
         _input.AttackAction.started += Attack;
@@ -83,6 +101,7 @@ public class PlayerAttacker : MonoBehaviour
         //IKの設定
         _aimIK = GetComponent<AimIK>();
         _aimIK.enabled = false;
+        _aimIK.solver.IKPositionWeight = 0f;
     }
 
     private void SetupUI()
@@ -114,9 +133,14 @@ public class PlayerAttacker : MonoBehaviour
                 _playerController.StopTargetRotation();
                 _isRotatingDuringAttack = false;
             }
+            // IKも強制リセット
+            ForceResetIK();
             return;
         }
+
         if (_gameManager.IsPaused) { return; }
+
+        if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
         // Debug用に適当なロジック
         _specialGauge.UpdateValue(1);
@@ -125,13 +149,83 @@ public class PlayerAttacker : MonoBehaviour
         // TODO:イベント駆動にしたほうがきれい
         _presenter.CountUpdate(_mainWeapon.Count);
 
-        //腕のIKの線形補間
-        if (_timer < _duration)
+        // IK制御の改善
+        UpdateIK();
+    }
+
+    /// <summary>
+    /// IK制御を独立したメソッドに分離
+    /// </summary>
+    private void UpdateIK()
+    {
+        if (_aimIK == null) return;
+
+        // フェードアウト中の処理
+        if (_isIKFadingOut)
         {
             _timer += Time.deltaTime;
-            float t = _timer / _duration;
-            float currentWeight = Mathf.Lerp(0f, _ikWeight, t);
-            _aimIK.solver.IKPositionWeight = currentWeight;
+            float t = Mathf.Clamp01(_timer / _fadeOutDuration);
+
+            _currentIKWeight = Mathf.Lerp(_currentIKWeight, 0f, t);
+            _aimIK.solver.IKPositionWeight = _currentIKWeight;
+
+            if (t >= 1f || _currentIKWeight < 0.001f)
+            {
+                // フェードアウト完了
+                _aimIK.solver.IKPositionWeight = 0f;
+                _aimIK.enabled = false;
+                _isIKActive = false;
+                _isIKFadingOut = false;
+                _shouldResetIK = false;
+                _currentIKWeight = 0f;
+                _timer = 0f;
+                Debug.Log("IKフェードアウト完了");
+            }
+            return;
+        }
+
+        // 攻撃状態以外では滑らかにフェードアウト
+        if (!_playerManager.IsState(PlayerState.Attack))
+        {
+            if (_aimIK.enabled && _currentIKWeight > 0f && !_isIKFadingOut)
+            {
+                StartIKFadeOut();
+                return;
+            }
+            else if (!_aimIK.enabled && _currentIKWeight <= 0f)
+            {
+                // 既に無効化済みの場合はそのまま
+                return;
+            }
+        }
+
+        // 強制リセットが必要な場合
+        if (_shouldResetIK)
+        {
+            _aimIK.solver.IKPositionWeight = 0f;
+            _aimIK.enabled = false;
+            _isIKActive = false;
+            _shouldResetIK = false;
+            _isIKFadingOut = false;
+            _currentIKWeight = 0f;
+            _timer = 0f;
+            Debug.Log("IKを強制リセットしました");
+            return;
+        }
+
+        // IKが有効でフェードイン中の場合
+        if (_isIKActive && _aimIK.enabled && _timer < _duration && !_isIKFadingOut)
+        {
+            _timer += Time.deltaTime;
+            float t = Mathf.Clamp01(_timer / _duration);
+
+            _currentIKWeight = Mathf.Lerp(0f, _ikWeight, t);
+            _aimIK.solver.IKPositionWeight = _currentIKWeight;
+        }
+        // IKが有効でなく、現在ウェイトが残っている場合は滑らかにフェードアウト
+        else if (!_isIKActive && _currentIKWeight > 0f && !_isIKFadingOut)
+        {
+            StartIKFadeOut();
         }
     }
 
@@ -140,12 +234,17 @@ public class PlayerAttacker : MonoBehaviour
         if (_gameManager.IsPaused) { return; }
 
         //IKのtargetの座標を設定する
-        _aimIK.solver.target.position = _mainWeapon.GetTargetPos();
+        if (_aimIK != null && _aimIK.enabled && _isIKActive)
+        {
+            _aimIK.solver.target.position = _mainWeapon.GetTargetPos();
+        }
     }
 
     async void WeaponChange(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
+
+        if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
         //Idle状態の時のみ武器変更可能
         if (_playerManager.IsState(PlayerState.Idle))
@@ -158,6 +257,9 @@ public class PlayerAttacker : MonoBehaviour
                 _playerController.StopTargetRotation();
                 _isRotatingDuringAttack = false;
             }
+
+            // IKを強制リセット
+            ForceResetIK();
 
             //装備中の武器を無効化
             _mainWeapon.SetAttack(false);
@@ -201,13 +303,9 @@ public class PlayerAttacker : MonoBehaviour
     {
         if (_gameManager.IsPaused) { return; }
 
-        bool isInput = context.phase == InputActionPhase.Started;
+        if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
-        if (_playerManager.IsState(PlayerState.Guard))
-        {
-            Debug.Log("Guard Now !!");
-            return;
-        }
+        bool isInput = context.phase == InputActionPhase.Started;
 
         //攻撃開始
         if (_playerManager.IsState(PlayerState.Idle) && isInput)
@@ -288,6 +386,8 @@ public class PlayerAttacker : MonoBehaviour
     private void OnAutoMoveCanceled()
     {
         _waitingForMovement = false;
+        // IKもリセット
+        ForceResetIK();
         Debug.Log("接近がキャンセルされました");
         // Idle状態に戻る（PlayerControllerで既に設定済み）
     }
@@ -303,10 +403,9 @@ public class PlayerAttacker : MonoBehaviour
 
         // レイヤー切り替え
         _anim.SetWeight(AnimationLayer.Attack, 1);
-        _mainWeapon.IKEnable(_aimIK, true);
 
-        //IKの線形補間の時間初期化
-        _timer = 0;
+        // IKを有効化
+        EnableIK();
 
         // 近接武器の場合、攻撃中も目標への回転を継続
         if (_mainWeapon.RequiresPlayerMovement())
@@ -322,7 +421,6 @@ public class PlayerAttacker : MonoBehaviour
 
         Debug.Log("攻撃開始");
 
-
         // とりあえずのデバッグ用、のちに修正
         if (_mainWeapon as ShortRangeWeapon_B)
         {
@@ -337,13 +435,15 @@ public class PlayerAttacker : MonoBehaviour
     {
         _playerManager.SetState(PlayerState.Idle);
 
+        // IKを自然にフェードアウト
+        StartIKFadeOut();
+
         _anim.SetBool("IsMissileAttack", false);
 
         // レイヤー切り替え
         _anim.SetWeight(AnimationLayer.Attack, 0);
 
         _mainWeapon.SetAttack(false);
-        _mainWeapon.IKEnable(_aimIK, false);
 
         // 攻撃中の回転を停止
         if (_isRotatingDuringAttack)
@@ -356,6 +456,73 @@ public class PlayerAttacker : MonoBehaviour
         Debug.Log("攻撃終了");
     }
 
+    /// <summary>
+    /// IKを有効化する
+    /// </summary>
+    private void EnableIK()
+    {
+        if (_aimIK != null && _mainWeapon.IKEnable())
+        {
+            _aimIK.enabled = true;
+            _isIKActive = true;
+            _shouldResetIK = false;
+            _isIKFadingOut = false;
+            _timer = 0f; // タイマーをリセット
+            // 現在のウェイトから開始（滑らかな継続）
+            _currentIKWeight = _aimIK.solver.IKPositionWeight;
+            Debug.Log("IKを有効化しました");
+        }
+    }
+
+    /// <summary>
+    /// IKのフェードアウトを開始
+    /// </summary>
+    private void StartIKFadeOut()
+    {
+        if (_aimIK != null && (_aimIK.enabled || _currentIKWeight > 0f))
+        {
+            _isIKActive = false;
+            _isIKFadingOut = true;
+            _shouldResetIK = false;
+            _timer = 0f; // フェードアウト用にタイマーリセット
+            // 現在のウェイト値を保持してそこからフェードアウト
+            _currentIKWeight = _aimIK.solver.IKPositionWeight;
+            Debug.Log($"IKフェードアウト開始 (開始ウェイト: {_currentIKWeight:F3})");
+        }
+        else
+        {
+            // 既に無効な場合は即座にリセット
+            ForceResetIK();
+        }
+    }
+
+    /// <summary>
+    /// IKをリセットする
+    /// </summary>
+    private void ResetIK()
+    {
+        _shouldResetIK = true;
+        Debug.Log("IKリセットをスケジュール");
+    }
+
+    /// <summary>
+    /// IKを強制的にリセットする（即座に実行）
+    /// </summary>
+    private void ForceResetIK()
+    {
+        if (_aimIK != null)
+        {
+            _aimIK.solver.IKPositionWeight = 0f;
+            _aimIK.enabled = false;
+            _isIKActive = false;
+            _shouldResetIK = false;
+            _isIKFadingOut = false;
+            _currentIKWeight = 0f;
+            _timer = 0f;
+            Debug.Log("IKを強制リセットしました");
+        }
+    }
+
     //AnimationEventで呼び出す、攻撃開始、終了の処理
     private void IsAttack()
     {
@@ -366,12 +533,61 @@ public class PlayerAttacker : MonoBehaviour
     private void Reload(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
+
+        if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
+
         _mainWeapon.Reload();
     }
 
-    private void Special(InputAction.CallbackContext context)
+    private async void Special(InputAction.CallbackContext context)
     {
+        // 必殺技中の重複実行を防止
+        if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
+        if (_playerManager.IsState(PlayerState.Idle) && _specialGauge.TryUseGauge())
+        {
+            Debug.LogError("必殺技発動");
+
+            // 必殺技状態に変更（他の処理より先に）
+            _playerManager.SetState(PlayerState.SpecialAttack);
+
+            // 必殺技開始前にすべての動作を停止
+            StopAllMovementAndRotation();
+
+            await _specialAttack.SpecialAttack();
+
+            _playerManager.SetState(PlayerState.Idle);
+            Debug.LogError("必殺技終了");
+        }
+    }
+
+    private void StopAllMovementAndRotation()
+    {
+        // 武器攻撃を停止
+        _mainWeapon.SetAttack(false);
+
+        // 攻撃中の回転を停止
+        if (_isRotatingDuringAttack)
+        {
+            _playerController.StopTargetRotation();
+            _isRotatingDuringAttack = false;
+        }
+
+        // 自動移動を停止
+        if (_playerController.IsAutoMoving)
+        {
+            _playerController.CancelAutoMovement();
+            _waitingForMovement = false;
+        }
+
+        // IKを強制リセット
+        ForceResetIK();
+
+        // アニメーション状態もリセット
+        _anim.SetBool("IsMissileAttack", false);
+        _anim.SetWeight(AnimationLayer.Attack, 0);
+
+        Debug.Log("必殺技開始：すべての動作を停止しました");
     }
 
     private void OnDisable()
@@ -388,5 +604,8 @@ public class PlayerAttacker : MonoBehaviour
             _playerController.StopTargetRotation();
             _isRotatingDuringAttack = false;
         }
+
+        // IKも強制リセット
+        ForceResetIK();
     }
 }

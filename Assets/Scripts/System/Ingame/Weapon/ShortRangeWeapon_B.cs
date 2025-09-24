@@ -175,9 +175,9 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
         return _targetPos;
     }
 
-    public override void IKEnable(AimIK ik, bool enable)
+    public override bool IKEnable()
     {
-        // IKは不要
+        return false;
     }
 
     public float GetAttackPower()

@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private WeaponType _type;
-    private WeaponDatabase _weaponDatabase;
+    private EquipmentDatabase _weaponDatabase;
     [SerializeField] private WeaponCell _weaponCell;
     [SerializeField] private Transform _cellParent;
     [SerializeField] private WeaponExplanation _explanation;
@@ -41,9 +41,9 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
             WeaponType.Main => _selector.PlayerData.CurrentLoadout.PrimaryWeaponId,
             WeaponType.Sub => _selector.PlayerData.CurrentLoadout.SecondWeaponId,
         };
-        _currentCell = _cells.First(cell => cell.WeaponData.WeaponID == equippedID);
+        _currentCell = _cells.First(cell => cell.WeaponData.ID == equippedID);
         _currentCell.Select();
-        SetExplanation(_currentCell.WeaponData.WeaponID);
+        SetExplanation(_currentCell.WeaponData.ID);
     }
     private void ResetUI()
     {
@@ -76,8 +76,8 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
             _currentCell = cell;
             _currentCell.Select();
 
-            _selector.SelectWeapon(_type, _currentCell.WeaponData.WeaponID);
-            SetExplanation(_currentCell.WeaponData.WeaponID);
+            _selector.SelectWeapon(_type, _currentCell.WeaponData.ID);
+            SetExplanation(_currentCell.WeaponData.ID);
         }
     }
     /// <summary>

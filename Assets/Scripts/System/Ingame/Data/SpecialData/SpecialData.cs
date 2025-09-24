@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "EquipmentData/SpecialData", fileName = "SpecialData")]
-public class SpecialData : ScriptableObject
+public class SpecialData : ScriptableObject,IData
 {
     [Header("基本情報")]
     [SerializeField] private int _id;

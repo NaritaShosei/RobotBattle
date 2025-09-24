@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class WeaponShopView : MonoBehaviour, IPointerClickHandler
 {
-    private WeaponDatabase _weaponDatabase;
+    private EquipmentDatabase _weaponDatabase;
     [SerializeField] private WeaponCell _weaponCell;
     [SerializeField] private Transform _cellParent;
     [SerializeField] private WeaponExplanation _explanation;
@@ -28,7 +28,7 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
     private void SetUI()
     {
         int[] unlockedIds = _selector.GetUnlockIDs().ToArray();
-        int[] allIds = _weaponDatabase.GetAllWeapons().Select(d => d.WeaponID).ToArray();
+        int[] allIds = _weaponDatabase.GetAllWeaponData().Select(d => d.ID).ToArray();
 
         int[] lockedIds = allIds.Except(unlockedIds).ToArray();
 
@@ -50,7 +50,7 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
         {
             _currentCell = _cells[0];
             _currentCell.Select();
-            SetExplanation(_currentCell.WeaponData.WeaponID);
+            SetExplanation(_currentCell.WeaponData.ID);
             return;
         }
 
@@ -90,7 +90,7 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
             _currentCell = cell;
             _currentCell.Select();
 
-            SetExplanation(_currentCell.WeaponData.WeaponID);
+            SetExplanation(_currentCell.WeaponData.ID);
         }
     }
 
