@@ -91,6 +91,8 @@ public class PlayerController : Character_B<PlayerData>
         //ポーズ中は何もしない
         if (_gameManager.IsPaused) { return; }
 
+        if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
+
         //ガードのコライダーのon・off
         GuardVisibleChange();
 

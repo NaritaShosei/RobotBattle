@@ -2,6 +2,7 @@
 using DG.Tweening;
 using RootMotion.FinalIK;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -43,11 +44,10 @@ public class PlayerAttacker : MonoBehaviour
     {
         InitializeReferences();
         SetupWeapons();
+        SetupSpecial();
         SetupUI();
         SetupIK();
         SetupInput();
-
-        _specialGauge = new SpecialGauge();
     }
 
     #region 初期化処理
@@ -67,6 +67,17 @@ public class PlayerAttacker : MonoBehaviour
         //初期装備の設定
         _mainWeapon = manager.SpawnMainWeapon(_playerEquipmentManager);
         _subWeapon = manager.SpawnSubWeapon(_subParent);
+    }
+
+    private void SetupSpecial()
+    {
+        _specialGauge = new SpecialGauge();
+
+        var manager = ServiceLocator.Get<EquipmentManager>();
+
+        _specialAttack = manager.SpawnSpecial(_playerEquipmentManager);
+
+        _specialGauge.Initialize(_specialAttack.Data.RequiredGauge);
     }
 
     private void SetupInput()
@@ -369,9 +380,16 @@ public class PlayerAttacker : MonoBehaviour
         _mainWeapon.Reload();
     }
 
-    private void Special(InputAction.CallbackContext context)
+    private async void Special(InputAction.CallbackContext context)
     {
-
+        Debug.LogError(9);
+        if (_playerManager.IsState(PlayerState.Idle) && _specialGauge.TryUseGauge())
+        {
+            Debug.LogError("必殺技発動");
+            _playerManager.SetState(PlayerState.SpecialAttack);
+            await _specialAttack.SpecialAttack();
+            _playerManager.SetState(PlayerState.Idle);
+        }
     }
 
     private void OnDisable()
