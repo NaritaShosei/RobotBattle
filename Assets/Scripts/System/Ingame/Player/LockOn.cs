@@ -44,18 +44,26 @@ public class LockOn : MonoBehaviour
         _lockOnTarget = null;
 
         //EnemyListをEnemyManagerから参照する
-        foreach (var enemy in _enemyManager.Enemies.Where(x => x.IsTargetInView()))
+        foreach (var enemy in _enemyManager.Enemies)
         {
+            // カメラ内チェック
+            if (!enemy.IsTargetInView()) continue;
+
+            // 実際のPlayerの視界ではなく、カメラベースでロックオン
+
             Vector3 enemyPos = enemy.GetTargetCenter().position;
 
             //距離チェック
             Vector3 dirToEnemy = enemyPos - _player.position;
-            if (dirToEnemy.magnitude > _maxDistance) continue;
+
+            float maxDistanceSqr = _maxDistance * _maxDistance;
+            if (dirToEnemy.sqrMagnitude > maxDistanceSqr) continue;
 
 
             //視野角チェック
-            float angleToEnemy = Vector3.Angle(_player.forward, dirToEnemy);
-            if (angleToEnemy > _viewAngle * 0.5f) continue;
+            Vector3 dirNormalized = dirToEnemy.normalized;
+            float dot = Vector3.Dot(_camera.transform.forward, dirNormalized);
+            if (dot < Mathf.Cos(_viewAngle * 0.5f * Mathf.Deg2Rad)) continue;
 
 
             //実際に見えているかチェック
@@ -187,11 +195,11 @@ public class LockOn : MonoBehaviour
         int segments = 20;
         Vector3 prevPos = cameraPos + forwardRight * _maxDistance;
 
-        for (int i = 1; i <= segments; i++)
+        for (int i = 0; i <= segments; i++)
         {
-            float angle = _viewAngle * ((float)i / segments - 0.5f);
-            Vector3 direction = Quaternion.AngleAxis(angle, up) * forward;
-            Vector3 pos = cameraPos + direction * _maxDistance;
+            float angle = Mathf.Lerp(-_viewAngle * 0.5f, _viewAngle * 0.5f, (float)i / segments);
+            Vector3 dir = Quaternion.AngleAxis(angle, up) * forward;
+            Vector3 pos = cameraPos + dir * _maxDistance;
             Gizmos.DrawLine(prevPos, pos);
             prevPos = pos;
         }
