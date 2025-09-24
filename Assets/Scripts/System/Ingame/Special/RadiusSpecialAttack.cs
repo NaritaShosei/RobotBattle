@@ -49,6 +49,7 @@ public class RadiusSpecialAttack : SpecialAttackBase
         if (other.TryGetComponent(out IEnemySource enemy))
         {
             enemy.HitDamage(this);
+            ServiceLocator.Get<EffectManager>().PlayExplosion(enemy.GetTargetCenter().position);
         }
     }
 }
