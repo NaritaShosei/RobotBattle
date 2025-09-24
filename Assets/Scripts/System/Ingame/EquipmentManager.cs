@@ -14,11 +14,7 @@ public class EquipmentManager : MonoBehaviour
         var data = SaveLoadService.Load<EquipmentData>();
         _mainID = data.CurrentLoadout.PrimaryWeaponId;
         _subID = data.CurrentLoadout.SecondWeaponId;
-    }
-
-    private void Start()
-    {
-
+        _specialID = data.CurrentLoadout.SpecialID;
     }
 
     public WeaponBase SpawnMainWeapon(PlayerEquipmentManager playerEquipmentManager)
@@ -57,8 +53,22 @@ public class EquipmentManager : MonoBehaviour
 
     public SpecialAttackBase SpawnSpecial(PlayerEquipmentManager playerEquipmentManager)
     {
-        // データベースからIDで検索できる機能ができたら生成処理
-        return null;
+        var specialData = ServiceLocator.Get<WeaponManager>().DataBase.GetSpecial(_specialID);
+
+        if (specialData?.Prefab == null) { Debug.LogWarning("プレハブが設定されていません"); return null; }
+
+        var parent = playerEquipmentManager.GetEquipmentParent(specialData.EquipmentType);
+
+        var specialObj = Instantiate(specialData.Prefab, parent);
+
+        if (!specialObj.TryGetComponent(out SpecialAttackBase specialAttack))
+        {
+            Debug.LogWarning("プレハブにWeaponBaseがアタッチされていません"); return null;
+        }
+
+        specialAttack.Initialize(specialData);
+
+        return specialAttack;
     }
 }
 public enum WeaponType
