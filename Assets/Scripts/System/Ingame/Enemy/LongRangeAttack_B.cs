@@ -26,7 +26,7 @@ public class LongRangeAttack_B : WeaponBase
         return default;
     }
 
-    public override void IKEnable(AimIK ik, bool enable) { }
+    public override bool IKEnable() { return true; }
 
     public override async void Reload()
     {
