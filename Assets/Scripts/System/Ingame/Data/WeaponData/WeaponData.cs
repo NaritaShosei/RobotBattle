@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "EquipmentData/WeaponData", fileName = "WeaponData")]
-public class WeaponData : ScriptableObject
+public class WeaponData : ScriptableObject,IData
 {
     [Header("基本情報")]
     [SerializeField] private int _weaponID;
@@ -22,7 +22,7 @@ public class WeaponData : ScriptableObject
     [Header("装備情報")]
     [SerializeField] private GameObject _weaponPrefab;
     [SerializeField] private EquipmentType _equipmentType;
-    public int WeaponID => _weaponID;
+    public int ID => _weaponID;
     public string WeaponName => _weaponName;
     public Sprite WeaponIcon => _weaponIcon;
     public int WeaponMoney => _weaponMoney;
