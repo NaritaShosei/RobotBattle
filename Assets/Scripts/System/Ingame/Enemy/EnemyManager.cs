@@ -9,7 +9,6 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private List<EnemySpawner> _spawners = new();
     [SerializeField] private List<GameObject> _spawnEnemies = new();
 
-
     List<IEnemySource> _enemies = new();
     public List<IEnemySource> Enemies => _enemies;
     public bool IsEnemyAllDefeated => _enemies.Count == 0;
@@ -85,6 +84,11 @@ public class EnemyManager : MonoBehaviour
         if (_enemies.Contains(enemy))
         {
             _enemies.Remove(enemy);
+        }
+
+        if (IsEnemyAllDefeated)
+        {
+            // TODOBoss戦に遷移
         }
     }
 
