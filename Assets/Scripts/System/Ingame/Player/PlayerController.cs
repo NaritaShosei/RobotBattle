@@ -399,6 +399,8 @@ public class PlayerController : Character_B<PlayerData>
     {
         if (_gameManager.IsPaused) { return; }
 
+        if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
+
         //AddForceなどはFixedUpdateで
 
         // 重力
@@ -489,6 +491,7 @@ public class PlayerController : Character_B<PlayerData>
     void OnJump(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
+        if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
         _isJumped = context.phase == InputActionPhase.Started;
 
