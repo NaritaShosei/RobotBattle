@@ -11,6 +11,7 @@ public class PlayerAttacker : MonoBehaviour
 {
     [SerializeField] private PlayerManager _playerManager;
     [SerializeField] private AnimationController _anim;
+    [SerializeField] private float _animationWeight = 0.5f;
 
     private WeaponBase _mainWeapon;
     private WeaponBase _subWeapon;
@@ -402,7 +403,7 @@ public class PlayerAttacker : MonoBehaviour
         _anim.SetBool("IsMissileAttack", true);
 
         // レイヤー切り替え
-        _anim.SetWeight(AnimationLayer.Attack, 1);
+        _anim.SetWeight(AnimationLayer.Attack, _animationWeight);
 
         // IKを有効化
         EnableIK();
