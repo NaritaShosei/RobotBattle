@@ -9,6 +9,7 @@ public class PlayerController : Character_B<PlayerData>
     [SerializeField] PlayerData _dataBase;
     [SerializeField] GuardCollider _collider;
     [SerializeField] float _rotateSpeed = 10;
+    [SerializeField] private GhostSpawner _ghostSpawner;
 
     Rigidbody _rb;
     InputManager _input;
@@ -94,7 +95,7 @@ public class PlayerController : Character_B<PlayerData>
         // 必殺技中は移動・回転を完全停止
         if (_playerManager.IsState(PlayerState.SpecialAttack))
         {
-            StopAllMovement(); // 新規メソッド
+            StopAllMovement(); 
             StopTargetRotation(); // 目標回転も停止
             return;
         }
@@ -109,7 +110,7 @@ public class PlayerController : Character_B<PlayerData>
             _isDashed = false;
             _isGuard = false;
             _isJumped = false;
-            StopAutoMovement(); // 自動移動も停止
+            StopAllMovement(); // 自動移動も停止
             StopTargetRotation(); // 目標回転も停止
             return;
         }
@@ -390,6 +391,9 @@ public class PlayerController : Character_B<PlayerData>
 
         // 自動移動も停止
         StopAutoMovement();
+
+        // 残像の停止処理
+        StopGhost();
     }
 
     /// <summary>
@@ -417,18 +421,6 @@ public class PlayerController : Character_B<PlayerData>
     /// 自動移動中かどうか
     /// </summary>
     public bool IsAutoMoving => _isAutoMoving;
-
-    /// <summary>
-    /// 自動移動の進捗（0.0～1.0）
-    /// </summary>
-    public float AutoMovementProgress
-    {
-        get
-        {
-            if (!_isAutoMoving) return 0f;
-            return Mathf.Clamp01(_autoMoveTimer / _maxAutoMoveTime);
-        }
-    }
 
     private void FixedUpdate()
     {
@@ -596,11 +588,16 @@ public class PlayerController : Character_B<PlayerData>
                 //線形補間のtargetの設定
                 _dashTargetPos = transform.position + moveDir * _data.DashDistance;
             }
+
+            _ghostSpawner.StartSpawning();
         }
 
         if (context.phase == InputActionPhase.Canceled)
         {
             _isBoost = false;
+
+            // 残像の停止処理
+            StopGhost();
         }
     }
 
@@ -621,6 +618,17 @@ public class PlayerController : Character_B<PlayerData>
         {
             _conflictObj = null;
             _isDashed = false;
+
+            // 残像の停止処理
+            StopGhost();
+        }
+    }
+
+    private void StopGhost()
+    {
+        if (!_isDashed && !_isBoost)
+        {
+            _ghostSpawner.StopSpawning();
         }
     }
 
