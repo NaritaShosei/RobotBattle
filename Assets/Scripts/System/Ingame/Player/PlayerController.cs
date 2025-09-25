@@ -434,6 +434,12 @@ public class PlayerController : Character_B<PlayerData>
     {
         if (_gameManager.IsPaused) { return; }
 
+        //AddForceなどはFixedUpdateで
+
+        // 重力
+        float fallSpeed = _rb.useGravity ? _data.FallSpeed : 0f;
+        _rb.AddForce(Vector3.down * fallSpeed, ForceMode.Force);
+
         if (_playerManager.IsState(PlayerState.SpecialAttack))
         {
             // 必殺技中は水平移動を完全に停止
@@ -441,12 +447,6 @@ public class PlayerController : Character_B<PlayerData>
             _rb.linearVelocity = new Vector3(0, currentVelocity.y, 0);
             return;
         }
-
-        //AddForceなどはFixedUpdateで
-
-        // 重力
-        float fallSpeed = _rb.useGravity ? _data.FallSpeed : 0f;
-        _rb.AddForce(Vector3.down * fallSpeed, ForceMode.Force);
 
         if (_isDashed)
         {
