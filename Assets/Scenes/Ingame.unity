@@ -2959,10 +2959,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _freeLookCamera: {fileID: 222685864}
+  _lookCamera: {fileID: 222685865}
   _cameraSensitivityX: 3.37
   _invertX: 1
   _cameraSensitivityY: 1.2
   _invertY: 0
+  _defaultLens: 56.3
+  _fastLens: 95
+  _lerpValue: 0.205
 --- !u!4 &1246506307
 Transform:
   m_ObjectHideFlags: 0
