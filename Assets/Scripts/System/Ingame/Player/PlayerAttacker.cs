@@ -331,6 +331,7 @@ public class PlayerAttacker : MonoBehaviour
                         _waitingForMovement = true;
                         _playerController.StartAutoMovement(
                             targetTransform,
+                            _mainWeapon.Data.AttackSpeed,
                             onComplete: OnAutoMoveComplete,
                             onCanceled: OnAutoMoveCanceled
                         );

@@ -50,6 +50,8 @@ public class PlayerController : Character_B<PlayerData>
     public float ArriveThreshold => _arriveThreshold; // PlayerAttackからアクセスするためpublic
     [SerializeField] private float _maxAutoMoveTime = 3f;
 
+    private float _autoMoveSpeed;
+
     private bool _isAutoMoving = false;
     private Transform _autoMoveTarget;
     private float _autoMoveTimer = 0f;
@@ -63,6 +65,7 @@ public class PlayerController : Character_B<PlayerData>
     private HPGaugePresenter _healthPresenter;
     private GaugePresenter _gaugePresenter;
     private IngameManager _gameManager;
+    private CameraManager _cameraManager;
     private Camera _camera;
 
     void Start()
@@ -71,6 +74,8 @@ public class PlayerController : Character_B<PlayerData>
         AddAction();
 
         _gameManager = ServiceLocator.Get<IngameManager>();
+
+        _cameraManager = ServiceLocator.Get<CameraManager>();
         _rb = GetComponent<Rigidbody>();
 
         Initialize(_dataBase);
@@ -266,7 +271,7 @@ public class PlayerController : Character_B<PlayerData>
 
             // 目標地点に向かって移動
             // 移動方向を設定（既存のMove関数を利用するため）
-            Vector3 moveDirection = direction * _data.BoostSpeed;
+            Vector3 moveDirection = direction * _autoMoveSpeed;
 
             _rb.linearVelocity = moveDirection;
 
@@ -285,7 +290,7 @@ public class PlayerController : Character_B<PlayerData>
     /// <param name="target">移動先の標的</param>
     /// <param name="onComplete">到達時のコールバック</param>
     /// <param name="onCanceled">キャンセル時のコールバック</param>
-    public void StartAutoMovement(Transform target, System.Action onComplete = null, System.Action onCanceled = null)
+    public void StartAutoMovement(Transform target, float speed, System.Action onComplete = null, System.Action onCanceled = null)
     {
         if (_playerManager.IsState(PlayerState.SpecialAttack)) return;
 
@@ -297,6 +302,7 @@ public class PlayerController : Character_B<PlayerData>
 
         // ターゲットは敵の中心を渡されている
         _autoMoveTarget = target;
+        _autoMoveSpeed = speed;
         _isAutoMoving = true;
         _autoMoveTimer = 0f;
         _onAutoMoveComplete = onComplete;
@@ -586,6 +592,8 @@ public class PlayerController : Character_B<PlayerData>
             }
 
             _ghostSpawner.StartSpawning();
+
+            _cameraManager.SetFastMode(true);
         }
 
         if (context.phase == InputActionPhase.Canceled)
@@ -625,6 +633,7 @@ public class PlayerController : Character_B<PlayerData>
         if (!_isDashed && !_isBoost)
         {
             _ghostSpawner.StopSpawning();
+            _cameraManager.SetFastMode(false);
         }
     }
 
