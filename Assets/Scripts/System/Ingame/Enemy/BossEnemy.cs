@@ -165,13 +165,4 @@ public class BossEnemy : Enemy_B<EnemyData_B>
         // 最終的な目標位置を設定
         _targetPos = candidateTarget;
     }
-
-    /// <summary>
-    /// とりあえずのデバッグ用
-    /// </summary>
-    /// <param name="other"></param>
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log(_data.Health);
-    }
 }

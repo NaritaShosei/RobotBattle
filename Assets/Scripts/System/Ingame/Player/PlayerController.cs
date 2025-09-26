@@ -22,17 +22,17 @@ public class PlayerController : Character_B<PlayerData>
     /// <summary>
     /// 入力情報の保持
     /// </summary>
-    Vector2 _velocity;
-    Vector3 _camForward;
-    Vector3 _camRight;
-    Vector3 _moveDir;
-    Vector3 _dashStartPos;
-    Vector3 _dashTargetPos;
+    [Tooltip("移動の入力ベクトル")] private Vector2 _velocity;
+    private Vector3 _camForward;
+    private Vector3 _camRight;
+    private Vector3 _moveDir;
+    private Vector3 _dashStartPos;
+    private Vector3 _dashTargetPos;
 
     /// <summary>
     /// 線形補完によって出されたダッシュ時の座標
     /// </summary>
-    Vector3 _newPos;
+    private Vector3 _newPos;
 
     /// <summary>
     /// ブースト時のスピードを線形補完にするための変数
@@ -395,7 +395,7 @@ public class PlayerController : Character_B<PlayerData>
         StopAutoMovement();
 
         // 残像の停止処理
-        StopGhost();
+        StopFast();
     }
 
     /// <summary>
@@ -490,15 +490,21 @@ public class PlayerController : Character_B<PlayerData>
         if (context.phase == InputActionPhase.Performed)
         {
             _velocity = input;
+
+            if (_velocity.magnitude > 1)
+            {
+                _velocity = _velocity.normalized;
+            }
+            // Boost中に入力が復活したら残像とカメラを再開
+            if (_isBoost && _velocity != Vector2.zero)
+            {
+                _ghostSpawner.StartSpawning();
+                _cameraManager.SetFastMode(true);
+            }
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
             _velocity = Vector2.zero;
-        }
-
-        if (_velocity.magnitude > 1)
-        {
-            _velocity = _velocity.normalized;
         }
     }
 
@@ -572,11 +578,12 @@ public class PlayerController : Character_B<PlayerData>
             _isDashed = true;
 
             // レイヤーを除外
-            int layerMask = ~LayerMask.GetMask("Weapon");
+            int layerMask = ~LayerMask.GetMask("Weapon", "Player");
 
             // Raycastを飛ばす
             if (Physics.Raycast(GetTargetCenter().position, moveDir, out RaycastHit hit, rayCastDis, layerMask))
             {
+                Debug.Log(hit.collider.name);
                 //hitしたらなにかにぶつかっているのでダッシュしない
                 var dir = (transform.position - hit.point).normalized;
                 //マジックナンバー
@@ -601,7 +608,7 @@ public class PlayerController : Character_B<PlayerData>
             _isBoost = false;
 
             // 残像の停止処理
-            StopGhost();
+            StopFast();
         }
     }
 
@@ -624,13 +631,13 @@ public class PlayerController : Character_B<PlayerData>
             _isDashed = false;
 
             // 残像の停止処理
-            StopGhost();
+            StopFast();
         }
     }
 
-    private void StopGhost()
+    private void StopFast()
     {
-        if (!_isDashed && !_isBoost)
+        if ((!_isDashed && !_isBoost) || _velocity == Vector2.zero)
         {
             _ghostSpawner.StopSpawning();
             _cameraManager.SetFastMode(false);
