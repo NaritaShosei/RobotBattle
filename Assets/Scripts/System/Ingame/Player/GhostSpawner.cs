@@ -32,6 +32,7 @@ public class GhostSpawner : MonoBehaviour
             // メッシュの追加
             var mf = ghost.AddComponent<MeshFilter>();
             var mr = ghost.AddComponent<MeshRenderer>();
+            ghost.AddComponent<GhostFade>();
 
             mf.sharedMesh = new Mesh();
 
@@ -61,12 +62,11 @@ public class GhostSpawner : MonoBehaviour
         {
             try
             {
-                // キャラだけでなく、装備なども複製
-                foreach (var smr in smrArray)
-                {
-                    SpawnGhost(smr);
-                }
+                SpawnGhost(smrArray);
+
                 await UniTask.Delay((int)(1000 * _interval), cancellationToken: token);
+
+                await UniTask.WaitUntil(() => !ServiceLocator.Get<IngameManager>().IsPaused);
             }
             catch (OperationCanceledException)
             {
@@ -75,7 +75,7 @@ public class GhostSpawner : MonoBehaviour
         }
     }
 
-    private void SpawnGhost(SkinnedMeshRenderer smr)
+    private void SpawnGhost(SkinnedMeshRenderer[] smrArray)
     {
 
         if (_pool.Count <= 0) { Debug.LogWarning("残像のプールが空"); return; }
@@ -84,10 +84,48 @@ public class GhostSpawner : MonoBehaviour
         ghost.SetActive(true);
 
         var mf = ghost.GetComponent<MeshFilter>();
-        smr.BakeMesh(mf.sharedMesh);
+        var mr = ghost.GetComponent<MeshRenderer>();
 
-        ghost.transform.SetPositionAndRotation(smr.transform.position, smr.transform.rotation);
-        ghost.transform.localScale = smr.transform.lossyScale;
+        // 座標を先に決める
+        ghost.transform.SetPositionAndRotation(transform.position, transform.rotation);
+        ghost.transform.localScale = transform.lossyScale;
+
+        // 再利用している Mesh をクリアして書き換える
+        Mesh combined = mf.sharedMesh;
+        combined.Clear();
+
+        // 複数SMRをまとめて1つのMeshにする
+        CombineInstance[] combines = new CombineInstance[smrArray.Length];
+
+        for (int i = 0; i < smrArray.Length; i++)
+        {
+            var smr = smrArray[i];
+
+            var baked = new Mesh();
+            smr.BakeMesh(baked);
+
+            // ソース頂点（baked）は smr のローカル空間の頂点なので、
+            // ghost ローカル空間へ変換する行列を用意する：
+            //  ghost.worldToLocal * smr.localToWorld
+            var mat = ghost.transform.worldToLocalMatrix * smr.transform.localToWorldMatrix;
+
+            // 1つにしたいMesh
+            combines[i].mesh = baked;
+            // meshを合成先のローカル座標系に変換するための行列
+            combines[i].transform = mat;
+        }
+
+        // 全てを合成（サブメッシュを1つにまとめ、行列を適用）
+        combined.CombineMeshes(combines, mergeSubMeshes: true, useMatrices: true);
+
+        // baked Mesh の破棄
+        for (int i = 0; i < smrArray.Length; i++)
+        {
+            if (combines[i].mesh != null)
+                Destroy(combines[i].mesh);
+        }
+
+        ghost.GetComponent<GhostFade>().Initialize(mr, _lifeTime, () => _pool.Enqueue(ghost));
     }
 
     public void StopSpawning()

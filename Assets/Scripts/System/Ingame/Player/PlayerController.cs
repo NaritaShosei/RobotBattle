@@ -95,7 +95,7 @@ public class PlayerController : Character_B<PlayerData>
         // 必殺技中は移動・回転を完全停止
         if (_playerManager.IsState(PlayerState.SpecialAttack))
         {
-            StopAllMovement(); 
+            StopAllMovement(false);
             StopTargetRotation(); // 目標回転も停止
             return;
         }
@@ -110,7 +110,7 @@ public class PlayerController : Character_B<PlayerData>
             _isDashed = false;
             _isGuard = false;
             _isJumped = false;
-            StopAllMovement(); // 自動移動も停止
+            StopAllMovement(true); // 自動移動も停止
             StopTargetRotation(); // 目標回転も停止
             return;
         }
@@ -336,9 +336,6 @@ public class PlayerController : Character_B<PlayerData>
         // 移動を停止
         StopMovement();
 
-        // 物理的な速度を確実に停止
-        _rb.linearVelocity = new Vector3(0, _rb.linearVelocity.y, 0);
-
         var onCanceled = _onAutoMoveCanceled;
         ResetAutoMovement();
 
@@ -367,27 +364,26 @@ public class PlayerController : Character_B<PlayerData>
         velocity.z = 0;
         _rb.linearVelocity = velocity;
 
-        // 入力状態もリセット（追加）
+        // 入力状態もリセット
         _velocity = Vector2.zero;
         _moveDir = Vector3.zero;
     }
     /// <summary>
     /// すべての移動要素を停止
     /// </summary>
-    private void StopAllMovement()
+    private void StopAllMovement(bool inputKill)
     {
         // 入力をリセット
-        _velocity = Vector2.zero;
-        _moveDir = Vector3.zero;
+        if (inputKill)
+        {
+            _velocity = Vector2.zero;
+            _moveDir = Vector3.zero;
+        }
 
         // 各種フラグを停止
         _isBoost = false;
         _isDashed = false;
         _isJumped = false;
-
-        // 物理的な移動も停止（Y軸は重力のため保持）
-        Vector3 currentVelocity = _rb.linearVelocity;
-        _rb.linearVelocity = new Vector3(0, currentVelocity.y, 0);
 
         // 自動移動も停止
         StopAutoMovement();
