@@ -2966,7 +2966,7 @@ MonoBehaviour:
   _invertY: 0
   _defaultLens: 56.3
   _fastLens: 95
-  _lerpValue: 0.205
+  _lerpValue: 0.085
 --- !u!4 &1246506307
 Transform:
   m_ObjectHideFlags: 0

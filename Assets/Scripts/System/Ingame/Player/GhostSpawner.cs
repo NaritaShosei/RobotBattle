@@ -66,7 +66,7 @@ public class GhostSpawner : MonoBehaviour
 
                 await UniTask.Delay((int)(1000 * _interval), cancellationToken: token);
 
-                await UniTask.WaitUntil(() => !ServiceLocator.Get<IngameManager>().IsPaused);
+                await UniTask.WaitUntil(() => !ServiceLocator.Get<IngameManager>().IsPaused,cancellationToken:token);
             }
             catch (OperationCanceledException)
             {

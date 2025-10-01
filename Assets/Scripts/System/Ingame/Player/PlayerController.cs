@@ -637,7 +637,7 @@ public class PlayerController : Character_B<PlayerData>
 
     private void StopFast()
     {
-        if ((!_isDashed && !_isBoost) || _velocity == Vector2.zero)
+        if (!_isDashed && (!_isBoost || _velocity == Vector2.zero))
         {
             _ghostSpawner.StopSpawning();
             _cameraManager.SetFastMode(false);
