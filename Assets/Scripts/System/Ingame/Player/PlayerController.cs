@@ -151,6 +151,7 @@ public class PlayerController : Character_B<PlayerData>
                 if (!GaugeValueChange(-_data.DashValue * Time.deltaTime))
                 {
                     _isBoost = false;
+                    StopFast();
                 }
             }
         }
