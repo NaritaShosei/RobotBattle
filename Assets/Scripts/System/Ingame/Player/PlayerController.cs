@@ -50,6 +50,9 @@ public class PlayerController : Character_B<PlayerData>
     public float ArriveThreshold => _arriveThreshold; // PlayerAttackからアクセスするためpublic
     [SerializeField] private float _maxAutoMoveTime = 3f;
 
+    [Header("Animation補間時間")]
+    [SerializeField] private float _dampTime = 0.1f;
+
     private float _autoMoveSpeed;
 
     private bool _isAutoMoving = false;
@@ -169,6 +172,8 @@ public class PlayerController : Character_B<PlayerData>
 
         // 回転処理
         HandleRotation();
+
+        SetMoveAnimParam();
     }
 
     /// <summary>
@@ -232,11 +237,6 @@ public class PlayerController : Character_B<PlayerData>
         _rb.useGravity = true;
         Debug.Log("目標回転停止");
     }
-
-    /// <summary>
-    /// 現在目標に向かって回転中かどうか
-    /// </summary>
-    public bool IsRotatingToTarget => _shouldRotateToTarget;
 
     /// <summary>
     /// 自動移動の処理
@@ -720,6 +720,12 @@ public class PlayerController : Character_B<PlayerData>
     protected override void OnGaugeChanged(float value)
     {
         _gaugePresenter.GaugeUpdate(value);
+    }
+
+    private void SetMoveAnimParam()
+    {
+        _playerManager.AnimController.SetFloat("MoveX", _velocity.x, _dampTime);
+        _playerManager.AnimController.SetFloat("MoveY", _velocity.y, _dampTime);
     }
 
     private void OnDisable()

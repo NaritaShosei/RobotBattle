@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    [SerializeField] private AnimationController _animController;
+
+    public AnimationController AnimController => _animController;
     public PlayerState State { get; private set; } = PlayerState.Idle;
     /// <summary>
     /// 状態遷移時に呼び出すAction

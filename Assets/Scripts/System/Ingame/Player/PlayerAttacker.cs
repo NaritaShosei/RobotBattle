@@ -10,7 +10,6 @@ using UnityEngine.SceneManagement;
 public class PlayerAttacker : MonoBehaviour
 {
     [SerializeField] private PlayerManager _playerManager;
-    [SerializeField] private AnimationController _anim;
     [SerializeField] private float _animationWeight = 0.5f;
 
     private WeaponBase _mainWeapon;
@@ -401,10 +400,10 @@ public class PlayerAttacker : MonoBehaviour
     {
         _playerManager.SetState(PlayerState.Attack);
 
-        _anim.SetBool("IsMissileAttack", true);
+        _playerManager.AnimController.SetBool("IsMissileAttack", true);
 
         // レイヤー切り替え
-        _anim.SetWeight(AnimationLayer.Attack, _animationWeight);
+        _playerManager.AnimController.SetWeight(AnimationLayer.Attack, _animationWeight);
 
         // IKを有効化
         EnableIK();
@@ -440,10 +439,10 @@ public class PlayerAttacker : MonoBehaviour
         // IKを自然にフェードアウト
         StartIKFadeOut();
 
-        _anim.SetBool("IsMissileAttack", false);
+        _playerManager.AnimController.SetBool("IsMissileAttack", false);
 
         // レイヤー切り替え
-        _anim.SetWeight(AnimationLayer.Attack, 0);
+        _playerManager.AnimController.SetWeight(AnimationLayer.Attack, 0);
 
         _mainWeapon.SetAttack(false);
 
@@ -586,8 +585,8 @@ public class PlayerAttacker : MonoBehaviour
         ForceResetIK();
 
         // アニメーション状態もリセット
-        _anim.SetBool("IsMissileAttack", false);
-        _anim.SetWeight(AnimationLayer.Attack, 0);
+        _playerManager.AnimController.SetBool("IsMissileAttack", false);
+        _playerManager.AnimController.SetWeight(AnimationLayer.Attack, 0);
 
         Debug.Log("必殺技開始：すべての動作を停止しました");
     }
