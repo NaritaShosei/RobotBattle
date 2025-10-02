@@ -13,12 +13,17 @@ public class GhostSpawner : MonoBehaviour
     [SerializeField] private int _poolSize;
 
     private Queue<GameObject> _pool;
+    private Queue<Mesh> _meshPool;
+    private Queue<Material> _materialPool;
     private CancellationTokenSource _cts;
 
     private void Awake()
     {
         // プールの生成
         _pool = new Queue<GameObject>(_poolSize);
+        _materialPool = new Queue<Material>(_poolSize);
+
+        var length = GetComponentsInChildren<SkinnedMeshRenderer>().Length;
 
         var parent = new GameObject($"Ghost_Pool_{gameObject.name}");
 
@@ -38,8 +43,19 @@ public class GhostSpawner : MonoBehaviour
 
             mr.sharedMaterial = new Material(_ghostMaterial);
 
+            _materialPool.Enqueue(mr.sharedMaterial);
+
             ghost.SetActive(false);
             _pool.Enqueue(ghost);
+        }
+
+        // SkinnedMeshRendererの数倍の大きさで生成
+        _meshPool = new Queue<Mesh>(_poolSize * length);
+
+        // Mesh プールの事前生成
+        for (int i = 0; i < _poolSize * length; i++)
+        {
+            _meshPool.Enqueue(new Mesh());
         }
     }
 
@@ -48,6 +64,8 @@ public class GhostSpawner : MonoBehaviour
     /// </summary>
     public async void StartSpawning()
     {
+        if (_cts != null) { return; }
+
         _cts = new CancellationTokenSource();
         await SpawnLoop(_cts.Token);
     }
@@ -62,11 +80,11 @@ public class GhostSpawner : MonoBehaviour
         {
             try
             {
+                await UniTask.WaitUntil(() => !ServiceLocator.Get<IngameManager>().IsPaused, cancellationToken: token);
+
                 SpawnGhost(smrArray);
 
                 await UniTask.Delay((int)(1000 * _interval), cancellationToken: token);
-
-                await UniTask.WaitUntil(() => !ServiceLocator.Get<IngameManager>().IsPaused,cancellationToken:token);
             }
             catch (OperationCanceledException)
             {
@@ -101,7 +119,7 @@ public class GhostSpawner : MonoBehaviour
         {
             var smr = smrArray[i];
 
-            var baked = new Mesh();
+            var baked = _meshPool.Dequeue();
             smr.BakeMesh(baked);
 
             // ソース頂点（baked）は smr のローカル空間の頂点なので、
@@ -122,10 +140,22 @@ public class GhostSpawner : MonoBehaviour
         for (int i = 0; i < smrArray.Length; i++)
         {
             if (combines[i].mesh != null)
-                Destroy(combines[i].mesh);
+                ReturnMesh(combines[i].mesh);
         }
 
-        ghost.GetComponent<GhostFade>().Initialize(mr, _lifeTime, () => _pool.Enqueue(ghost));
+        var material = _materialPool.Dequeue();
+
+        ghost.GetComponent<GhostFade>().Initialize(material, _lifeTime, () =>
+        {
+            _pool.Enqueue(ghost);
+            _materialPool.Enqueue(material); // フェード後に必ず戻す
+        });
+    }
+
+    private void ReturnMesh(Mesh mesh)
+    {
+        mesh.Clear();
+        _meshPool.Enqueue(mesh);
     }
 
     public void StopSpawning()

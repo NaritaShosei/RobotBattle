@@ -8,10 +8,9 @@ public class GhostFade : MonoBehaviour
     private float _lifeTime;
     private Action _onComplete;
 
-    public void Initialize(MeshRenderer mr, float lifeTime, Action onComplete = null)
+    public void Initialize(Material material, float lifeTime, Action onComplete = null)
     {
-        _material = new Material(mr.sharedMaterial);
-        mr.material = _material;
+        _material = material;
 
         _lifeTime = lifeTime;
         _onComplete = onComplete;
