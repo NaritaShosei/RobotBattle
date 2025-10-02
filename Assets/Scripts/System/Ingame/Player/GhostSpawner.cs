@@ -165,4 +165,32 @@ public class GhostSpawner : MonoBehaviour
         _cts.Dispose();
         _cts = null;
     }
+
+    private void OnDestroy()
+    {
+        if (_materialPool != null)
+        {
+            foreach (var mat in _materialPool)
+            {
+                if (mat != null)
+                {
+                    Destroy(mat);
+                }
+            }
+            _materialPool.Clear();
+        }
+
+        if (_meshPool != null)
+        {
+            foreach (var mesh in _meshPool)
+            {
+                if (mesh != null)
+                {
+                    Destroy(mesh);
+                }
+            }
+            _meshPool.Clear();
+        }
+    }
+
 }
