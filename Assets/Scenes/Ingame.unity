@@ -1748,6 +1748,39 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &720575608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 720575609}
+  m_Layer: 0
+  m_Name: Directional Lights
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &720575609
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720575608}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2014347885}
+  - {fileID: 1308169783}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &801840454
 GameObject:
   m_ObjectHideFlags: 0
@@ -2598,7 +2631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interval: 0.05
   _lifeTime: 0.5
-  _ghostMaterial: {fileID: 2100000, guid: 5c7407d2adf955d45bf09a96518e5856, type: 2}
+  _ghostMaterial: {fileID: 2100000, guid: 229e47148262ddc49b380c361500bf8c, type: 2}
   _poolSize: 15
 --- !u!114 &1155244334 stripped
 MonoBehaviour:
@@ -3385,7 +3418,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 720575609}
   m_LocalEulerAnglesHint: {x: 160.66, y: -75.2, z: 0}
 --- !u!1001 &1378148668
 PrefabInstance:
@@ -4587,7 +4620,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 720575609}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &2014347886
 MonoBehaviour:
@@ -5490,8 +5523,7 @@ SceneRoots:
   - {fileID: 1246506307}
   - {fileID: 1556743758}
   - {fileID: 104793615}
-  - {fileID: 2014347885}
-  - {fileID: 1308169783}
+  - {fileID: 720575609}
   - {fileID: 2115516959}
   - {fileID: 401978580}
   - {fileID: 394076130}

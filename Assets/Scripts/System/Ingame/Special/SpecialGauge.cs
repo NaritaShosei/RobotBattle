@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class SpecialGauge
+public class SpecialGaugeModel
 {
     private float _value;
     private float _max = 100;
@@ -9,6 +9,8 @@ public class SpecialGauge
     public event Action OnUseGauge;
     public event Action OnGaugeMax;
     public bool IsGaugeMax => _value >= _max;
+    public float Max => _max;
+    public float CurrentValue => _value;
 
     public void Initialize(float max)
     {
@@ -21,7 +23,7 @@ public class SpecialGauge
 
         var oldValue = _value;
 
-        _value = Mathf.Min(value, _max);
+        _value = Mathf.Min(_value + value, _max);
         OnValueChange?.Invoke(_value / _max);
 
         if (IsGaugeMax)
@@ -38,5 +40,31 @@ public class SpecialGauge
         _value = 0;
 
         return true;
+    }
+}
+
+public class SpecialGaugePresenter
+{
+    private SpecialGaugeModel _model;
+    private SpecialGaugeView _view;
+
+    public SpecialGaugePresenter(SpecialGaugeModel model, SpecialGaugeView view, float maxValue)
+    {
+        _model = model;
+        _view = view;
+
+        _model.Initialize(maxValue);
+    }
+
+    private void UpdateView(float amount)
+    {
+        _view.UpdateView(amount);
+    }
+
+    public void UpdateModel(float amount)
+    {
+        _model.UpdateValue(amount);
+
+        UpdateView(_model.CurrentValue / _model.Max);
     }
 }
