@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 public class PlayerAttacker : MonoBehaviour
 {
     [SerializeField] private PlayerManager _playerManager;
-    [SerializeField] private AnimationController _anim;
+    [SerializeField] private float _animationWeight = 0.5f;
 
     private WeaponBase _mainWeapon;
     private WeaponBase _subWeapon;
@@ -45,7 +45,7 @@ public class PlayerAttacker : MonoBehaviour
     private bool _isIKFadingOut = false; // フェードアウト中フラグ
     private float _currentIKWeight = 0f; // 現在のIKウェイト値を記録
 
-    private SpecialGauge _specialGauge;
+    private SpecialGaugeModel _specialGauge;
 
     private void Start()
     {
@@ -78,7 +78,7 @@ public class PlayerAttacker : MonoBehaviour
 
     private void SetupSpecial()
     {
-        _specialGauge = new SpecialGauge();
+        _specialGauge = new SpecialGaugeModel();
 
         var manager = ServiceLocator.Get<EquipmentManager>();
 
@@ -330,6 +330,7 @@ public class PlayerAttacker : MonoBehaviour
                         _waitingForMovement = true;
                         _playerController.StartAutoMovement(
                             targetTransform,
+                            _mainWeapon.Data.AttackSpeed,
                             onComplete: OnAutoMoveComplete,
                             onCanceled: OnAutoMoveCanceled
                         );
@@ -399,10 +400,10 @@ public class PlayerAttacker : MonoBehaviour
     {
         _playerManager.SetState(PlayerState.Attack);
 
-        _anim.SetBool("IsMissileAttack", true);
+        _playerManager.AnimController.SetBool("IsMissileAttack", true);
 
         // レイヤー切り替え
-        _anim.SetWeight(AnimationLayer.Attack, 1);
+        _playerManager.AnimController.SetWeight(AnimationLayer.Attack, _animationWeight);
 
         // IKを有効化
         EnableIK();
@@ -438,10 +439,10 @@ public class PlayerAttacker : MonoBehaviour
         // IKを自然にフェードアウト
         StartIKFadeOut();
 
-        _anim.SetBool("IsMissileAttack", false);
+        _playerManager.AnimController.SetBool("IsMissileAttack", false);
 
         // レイヤー切り替え
-        _anim.SetWeight(AnimationLayer.Attack, 0);
+        _playerManager.AnimController.SetWeight(AnimationLayer.Attack, 0);
 
         _mainWeapon.SetAttack(false);
 
@@ -546,8 +547,6 @@ public class PlayerAttacker : MonoBehaviour
 
         if (_playerManager.IsState(PlayerState.Idle) && _specialGauge.TryUseGauge())
         {
-            Debug.LogError("必殺技発動");
-
             // 必殺技状態に変更（他の処理より先に）
             _playerManager.SetState(PlayerState.SpecialAttack);
 
@@ -557,7 +556,6 @@ public class PlayerAttacker : MonoBehaviour
             await _specialAttack.SpecialAttack();
 
             _playerManager.SetState(PlayerState.Idle);
-            Debug.LogError("必殺技終了");
         }
     }
 
@@ -584,8 +582,8 @@ public class PlayerAttacker : MonoBehaviour
         ForceResetIK();
 
         // アニメーション状態もリセット
-        _anim.SetBool("IsMissileAttack", false);
-        _anim.SetWeight(AnimationLayer.Attack, 0);
+        _playerManager.AnimController.SetBool("IsMissileAttack", false);
+        _playerManager.AnimController.SetWeight(AnimationLayer.Attack, 0);
 
         Debug.Log("必殺技開始：すべての動作を停止しました");
     }

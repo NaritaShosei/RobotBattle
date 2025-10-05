@@ -9,6 +9,7 @@ public class PlayerController : Character_B<PlayerData>
     [SerializeField] PlayerData _dataBase;
     [SerializeField] GuardCollider _collider;
     [SerializeField] float _rotateSpeed = 10;
+    [SerializeField] private GhostSpawner _ghostSpawner;
 
     Rigidbody _rb;
     InputManager _input;
@@ -21,17 +22,17 @@ public class PlayerController : Character_B<PlayerData>
     /// <summary>
     /// 入力情報の保持
     /// </summary>
-    Vector2 _velocity;
-    Vector3 _camForward;
-    Vector3 _camRight;
-    Vector3 _moveDir;
-    Vector3 _dashStartPos;
-    Vector3 _dashTargetPos;
+    [Tooltip("移動の入力ベクトル")] private Vector2 _velocity;
+    private Vector3 _camForward;
+    private Vector3 _camRight;
+    private Vector3 _moveDir;
+    private Vector3 _dashStartPos;
+    private Vector3 _dashTargetPos;
 
     /// <summary>
     /// 線形補完によって出されたダッシュ時の座標
     /// </summary>
-    Vector3 _newPos;
+    private Vector3 _newPos;
 
     /// <summary>
     /// ブースト時のスピードを線形補完にするための変数
@@ -49,6 +50,11 @@ public class PlayerController : Character_B<PlayerData>
     public float ArriveThreshold => _arriveThreshold; // PlayerAttackからアクセスするためpublic
     [SerializeField] private float _maxAutoMoveTime = 3f;
 
+    [Header("Animation補間時間")]
+    [SerializeField] private float _dampTime = 0.1f;
+
+    private float _autoMoveSpeed;
+
     private bool _isAutoMoving = false;
     private Transform _autoMoveTarget;
     private float _autoMoveTimer = 0f;
@@ -62,6 +68,7 @@ public class PlayerController : Character_B<PlayerData>
     private HPGaugePresenter _healthPresenter;
     private GaugePresenter _gaugePresenter;
     private IngameManager _gameManager;
+    private CameraManager _cameraManager;
     private Camera _camera;
 
     void Start()
@@ -70,6 +77,8 @@ public class PlayerController : Character_B<PlayerData>
         AddAction();
 
         _gameManager = ServiceLocator.Get<IngameManager>();
+
+        _cameraManager = ServiceLocator.Get<CameraManager>();
         _rb = GetComponent<Rigidbody>();
 
         Initialize(_dataBase);
@@ -86,31 +95,29 @@ public class PlayerController : Character_B<PlayerData>
         Start_B();
     }
 
-    void Update()
+    private void Update()
     {
-        //ポーズ中は何もしない
+        // ポーズ中は何もしない
         if (_gameManager.IsPaused) { return; }
 
         // 必殺技中は移動・回転を完全停止
         if (_playerManager.IsState(PlayerState.SpecialAttack))
         {
-            StopAllMovement(); // 新規メソッド
-            StopTargetRotation(); // 目標回転も停止
+            StopAllMovement(false);
+            StopTargetRotation();
             return;
         }
 
-        //ガードのコライダーのon・off
         GuardVisibleChange();
 
-        //Playerが死亡したらすべてのフラグをおろして処理を抜ける
         if (_playerManager.IsState(PlayerState.Dead))
         {
             _isBoost = false;
             _isDashed = false;
             _isGuard = false;
             _isJumped = false;
-            StopAutoMovement(); // 自動移動も停止
-            StopTargetRotation(); // 目標回転も停止
+            StopAllMovement(true);
+            StopTargetRotation();
             return;
         }
 
@@ -118,16 +125,16 @@ public class PlayerController : Character_B<PlayerData>
         if (_isAutoMoving)
         {
             HandleAutoMovement();
-            return; // 自動移動中は通常の処理をスキップ
+            return;
         }
 
-        //ダッシュとジャンプ両方していなかったらゲージを回復
+        // ダッシュとジャンプ両方していなかったらゲージを回復
         if (!_isDashed && !_isJumped)
         {
             GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
         }
 
-        //ジャンプ中にゲージがなくなったらジャンプを解除
+        // ジャンプ中にゲージがなくなったらジャンプを解除
         if (_isJumped)
         {
             if (!GaugeValueChange(-_data.JumpValue * Time.deltaTime))
@@ -136,33 +143,40 @@ public class PlayerController : Character_B<PlayerData>
             }
         }
 
-        //ブースト中にゲージがなくなったらブーストを解除
+        // ブースト中にゲージがなくなったらブーストを解除
         if (_isBoost)
         {
-            //入力がなかったらゲージをへらさない
+            // 入力がなかったらゲージを減らさない
             if (_velocity != Vector2.zero)
             {
                 if (!GaugeValueChange(-_data.DashValue * Time.deltaTime))
                 {
                     _isBoost = false;
+                    UpdateFastEffect(); // 追加
                 }
+            }
+            else
+            {
+                // ブースト中に入力が止まったら残像とカメラを停止
+                UpdateFastEffect(); // 追加
             }
         }
 
-        //ダッシュフラグが立っていたらダッシュ
+        // ダッシュフラグが立っていたらダッシュ
         if (_isDashed)
         {
             Dash();
         }
-        //ダッシュフラグがおりていたら通常の移動
+        // ダッシュフラグがおりていたら通常の移動
         else if (!_isDashed)
         {
             Move(_isBoost ? _data.BoostSpeed : _data.NormalSpeed);
         }
 
-        // 回転処理
         HandleRotation();
+        SetMoveAnimParam();
     }
+
 
     /// <summary>
     /// 回転処理を統合
@@ -227,11 +241,6 @@ public class PlayerController : Character_B<PlayerData>
     }
 
     /// <summary>
-    /// 現在目標に向かって回転中かどうか
-    /// </summary>
-    public bool IsRotatingToTarget => _shouldRotateToTarget;
-
-    /// <summary>
     /// 自動移動の処理
     /// </summary>
     private void HandleAutoMovement()
@@ -265,7 +274,7 @@ public class PlayerController : Character_B<PlayerData>
 
             // 目標地点に向かって移動
             // 移動方向を設定（既存のMove関数を利用するため）
-            Vector3 moveDirection = direction * _data.BoostSpeed;
+            Vector3 moveDirection = direction * _autoMoveSpeed;
 
             _rb.linearVelocity = moveDirection;
 
@@ -284,7 +293,7 @@ public class PlayerController : Character_B<PlayerData>
     /// <param name="target">移動先の標的</param>
     /// <param name="onComplete">到達時のコールバック</param>
     /// <param name="onCanceled">キャンセル時のコールバック</param>
-    public void StartAutoMovement(Transform target, System.Action onComplete = null, System.Action onCanceled = null)
+    public void StartAutoMovement(Transform target, float speed, System.Action onComplete = null, System.Action onCanceled = null)
     {
         if (_playerManager.IsState(PlayerState.SpecialAttack)) return;
 
@@ -294,14 +303,18 @@ public class PlayerController : Character_B<PlayerData>
             return;
         }
 
-        // ターゲットは敵の中心を渡されている
         _autoMoveTarget = target;
+        _autoMoveSpeed = speed;
         _isAutoMoving = true;
         _autoMoveTimer = 0f;
         _onAutoMoveComplete = onComplete;
         _onAutoMoveCanceled = onCanceled;
 
         _playerManager.SetState(PlayerState.MovingToTarget);
+
+        // 自動移動開始時に残像とカメラエフェクトを開始 - 追加
+        _ghostSpawner.StartSpawning();
+        _cameraManager.SetFastMode(true);
 
         Debug.Log($"自動移動開始: 目標地点 {target}, 距離: {Vector3.Distance(transform.position, target.position):F2}m");
     }
@@ -313,14 +326,14 @@ public class PlayerController : Character_B<PlayerData>
     {
         Debug.Log("自動移動完了");
 
-        // 移動を停止
         StopMovement();
 
         var onComplete = _onAutoMoveComplete;
         ResetAutoMovement();
 
-        // コールバック実行
         onComplete?.Invoke();
+
+        UpdateFastEffect(); // StopFast()から変更
     }
 
     /// <summary>
@@ -332,17 +345,14 @@ public class PlayerController : Character_B<PlayerData>
 
         Debug.Log("自動移動をキャンセルしました");
 
-        // 移動を停止
         StopMovement();
-
-        // 物理的な速度を確実に停止
-        _rb.linearVelocity = new Vector3(0, _rb.linearVelocity.y, 0);
 
         var onCanceled = _onAutoMoveCanceled;
         ResetAutoMovement();
 
-        // コールバック実行
         onCanceled?.Invoke();
+
+        UpdateFastEffect(); // 追加
     }
 
     /// <summary>
@@ -366,30 +376,32 @@ public class PlayerController : Character_B<PlayerData>
         velocity.z = 0;
         _rb.linearVelocity = velocity;
 
-        // 入力状態もリセット（追加）
+        // 入力状態もリセット
         _velocity = Vector2.zero;
         _moveDir = Vector3.zero;
     }
     /// <summary>
     /// すべての移動要素を停止
     /// </summary>
-    private void StopAllMovement()
+    private void StopAllMovement(bool inputKill)
     {
         // 入力をリセット
-        _velocity = Vector2.zero;
-        _moveDir = Vector3.zero;
+        if (inputKill)
+        {
+            _velocity = Vector2.zero;
+            _moveDir = Vector3.zero;
+        }
 
         // 各種フラグを停止
         _isBoost = false;
         _isDashed = false;
         _isJumped = false;
 
-        // 物理的な移動も停止（Y軸は重力のため保持）
-        Vector3 currentVelocity = _rb.linearVelocity;
-        _rb.linearVelocity = new Vector3(0, currentVelocity.y, 0);
-
         // 自動移動も停止
         StopAutoMovement();
+
+        // 残像の停止処理
+        UpdateFastEffect();
     }
 
     /// <summary>
@@ -418,21 +430,15 @@ public class PlayerController : Character_B<PlayerData>
     /// </summary>
     public bool IsAutoMoving => _isAutoMoving;
 
-    /// <summary>
-    /// 自動移動の進捗（0.0～1.0）
-    /// </summary>
-    public float AutoMovementProgress
-    {
-        get
-        {
-            if (!_isAutoMoving) return 0f;
-            return Mathf.Clamp01(_autoMoveTimer / _maxAutoMoveTime);
-        }
-    }
-
     private void FixedUpdate()
     {
         if (_gameManager.IsPaused) { return; }
+
+        //AddForceなどはFixedUpdateで
+
+        // 重力
+        float fallSpeed = _rb.useGravity ? _data.FallSpeed : 0f;
+        _rb.AddForce(Vector3.down * fallSpeed, ForceMode.Force);
 
         if (_playerManager.IsState(PlayerState.SpecialAttack))
         {
@@ -441,12 +447,6 @@ public class PlayerController : Character_B<PlayerData>
             _rb.linearVelocity = new Vector3(0, currentVelocity.y, 0);
             return;
         }
-
-        //AddForceなどはFixedUpdateで
-
-        // 重力
-        float fallSpeed = _rb.useGravity ? _data.FallSpeed : 0f;
-        _rb.AddForce(Vector3.down * fallSpeed, ForceMode.Force);
 
         if (_isDashed)
         {
@@ -483,12 +483,10 @@ public class PlayerController : Character_B<PlayerData>
         }
     }
 
-    void OnMoveInput(InputAction.CallbackContext context)
+    private void OnMoveInput(InputAction.CallbackContext context)
     {
-        //移動の入力感知
         if (_gameManager.IsPaused) { return; }
 
-        // 自動移動中は手動入力を無視
         if (_isAutoMoving) return;
 
         var input = context.ReadValue<Vector2>();
@@ -496,19 +494,21 @@ public class PlayerController : Character_B<PlayerData>
         if (context.phase == InputActionPhase.Performed)
         {
             _velocity = input;
+
+            if (_velocity.magnitude > 1)
+            {
+                _velocity = _velocity.normalized;
+            }
+            // Boost中に入力が復活したら残像とカメラを再開
+            UpdateFastEffect(); // 追加
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
             _velocity = Vector2.zero;
-        }
-
-        if (_velocity.magnitude > 1)
-        {
-            _velocity = _velocity.normalized;
+            UpdateFastEffect(); // 追加
         }
     }
-
-    void Move(float speed)
+    private void Move(float speed)
     {
         if (_gameManager.IsPaused) { return; }
 
@@ -531,7 +531,7 @@ public class PlayerController : Character_B<PlayerData>
         _rb.linearVelocity = vel;
     }
 
-    void OnJump(InputAction.CallbackContext context)
+    private void OnJump(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
@@ -551,41 +551,33 @@ public class PlayerController : Character_B<PlayerData>
         }
     }
 
-    void OnDash(InputAction.CallbackContext context)
+    private void OnDash(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused) { return; }
-
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
-
-        // 自動移動中はダッシュを無効
-        if (_isAutoMoving) return;
 
         if (context.phase == InputActionPhase.Started && !_isDashed)
         {
+            if (_isAutoMoving) return;
+
             if (!GaugeValueChange(-_data.DashValue)) return;
 
-            //線形補間のstartの登録
             _isBoost = true;
             _data.DashTimer = 0;
             _dashStartPos = transform.position;
 
-            //入力がなかったらカメラの正面方向
             Vector3 moveVel = _velocity != Vector2.zero ? _moveDir : _camForward;
             Vector3 moveDir = moveVel.normalized;
 
-            //マジックナンバー
             var rayCastDis = 8;
             _isDashed = true;
 
-            // レイヤーを除外
-            int layerMask = ~LayerMask.GetMask("Weapon");
+            int layerMask = ~LayerMask.GetMask("Weapon", "Player");
 
-            // Raycastを飛ばす
             if (Physics.Raycast(GetTargetCenter().position, moveDir, out RaycastHit hit, rayCastDis, layerMask))
             {
-                //hitしたらなにかにぶつかっているのでダッシュしない
+                Debug.Log(hit.collider.name);
                 var dir = (transform.position - hit.point).normalized;
-                //マジックナンバー
                 var newPos = hit.point + dir * 10;
                 newPos.y = transform.position.y;
                 _newPos = newPos;
@@ -593,27 +585,27 @@ public class PlayerController : Character_B<PlayerData>
             }
             else
             {
-                //線形補間のtargetの設定
                 _dashTargetPos = transform.position + moveDir * _data.DashDistance;
             }
+
+            UpdateFastEffect(); // 追加
         }
 
         if (context.phase == InputActionPhase.Canceled)
         {
             _isBoost = false;
+            UpdateFastEffect(); // StopFast()から変更
         }
     }
 
-    void Dash()
+    private void Dash()
     {
         _data.DashTimer += Time.deltaTime;
 
         var t = Mathf.Clamp01(_data.DashTimer / _data.DashTime);
 
-        //なにもぶつかっていなければダッシュ
         if (!_conflictObj)
         {
-            //線形補間
             _newPos = Vector3.Lerp(_dashStartPos, _dashTargetPos, t);
         }
 
@@ -621,8 +613,48 @@ public class PlayerController : Character_B<PlayerData>
         {
             _conflictObj = null;
             _isDashed = false;
+            UpdateFastEffect(); // StopFast()から変更
         }
     }
+
+    // 新しいメソッド: 残像とカメラエフェクトの統合管理
+    /// <summary>
+    /// 残像とカメラエフェクトを現在の状態に応じて更新
+    /// </summary>
+    private void UpdateFastEffect()
+    {
+        // エフェクトを表示すべき条件
+        bool shouldShowEffect = false;
+
+        // 1. ダッシュ中は常に表示
+        if (_isDashed)
+        {
+            shouldShowEffect = true;
+        }
+        // 2. ブースト中かつ入力がある時のみ表示
+        else if (_isBoost && _velocity != Vector2.zero)
+        {
+            shouldShowEffect = true;
+        }
+        // 3. 自動移動中は常に表示
+        else if (_isAutoMoving)
+        {
+            shouldShowEffect = true;
+        }
+
+        // 状態に応じてエフェクトを制御
+        if (shouldShowEffect)
+        {
+            _ghostSpawner.StartSpawning();
+            _cameraManager.SetFastMode(true);
+        }
+        else
+        {
+            _ghostSpawner.StopSpawning();
+            _cameraManager.SetFastMode(false);
+        }
+    }
+
 
     void OnGuard(InputAction.CallbackContext context)
     {
@@ -699,6 +731,12 @@ public class PlayerController : Character_B<PlayerData>
     protected override void OnGaugeChanged(float value)
     {
         _gaugePresenter.GaugeUpdate(value);
+    }
+
+    private void SetMoveAnimParam()
+    {
+        _playerManager.AnimController.SetFloat("MoveX", _velocity.x, _dampTime);
+        _playerManager.AnimController.SetFloat("MoveY", _velocity.y, _dampTime);
     }
 
     private void OnDisable()

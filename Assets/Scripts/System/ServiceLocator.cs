@@ -22,7 +22,6 @@ public static class ServiceLocator
     {
         if (_service.TryGetValue(typeof(T), out var service))
         {
-            Debug.Log($"{typeof(T)}を取得しました");
             return (T)service;
         }
         Debug.LogError($"{typeof(T)}の登録がありません");

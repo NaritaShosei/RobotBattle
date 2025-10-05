@@ -20,9 +20,16 @@ public abstract class Bullet_B : MonoBehaviour, IWeapon
     private Vector3 _startPos;
     private CancellationTokenSource _cts;
 
+    private EffectManager _effectManager;
+
     private void Awake()
     {
         gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        _effectManager = ServiceLocator.Get<EffectManager>();
     }
 
     public virtual void Initialize(WeaponData data)
@@ -85,7 +92,12 @@ public abstract class Bullet_B : MonoBehaviour, IWeapon
         Conflict(other);
     }
 
-    protected abstract void Conflict(Collider other);
+    protected virtual void Conflict(Collider other)
+    {
+        _effectManager.PlayExplosion(transform.position);
+        _isConflictReturned = true;
+        gameObject.SetActive(false);
+    }
 
     public virtual void SetTarget(ILockOnTarget target)
     {

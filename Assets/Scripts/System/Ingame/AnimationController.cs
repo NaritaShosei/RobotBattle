@@ -10,6 +10,11 @@ public class AnimationController : MonoBehaviour
         _animator.SetFloat(name, value);
     }
 
+    public void SetFloat(string name, float value, float dampTime)
+    {
+        _animator.SetFloat(name, value, dampTime, Time.deltaTime);
+    }
+
     public void SetBool(string name, bool value)
     {
         _animator.SetBool(name, value);
