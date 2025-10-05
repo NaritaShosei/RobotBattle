@@ -4,59 +4,67 @@ using UnityEngine;
 
 public class GhostFade : MonoBehaviour
 {
-    private Material _material;
+    private Renderer _renderer;
+    private MaterialPropertyBlock _mpb;
+
+    private float _spawnTime;
     private float _lifeTime;
     private Action _onComplete;
 
-    public void Initialize(Material material, float lifeTime, Action onComplete = null)
+    private void Awake()
     {
-        _material = material;
-
-        _lifeTime = lifeTime;
-        _onComplete = onComplete;
-
-        StartFade();
+        _renderer = GetComponent<Renderer>();
+        _mpb = new MaterialPropertyBlock();
     }
 
-    public async void StartFade()
+    public void Initialize(float lifeTime, Action onComplete = null)
+    {
+        _lifeTime = lifeTime;
+        _spawnTime = Time.time;
+
+        _onComplete = onComplete;
+
+        UpdateProperties();
+
+        StartLoop();
+    }
+
+    private async void StartLoop()
     {
         try
         {
-            await FadeLoop();
+            while (true)
+            {
+                await UniTask.WaitUntil(() => !ServiceLocator.Get<IngameManager>().IsPaused, cancellationToken: destroyCancellationToken);
+
+                float age = Time.time - _spawnTime;
+
+                UpdateProperties();
+
+                if (age > _lifeTime)
+                {
+                    gameObject.SetActive(false);
+                    _onComplete?.Invoke();
+                    break;
+                }
+
+                await UniTask.Yield(cancellationToken: destroyCancellationToken);
+            }
         }
-        catch (OperationCanceledException)
-        {
-            // 正常終了
-        }
+        catch { }
     }
 
-    private async UniTask FadeLoop()
+    /// <summary>
+    /// materialのシェーダーに情報を渡す
+    /// </summary>
+    private void UpdateProperties()
     {
-        float time = 0;
+        _renderer.GetPropertyBlock(_mpb);
 
-        // 色のプロパティの名前を取得
-        string colorProp = _material.HasProperty("_BaseColor") ? "_BaseColor" : "_Color"; ;
+        _mpb.SetFloat("_SpawnTime", _spawnTime);
+        _mpb.SetFloat("_CurrentTime", Time.time);
+        _mpb.SetFloat("_LifeTime", _lifeTime);
 
-        // プロパティから色を取得
-        Color color = _material.GetColor(colorProp);
-
-        while (_lifeTime > time)
-        {
-            // 線形補間でフェード
-            if (!ServiceLocator.Get<IngameManager>().IsPaused)
-            {
-                float alpha = Mathf.Lerp(1, 0, time / _lifeTime);
-                Color newColor = color; newColor.a = alpha;
-                _material.SetColor(colorProp, newColor);
-
-                time += Time.deltaTime;
-            }
-
-            await UniTask.Yield(cancellationToken: destroyCancellationToken);
-        }
-
-        // フェード完了時にActionを発火
-        _onComplete?.Invoke();
-        gameObject.SetActive(false);
+        _renderer.SetPropertyBlock(_mpb);
     }
 }

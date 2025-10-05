@@ -14,14 +14,12 @@ public class GhostSpawner : MonoBehaviour
 
     private Queue<GameObject> _pool;
     private Queue<Mesh> _meshPool;
-    private Queue<Material> _materialPool;
     private CancellationTokenSource _cts;
 
     private void Awake()
     {
         // プールの生成
         _pool = new Queue<GameObject>(_poolSize);
-        _materialPool = new Queue<Material>(_poolSize);
 
         var length = GetComponentsInChildren<SkinnedMeshRenderer>().Length;
 
@@ -42,8 +40,6 @@ public class GhostSpawner : MonoBehaviour
             mf.sharedMesh = new Mesh();
 
             mr.sharedMaterial = new Material(_ghostMaterial);
-
-            _materialPool.Enqueue(mr.sharedMaterial);
 
             ghost.SetActive(false);
             _pool.Enqueue(ghost);
@@ -143,12 +139,10 @@ public class GhostSpawner : MonoBehaviour
                 ReturnMesh(combines[i].mesh);
         }
 
-        var material = _materialPool.Dequeue();
 
-        ghost.GetComponent<GhostFade>().Initialize(material, _lifeTime, () =>
+        ghost.GetComponent<GhostFade>().Initialize(_lifeTime, () =>
         {
             _pool.Enqueue(ghost);
-            _materialPool.Enqueue(material); // フェード後に必ず戻す
         });
     }
 
@@ -168,18 +162,6 @@ public class GhostSpawner : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (_materialPool != null)
-        {
-            foreach (var mat in _materialPool)
-            {
-                if (mat != null)
-                {
-                    Destroy(mat);
-                }
-            }
-            _materialPool.Clear();
-        }
-
         if (_meshPool != null)
         {
             foreach (var mesh in _meshPool)
