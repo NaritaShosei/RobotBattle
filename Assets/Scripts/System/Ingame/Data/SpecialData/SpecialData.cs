@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "EquipmentData/SpecialData", fileName = "SpecialData")]
+[CreateAssetMenu(menuName = "GameData/EquipmentData/SpecialData", fileName = "SpecialData")]
 public class SpecialData : ScriptableObject,IData
 {
     [Header("基本情報")]

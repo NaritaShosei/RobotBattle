@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "AudioData", fileName = "AudioData")]
+[CreateAssetMenu(menuName = "GameData/AudioData", fileName = "AudioData")]
 public class AudioData : ScriptableObject
 {
     [SerializeField]

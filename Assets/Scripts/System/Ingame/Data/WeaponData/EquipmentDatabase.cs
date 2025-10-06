@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-[CreateAssetMenu(menuName = "EquipmentData/Database", fileName = "Database")]
+[CreateAssetMenu(menuName = "GameData/EquipmentData/Database", fileName = "Database")]
 public class EquipmentDatabase : ScriptableObject
 {
     [Serializable]
