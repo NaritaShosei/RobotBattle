@@ -591,13 +591,13 @@ public class PlayerController : Character_B<PlayerData>
                 _dashTargetPos = transform.position + moveDir * _data.DashDistance;
             }
 
-            UpdateFastEffect(); // 追加
+            UpdateFastEffect();
         }
 
         if (context.phase == InputActionPhase.Canceled)
         {
             _isBoost = false;
-            UpdateFastEffect(); // StopFast()から変更
+            UpdateFastEffect();
         }
     }
 
@@ -616,11 +616,10 @@ public class PlayerController : Character_B<PlayerData>
         {
             _conflictObj = null;
             _isDashed = false;
-            UpdateFastEffect(); // StopFast()から変更
+            UpdateFastEffect();
         }
     }
 
-    // 新しいメソッド: 残像とカメラエフェクトの統合管理
     /// <summary>
     /// 残像とカメラエフェクトを現在の状態に応じて更新
     /// </summary>
@@ -629,17 +628,17 @@ public class PlayerController : Character_B<PlayerData>
         // エフェクトを表示すべき条件
         bool shouldShowEffect = false;
 
-        // 1. ダッシュ中は常に表示
+        // ダッシュ中は常に表示
         if (_isDashed)
         {
             shouldShowEffect = true;
         }
-        // 2. ブースト中かつ入力がある時のみ表示
+        // ブースト中かつ入力がある時のみ表示
         else if (_isBoost && _velocity != Vector2.zero)
         {
             shouldShowEffect = true;
         }
-        // 3. 自動移動中は常に表示
+        // 自動移動中は常に表示
         else if (_isAutoMoving)
         {
             shouldShowEffect = true;
@@ -658,8 +657,7 @@ public class PlayerController : Character_B<PlayerData>
         }
     }
 
-
-    void OnGuard(InputAction.CallbackContext context)
+    private void OnGuard(InputAction.CallbackContext context)
     {
         if (_gameManager.IsPaused || _playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
@@ -685,7 +683,7 @@ public class PlayerController : Character_B<PlayerData>
         }
     }
 
-    void GuardVisibleChange()
+    private void GuardVisibleChange()
     {
         if (_isGuard)
         {
@@ -701,7 +699,7 @@ public class PlayerController : Character_B<PlayerData>
     /// ガード成功時にゲージを減らす
     /// </summary>
     /// <param name="other"></param>
-    void OnGuardHit(Collider other)
+    private void OnGuardHit(Collider other)
     {
         if (_gameManager.IsPaused) { return; }
 
@@ -747,7 +745,7 @@ public class PlayerController : Character_B<PlayerData>
         RemoveAction();
     }
 
-    void AddAction()
+    private void AddAction()
     {
         Debug.Log("InputEventが登録されました");
         _collider.OnTriggerEnterEvent += OnGuardHit;
@@ -761,7 +759,7 @@ public class PlayerController : Character_B<PlayerData>
         _input.GuardAction.canceled += OnGuard;
     }
 
-    void RemoveAction()
+    private void RemoveAction()
     {
         Debug.Log("InputEventが破棄されました");
         _collider.OnTriggerEnterEvent -= OnGuardHit;

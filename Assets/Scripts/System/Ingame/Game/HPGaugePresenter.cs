@@ -16,6 +16,6 @@ public class HPGaugePresenter
 
     public void GaugeUpdate(float currentHealth)
     {
-        _view?.GaugeUpdate(currentHealth);
+        _view.GaugeUpdate(currentHealth);
     }
 }

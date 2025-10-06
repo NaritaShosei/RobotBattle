@@ -21,6 +21,6 @@ MonoBehaviour:
   _range: 30
   _guardBreak: 50
   _duration: 2
-  _requiredGauge: 0
+  _requiredGauge: 200
   _prefab: {fileID: 2995124986475092325, guid: a119711e2f274a84096cf2cd530b1296, type: 3}
   _equipmentType: 2
