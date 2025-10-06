@@ -1,9 +1,7 @@
-﻿using Script.System.Ingame;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class BossEnemy : Enemy_B<EnemyData_B>
+public class MovingEnemy : Enemy_B<EnemyData_B>
 {
     Rigidbody _rb;
 
