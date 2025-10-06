@@ -6,7 +6,7 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
     where DataType : CharacterData_B
 {
     [SerializeField]
-    EnemyDropData _dropData;
+    protected EnemyDropData _dropData;
     public Action<PlayerController> OnAttackEvent;
     protected PlayerController _player;
     protected Camera _camera;
@@ -20,6 +20,9 @@ public class Enemy_B<DataType> : Character_B<DataType>, IEnemy
 
     public override bool IsTargetInView()
     {
+        if (_camera == null || _player == null)
+            return false;
+
         Vector3 viewportPosition = _camera.WorldToViewportPoint(GetTargetCenter().position);
 
         // 画面内にいるかチェック

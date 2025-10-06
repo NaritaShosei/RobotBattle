@@ -39,11 +39,16 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
         if (_gameManager.IsPaused) { return; }
         GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
 
-        var dirToPlayer = _player.transform.position - transform.position;
-        transform.forward = new Vector3(dirToPlayer.x, 0, dirToPlayer.z);
+        if (_player != null)
+        {
+            Vector3 flatDir = _player.transform.position - transform.position;
+            flatDir.y = 0f;
 
-        _playerDistance = dirToPlayer.magnitude;
-
+            if (flatDir.sqrMagnitude > 0.0001f)
+            {
+                transform.rotation = Quaternion.LookRotation(flatDir);
+            }
+        }
 
         if (IsAttack)
         {
