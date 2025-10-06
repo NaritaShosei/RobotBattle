@@ -24,8 +24,8 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] CrosshairView _crosshairView;
     public CrosshairView CrosshairView => _crosshairView;
 
-    [SerializeField] FadePanel _panelUIView;
-    public FadePanel PanelUIView => _panelUIView;
+    [SerializeField] SpecialGaugeView _specialGaugeView;
+    public SpecialGaugeView SpecialGaugeView => _specialGaugeView;
 
     private void Awake()
     {

@@ -80,6 +80,8 @@ public class PlayerAttacker : MonoBehaviour
     {
         _specialGauge = new SpecialGaugeModel();
 
+        new SpecialGaugePresenter(_specialGauge, ServiceLocator.Get<GameUIManager>().SpecialGaugeView);
+
         var manager = ServiceLocator.Get<EquipmentManager>();
 
         _specialAttack = manager.SpawnSpecial(_playerEquipmentManager);
@@ -116,14 +118,6 @@ public class PlayerAttacker : MonoBehaviour
 
     private void Update()
     {
-#if UNITY_EDITOR
-        //Debug Only
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            SceneManager.LoadScene("InGame");
-        }
-#endif
-
         if (_gameManager.IsGameEnd)
         {
             _mainWeapon.SetAttack(false);

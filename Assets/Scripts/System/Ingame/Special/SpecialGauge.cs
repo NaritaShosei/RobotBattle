@@ -48,23 +48,15 @@ public class SpecialGaugePresenter
     private SpecialGaugeModel _model;
     private SpecialGaugeView _view;
 
-    public SpecialGaugePresenter(SpecialGaugeModel model, SpecialGaugeView view, float maxValue)
+    public SpecialGaugePresenter(SpecialGaugeModel model, SpecialGaugeView view)
     {
         _model = model;
         _view = view;
 
-        _model.Initialize(maxValue);
-    }
+        _model.OnValueChange += _view.UpdateView;
+        _model.OnUseGauge += _view.UseGauge;
+        _model.OnGaugeMax += _view.MaxGauge;
 
-    private void UpdateView(float amount)
-    {
-        _view.UpdateView(amount);
-    }
-
-    public void UpdateModel(float amount)
-    {
-        _model.UpdateValue(amount);
-
-        UpdateView(_model.CurrentValue / _model.Max);
+        _view.UpdateView(_model.CurrentValue / _model.Max);
     }
 }

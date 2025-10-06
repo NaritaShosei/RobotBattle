@@ -40,7 +40,7 @@ public class UISubmitPanel : UISubmitBase
         IsClicked = true;
        // if (_targetType == TargetType.None) { _events.Invoke(); return; }
 
-        var view = ServiceLocator.Get<GameUIManager>().PanelUIView;
+        var view = ServiceLocator.Get<GameUIManager>().SpecialGaugeView;
 
       //  view.Fade(_targetType, _fadeAlpha, _fadeDuration, () => _events?.Invoke());
         Debug.Log("UI Submit");
