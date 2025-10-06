@@ -49,16 +49,6 @@ public class EnemySpawner : MonoBehaviour, ISpawner
         }
     }
 
-    public void AddOnAttackEvent(Action<PlayerController> action)
-    {
-
-    }
-
-    public void RemoveOnAttackEvent(Action<PlayerController> action)
-    {
-
-    }
-
     public bool IsTargetInView()
     {
         Vector3 viewportPosition = _camera.WorldToViewportPoint(GetTargetCenter().position);

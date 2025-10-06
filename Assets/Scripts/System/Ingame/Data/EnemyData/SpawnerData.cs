@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SpawnerData", fileName = "SpawnerData")]
+[CreateAssetMenu(menuName = "GameData/SpawnerData", fileName = "SpawnerData")]
 public class SpawnerData : ScriptableObject
 {
     [SerializeField] private float _maxHealth = 1000;

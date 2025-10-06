@@ -18,19 +18,13 @@ public class EnemyManager : MonoBehaviour
         ServiceLocator.Set(this);
     }
 
-    private async void Start()
+    private void Start()
     {
         InitializeEnemies();
-        try
-        {
-            await WaitUntilGameResumed();
-            await StartSpawnersAsync();
-        }
-        catch { }
     }
 
     /// <summary>
-    /// 既存の敵をリストに登録（Playerを除外）
+    /// 既存の敵をリストに登録
     /// </summary>
     private void InitializeEnemies()
     {
@@ -42,18 +36,23 @@ public class EnemyManager : MonoBehaviour
     /// <summary>
     /// ポーズ解除まで待機
     /// </summary>
-    private async UniTask WaitUntilGameResumed()
+    public async UniTask WaitUntilGameResumed()
     {
-        await UniTask.WaitUntil(
-            () => !ServiceLocator.Get<IngameManager>().IsPaused,
-            cancellationToken: destroyCancellationToken
-        );
+        try
+        {
+            await UniTask.WaitUntil(
+                () => !ServiceLocator.Get<IngameManager>().IsPaused,
+                cancellationToken: destroyCancellationToken
+            );
+        }
+
+        catch { }
     }
 
     /// <summary>
     /// 各Spawnerの初期化とSpawn開始
     /// </summary>
-    private async UniTask StartSpawnersAsync()
+    public async UniTask StartSpawnersAsync()
     {
         List<UniTask> tasks = new();
 
@@ -62,8 +61,11 @@ public class EnemyManager : MonoBehaviour
             SetupSpawner(spawner);
             tasks.Add(spawner.Spawn(_spawnEnemies));
         }
-
-        await UniTask.WhenAll(tasks);
+        try
+        {
+            await UniTask.WhenAll(tasks);
+        }
+        catch { }
     }
 
     /// <summary>

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "EnemyDropData", fileName = "EnemyDropData")]
+[CreateAssetMenu(menuName = "GameData/EnemyDropData", fileName = "EnemyDropData")]
 public class EnemyDropData : ScriptableObject
 {
     [SerializeField]
