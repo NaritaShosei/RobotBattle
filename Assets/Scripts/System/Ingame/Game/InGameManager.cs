@@ -47,6 +47,7 @@ public class IngameManager : MonoBehaviour
 
     void Update()
     {
+        return;
         if (_isGameEnd) { return; }
 
         if (_isPaused) { return; }
