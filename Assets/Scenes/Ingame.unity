@@ -5161,6 +5161,22 @@ PrefabInstance:
       propertyPath: _ghostSpawner
       value: 
       objectReference: {fileID: 1155244331}
+    - target: {fileID: 3573825822341839908, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: _ignoreLayers.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3573825822341839908, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: '_ignoreLayers.Array.data[0]'
+      value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3573825822341839908, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: '_ignoreLayers.Array.data[1]'
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3573825822341839908, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: '_ignoreLayers.Array.data[2]'
+      value: Ignore Raycast
+      objectReference: {fileID: 0}
     - target: {fileID: 3745475575074223026, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: _animController
       value: 

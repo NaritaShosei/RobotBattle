@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2671404667822840285}
   - component: {fileID: 5270541378349135100}
   - component: {fileID: 3944601094443124400}
-  m_Layer: 11
+  m_Layer: 2
   m_Name: TargetZone
   m_TagString: IgnoreCollider
   m_Icon: {fileID: 0}
