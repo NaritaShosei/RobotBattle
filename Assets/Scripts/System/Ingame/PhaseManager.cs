@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class PhaseManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class PhaseManager : MonoBehaviour
     private async void Start()
     {
         _context = new PhaseContext();
+
+        _context.TimeLineManager = ServiceLocator.Get<TimeLineManager>();
 
         await WaitAllPhase();
     }
@@ -25,4 +28,9 @@ public class PhaseManager : MonoBehaviour
 
         Debug.Log("End");
     }
+}
+// フェーズ間で共有したいデータなど
+public class PhaseContext
+{
+    public TimeLineManager TimeLineManager;
 }

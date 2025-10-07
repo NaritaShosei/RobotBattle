@@ -7,9 +7,3 @@ public abstract class PhaseData_B : ScriptableObject
 
     public abstract UniTask Run(PhaseContext context);
 }
-
-// フェーズ間で共有したいデータなど
-public class PhaseContext
-{
-
-}
