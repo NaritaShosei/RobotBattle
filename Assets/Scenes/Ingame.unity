@@ -1463,6 +1463,7 @@ GameObject:
   m_Component:
   - component: {fileID: 484472512}
   - component: {fileID: 484472511}
+  - component: {fileID: 484472513}
   m_Layer: 0
   m_Name: TestTL
   m_TagString: Untagged
@@ -1480,12 +1481,14 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 046e53ae1f0df294aaf6b3934d826f5b, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
   - key: {fileID: -6296864204670939426, guid: 046e53ae1f0df294aaf6b3934d826f5b, type: 2}
+    value: {fileID: 1155244336}
+  - key: {fileID: -970650224395267428, guid: 046e53ae1f0df294aaf6b3934d826f5b, type: 2}
     value: {fileID: 1155244336}
   m_ExposedReferences:
     m_References: []
@@ -1504,6 +1507,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &484472513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484472510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d47008e28b3773f449ef1bdbcd3b89bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playableDirector: {fileID: 484472511}
 --- !u!1 &545587957
 GameObject:
   m_ObjectHideFlags: 0
@@ -1557,7 +1573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5719,11 +5735,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7053778544467440685, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 146.7
       objectReference: {fileID: 0}
     - target: {fileID: 7053778544467440685, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -362.3
       objectReference: {fileID: 0}
     - target: {fileID: 7053778544467440685, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: m_LocalRotation.w

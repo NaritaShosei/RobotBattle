@@ -18,11 +18,6 @@ public class EnemyManager : MonoBehaviour
         ServiceLocator.Set(this);
     }
 
-    private void Start()
-    {
-        InitializeEnemies();
-    }
-
     /// <summary>
     /// 既存の敵をリストに登録
     /// </summary>
@@ -47,6 +42,11 @@ public class EnemyManager : MonoBehaviour
         }
 
         catch { }
+
+        finally
+        {
+            InitializeEnemies();
+        }
     }
 
     /// <summary>
@@ -86,11 +86,6 @@ public class EnemyManager : MonoBehaviour
         if (_enemies.Contains(enemy))
         {
             _enemies.Remove(enemy);
-        }
-
-        if (IsEnemyAllDefeated)
-        {
-            // TODOBoss戦に遷移
         }
     }
 
