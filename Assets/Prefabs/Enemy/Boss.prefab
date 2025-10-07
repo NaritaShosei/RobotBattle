@@ -259,6 +259,8 @@ MonoBehaviour:
   _dodgeClampData:
     Min: 0.3
     Max: 0.7
+  _ignoreLayers:
+  - EnemyBullet
 --- !u!1 &7634399089484709906
 GameObject:
   m_ObjectHideFlags: 0

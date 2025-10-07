@@ -9,6 +9,9 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
     [SerializeField] EnemyDodgeZone _dodgeZone;
     [SerializeField] EnemyDodgeClampData _dodgeClampData;
 
+    [Tooltip("回避行動を無視したいレイヤー")]
+    [SerializeField] private string[] _ignoreLayers;
+
     [System.Serializable]
     public struct EnemyDodgeClampData
     {
@@ -31,7 +34,7 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
         Initialize(_dataBase);
         _rb = GetComponent<Rigidbody>();
         _player = FindAnyObjectByType<PlayerController>();
-        _dodgeZone.OnTriggerEnterEvent += Dodge;
+        _dodgeZone.OnTriggerEnterEvent += SetDodgeTargetPosition;
     }
 
     private void Update()
@@ -39,16 +42,7 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
         if (_gameManager.IsPaused) { return; }
         GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
 
-        if (_player != null)
-        {
-            Vector3 flatDir = _player.transform.position - transform.position;
-            flatDir.y = 0f;
-
-            if (flatDir.sqrMagnitude > 0.0001f)
-            {
-                transform.rotation = Quaternion.LookRotation(flatDir);
-            }
-        }
+        HandleRotation();
 
         if (IsAttack)
         {
@@ -114,7 +108,22 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
             _canJump = true;
         }
     }
-    void Move(Vector3 target)
+
+    protected virtual void HandleRotation()
+    {
+        if (_player != null)
+        {
+            Vector3 flatDir = _player.transform.position - transform.position;
+            flatDir.y = 0f;
+
+            if (flatDir.sqrMagnitude > 0.0001f)
+            {
+                transform.rotation = Quaternion.LookRotation(flatDir);
+            }
+        }
+    }
+
+    protected virtual void Move(Vector3 target)
     {
         Vector3 vec = target - transform.position;
         Vector3 dir = vec.normalized;
@@ -129,9 +138,12 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
         _rb.linearVelocity = currentVel;
     }
 
-    void Dodge(Collider other)
+    protected virtual void SetDodgeTargetPosition(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyBullet")) return;
+        int mask = LayerMask.GetMask(_ignoreLayers);
+
+        if (((1 << other.gameObject.layer) & mask) != 0) return;
+
         if (!other.TryGetComponent(out MonoBehaviour _)) return;
 
         if (!GaugeValueChange(-_data.DashValue)) return;
