@@ -4,7 +4,7 @@ public class LookTarget : MonoBehaviour
 {
     [SerializeField] private Transform _target;
     [SerializeField] private float _smooth = 1;
-    Vector3 _velocity;
+    private Vector3 _velocity;
 
     private void Start()
     {

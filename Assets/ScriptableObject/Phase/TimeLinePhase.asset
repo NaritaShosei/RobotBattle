@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0792a822530b8a4490583d72452c7af, type: 3}
   m_Name: TimeLinePhase
   m_EditorClassIdentifier: 
-  PhaseName: "\u30D5\u30A7\u30FC\u30BA"
+  PhaseName: "\u30B9\u30BF\u30FC\u30C8\u6F14\u51FA\u30D5\u30A7\u30FC\u30BA"
   _timeLine: {fileID: 11400000, guid: 046e53ae1f0df294aaf6b3934d826f5b, type: 2}
