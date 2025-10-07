@@ -9,7 +9,7 @@ public class TimeLinePhase : PhaseData_B
     [SerializeField] private TimelineAsset _timeLine;
     public override async UniTask Run(PhaseContext context)
     {
-        var pd = FindAnyObjectByType<PlayableDirector>();
+        var pd = context.TimeLineManager.PlayableDirector;
 
         pd.Play(_timeLine);
 
