@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -15,11 +16,18 @@ public class PhaseManager : MonoBehaviour
         _context = new PhaseContext(
             timeLineManager: ServiceLocator.Get<TimeLineManager>(),
             bossManager: ServiceLocator.Get<BossManager>(),
-            enemyManager: ServiceLocator.Get<EnemyManager>());
+            enemyManager: ServiceLocator.Get<EnemyManager>(),
+            ingameManager: ServiceLocator.Get<IngameManager>());
 
         _cts = new CancellationTokenSource();
 
-        WaitAllPhase(_cts.Token).Forget(ex => Debug.LogError(ex.Message));
+        WaitAllPhase(_cts.Token).Forget(ex =>
+        {
+            if (!(ex is OperationCanceledException))
+            {
+                Debug.LogError(ex);
+            }
+        });
     }
 
     private async UniTask WaitAllPhase(CancellationToken token)
@@ -47,11 +55,13 @@ public class PhaseContext
     public TimeLineManager TimeLineManager { get; }
     public BossManager BossManager { get; }
     public EnemyManager EnemyManager { get; }
+    public IngameManager IngameManager { get; }
 
-    public PhaseContext(TimeLineManager timeLineManager, BossManager bossManager, EnemyManager enemyManager)
+    public PhaseContext(TimeLineManager timeLineManager, BossManager bossManager, EnemyManager enemyManager, IngameManager ingameManager)
     {
         TimeLineManager = timeLineManager;
         BossManager = bossManager;
         EnemyManager = enemyManager;
+        IngameManager = ingameManager;
     }
 }

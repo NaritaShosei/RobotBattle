@@ -19,6 +19,9 @@ public class IngameManager : MonoBehaviour
 
     bool _isGameEnd;
     public bool IsGameEnd => _isGameEnd;
+
+    private bool _isInEvent;
+    public bool IsInEvent => _isInEvent;
     private void Awake()
     {
         ServiceLocator.Set(this);
@@ -76,9 +79,13 @@ public class IngameManager : MonoBehaviour
         }
     }
 
-    [ContextMenu(nameof(PauseResume))]
-    public void PauseResume()
+    public void SetIsPause(bool value)
     {
-        _isPaused = !_isPaused;
+        _isPaused = value;
+    }
+
+    public void SetInEvent(bool value)
+    {
+        _isInEvent = value;
     }
 }

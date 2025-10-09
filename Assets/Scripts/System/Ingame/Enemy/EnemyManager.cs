@@ -21,32 +21,11 @@ public class EnemyManager : MonoBehaviour
     /// <summary>
     /// 既存の敵をリストに登録
     /// </summary>
-    private void InitializeEnemies()
+    public void InitializeEnemies()
     {
         _enemies = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
             .OfType<IEnemySource>()
             .ToList();
-    }
-
-    /// <summary>
-    /// ポーズ解除まで待機
-    /// </summary>
-    public async UniTask WaitUntilGameResumed()
-    {
-        try
-        {
-            await UniTask.WaitUntil(
-                () => !ServiceLocator.Get<IngameManager>().IsPaused,
-                cancellationToken: destroyCancellationToken
-            );
-        }
-
-        catch { }
-
-        finally
-        {
-            InitializeEnemies();
-        }
     }
 
     /// <summary>

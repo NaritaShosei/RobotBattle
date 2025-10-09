@@ -9,7 +9,7 @@ public class EnemyPhase : PhaseData_B
     {
         var em = context.EnemyManager;
 
-        await em.WaitUntilGameResumed();
+        em.InitializeEnemies();
 
         em.StartSpawnersAsync().Forget(ex => Debug.LogError(ex.Message));
 

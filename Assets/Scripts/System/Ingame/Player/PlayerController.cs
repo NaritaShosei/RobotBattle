@@ -103,7 +103,7 @@ public class PlayerController : Character_B<PlayerData>
     private void Update()
     {
         // ポーズ中は何もしない
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         // 必殺技中は移動・回転を完全停止
         if (_playerManager.IsState(PlayerState.SpecialAttack))
