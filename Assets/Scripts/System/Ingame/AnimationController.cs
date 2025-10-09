@@ -30,6 +30,21 @@ public class AnimationController : MonoBehaviour
         _animator.SetTrigger(name);
     }
 
+    public float GetFloat(string name)
+    {
+        return _animator.GetFloat(name);
+    }
+
+    public bool GetBool(string name)
+    {
+        return _animator.GetBool(name);
+    }
+
+    public int GetInt(string name)
+    {
+        return _animator.GetInteger(name);
+    }
+
     public void PlayDead()
     {
         foreach (AnimatorControllerParameter param in _animator.parameters)

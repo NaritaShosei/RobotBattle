@@ -55,6 +55,8 @@ public class PlayerController : Character_B<PlayerData>
 
     [Header("Animation補間時間")]
     [SerializeField] private float _dampTime = 0.1f;
+    private float _moveX;
+    private float _moveY;
 
     private float _autoMoveSpeed;
 
@@ -736,9 +738,34 @@ public class PlayerController : Character_B<PlayerData>
 
     private void SetMoveAnimParam()
     {
-        _playerManager.AnimController.SetFloat("MoveX", _velocity.x, _dampTime);
-        _playerManager.AnimController.SetFloat("MoveY", _velocity.y, _dampTime);
+        Vector2 target = new Vector2(_velocity.x, _velocity.y);
+
+        // Unityの内部補間に近い指数補間係数
+        float t = 1f - Mathf.Exp(-Time.deltaTime / _dampTime);
+
+        _moveX = Mathf.Lerp(_moveX, target.x, t);
+        _moveY = Mathf.Lerp(_moveY, target.y, t);
+
+        Vector2 nextValue = new Vector2(_moveX, _moveY);
+
+        // 現在Animatorに設定されている値
+        var anim = _playerManager.AnimController;
+        Vector2 currentValue = new Vector2(
+            anim.GetFloat("MoveX"),
+            anim.GetFloat("MoveY")
+        );
+
+        // Lerpなどで値が微妙に動き続けてると、
+        // Animatorが無限に内部時間を積み上げてしまうので
+        // 一定以上の変化がある場合のみAnimatorを更新
+        const float threshold = 0.001f;
+        if (Vector2.Distance(currentValue, nextValue) > threshold)
+        {
+            anim.SetFloat("MoveX", nextValue.x);
+            anim.SetFloat("MoveY", nextValue.y);
+        }
     }
+
 
     private void OnDisable()
     {
