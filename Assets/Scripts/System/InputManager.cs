@@ -40,12 +40,6 @@ public class InputManager : MonoBehaviour
         ServiceLocator.Set(this);
     }
 
-    private void Start()
-    {
-        //ActionMapの切り替え
-        SwitchInputMode(UI);
-    }
-
     /// <summary>
     /// それぞれのアクションを取得
     /// </summary>

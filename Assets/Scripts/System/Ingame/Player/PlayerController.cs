@@ -435,7 +435,7 @@ public class PlayerController : Character_B<PlayerData>
 
     private void FixedUpdate()
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         //AddForceなどはFixedUpdateで
 
@@ -488,7 +488,7 @@ public class PlayerController : Character_B<PlayerData>
 
     private void OnMoveInput(InputAction.CallbackContext context)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         if (_isAutoMoving) return;
 
@@ -513,7 +513,7 @@ public class PlayerController : Character_B<PlayerData>
     }
     private void Move(float speed)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
@@ -536,7 +536,7 @@ public class PlayerController : Character_B<PlayerData>
 
     private void OnJump(InputAction.CallbackContext context)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
         _isJumped = context.phase == InputActionPhase.Started;
@@ -556,7 +556,7 @@ public class PlayerController : Character_B<PlayerData>
 
     private void OnDash(InputAction.CallbackContext context)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
         if (context.phase == InputActionPhase.Started && !_isDashed)
@@ -659,7 +659,7 @@ public class PlayerController : Character_B<PlayerData>
 
     private void OnGuard(InputAction.CallbackContext context)
     {
-        if (_gameManager.IsPaused || _playerManager.IsState(PlayerState.SpecialAttack)) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent || _playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
         // 自動移動中はガードを無効
         if (_isAutoMoving) return;
@@ -701,7 +701,7 @@ public class PlayerController : Character_B<PlayerData>
     /// <param name="other"></param>
     private void OnGuardHit(Collider other)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         if (other.TryGetComponent(out Bullet_B bullet))
         {

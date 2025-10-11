@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using RootMotion.FinalIK;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -132,7 +133,7 @@ public class PlayerAttacker : MonoBehaviour
             return;
         }
 
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
@@ -225,7 +226,7 @@ public class PlayerAttacker : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         //IKのtargetの座標を設定する
         if (_aimIK != null && _aimIK.enabled && _isIKActive)
@@ -236,7 +237,7 @@ public class PlayerAttacker : MonoBehaviour
 
     async void WeaponChange(InputAction.CallbackContext context)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
@@ -295,7 +296,7 @@ public class PlayerAttacker : MonoBehaviour
 
     private void Attack(InputAction.CallbackContext context)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
@@ -521,13 +522,13 @@ public class PlayerAttacker : MonoBehaviour
     //AnimationEventで呼び出す、攻撃開始、終了の処理
     private void IsAttack()
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
         _mainWeapon.SetAttack(true);
     }
 
     private void Reload(InputAction.CallbackContext context)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
@@ -547,7 +548,12 @@ public class PlayerAttacker : MonoBehaviour
             // 必殺技開始前にすべての動作を停止
             StopAllMovementAndRotation();
 
-            await _specialAttack.SpecialAttack();
+            try
+            {
+                await _specialAttack.SpecialAttack();
+            }
+            catch (OperationCanceledException ex) { }
+            catch (Exception ex) { Debug.LogWarning(ex.Message); }
 
             _playerManager.SetState(PlayerState.Idle);
         }
