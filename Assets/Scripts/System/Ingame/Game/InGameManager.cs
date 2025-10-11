@@ -46,17 +46,12 @@ public class IngameManager : MonoBehaviour
         _timePresenter = new TimePresenter(timeModel, timeView);
 
         _timePresenter?.Initialize();
+
+        ServiceLocator.Get<PhaseManager>().OnComplete += GameEnd;
     }
 
-    void Update()
+    private void GameEnd()
     {
-        return;
-        if (_isGameEnd) { return; }
-
-        if (_isPaused) { return; }
-
-        _timePresenter?.Update(Time.deltaTime);
-
         if (_timePresenter.GetIsTimeOver())
         {
             _gameResultPresenter.SetGameOver(GameOverType.TimeOver, _scoreManager.Score);
@@ -78,7 +73,6 @@ public class IngameManager : MonoBehaviour
             ServiceLocator.Get<InputManager>().SwitchInputMode(InputManager.UI);
         }
     }
-
     public void SetIsPause(bool value)
     {
         _isPaused = value;

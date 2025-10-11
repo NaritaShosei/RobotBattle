@@ -7,17 +7,23 @@ using UnityEngine.Playables;
 public class PhaseManager : MonoBehaviour
 {
     [SerializeField] private PhaseDataBase _phaseDataBase;
+    [SerializeField] private PlayerManager _playerManager;
 
     private PhaseContext _context;
     private CancellationTokenSource _cts;
+    public event Action OnComplete;
+
+    private void Awake()
+    {
+        ServiceLocator.Set(this);
+    }
 
     private void Start()
     {
-        _context = new PhaseContext(
-            timeLineManager: ServiceLocator.Get<TimeLineManager>(),
-            bossManager: ServiceLocator.Get<BossManager>(),
-            enemyManager: ServiceLocator.Get<EnemyManager>(),
-            ingameManager: ServiceLocator.Get<IngameManager>());
+        InitializeContext();
+
+        if (_playerManager is null) { _playerManager = FindAnyObjectByType<PlayerManager>(); }
+        _playerManager.OnDead += StopRun;
 
         _cts = new CancellationTokenSource();
 
@@ -30,23 +36,48 @@ public class PhaseManager : MonoBehaviour
         });
     }
 
+    private void InitializeContext()
+    {
+        _context = new PhaseContext(
+            timeLineManager: ServiceLocator.Get<TimeLineManager>(),
+            bossManager: ServiceLocator.Get<BossManager>(),
+            enemyManager: ServiceLocator.Get<EnemyManager>(),
+            ingameManager: ServiceLocator.Get<IngameManager>());
+    }
+
     private async UniTask WaitAllPhase(CancellationToken token)
     {
-        foreach (var phase in _phaseDataBase.AllPhaseData)
+        try
         {
-            Debug.Log($"{phase.PhaseName}==Start Run");
+            await UniTask.WaitUntil(() => !_context.IngameManager.IsPaused);
 
-            await phase.Run(_context, token);
+            foreach (var phase in _phaseDataBase.AllPhaseData)
+            {
+                token.ThrowIfCancellationRequested();
+
+                Debug.Log($"{phase.PhaseName}==Start Run");
+
+                await phase.Run(_context, token);
+            }
         }
+        finally
+        {
+            OnComplete?.Invoke();
+            Debug.Log("Phase All End");
+        }
+    }
 
-        Debug.Log("End");
+    private void StopRun()
+    {
+        if (_cts is null) { return; }
+        _cts.Cancel();
+        _cts.Dispose();
+        _cts = null;
     }
 
     private void OnDestroy()
     {
-        _cts.Cancel();
-        _cts.Dispose();
-        _cts = null;
+        StopRun();
     }
 }
 // フェーズ間で共有したいデータなど

@@ -225,7 +225,6 @@ public class PlayerController : Character_B<PlayerData>
 
         // 追尾中は重力を切る
         _rb.useGravity = false;
-        Debug.Log($"目標回転開始");
     }
 
     /// <summary>
@@ -242,7 +241,6 @@ public class PlayerController : Character_B<PlayerData>
 
         // 追尾終了時に重力をかけなおす
         _rb.useGravity = true;
-        Debug.Log("目標回転停止");
     }
 
     /// <summary>

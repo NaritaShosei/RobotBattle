@@ -7,6 +7,9 @@ public class PlayerManager : MonoBehaviour
 
     public AnimationController AnimController => _animController;
     public PlayerState State { get; private set; } = PlayerState.Idle;
+
+    public event Action OnDead;
+
     /// <summary>
     /// 状態遷移時に呼び出すAction
     /// UIとかに使うかもしれない
@@ -41,6 +44,8 @@ public class PlayerManager : MonoBehaviour
 
             OnStateChanged?.Invoke(oldState, newState);
         }
+
+        if (State == PlayerState.Dead) { OnDead?.Invoke(); }
     }
 
     public bool IsState(PlayerState state)
