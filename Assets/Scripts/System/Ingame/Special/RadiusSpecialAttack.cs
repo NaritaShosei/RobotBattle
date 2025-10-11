@@ -26,19 +26,21 @@ public class RadiusSpecialAttack : SpecialAttackBase
 
     public override async UniTask SpecialAttack()
     {
+        _collider.enabled = true;
+
+        if (_viewObj)
+            _viewObj.SetActive(true);
+
         try
         {
-            _collider.enabled = true;
-
-            if (_viewObj)
-                _viewObj.SetActive(true);
             await UniTask.Delay((int)(1000 * Data.Duration), cancellationToken: destroyCancellationToken);
-            _collider.enabled = false;
-
-            if (_viewObj)
-                _viewObj.SetActive(false);
         }
         catch { }
+
+        _collider.enabled = false;
+
+        if (_viewObj)
+            _viewObj.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
