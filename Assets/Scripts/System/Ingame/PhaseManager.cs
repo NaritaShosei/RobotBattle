@@ -31,7 +31,7 @@ public class PhaseManager : MonoBehaviour
         {
             if (!(ex is OperationCanceledException))
             {
-                Debug.LogError(ex);
+                Debug.LogWarning($"フェーズの中断\n{ex}");
             }
         });
     }
