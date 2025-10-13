@@ -14,6 +14,10 @@ public class AnimationController : MonoBehaviour
         ResetLongRunningState().Forget();
     }
 
+    /// <summary>
+    /// Animatorの内部で保存している値がすごく大きくなってしまう時があるので、それを回避するためのメソッド
+    /// </summary>
+    /// <returns></returns>
     private async UniTask ResetLongRunningState()
     {
         try
