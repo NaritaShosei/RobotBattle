@@ -284,11 +284,14 @@ public class PlayerAttacker : MonoBehaviour
     {
         var seq = DOTween.Sequence();
 
+        // 交換後のメイン武器の装備場所の取得
         var mainParent = _playerEquipmentManager.GetEquipmentParent(_mainWeapon.Data.EquipmentType);
 
+        // 各武器の親を変更
         _mainWeapon.transform.SetParent(mainParent);
         _subWeapon.transform.SetParent(_subParent);
 
+        // 装備位置への移動
         await seq.Append(_mainWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
             Join(_subWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
             AsyncWaitForCompletion();
@@ -395,10 +398,12 @@ public class PlayerAttacker : MonoBehaviour
     {
         _playerManager.SetState(PlayerState.Attack);
 
-        _playerManager.AnimController.SetBool("IsMissileAttack", true);
+        var animData = _mainWeapon.Data.WeaponAnimationData;
+
+        _playerManager.AnimController.SetBool(animData.AttackTrigger, true);
 
         // レイヤー切り替え
-        _playerManager.AnimController.SetWeight(AnimationLayer.Attack, _animationWeight);
+        _playerManager.AnimController.SetWeight(animData.AnimationLayer, animData.AttackLayerWeight);
 
         // IKを有効化
         EnableIK();
@@ -416,12 +421,6 @@ public class PlayerAttacker : MonoBehaviour
         }
 
         Debug.Log("攻撃開始");
-
-        // とりあえずのデバッグ用、のちに修正
-        if (_mainWeapon as ShortRangeWeapon_B)
-        {
-            Invoke(nameof(EndAttack), 1);
-        }
     }
 
     /// <summary>
@@ -434,10 +433,12 @@ public class PlayerAttacker : MonoBehaviour
         // IKを自然にフェードアウト
         StartIKFadeOut();
 
-        _playerManager.AnimController.SetBool("IsMissileAttack", false);
+        var animData = _mainWeapon.Data.WeaponAnimationData;
+
+        _playerManager.AnimController.SetBool(animData.AttackTrigger, false);
 
         // レイヤー切り替え
-        _playerManager.AnimController.SetWeight(AnimationLayer.Attack, 0);
+        _playerManager.AnimController.SetWeight(animData.AnimationLayer, 0);
 
         _mainWeapon.SetAttack(false);
 
@@ -483,7 +484,6 @@ public class PlayerAttacker : MonoBehaviour
             _timer = 0f; // フェードアウト用にタイマーリセット
             // 現在のウェイト値を保持してそこからフェードアウト
             _currentIKWeight = _aimIK.solver.IKPositionWeight;
-            Debug.Log($"IKフェードアウト開始 (開始ウェイト: {_currentIKWeight:F3})");
         }
         else
         {
@@ -533,6 +533,11 @@ public class PlayerAttacker : MonoBehaviour
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
         _mainWeapon.Reload();
+
+        // リロードのアニメーション再生
+        var animData = _mainWeapon.Data.WeaponAnimationData;
+
+        _playerManager.AnimController.SetTrigger(animData.ReloadTrigger);
     }
 
     private async void Special(InputAction.CallbackContext context)
@@ -582,8 +587,9 @@ public class PlayerAttacker : MonoBehaviour
         ForceResetIK();
 
         // アニメーション状態もリセット
-        _playerManager.AnimController.SetBool("IsMissileAttack", false);
-        _playerManager.AnimController.SetWeight(AnimationLayer.Attack, 0);
+        var animData = _mainWeapon.Data.WeaponAnimationData;
+        _playerManager.AnimController.SetBool(animData.AttackTrigger, false);
+        _playerManager.AnimController.SetWeight(animData.AnimationLayer, 0);
 
         Debug.Log("必殺技開始：すべての動作を停止しました");
     }

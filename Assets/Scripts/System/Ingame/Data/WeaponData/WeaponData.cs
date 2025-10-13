@@ -48,10 +48,10 @@ public class WeaponAnimationData
 {
     [SerializeField] private string _attackTrigger;
     [SerializeField] private string _reloadTrigger;
-    [SerializeField] private int _attackLayerWeight;
+    [SerializeField] private int _attackLayerWeight = 1;
     [SerializeField] private AnimationLayer _animationLayer;
-    public string AttackTrigger => _attackTrigger;
-    public string ReloadTrigger => _reloadTrigger;
-    public int AttackLayerWeight => _attackLayerWeight;
-    public AnimationLayer AnimationLayer => _animationLayer;
+    [Tooltip("攻撃アニメーションのTrigger")] public string AttackTrigger => _attackTrigger;
+    [Tooltip("リロードアニメーションのTrigger")] public string ReloadTrigger => _reloadTrigger;
+    [Tooltip("Layerの重み")] public int AttackLayerWeight => _attackLayerWeight;
+    [Tooltip("Layer")] public AnimationLayer AnimationLayer => _animationLayer;
 }
