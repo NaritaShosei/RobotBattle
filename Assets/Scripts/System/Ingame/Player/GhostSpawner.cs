@@ -91,7 +91,6 @@ public class GhostSpawner : MonoBehaviour
 
     private void SpawnGhost(SkinnedMeshRenderer[] smrArray)
     {
-
         if (_pool.Count <= 0) { Debug.LogWarning("残像のプールが空"); return; }
 
         var ghost = _pool.Dequeue();
@@ -100,31 +99,33 @@ public class GhostSpawner : MonoBehaviour
         var mf = ghost.GetComponent<MeshFilter>();
         var mr = ghost.GetComponent<MeshRenderer>();
 
-        // 座標を先に決める
+        // 座標の設定
         ghost.transform.SetPositionAndRotation(transform.position, transform.rotation);
         ghost.transform.localScale = transform.lossyScale;
 
-        // 再利用している Mesh をクリアして書き換える
+        // メッシュの再利用
         Mesh combined = mf.sharedMesh;
         combined.Clear();
 
+        // 頂点が65535超える場合に備えてUInt32に変更
+        combined.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
+
         // 複数SMRをまとめて1つのMeshにする
         CombineInstance[] combines = new CombineInstance[smrArray.Length];
-
         for (int i = 0; i < smrArray.Length; i++)
         {
             var smr = smrArray[i];
-
             var baked = _meshPool.Dequeue();
             smr.BakeMesh(baked);
 
-            // ソース頂点（baked）は smr のローカル空間の頂点なので、
-            // ghost ローカル空間へ変換する行列を用意する：
-            //  ghost.worldToLocal * smr.localToWorld
+            // ソース頂点（baked）は smr のローカル空間の頂点なので、 
+            // ghost ローカル空間へ変換する行列を用意する
+            // ghost.worldToLocal * smr.localToWorld
             var mat = ghost.transform.worldToLocalMatrix * smr.transform.localToWorldMatrix;
 
             // 1つにしたいMesh
             combines[i].mesh = baked;
+
             // meshを合成先のローカル座標系に変換するための行列
             combines[i].transform = mat;
         }
@@ -132,13 +133,12 @@ public class GhostSpawner : MonoBehaviour
         // 全てを合成（サブメッシュを1つにまとめ、行列を適用）
         combined.CombineMeshes(combines, mergeSubMeshes: true, useMatrices: true);
 
-        // baked Mesh の破棄
+        // baked Mesh の返却
         for (int i = 0; i < smrArray.Length; i++)
         {
             if (combines[i].mesh != null)
                 ReturnMesh(combines[i].mesh);
         }
-
 
         ghost.GetComponent<GhostFade>().Initialize(_lifeTime, () =>
         {
