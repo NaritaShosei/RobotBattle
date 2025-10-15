@@ -25,3 +25,9 @@ MonoBehaviour:
   _guardBreak: 50
   _speed: 100
   _weaponPrefab: {fileID: 8394636388324156513, guid: 1de5c6e1700b1ec438798eb5ea0e5778, type: 3}
+  _equipmentType: 0
+  _weaponAnimationData:
+    _attackTrigger: IsMissileAttack
+    _reloadTrigger: 
+    _attackLayerWeight: 1
+    _animationLayer: 1
