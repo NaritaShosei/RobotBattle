@@ -17,7 +17,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0.9109704, y: -0.0000075854505, z: -0.0000031569011, w: 0.41247192}
+        value: {x: -0.12878583, y: 0.018218515, z: 0.13888054, w: 0.98173034}
         inSlope: {x: 0, y: 0, z: 0, w: 0}
         outSlope: {x: 0, y: 0, z: 0, w: 0}
         tangentMode: 0
@@ -27,13 +27,13 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: robot_metallic/root/root.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: -0.23757428, y: -0.0032067841, z: -0.0007843077, w: 0.97136384}
+        value: {x: 0.0000003874301, y: -0.000000046566118, z: -0.29049325, w: 0.95687705}
         inSlope: {x: 0, y: 0, z: 0, w: 0}
         outSlope: {x: 0, y: 0, z: 0, w: 0}
         tangentMode: 0
@@ -43,13 +43,13 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: -0.0006837377, y: 0.85940087, z: 0.5112919, w: 0.0032115164}
+        value: {x: 0.11209642, y: 0.036461346, z: 0.06505475, w: 0.990895}
         inSlope: {x: 0, y: 0, z: 0, w: 0}
         outSlope: {x: 0, y: 0, z: 0, w: 0}
         tangentMode: 0
@@ -59,13 +59,13 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/c_neck_01.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0.42926967, y: -0.0207107, z: 0.11820629, w: 0.8951681}
+        value: {x: -0.00000004682292, y: 0.00000037154035, z: -0.24188867, w: 0.970304}
         inSlope: {x: 0, y: 0, z: 0, w: 0}
         outSlope: {x: 0, y: 0, z: 0, w: 0}
         tangentMode: 0
@@ -75,13 +75,13 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0.0595688, y: -0.14649314, z: -0.39639163, w: 0.9043589}
+        value: {x: -0.19508262, y: -3.5527137e-15, z: -0.00000008195637, w: 0.9807868}
         inSlope: {x: 0, y: 0, z: 0, w: 0}
         outSlope: {x: 0, y: 0, z: 0, w: 0}
         tangentMode: 0
@@ -91,13 +91,13 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0.42937604, y: 0.018382587, z: -0.11335702, w: 0.89579487}
+        value: {x: 0.0000011771918, y: -0.0000009313226, z: 0.37907147, w: 0.9253674}
         inSlope: {x: 0, y: 0, z: 0, w: 0}
         outSlope: {x: 0, y: 0, z: 0, w: 0}
         tangentMode: 0
@@ -107,13 +107,13 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0.13335994, y: 0.037334118, z: 0.36535305, w: 0.9205099}
+        value: {x: -0.16980638, y: -0.1057929, z: -0.19692591, w: 0.9597884}
         inSlope: {x: 0, y: 0, z: 0, w: 0}
         outSlope: {x: 0, y: 0, z: 0, w: 0}
         tangentMode: 0
@@ -123,13 +123,13 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0.80764115, y: 0.3327089, z: 0.4479936, w: 0.19058438}
+        value: {x: 0.00000019371504, y: 0.00000060349686, z: 0.45792893, w: 0.8889888}
         inSlope: {x: 0, y: 0, z: 0, w: 0}
         outSlope: {x: 0, y: 0, z: 0, w: 0}
         tangentMode: 0
@@ -139,13 +139,13 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: robot_metallic/root/root.x/thigh_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0.027610082, y: 0.11418033, z: 0.40040195, w: 0.9087788}
+        value: {x: 0.00000024814645, y: -0.00000011889203, z: -0.121370375, w: 0.9926073}
         inSlope: {x: 0, y: 0, z: 0, w: 0}
         outSlope: {x: 0, y: 0, z: 0, w: 0}
         tangentMode: 0
@@ -155,13 +155,13 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: robot_metallic/root/root.x/thigh_stretch.r/leg_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L/U_Foot_L
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0.08463133, y: -0.024932737, z: -0.35348246, w: 0.93127126}
+        value: {x: 0.000000044703473, y: -0.0000002663582, z: -0.10931889, w: 0.99400675}
         inSlope: {x: 0, y: 0, z: 0, w: 0}
         outSlope: {x: 0, y: 0, z: 0, w: 0}
         tangentMode: 0
@@ -171,13 +171,13 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: robot_metallic/root/root.x/thigh_stretch.l/leg_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0.8335005, y: -0.26333946, z: -0.4601537, w: 0.15552469}
+        value: {x: -0.000000052154057, y: -0.0000003613531, z: -0.106468044, w: 0.99431616}
         inSlope: {x: 0, y: 0, z: 0, w: 0}
         outSlope: {x: 0, y: 0, z: 0, w: 0}
         tangentMode: 0
@@ -187,58 +187,74 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: robot_metallic/root/root.x/thigh_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.00000005385913, y: 0.0000000231318, z: -0.15427858, w: 0.98802745}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R/U_Foot_R
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.00000008940696, y: -0, z: -0.19101354, w: 0.9815874}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.00000012272098, y: 0.000000004341771, z: -0.21451956, w: 0.9767197}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.0000000147731125, y: 0.00000008331327, z: -0.11687647, w: 0.99314654}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R
   m_CompressedRotationCurves: []
   m_EulerCurves: []
-  m_PositionCurves:
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: {x: -0.000017968998, y: -0.97784925, z: 3.1343184}
-        inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    path: robot_metallic/root/root.x
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: {x: 0.6422875, y: 1.3326505, z: -0.41285214}
-        inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    path: robot_metallic/root/root.x/thigh_stretch.r/leg_stretch.r
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: {x: -0.9342104, y: 1.2865129, z: -0.5337704}
-        inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    path: robot_metallic/root/root.x/thigh_stretch.l/leg_stretch.l
+  m_PositionCurves: []
   m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves: []
@@ -250,34 +266,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 842974238
-      attribute: 1
-      script: {fileID: 0}
-      typeID: 4
-      customType: 0
-      isPPtrCurve: 0
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    - serializedVersion: 2
-      path: 3853247594
-      attribute: 1
-      script: {fileID: 0}
-      typeID: 4
-      customType: 0
-      isPPtrCurve: 0
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    - serializedVersion: 2
-      path: 3065339443
-      attribute: 1
-      script: {fileID: 0}
-      typeID: 4
-      customType: 0
-      isPPtrCurve: 0
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    - serializedVersion: 2
-      path: 842974238
+      path: 2269896663
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -286,7 +275,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3823176114
+      path: 249687259
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -295,7 +284,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1183125427
+      path: 2101666484
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -304,7 +293,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 494521796
+      path: 884441249
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -313,7 +302,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2130758212
+      path: 1077195896
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -322,7 +311,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 1315403677
+      path: 3907551936
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -331,7 +320,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 20003578
+      path: 3162252857
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -340,7 +329,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3931130716
+      path: 3260419842
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -349,7 +338,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3853247594
+      path: 511540269
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -358,7 +347,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3065339443
+      path: 2739505610
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -367,7 +356,43 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 274691647
+      path: 2781240164
+      attribute: 2
+      script: {fileID: 0}
+      typeID: 4
+      customType: 0
+      isPPtrCurve: 0
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    - serializedVersion: 2
+      path: 3814671799
+      attribute: 2
+      script: {fileID: 0}
+      typeID: 4
+      customType: 0
+      isPPtrCurve: 0
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    - serializedVersion: 2
+      path: 281702887
+      attribute: 2
+      script: {fileID: 0}
+      typeID: 4
+      customType: 0
+      isPPtrCurve: 0
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    - serializedVersion: 2
+      path: 4054123882
+      attribute: 2
+      script: {fileID: 0}
+      typeID: 4
+      customType: 0
+      isPPtrCurve: 0
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    - serializedVersion: 2
+      path: 2793624037
       attribute: 2
       script: {fileID: 0}
       typeID: 4
@@ -403,7 +428,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.9109704
+        value: -0.12878583
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -414,7 +439,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.x
-    path: robot_metallic/root/root.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -424,7 +449,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.0000075854505
+        value: 0.018218515
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -435,7 +460,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.y
-    path: robot_metallic/root/root.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -445,7 +470,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.0000031569011
+        value: 0.13888054
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -456,7 +481,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.z
-    path: robot_metallic/root/root.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -466,7 +491,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.41247192
+        value: 0.98173034
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -477,7 +502,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.w
-    path: robot_metallic/root/root.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -487,7 +512,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.23757428
+        value: 0.0000003874301
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -498,7 +523,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.x
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -508,7 +533,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.0032067841
+        value: -0.000000046566118
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -519,7 +544,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.y
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -529,7 +554,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.0007843077
+        value: -0.29049325
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -540,7 +565,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.z
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -550,7 +575,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.97136384
+        value: 0.95687705
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -561,7 +586,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.w
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -571,7 +596,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.0006837377
+        value: 0.11209642
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -582,7 +607,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.x
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/c_neck_01.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -592,7 +617,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.85940087
+        value: 0.036461346
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -603,7 +628,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.y
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/c_neck_01.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -613,7 +638,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.5112919
+        value: 0.06505475
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -624,7 +649,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.z
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/c_neck_01.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -634,7 +659,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.0032115164
+        value: 0.990895
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -645,7 +670,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.w
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/c_neck_01.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -655,7 +680,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.42926967
+        value: -0.00000004682292
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -666,7 +691,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.x
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -676,7 +701,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.0207107
+        value: 0.00000037154035
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -687,7 +712,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.y
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -697,7 +722,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.11820629
+        value: -0.24188867
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -708,7 +733,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.z
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -718,7 +743,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.8951681
+        value: 0.970304
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -729,7 +754,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.w
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -739,7 +764,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.0595688
+        value: -0.19508262
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -750,7 +775,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.x
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -760,7 +785,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.14649314
+        value: -3.5527137e-15
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -771,7 +796,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.y
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -781,7 +806,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.39639163
+        value: -0.00000008195637
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -792,7 +817,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.z
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -802,7 +827,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.9043589
+        value: 0.9807868
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -813,7 +838,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.w
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -823,7 +848,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.42937604
+        value: 0.0000011771918
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -834,7 +859,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.x
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -844,7 +869,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.018382587
+        value: -0.0000009313226
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -855,7 +880,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.y
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -865,7 +890,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.11335702
+        value: 0.37907147
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -876,7 +901,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.z
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -886,7 +911,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.89579487
+        value: 0.9253674
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -897,7 +922,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.w
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -907,7 +932,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.13335994
+        value: -0.16980638
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -918,7 +943,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.x
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -928,7 +953,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.037334118
+        value: -0.1057929
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -939,7 +964,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.y
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -949,7 +974,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.36535305
+        value: -0.19692591
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -960,7 +985,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.z
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -970,7 +995,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.9205099
+        value: 0.9597884
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -981,7 +1006,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.w
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -991,70 +1016,91 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.000017968998
+        value: 0.00000019371504
         inSlope: 0
         outSlope: 0
-        tangentMode: 136
+        tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalPosition.x
-    path: robot_metallic/root/root.x
+    attribute: m_LocalRotation.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R
     classID: 4
     script: {fileID: 0}
-    flags: 16
+    flags: 0
   - serializedVersion: 2
     curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.97784925
+        value: 0.00000060349686
         inSlope: 0
         outSlope: 0
-        tangentMode: 136
+        tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalPosition.y
-    path: robot_metallic/root/root.x
+    attribute: m_LocalRotation.y
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R
     classID: 4
     script: {fileID: 0}
-    flags: 16
+    flags: 0
   - serializedVersion: 2
     curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 3.1343184
+        value: 0.45792893
         inSlope: 0
         outSlope: 0
-        tangentMode: 136
+        tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalPosition.z
-    path: robot_metallic/root/root.x
+    attribute: m_LocalRotation.z
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R
     classID: 4
     script: {fileID: 0}
-    flags: 16
+    flags: 0
   - serializedVersion: 2
     curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.80764115
+        value: 0.8889888
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.w
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.00000024814645
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1065,7 +1111,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.x
-    path: robot_metallic/root/root.x/thigh_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L/U_Foot_L
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -1075,7 +1121,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.3327089
+        value: -0.00000011889203
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1086,7 +1132,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.y
-    path: robot_metallic/root/root.x/thigh_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L/U_Foot_L
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -1096,7 +1142,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.4479936
+        value: -0.121370375
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1107,7 +1153,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.z
-    path: robot_metallic/root/root.x/thigh_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L/U_Foot_L
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -1117,7 +1163,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.19058438
+        value: 0.9926073
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1128,7 +1174,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.w
-    path: robot_metallic/root/root.x/thigh_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L/U_Foot_L
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -1138,7 +1184,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.027610082
+        value: 0.000000044703473
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1149,7 +1195,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.x
-    path: robot_metallic/root/root.x/thigh_stretch.r/leg_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -1159,7 +1205,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.11418033
+        value: -0.0000002663582
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1170,7 +1216,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.y
-    path: robot_metallic/root/root.x/thigh_stretch.r/leg_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -1180,7 +1226,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.40040195
+        value: -0.10931889
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1191,7 +1237,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.z
-    path: robot_metallic/root/root.x/thigh_stretch.r/leg_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -1201,7 +1247,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.9087788
+        value: 0.99400675
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1212,7 +1258,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.w
-    path: robot_metallic/root/root.x/thigh_stretch.r/leg_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -1222,70 +1268,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.6422875
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalPosition.x
-    path: robot_metallic/root/root.x/thigh_stretch.r/leg_stretch.r
-    classID: 4
-    script: {fileID: 0}
-    flags: 16
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1.3326505
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalPosition.y
-    path: robot_metallic/root/root.x/thigh_stretch.r/leg_stretch.r
-    classID: 4
-    script: {fileID: 0}
-    flags: 16
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: -0.41285214
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalPosition.z
-    path: robot_metallic/root/root.x/thigh_stretch.r/leg_stretch.r
-    classID: 4
-    script: {fileID: 0}
-    flags: 16
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0.08463133
+        value: -0.000000052154057
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1296,7 +1279,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.x
-    path: robot_metallic/root/root.x/thigh_stretch.l/leg_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -1306,7 +1289,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.024932737
+        value: -0.0000003613531
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1317,7 +1300,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.y
-    path: robot_metallic/root/root.x/thigh_stretch.l/leg_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -1327,7 +1310,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.35348246
+        value: -0.106468044
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1338,7 +1321,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.z
-    path: robot_metallic/root/root.x/thigh_stretch.l/leg_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -1348,7 +1331,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.93127126
+        value: 0.99431616
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1359,7 +1342,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.w
-    path: robot_metallic/root/root.x/thigh_stretch.l/leg_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -1369,70 +1352,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.9342104
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalPosition.x
-    path: robot_metallic/root/root.x/thigh_stretch.l/leg_stretch.l
-    classID: 4
-    script: {fileID: 0}
-    flags: 16
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1.2865129
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalPosition.y
-    path: robot_metallic/root/root.x/thigh_stretch.l/leg_stretch.l
-    classID: 4
-    script: {fileID: 0}
-    flags: 16
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: -0.5337704
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalPosition.z
-    path: robot_metallic/root/root.x/thigh_stretch.l/leg_stretch.l
-    classID: 4
-    script: {fileID: 0}
-    flags: 16
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0.8335005
+        value: -0.00000005385913
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1443,7 +1363,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.x
-    path: robot_metallic/root/root.x/thigh_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R/U_Foot_R
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -1453,7 +1373,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.26333946
+        value: 0.0000000231318
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1464,7 +1384,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.y
-    path: robot_metallic/root/root.x/thigh_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R/U_Foot_R
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -1474,7 +1394,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.4601537
+        value: -0.15427858
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1485,7 +1405,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.z
-    path: robot_metallic/root/root.x/thigh_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R/U_Foot_R
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -1495,7 +1415,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.15552469
+        value: 0.98802745
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1506,7 +1426,259 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalRotation.w
-    path: robot_metallic/root/root.x/thigh_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R/U_Foot_R
+    classID: 4
+    script: {fileID: 0}
+    flags: 16
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.00000008940696
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper
+    classID: 4
+    script: {fileID: 0}
+    flags: 16
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.y
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper
+    classID: 4
+    script: {fileID: 0}
+    flags: 16
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.19101354
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.z
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper
+    classID: 4
+    script: {fileID: 0}
+    flags: 16
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.9815874
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.w
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper
+    classID: 4
+    script: {fileID: 0}
+    flags: 16
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.00000012272098
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 16
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.000000004341771
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.y
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 16
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.21451956
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.z
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 16
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.9767197
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.w
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 16
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.0000000147731125
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R
+    classID: 4
+    script: {fileID: 0}
+    flags: 16
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.00000008331327
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.y
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R
+    classID: 4
+    script: {fileID: 0}
+    flags: 16
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.11687647
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.z
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R
+    classID: 4
+    script: {fileID: 0}
+    flags: 16
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.99314654
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.w
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R
     classID: 4
     script: {fileID: 0}
     flags: 16
@@ -1517,7 +1689,175 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 17.807081
+        value: -14.947052
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.000020766314
+        inSlope: 0.000016522576
+        outSlope: 0.000016522576
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.y
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 16.103844
+        inSlope: 0.000022888184
+        outSlope: 0.000022888184
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.z
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -13.942393
+        inSlope: -Infinity
+        outSlope: -Infinity
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.z
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L/U_Foot_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.000016974529
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.y
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L/U_Foot_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.000026571719
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L/U_Foot_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 12.556813
+        inSlope: -0.000014305115
+        outSlope: -0.000014305115
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 5.1044497
+        inSlope: -0.00001001358
+        outSlope: -0.00001001358
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.y
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 8.0744
         inSlope: 0.000005722046
         outSlope: 0.000005722046
         tangentMode: 0
@@ -1528,7 +1868,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAngles.z
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1538,51 +1878,9 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 5.8316455
-        inSlope: 0.000012874603
-        outSlope: 0.000012874603
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.y
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 50.6632
-        inSlope: 0.000022888184
-        outSlope: 0.000022888184
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.x
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 134.91025
-        inSlope: NaN
-        outSlope: NaN
+        value: -12.223507
+        inSlope: -Infinity
+        outSlope: -Infinity
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -1591,7 +1889,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAngles.z
-    path: robot_metallic/root/root.x/thigh_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1601,9 +1899,9 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 121.73448
-        inSlope: Infinity
-        outSlope: Infinity
+        value: -0.000040536357
+        inSlope: -Infinity
+        outSlope: -Infinity
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -1612,7 +1910,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAngles.y
-    path: robot_metallic/root/root.x/thigh_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1622,7 +1920,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.5583358
+        value: -0.000010351075
         inSlope: -Infinity
         outSlope: -Infinity
         tangentMode: 0
@@ -1633,7 +1931,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAngles.x
-    path: robot_metallic/root/root.x/thigh_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1643,154 +1941,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -61.499588
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.x
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/c_neck_01.x
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 179.42111
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.y
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/c_neck_01.x
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0.2532201
-        inSlope: -0.0000015199184
-        outSlope: -0.0000015199184
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.z
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/c_neck_01.x
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 50.663204
-        inSlope: 0.000011444092
-        outSlope: 0.000011444092
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.x
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: -5.832181
-        inSlope: -0.000008583069
-        outSlope: -0.000008583069
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.y
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: -17.186798
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.z
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 12.605563
-        inSlope: -0.000008583069
-        outSlope: -0.000008583069
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.x
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 9.804354
+        value: -22.499098
         inSlope: -0.000005722046
         outSlope: -0.000005722046
         tangentMode: 0
@@ -1800,8 +1951,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: localEulerAngles.y
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r
+    attribute: localEulerAngles.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1811,7 +1962,112 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 44.382053
+        value: 0.000001983059
+        inSlope: -0.000005949177
+        outSlope: -0.000005949177
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.y
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.000009969922
+        inSlope: -0.0000158666
+        outSlope: -0.0000158666
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.z
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.00016528372
+        inSlope: 0.000007688868
+        outSlope: 0.000007688868
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.000047621466
+        inSlope: 0.0000055352975
+        outSlope: 0.0000055352975
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.y
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 44.552353
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.z
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -21.569103
         inSlope: -0.000011444092
         outSlope: -0.000011444092
         tangentMode: 0
@@ -1821,8 +2077,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: localEulerAngles.z
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r
+    attribute: localEulerAngles.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1832,30 +2088,9 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -47.259853
-        inSlope: -0.000011444092
-        outSlope: -0.000011444092
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.z
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: -18.191916
-        inSlope: 0.000017166138
-        outSlope: 0.000017166138
+        value: -8.421518
+        inSlope: -0.000017166138
+        outSlope: -0.000017166138
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -1864,7 +2099,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAngles.y
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1874,9 +2109,30 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.4809551
-        inSlope: -0.000005811453
-        outSlope: -0.000005811453
+        value: -21.582722
+        inSlope: 0.000011444092
+        outSlope: 0.000011444092
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.z
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.0000119345
+        inSlope: -0.000009972866
+        outSlope: -0.000009972866
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -1885,7 +2141,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAngles.x
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1895,7 +2151,49 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -27.486986
+        value: 0.00007164374
+        inSlope: 0.000013950608
+        outSlope: 0.000013950608
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.y
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 54.507088
+        inSlope: -0.000022888184
+        outSlope: -0.000022888184
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.z
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.000040931624
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 0
@@ -1906,7 +2204,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAngles.x
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1916,7 +2214,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.3783022
+        value: -0.000018002778
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 0
@@ -1927,7 +2225,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAngles.y
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1937,28 +2235,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.00000016541507
-        inSlope: -Infinity
-        outSlope: -Infinity
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.z
-    path: robot_metallic/root/root.x/spine_01.x/spine_02.x
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: -42.00434
+        value: -33.77497
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 0
@@ -1969,7 +2246,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAngles.z
-    path: robot_metallic/root/root.x/thigh_stretch.l/leg_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -1979,7 +2256,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -6.161234
+        value: 0.0000017552645
         inSlope: -Infinity
         outSlope: -Infinity
         tangentMode: 0
@@ -1989,8 +2266,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: localEulerAngles.y
-    path: robot_metallic/root/root.x/thigh_stretch.l/leg_stretch.l
+    attribute: localEulerAngles.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -2000,7 +2277,112 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 8.048013
+        value: -0.000030899468
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.y
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -12.552107
+        inSlope: -Infinity
+        outSlope: -Infinity
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.z
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.0000050923263
+        inSlope: -Infinity
+        outSlope: -Infinity
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.000042608925
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.y
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -27.996075
+        inSlope: -Infinity
+        outSlope: -Infinity
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.z
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.0000056889617
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 0
@@ -2011,7 +2393,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAngles.x
-    path: robot_metallic/root/root.x/thigh_stretch.l/leg_stretch.l
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R/U_Foot_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -2021,28 +2403,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -2.3643014
-        inSlope: -Infinity
-        outSlope: -Infinity
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.x
-    path: robot_metallic/root/root.x/thigh_stretch.r/leg_stretch.r
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 13.28737
+        value: 0.0000035711494
         inSlope: -Infinity
         outSlope: -Infinity
         tangentMode: 0
@@ -2053,7 +2414,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAngles.y
-    path: robot_metallic/root/root.x/thigh_stretch.r/leg_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R/U_Foot_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -2063,9 +2424,9 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 47.28052
-        inSlope: -Infinity
-        outSlope: -Infinity
+        value: -17.749916
+        inSlope: Infinity
+        outSlope: Infinity
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -2074,7 +2435,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAngles.z
-    path: robot_metallic/root/root.x/thigh_stretch.r/leg_stretch.r
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R/U_Foot_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -2084,70 +2445,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -144.3945
-        inSlope: NaN
-        outSlope: NaN
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.z
-    path: robot_metallic/root/root.x/thigh_stretch.l
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: -121.88505
-        inSlope: NaN
-        outSlope: NaN
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.y
-    path: robot_metallic/root/root.x/thigh_stretch.l
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0.96872056
-        inSlope: -Infinity
-        outSlope: -Infinity
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.x
-    path: robot_metallic/root/root.x/thigh_stretch.l
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 48.720425
+        value: 0.00001005664
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 0
@@ -2158,7 +2456,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAngles.x
-    path: robot_metallic/root/root.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -2168,9 +2466,9 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -179.99895
-        inSlope: NaN
-        outSlope: NaN
+        value: -0.0000019569877
+        inSlope: Infinity
+        outSlope: Infinity
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -2179,7 +2477,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAngles.y
-    path: robot_metallic/root/root.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -2189,9 +2487,9 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -179.99857
-        inSlope: NaN
-        outSlope: NaN
+        value: -22.023876
+        inSlope: -Infinity
+        outSlope: -Infinity
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -2200,7 +2498,133 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAngles.z
-    path: robot_metallic/root/root.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.000013842132
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.0000025307954
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.y
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -24.774685
+        inSlope: -Infinity
+        outSlope: -Infinity
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.z
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.000002797091
+        inSlope: -Infinity
+        outSlope: -Infinity
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.x
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.000009283709
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.y
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -13.423736
+        inSlope: -Infinity
+        outSlope: -Infinity
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.z
+    path: U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R
     classID: 4
     script: {fileID: 0}
     flags: 0
