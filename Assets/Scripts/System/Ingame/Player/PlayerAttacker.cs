@@ -33,9 +33,6 @@ public class PlayerAttacker : MonoBehaviour
     private PlayerController _playerController;
     private PlayerEquipmentManager _playerEquipmentManager;
 
-    [Header("サブ武器を装備する位置")]
-    [SerializeField] private Transform _subParent;
-
     // 攻撃待機状態
     private bool _waitingForMovement = false;
     // 攻撃中の回転継続フラグ
@@ -74,8 +71,16 @@ public class PlayerAttacker : MonoBehaviour
         var manager = ServiceLocator.Get<EquipmentManager>();
 
         //初期装備の設定
-        _mainWeapon = manager.SpawnMainWeapon(_playerEquipmentManager);
-        _subWeapon = manager.SpawnSubWeapon(_subParent);
+        _mainWeapon = manager.SpawnWeapon(_playerEquipmentManager, WeaponType.Main);
+        _subWeapon = manager.SpawnWeapon(_playerEquipmentManager, WeaponType.Sub);
+
+        var mainParent = _playerEquipmentManager.GetEquipmentParent(_mainWeapon.Data.EquipmentType);
+        var subParent = _playerEquipmentManager.GetEquipmentParent(_subWeapon.Data.EquipmentType);
+
+        _mainWeapon.transform.rotation = mainParent.transform.rotation;
+        _subWeapon.transform.rotation = subParent.transform.rotation;
+
+        _subWeapon.gameObject.SetActive(false);
     }
 
     private void SetupSpecial()
@@ -284,19 +289,14 @@ public class PlayerAttacker : MonoBehaviour
 
     private async UniTask SwapWeapon()
     {
-        var seq = DOTween.Sequence();
+        _mainWeapon.gameObject.SetActive(true);
 
-        // 交換後のメイン武器の装備場所の取得
-        var mainParent = _playerEquipmentManager.GetEquipmentParent(_mainWeapon.Data.EquipmentType);
-
-        // 各武器の親を変更
-        _mainWeapon.transform.SetParent(mainParent);
-        _subWeapon.transform.SetParent(_subParent);
+        _mainWeapon.PlayDissolveEffect(true, _swapDuration);
+        _subWeapon.PlayDissolveEffect(false, _swapDuration);
 
         // 装備位置への移動
-        await seq.Append(_mainWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
-            Join(_subWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
-            AsyncWaitForCompletion();
+        await UniTask.Delay((int)(1000 * _swapDuration));
+        _subWeapon.gameObject.SetActive(false);
     }
 
     private void Attack(InputAction.CallbackContext context)

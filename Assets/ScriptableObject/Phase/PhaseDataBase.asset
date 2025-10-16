@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: PhaseDataBase
   m_EditorClassIdentifier: 
   _phases:
-  - {fileID: 11400000, guid: 8dd50cd8d1bbf6848984ab97c15412d1, type: 2}
   - {fileID: 11400000, guid: 9ff1f7bddd2fee14e809ce5b477fcaa9, type: 2}
   - {fileID: 11400000, guid: 0b6a59efe8252f948a7cdf9303aa6414, type: 2}

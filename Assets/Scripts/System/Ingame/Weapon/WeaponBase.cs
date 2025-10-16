@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class WeaponBase : MonoBehaviour
 {
+    [SerializeField] private WeaponDissolveEffect _weaponDissolveEffect;
+
     protected WeaponData _data;
 
     public WeaponData Data => _data;
@@ -12,6 +14,14 @@ public abstract class WeaponBase : MonoBehaviour
     {
         _data = data;
         OnInitialize();
+    }
+
+    public void PlayDissolveEffect(bool active, float time)
+    {
+        if (active)
+            _weaponDissolveEffect.Spawn(time);
+        else
+            _weaponDissolveEffect.Despawn(time);
     }
 
     protected virtual void OnInitialize() { }
