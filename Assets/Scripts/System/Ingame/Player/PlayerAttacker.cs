@@ -404,10 +404,14 @@ public class PlayerAttacker : MonoBehaviour
 
         var animData = _mainWeapon.Data.WeaponAnimationData;
 
-        _playerManager.AnimController.SetBool(animData.AttackTrigger, true);
+        // アニメーション再生可能な武器、状況であればアニメーション再生
+        if (_mainWeapon.CanAttackAnimPlay())
+        {
+            _playerManager.AnimController.SetAttack(animData.AttackTrigger, animData.AnimationType);
 
-        // レイヤー切り替え
-        _playerManager.AnimController.SetWeight(animData.AnimationLayer, animData.AttackLayerWeight);
+            // レイヤー切り替え
+            _playerManager.AnimController.SetWeight(animData.AnimationLayer, animData.AttackLayerWeight);
+        }
 
         // IKを有効化
         EnableIK();
@@ -439,7 +443,7 @@ public class PlayerAttacker : MonoBehaviour
 
         var animData = _mainWeapon.Data.WeaponAnimationData;
 
-        _playerManager.AnimController.SetBool(animData.AttackTrigger, false);
+        _playerManager.AnimController.ResetAttack(animData.AttackTrigger, animData.AnimationType);
 
         // レイヤー切り替え
         _playerManager.AnimController.SetWeight(animData.AnimationLayer, 0);
@@ -593,7 +597,7 @@ public class PlayerAttacker : MonoBehaviour
 
         // アニメーション状態もリセット
         var animData = _mainWeapon.Data.WeaponAnimationData;
-        _playerManager.AnimController.SetBool(animData.AttackTrigger, false);
+        _playerManager.AnimController.ResetAttack(animData.AttackTrigger, animData.AnimationType);
         _playerManager.AnimController.SetWeight(animData.AnimationLayer, 0);
 
         Debug.Log("必殺技開始：すべての動作を停止しました");

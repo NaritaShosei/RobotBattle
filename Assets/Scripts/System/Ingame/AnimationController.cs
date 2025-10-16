@@ -38,6 +38,32 @@ public class AnimationController : MonoBehaviour
         catch { }
     }
 
+    public void SetAttack(string name, AnimationType type)
+    {
+        switch (type)
+        {
+            case AnimationType.Bool:
+                SetBool(name, true);
+                break;
+            case AnimationType.Trigger:
+                SetTrigger(name);
+                break;
+        }
+    }
+
+    public void ResetAttack(string name, AnimationType type)
+    {
+        switch (type)
+        {
+            case AnimationType.Bool:
+                SetBool(name, false);
+                break;
+            case AnimationType.Trigger:
+                _animator.ResetTrigger(name);
+                break;
+        }
+    }
+
     public void SetFloat(string name, float value)
     {
         _animator.SetFloat(name, value);

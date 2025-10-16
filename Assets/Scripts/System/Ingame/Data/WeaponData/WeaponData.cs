@@ -50,8 +50,16 @@ public class WeaponAnimationData
     [SerializeField] private string _reloadTrigger;
     [SerializeField] private int _attackLayerWeight = 1;
     [SerializeField] private AnimationLayer _animationLayer;
+    [SerializeField] private AnimationType _animationType;
     [Tooltip("攻撃アニメーションのTrigger")] public string AttackTrigger => _attackTrigger;
     [Tooltip("リロードアニメーションのTrigger")] public string ReloadTrigger => _reloadTrigger;
     [Tooltip("Layerの重み")] public int AttackLayerWeight => _attackLayerWeight;
     [Tooltip("Layer")] public AnimationLayer AnimationLayer => _animationLayer;
+    [Tooltip("遷移条件")] public AnimationType AnimationType => _animationType;
+}
+
+public enum AnimationType
+{
+    Bool,
+    Trigger,
 }
