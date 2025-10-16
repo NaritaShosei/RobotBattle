@@ -187,7 +187,13 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     public override bool CanAttackAnimPlay()
     {
         // 攻撃可能であればアニメーション再生可能
-        return _count > 0;
+        if (_count <= 0)
+        {
+            Reload();
+            return false;
+        }
+
+        return true;
     }
 
     /// <summary>
