@@ -80,6 +80,8 @@ public class PlayerAttacker : MonoBehaviour
         _mainWeapon.transform.rotation = mainParent.transform.rotation;
         _subWeapon.transform.rotation = subParent.transform.rotation;
 
+        _mainWeapon.PlayDissolveEffect(true, 0);
+
         _subWeapon.gameObject.SetActive(false);
     }
 
