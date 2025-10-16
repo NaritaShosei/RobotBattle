@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ChaseBullet : Bullet_B
 {
-    [SerializeField] private float _minDistance = 10f;
+    [SerializeField] private float _minDistance = 10f; // 追尾する対象との最小距離
     [SerializeField] private float _rotateSpeed = 10f; // 回転の追従速度
     [SerializeField] private float _chaseDuration = 1.5f; // 追尾継続時間
 
