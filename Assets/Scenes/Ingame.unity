@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: d4454f71d85928744be7771e2143dab7, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: efd1c33efd2d58340b88804268e6833f, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -2207,12 +2207,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 359263431}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.7199675, y: 8.470009, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1073266130}
+  m_Father: {fileID: 875041549}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &359462073
 GameObject:
@@ -2292,11 +2292,6 @@ CanvasRenderer:
 --- !u!1 &378783309 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3152140421833680248, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
-  m_PrefabInstance: {fileID: 1358205070}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &378783310 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3152140421833680249, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
   m_PrefabInstance: {fileID: 1358205070}
   m_PrefabAsset: {fileID: 0}
 --- !u!137 &378783314
@@ -2841,6 +2836,11 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0000019073486, y: 0, z: 0}
     m_Extent: {x: 0.45705986, y: 0.07024336, z: 0.35107994}
   m_DirtyAABB: 0
+--- !u!4 &422408386 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3152140420624348208, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+  m_PrefabInstance: {fileID: 1358205070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &431870802 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3152140422650188224, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
@@ -2932,11 +2932,11 @@ Transform:
   m_GameObject: {fileID: 432575278}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000042278952, y: 0.7071068, z: 0.000000042014744, w: 0.7071068}
-  m_LocalPosition: {x: -0.049885392, y: -12.059824, z: 0}
-  m_LocalScale: {x: 2.702702, y: 2.7027023, z: 2.702702}
+  m_LocalPosition: {x: 0.7099874, y: -1.1600194, z: 0}
+  m_LocalScale: {x: 2.702702, y: 2.7027025, z: 2.702702}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1073266130}
+  m_Father: {fileID: 875041549}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &432575280
 CapsuleCollider:
@@ -3229,6 +3229,11 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.009206772, y: -0.004211664, z: 0.011007309}
     m_Extent: {x: 0.8476238, y: 0.5833912, z: 0.35985756}
   m_DirtyAABB: 0
+--- !u!4 &453831458 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3152140421261082812, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+  m_PrefabInstance: {fileID: 1358205070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &461602132 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3152140422247797985, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
@@ -3513,11 +3518,11 @@ Transform:
   m_GameObject: {fileID: 490795148}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000042278952, y: 0.7071068, z: 0.000000042014744, w: 0.7071068}
-  m_LocalPosition: {x: -2.0336933, y: -1.1949472, z: -0.23513494}
+  m_LocalPosition: {x: -3.2438078, y: 0.06568813, z: -0.23513502}
   m_LocalScale: {x: 2.702702, y: 2.7027025, z: 2.702702}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1073266130}
+  m_Father: {fileID: 876716307}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &529562605 stripped
 GameObject:
@@ -3845,11 +3850,11 @@ Transform:
   m_GameObject: {fileID: 548929747}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000042278952, y: 0.7071068, z: 0.000000042014744, w: 0.7071068}
-  m_LocalPosition: {x: -0.049885392, y: -4.2220025, z: 0}
+  m_LocalPosition: {x: 0.66000456, y: 7.6486325, z: 0}
   m_LocalScale: {x: 21.567564, y: 21.56757, z: 21.567564}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 1073266130}
+  m_Father: {fileID: 875041549}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &548929749
 MeshFilter:
@@ -5545,11 +5550,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3152140421868915357, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
   m_PrefabInstance: {fileID: 1358205070}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &809325163 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3152140421868915358, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
-  m_PrefabInstance: {fileID: 1358205070}
-  m_PrefabAsset: {fileID: 0}
 --- !u!137 &809325167
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -5747,7 +5747,7 @@ GameObject:
   m_Component:
   - component: {fileID: 869818418}
   m_Layer: 0
-  m_Name: TargetTransform (1)
+  m_Name: IKTargetTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5761,12 +5761,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 869818417}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000042278952, y: 0.7071068, z: 0.000000042014744, w: 0.7071068}
-  m_LocalPosition: {x: -0.049885392, y: -12.059824, z: 0}
-  m_LocalScale: {x: 2.702702, y: 2.7027023, z: 2.702702}
+  m_LocalRotation: {x: -0.000000059604638, y: -0, z: -1.868212e-10, w: 1}
+  m_LocalPosition: {x: 0, y: 146.7, z: -362.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1073266130}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &875041549 stripped
 Transform:
@@ -5987,6 +5987,11 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: -1.1795633, z: 0}
     m_Extent: {x: 1.6316147, y: 1.1785634, z: 0.80070114}
   m_DirtyAABB: 0
+--- !u!4 &876716307 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3152140422435492090, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+  m_PrefabInstance: {fileID: 1358205070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &878955837 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3152140420568028709, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
@@ -7381,11 +7386,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3152140421650098067, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
   m_PrefabInstance: {fileID: 1358205070}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1073266130 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3152140421650098156, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
-  m_PrefabInstance: {fileID: 1358205070}
-  m_PrefabAsset: {fileID: 0}
 --- !u!137 &1073266134
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -7768,90 +7768,154 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bonePaths:
   - 
-  - robot_metallic
-  - robot_metallic/robot_metallic
-  - robot_metallic/root
-  - robot_metallic/root/root.x
-  - robot_metallic/root/root.x/spine_01.x
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/c_neck_01.x
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/neck.x
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/neck.x/head.x
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/neck.x/head.x/c_skull_01.x
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/neck.x/head.x/c_skull_02.x
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/neck.x/head.x/c_skull_03.x
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/index1_base.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/index1_base.l/index1.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/index1_base.l/index1.l/index2.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/index1_base.l/index1.l/index2.l/index3.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/middle1_base.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/middle1_base.l/middle1.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/middle1_base.l/middle1.l/middle2.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/middle1_base.l/middle1.l/middle2.l/middle3.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/pinky1_base.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/pinky1_base.l/pinky1.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/pinky1_base.l/pinky1.l/pinky2.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/pinky1_base.l/pinky1.l/pinky2.l/pinky3.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/ring1_base.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/ring1_base.l/ring1.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/ring1_base.l/ring1.l/ring2.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/ring1_base.l/ring1.l/ring2.l/ring3.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/thumb1.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/thumb1.l/thumb2.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/thumb1.l/thumb2.l/thumb3.l
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/AimTransform
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/Left
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/index1_base.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/index1_base.r/index1.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/index1_base.r/index1.r/index2.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/index1_base.r/index1.r/index2.r/index3.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/middle1_base.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/middle1_base.r/middle1.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/middle1_base.r/middle1.r/middle2.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/middle1_base.r/middle1.r/middle2.r/middle3.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/pinky1_base.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/pinky1_base.r/pinky1.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/pinky1_base.r/pinky1.r/pinky2.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/pinky1_base.r/pinky1.r/pinky2.r/pinky3.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/ring1_base.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/ring1_base.r/ring1.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/ring1_base.r/ring1.r/ring2.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/ring1_base.r/ring1.r/ring2.r/ring3.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/thumb1.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/thumb1.r/thumb2.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/thumb1.r/thumb2.r/thumb3.r
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/Right
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/Sub
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/TargetCenter
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/GuardCollider
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/DamageCollider
-  - robot_metallic/root/root.x/spine_01.x/spine_02.x/TargetTransform
-  - robot_metallic/root/root.x/thigh_stretch.l
-  - robot_metallic/root/root.x/thigh_stretch.l/leg_stretch.l
-  - robot_metallic/root/root.x/thigh_stretch.l/leg_stretch.l/foot.l
-  - robot_metallic/root/root.x/thigh_stretch.l/leg_stretch.l/foot.l/toes_01.l
-  - robot_metallic/root/root.x/thigh_stretch.r
-  - robot_metallic/root/root.x/thigh_stretch.r/leg_stretch.r
-  - robot_metallic/root/root.x/thigh_stretch.r/leg_stretch.r/foot.r
-  - robot_metallic/root/root.x/thigh_stretch.r/leg_stretch.r/foot.r/toes_01.r
   - PlayerLook
+  - U_Dreadnought
+  - U_Dreadnought/U_Dreadnought_Lower
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_Parts
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Close
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Close/U_Head_Visor
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Close/U_Head_EyeGuard_Upper
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Close/U_Head_Slider_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Close/U_Head_Slider_L/U_Head_Face_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Close/U_Head_Slider_L/U_Head_Face_L/U_Head_EyeGuard_Lower_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Close/U_Head_Slider_L/U_Head_Face_L/U_Head_Cheek_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Close/U_Head_Slider_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Close/U_Head_Slider_R/U_Head_Face_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Close/U_Head_Slider_R/U_Head_Face_R/U_Head_EyeGuard_Lower_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Close/U_Head_Slider_R/U_Head_Face_R/U_Head_Cheek_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Close/U_Head_Jaw
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Open
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Open/U_Head_Visor
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Open/U_Head_EyeGuard_Upper
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Open/U_Head_Slider_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Open/U_Head_Slider_L/U_Head_Face_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Open/U_Head_Slider_L/U_Head_Face_L/U_Head_EyeGuard_Lower_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Open/U_Head_Slider_L/U_Head_Face_L/U_Head_Cheek_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Open/U_Head_Slider_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Open/U_Head_Slider_R/U_Head_Face_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Open/U_Head_Slider_R/U_Head_Face_R/U_Head_EyeGuard_Lower_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Open/U_Head_Slider_R/U_Head_Face_R/U_Head_Cheek_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Head_Open/U_Head_Jaw
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Shoulder_Cover_Upper_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Shoulder_Cover_Lower_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Shoulder_Cover_Lower_L/U_RotateCover_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_LittleFinger3_Joint_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_LittleFinger3_Joint_L/U_LittleFinger3_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_LittleFinger3_Joint_L/U_LittleFinger3_L/U_LittleFinger2_Joint_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_LittleFinger3_Joint_L/U_LittleFinger3_L/U_LittleFinger2_Joint_L/U_LittleFinger2_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_LittleFinger3_Joint_L/U_LittleFinger3_L/U_LittleFinger2_Joint_L/U_LittleFinger2_L/U_LittleFinger1_Joint_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_LittleFinger3_Joint_L/U_LittleFinger3_L/U_LittleFinger2_Joint_L/U_LittleFinger2_L/U_LittleFinger1_Joint_L/U_LittleFinger1_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_RingFinger3_Joint_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_RingFinger3_Joint_L/U_RingFinger3_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_RingFinger3_Joint_L/U_RingFinger3_L/U_RingFinger2_Joint_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_RingFinger3_Joint_L/U_RingFinger3_L/U_RingFinger2_Joint_L/U_RingFinger2_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_RingFinger3_Joint_L/U_RingFinger3_L/U_RingFinger2_Joint_L/U_RingFinger2_L/U_RingFinger1_Joint_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_RingFinger3_Joint_L/U_RingFinger3_L/U_RingFinger2_Joint_L/U_RingFinger2_L/U_RingFinger1_Joint_L/U_RingFinger1_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_MiddleFinger3_Joint_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_MiddleFinger3_Joint_L/U_MiddleFinger3_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_MiddleFinger3_Joint_L/U_MiddleFinger3_L/U_MiddleFinger2_Joint_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_MiddleFinger3_Joint_L/U_MiddleFinger3_L/U_MiddleFinger2_Joint_L/U_MiddleFinger2_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_MiddleFinger3_Joint_L/U_MiddleFinger3_L/U_MiddleFinger2_Joint_L/U_MiddleFinger2_L/U_MiddleFinger1_Joint_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_MiddleFinger3_Joint_L/U_MiddleFinger3_L/U_MiddleFinger2_Joint_L/U_MiddleFinger2_L/U_MiddleFinger1_Joint_L/U_MiddleFinger1_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_IndexFinger3_Joint_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_IndexFinger3_Joint_L/U_IndexFinger3_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_IndexFinger3_Joint_L/U_IndexFinger3_L/U_IndexFinger2_Joint_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_IndexFinger3_Joint_L/U_IndexFinger3_L/U_IndexFinger2_Joint_L/U_IndexFinger2_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_IndexFinger3_Joint_L/U_IndexFinger3_L/U_IndexFinger2_Joint_L/U_IndexFinger2_L/U_IndexFinger1_Joint_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_IndexFinger3_Joint_L/U_IndexFinger3_L/U_IndexFinger2_Joint_L/U_IndexFinger2_L/U_IndexFinger1_Joint_L/U_IndexFinger1_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_ThumbMain_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_ThumbMain_L/U_Thumb2_Joint_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_ThumbMain_L/U_Thumb2_Joint_L/U_Thumb2_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_ThumbMain_L/U_Thumb2_Joint_L/U_Thumb2_L/U_Thumb1_Joint_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/U_ThumbMain_L/U_Thumb2_Joint_L/U_Thumb2_L/U_Thumb1_Joint_L/U_Thumb1_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/AimTransform
+    (1)
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Arm_L/U_Elbow_Joint_L/U_ForeArm_L/U_Wrist_L/U_InnerWrist_L/U_HandGuard_L/Left
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Shoulder_L_Rocket1
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Shoulder_L_Rocket2
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_L/U_Shoulder_L/U_Shoulder_L_Rocket3
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Shoulder_Cover_Upper_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Shoulder_Cover_Lower_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Shoulder_Cover_Lower_R/U_RotateCover_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_LittleFinger3_Joint_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_LittleFinger3_Joint_R/U_LittleFinger3_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_LittleFinger3_Joint_R/U_LittleFinger3_R/U_LittleFinger2_Joint_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_LittleFinger3_Joint_R/U_LittleFinger3_R/U_LittleFinger2_Joint_R/U_LittleFinger2_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_LittleFinger3_Joint_R/U_LittleFinger3_R/U_LittleFinger2_Joint_R/U_LittleFinger2_R/U_LittleFinger1_Joint_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_LittleFinger3_Joint_R/U_LittleFinger3_R/U_LittleFinger2_Joint_R/U_LittleFinger2_R/U_LittleFinger1_Joint_R/U_LittleFinger1_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_RingFinger3_Joint_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_RingFinger3_Joint_R/U_RingFinger3_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_RingFinger3_Joint_R/U_RingFinger3_R/U_RingFinger2_Joint_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_RingFinger3_Joint_R/U_RingFinger3_R/U_RingFinger2_Joint_R/U_RingFinger2_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_RingFinger3_Joint_R/U_RingFinger3_R/U_RingFinger2_Joint_R/U_RingFinger2_R/U_RingFinger1_Joint_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_RingFinger3_Joint_R/U_RingFinger3_R/U_RingFinger2_Joint_R/U_RingFinger2_R/U_RingFinger1_Joint_R/U_RingFinger1_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_MiddleFinger3_Joint_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_MiddleFinger3_Joint_R/U_MiddleFinger3_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_MiddleFinger3_Joint_R/U_MiddleFinger3_R/U_MiddleFinger2_Joint_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_MiddleFinger3_Joint_R/U_MiddleFinger3_R/U_MiddleFinger2_Joint_R/U_MiddleFinger2_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_MiddleFinger3_Joint_R/U_MiddleFinger3_R/U_MiddleFinger2_Joint_R/U_MiddleFinger2_R/U_MiddleFinger1_Joint_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_MiddleFinger3_Joint_R/U_MiddleFinger3_R/U_MiddleFinger2_Joint_R/U_MiddleFinger2_R/U_MiddleFinger1_Joint_R/U_MiddleFinger1_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_IndexFinger3_Joint_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_IndexFinger3_Joint_R/U_IndexFinger3_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_IndexFinger3_Joint_R/U_IndexFinger3_R/U_IndexFinger2_Joint_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_IndexFinger3_Joint_R/U_IndexFinger3_R/U_IndexFinger2_Joint_R/U_IndexFinger2_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_IndexFinger3_Joint_R/U_IndexFinger3_R/U_IndexFinger2_Joint_R/U_IndexFinger2_R/U_IndexFinger1_Joint_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_IndexFinger3_Joint_R/U_IndexFinger3_R/U_IndexFinger2_Joint_R/U_IndexFinger2_R/U_IndexFinger1_Joint_R/U_IndexFinger1_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_ThumbMain_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_ThumbMain_R/U_Thumb2_Joint_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_ThumbMain_R/U_Thumb2_Joint_R/U_Thumb2_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_ThumbMain_R/U_Thumb2_Joint_R/U_Thumb2_R/U_Thumb1_Joint_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Arm_R/U_Elbow_Joint_R/U_ForeArm_R/U_Wrist_R/U_InnerWrist_R/U_HandGuard_R/U_ThumbMain_R/U_Thumb2_Joint_R/U_Thumb2_R/U_Thumb1_Joint_R/U_Thumb1_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Shoulder_R_Rocket1
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Shoulder_R_Rocket2
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Upper/U_Upper_SideShoulder_R/U_Shoulder_R/U_Shoulder_R_Rocket3
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L/U_Foot_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L/U_Foot_L/U_Heel_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L/U_Foot_L/U_Tiptoe_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_L/U_Thigh_L/U_Calf_L/U_Foot_L/U_Tiptoe_L/U_Toenail_L
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R/U_Foot_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R/U_Foot_R/U_Heel_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R/U_Foot_R/U_Tiptoe_R
+  - U_Dreadnought/U_Dreadnought_Lower/U_Dreadnought_Lower_R/U_Thigh_R/U_Calf_R/U_Foot_R/U_Tiptoe_R/U_Toenail_R
+  - U_Dreadnought/U_Dreadnought_Lower/Sub (1)
+  - U_Dreadnought/TargetCenter (1)
+  - U_Dreadnought/GuardCollider (1)
+  - U_Dreadnought/DamageCollider (1)
+  - U_Dreadnought/TargetTransform (1)
   writeLockBones: 
-  showBones: 0000000004000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f00000020000000210000002200000023000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f000000300000003100000032000000330000003400000035000000360000003700000038000000390000003a0000003b0000003c000000430000004400000045000000460000004700000048000000490000004a000000
-  foldoutBones: 4900000048000000470000004500000044000000430000003b0000003a000000380000003700000036000000340000003300000032000000300000002f0000002e0000002c0000002b0000002a0000002900000028000000270000002600000022000000210000001f0000001e0000001d0000001b0000001a00000019000000170000001600000015000000130000001200000011000000100000000f0000000e0000000d0000000900000008000000060000000500000004000000030000000100000000000000
-  mirrorBones: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f000000300000003100000032000000330000003400000035000000360000003700000038000000390000003a0000003b0000003c000000ffffffffffffffff0d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f00000020000000210000002200000023000000ffffffffffffffffffffffffffffffffffffffffffffffff4700000048000000490000004a00000043000000440000004500000046000000ffffffff
+  showBones: 0000000002000000030000000400000006000000090000000a0000000d0000000e000000120000001500000016000000190000001a0000001e0000001f000000210000002300000025000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000003000000031000000320000003300000034000000360000003700000038000000390000003a0000003c0000003d0000003e0000003f00000040000000420000004300000044000000450000004c0000004d0000004f00000051000000530000005400000055000000560000005700000058000000590000005a0000005b0000005c0000005e0000005f00000060000000610000006200000064000000650000006600000067000000680000006a0000006b0000006c0000006d0000006e0000007000000071000000720000007300000078000000790000007a0000007b0000007d0000007f00000080000000810000008200000084000000
+  foldoutBones: 020000001500000067000000120000006c0000005100000030000000280000003900000043000000840000000600000033000000040000006b00000027000000400000003f00000079000000250000007a000000810000005f0000005b000000420000007b000000260000000a00000000000000730000004c0000006000000032000000710000006d0000002b000000230000001900000045000000550000001e0000002d00000003000000700000003e0000003a000000160000001a000000570000002e000000290000003c0000002100000005000000380000001f00000062000000310000006a00000064000000720000007f0000003d0000008200000059000000360000006e0000002c00000054000000530000007d0000005a000000340000000d0000006500000009000000560000002a0000006800000061000000660000004d0000000e0000004f000000440000005c0000005e00000080000000780000005800000037000000
+  mirrorBones: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   mirrorBlendShape: []
   animatorIkData: []
   originalIkData: []
   selectionData: []
-  lastSelectAnimationClip: {fileID: 7400000, guid: 3e1b003c16485944ba0406cafbde8a03, type: 2}
+  lastSelectAnimationClip: {fileID: 7400000, guid: a9a77cfb9d1e4fe44baaac35bd9497e2, type: 2}
   handPoseList: []
   blendShapeList: []
 --- !u!114 &1155244331
@@ -9609,6 +9673,222 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3152140420815542461, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.000009083189
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140420815542461, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.000039671206
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140420815542461, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -16.165407
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140420950071351, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.000013842132
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140420950071351, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.0000025307954
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140420950071351, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -24.774685
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140420974814065, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -0.000012918314
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140420974814065, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.00004605341
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140420974814065, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -8.474789
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421003563429, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -0.0000119345
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421003563429, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.00007164374
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421003563429, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 54.507088
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421261082812, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.00016528372
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421261082812, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.000047621466
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421261082812, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 44.552353
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421325371286, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.0907977
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421325371286, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.13786334
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421325371286, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -22.03317
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421361557769, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.000002797091
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421361557769, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.000009283709
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421361557769, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -13.423736
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421433331239, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -0.0000045805696
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421433331239, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.0000027738956
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421433331239, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -13.727298
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421471559939, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.0000017552645
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421471559939, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.000030899468
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421471559939, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -12.552107
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421473865081, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -14.947052
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421473865081, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.000020766314
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421473865081, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 16.103844
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421833680249, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.00001005664
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421833680249, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.0000019569877
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140421833680249, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -22.023876
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422173894366, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -22.499165
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422173894366, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.00015582588
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422173894366, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 60.701424
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422237116166, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 12.556813
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422237116166, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 5.1044497
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422237116166, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 8.0744
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422247797986, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.000038215352
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422247797986, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.00002071599
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422247797986, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -19.517897
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422306149840, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 3.4711041
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422306149840, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 4.9586954
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422306149840, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -17.558311
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422419575008, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -0.000010351075
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422419575008, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.000040536357
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422419575008, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -12.223507
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422435492090, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.0000021256576
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422435492090, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.00000019336063
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422435492090, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -10.395223
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422439361348, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -21.569103
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422439361348, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -8.421518
+      objectReference: {fileID: 0}
+    - target: {fileID: 3152140422439361348, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -21.582722
+      objectReference: {fileID: 0}
     - target: {fileID: 3152140422560338785, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -9874,21 +10154,18 @@ PrefabInstance:
     - {fileID: 3152140422435492095, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 3152140421650098156, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 3152140420570402373, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 359263432}
-    - targetCorrespondingSourceObject: {fileID: 3152140421650098156, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 490795149}
-    - targetCorrespondingSourceObject: {fileID: 3152140421650098156, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 3152140420570402373, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 548929748}
-    - targetCorrespondingSourceObject: {fileID: 3152140421650098156, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 3152140420570402373, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 432575279}
-    - targetCorrespondingSourceObject: {fileID: 3152140421650098156, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 3152140422435492090, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 869818418}
+      addedObject: {fileID: 490795149}
     - targetCorrespondingSourceObject: {fileID: 3152140421488266103, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1373855125}
@@ -13851,7 +14128,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -14863,6 +15140,18 @@ PrefabInstance:
       value: 0.54
       objectReference: {fileID: 0}
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.axis.y
+      value: 18.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.axis.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.target
       value: 
       objectReference: {fileID: 869818418}
@@ -14872,15 +15161,15 @@ PrefabInstance:
       objectReference: {fileID: 1373855125}
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.IKPosition.x
-      value: -1.9961767
+      value: -17.84919
       objectReference: {fileID: 0}
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.IKPosition.y
-      value: 146.4439
+      value: 99.21361
       objectReference: {fileID: 0}
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.IKPosition.z
-      value: -361.3442
+      value: -347.2432
       objectReference: {fileID: 0}
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.polePosition.x
@@ -14896,11 +15185,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.bones.Array.size
-      value: 6
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[0].weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[1].weight
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.bones.Array.data[2].weight
-      value: 0.194
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.bones.Array.data[5].weight
@@ -14909,34 +15206,138 @@ PrefabInstance:
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.bones.Array.data[0].transform
       value: 
-      objectReference: {fileID: 378783310}
+      objectReference: {fileID: 1173820551}
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.bones.Array.data[1].transform
       value: 
-      objectReference: {fileID: 809325163}
+      objectReference: {fileID: 743094823}
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.bones.Array.data[2].transform
       value: 
-      objectReference: {fileID: 1173820551}
+      objectReference: {fileID: 453831458}
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.bones.Array.data[3].transform
       value: 
-      objectReference: {fileID: 809325163}
+      objectReference: {fileID: 422408386}
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.bones.Array.data[4].transform
       value: 
-      objectReference: {fileID: 1173820551}
+      objectReference: {fileID: 743094823}
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.bones.Array.data[5].transform
       value: 
       objectReference: {fileID: 743094823}
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[0].defaultLocalPosition.x
+      value: 0.1981144
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[0].defaultLocalPosition.y
+      value: 1.3843651
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[0].defaultLocalPosition.z
+      value: 2.0901282
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[0].defaultLocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[0].defaultLocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[0].defaultLocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[0].defaultLocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[1].defaultLocalPosition.x
+      value: -0.14770366
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[1].defaultLocalPosition.y
+      value: -0.13466904
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[1].defaultLocalPosition.z
+      value: 1.2716043
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[1].defaultLocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[1].defaultLocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[1].defaultLocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[1].defaultLocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[2].defaultLocalPosition.x
+      value: 0.20572901
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[2].defaultLocalPosition.y
+      value: -2.5245867
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[2].defaultLocalPosition.z
+      value: 0.0000023841858
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.bones.Array.data[2].defaultLocalRotation.w
-      value: 0.5860886
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[2].defaultLocalRotation.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.bones.Array.data[2].defaultLocalRotation.y
-      value: -0.39560065
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[2].defaultLocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[3].defaultLocalPosition.x
+      value: 0.27249318
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[3].defaultLocalPosition.y
+      value: -2.148496
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[3].defaultLocalPosition.z
+      value: -0.11103171
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[3].defaultLocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[3].defaultLocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[3].defaultLocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+      propertyPath: solver.bones.Array.data[3].defaultLocalRotation.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6450839121585084671, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: solver.bones.Array.data[5].defaultLocalPosition.x
@@ -15355,6 +15756,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 357140968}
   - {fileID: 1298894293}
+  - {fileID: 869818418}
   - {fileID: 3019013742801692727}
   - {fileID: 222685866}
   - {fileID: 1246506307}
