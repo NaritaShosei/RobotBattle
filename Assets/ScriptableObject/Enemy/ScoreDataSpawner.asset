@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ScoreDataSpawner
   m_EditorClassIdentifier: 
   _score: 9999
-  _money: 1000000
+  _money: 500

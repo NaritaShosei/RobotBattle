@@ -85,7 +85,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: a9a77cfb9d1e4fe44baaac35bd9497e2, type: 2}
+  m_Motion: {fileID: 7400000, guid: edd937291e9ed5e4d99499b2c49e4bac, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -259,7 +259,7 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
   - m_Name: ShortAttack
-    m_Type: 4
+    m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -353,7 +353,7 @@ AnimatorStateMachine:
     m_Position: {x: 400, y: -60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5748257419836810200}
-    m_Position: {x: 630, y: 0, z: 0}
+    m_Position: {x: 440, y: 110, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
