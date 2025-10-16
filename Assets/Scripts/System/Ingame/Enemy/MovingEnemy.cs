@@ -19,15 +19,15 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
         public float Max;
     }
 
-    float _playerDistance;
+    float PlayerDistance => Vector3.Distance(transform.position, _player.transform.position);
     Vector3 _startPos;
     Vector3 _targetPos;
     bool _isDodged;
     bool _isJumping;
     bool _canJump = true;
-    bool CanMove => _data.MinDistance <= _playerDistance;
-    bool IsDash => _data.DashMinDistance <= _playerDistance;
-    bool IsAttack => _data.AttackDistance >= _playerDistance;
+    bool CanMove => _data.MinDistance <= PlayerDistance;
+    bool IsDash => _data.DashMinDistance <= PlayerDistance;
+    bool IsAttack => _data.AttackDistance >= PlayerDistance;
     void Start()
     {
         OnStart();
@@ -39,7 +39,7 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
 
     private void Update()
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
         GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
 
         HandleRotation();
@@ -77,7 +77,7 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
     }
     private void FixedUpdate()
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
         _rb.AddForce(Vector3.down * _data.FallSpeed, ForceMode.Force);
 
         if (_canJump && !_isJumping && _player.transform.position.y > transform.position.y)

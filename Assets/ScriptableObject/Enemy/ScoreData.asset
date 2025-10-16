@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ScoreData
   m_EditorClassIdentifier: 
   _score: 500
-  _money: 10000
+  _money: 100

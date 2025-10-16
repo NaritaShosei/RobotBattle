@@ -59,13 +59,10 @@ public abstract class Bullet_B : MonoBehaviour, IWeapon
         }
     }
 
-    async UniTaskVoid MoveAsync(CancellationToken token)
+    private async UniTaskVoid MoveAsync(CancellationToken token)
     {
         while (!_isTimeReturned && !_isConflictReturned && !token.IsCancellationRequested)
         {
-            float speed = _weaponData.AttackSpeed;
-            transform.position += transform.forward * speed * Time.deltaTime;
-
             // 移動距離チェック
             if (Vector3.Distance(_startPos, transform.position) >= _weaponData.Range)
             {

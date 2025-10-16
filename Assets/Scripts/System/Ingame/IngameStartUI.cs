@@ -19,7 +19,7 @@ public class IngameStartUI : MonoBehaviour
         _group.DOFade(0, _fadeDuration).OnComplete(() =>
         {
             ServiceLocator.Get<InputManager>().SwitchInputMode(InputManager.PLAYER);
-            ServiceLocator.Get<IngameManager>().PauseResume();
+            ServiceLocator.Get<IngameManager>().SetIsPause(false);
             _group.blocksRaycasts = false;
         });
     }

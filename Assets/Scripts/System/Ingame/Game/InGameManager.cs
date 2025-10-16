@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 public class IngameManager : MonoBehaviour
 {
@@ -9,16 +10,21 @@ public class IngameManager : MonoBehaviour
     [SerializeField]
     int _maxTime;
 
+    [SerializeField] private string _inputMode = "Player";
+
     TimePresenter _timePresenter;
     GameResultPresenter _gameResultPresenter;
     EnemyManager _enemyManager;
     ScoreManager _scoreManager;
 
-    bool _isPaused = true;
+    bool _isPaused;
     public bool IsPaused => _isPaused;
 
     bool _isGameEnd;
     public bool IsGameEnd => _isGameEnd;
+
+    private bool _isInEvent;
+    public bool IsInEvent => _isInEvent;
     private void Awake()
     {
         ServiceLocator.Set(this);
@@ -26,6 +32,8 @@ public class IngameManager : MonoBehaviour
 
     void Start()
     {
+        ServiceLocator.Get<FadePanel>().Fade(0).Forget();
+
         var timeModel = new TimeModel(_maxTime);
 
         var timeView = ServiceLocator.Get<GameUIManager>().TimeView;
@@ -43,17 +51,14 @@ public class IngameManager : MonoBehaviour
         _timePresenter = new TimePresenter(timeModel, timeView);
 
         _timePresenter?.Initialize();
+
+        ServiceLocator.Get<PhaseManager>().OnComplete += GameEnd;
+
+        ServiceLocator.Get<InputManager>().SwitchInputMode(_inputMode);
     }
 
-    void Update()
+    private void GameEnd()
     {
-        return;
-        if (_isGameEnd) { return; }
-
-        if (_isPaused) { return; }
-
-        _timePresenter?.Update(Time.deltaTime);
-
         if (_timePresenter.GetIsTimeOver())
         {
             _gameResultPresenter.SetGameOver(GameOverType.TimeOver, _scoreManager.Score);
@@ -75,10 +80,13 @@ public class IngameManager : MonoBehaviour
             ServiceLocator.Get<InputManager>().SwitchInputMode(InputManager.UI);
         }
     }
-
-    [ContextMenu(nameof(PauseResume))]
-    public void PauseResume()
+    public void SetIsPause(bool value)
     {
-        _isPaused = !_isPaused;
+        _isPaused = value;
+    }
+
+    public void SetInEvent(bool value)
+    {
+        _isInEvent = value;
     }
 }

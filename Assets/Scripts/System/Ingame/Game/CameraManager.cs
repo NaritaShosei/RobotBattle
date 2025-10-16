@@ -38,7 +38,7 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {
-        if (_inGameManager.IsGameEnd || _inGameManager.IsPaused) { return; }
+        if (_inGameManager.IsGameEnd || _inGameManager.IsPaused || _inGameManager.IsInEvent) { return; }
 
         LerpLens();
         UpdateCameraLook();

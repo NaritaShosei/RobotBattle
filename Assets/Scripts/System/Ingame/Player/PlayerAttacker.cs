@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using RootMotion.FinalIK;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class PlayerAttacker : MonoBehaviour
     private InputManager _input;
     private WeaponPresenter _presenter;
     private AimIK _aimIK;
+    private Vector3 _ikAxis;
 
     private float _timer = 0;
     [SerializeField] private float _duration = 0.5f;
@@ -30,9 +32,6 @@ public class PlayerAttacker : MonoBehaviour
     private LockOn _lockOn;
     private PlayerController _playerController;
     private PlayerEquipmentManager _playerEquipmentManager;
-
-    [Header("サブ武器を装備する位置")]
-    [SerializeField] private Transform _subParent;
 
     // 攻撃待機状態
     private bool _waitingForMovement = false;
@@ -72,8 +71,18 @@ public class PlayerAttacker : MonoBehaviour
         var manager = ServiceLocator.Get<EquipmentManager>();
 
         //初期装備の設定
-        _mainWeapon = manager.SpawnMainWeapon(_playerEquipmentManager);
-        _subWeapon = manager.SpawnSubWeapon(_subParent);
+        _mainWeapon = manager.SpawnWeapon(_playerEquipmentManager, WeaponType.Main);
+        _subWeapon = manager.SpawnWeapon(_playerEquipmentManager, WeaponType.Sub);
+
+        var mainParent = _playerEquipmentManager.GetEquipmentParent(_mainWeapon.Data.EquipmentType);
+        var subParent = _playerEquipmentManager.GetEquipmentParent(_subWeapon.Data.EquipmentType);
+
+        _mainWeapon.transform.rotation = mainParent.transform.rotation;
+        _subWeapon.transform.rotation = subParent.transform.rotation;
+
+        _mainWeapon.PlayDissolveEffect(true, 0);
+
+        _subWeapon.gameObject.SetActive(false);
     }
 
     private void SetupSpecial()
@@ -102,6 +111,7 @@ public class PlayerAttacker : MonoBehaviour
     {
         //IKの設定
         _aimIK = GetComponent<AimIK>();
+        _ikAxis = _aimIK.solver.axis;
         _aimIK.enabled = false;
         _aimIK.solver.IKPositionWeight = 0f;
     }
@@ -132,7 +142,7 @@ public class PlayerAttacker : MonoBehaviour
             return;
         }
 
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
@@ -148,7 +158,7 @@ public class PlayerAttacker : MonoBehaviour
     }
 
     /// <summary>
-    /// IK制御を独立したメソッドに分離
+    /// IK制御
     /// </summary>
     private void UpdateIK()
     {
@@ -225,7 +235,7 @@ public class PlayerAttacker : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         //IKのtargetの座標を設定する
         if (_aimIK != null && _aimIK.enabled && _isIKActive)
@@ -236,7 +246,7 @@ public class PlayerAttacker : MonoBehaviour
 
     async void WeaponChange(InputAction.CallbackContext context)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
@@ -281,21 +291,19 @@ public class PlayerAttacker : MonoBehaviour
 
     private async UniTask SwapWeapon()
     {
-        var seq = DOTween.Sequence();
+        _mainWeapon.gameObject.SetActive(true);
 
-        var mainParent = _playerEquipmentManager.GetEquipmentParent(_mainWeapon.Data.EquipmentType);
+        _mainWeapon.PlayDissolveEffect(true, _swapDuration);
+        _subWeapon.PlayDissolveEffect(false, _swapDuration);
 
-        _mainWeapon.transform.SetParent(mainParent);
-        _subWeapon.transform.SetParent(_subParent);
-
-        await seq.Append(_mainWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
-            Join(_subWeapon.transform.DOLocalMove(Vector3.zero, _swapDuration)).
-            AsyncWaitForCompletion();
+        // 装備位置への移動
+        await UniTask.Delay((int)(1000 * _swapDuration));
+        _subWeapon.gameObject.SetActive(false);
     }
 
     private void Attack(InputAction.CallbackContext context)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
@@ -394,10 +402,16 @@ public class PlayerAttacker : MonoBehaviour
     {
         _playerManager.SetState(PlayerState.Attack);
 
-        _playerManager.AnimController.SetBool("IsMissileAttack", true);
+        var animData = _mainWeapon.Data.WeaponAnimationData;
 
-        // レイヤー切り替え
-        _playerManager.AnimController.SetWeight(AnimationLayer.Attack, _animationWeight);
+        // アニメーション再生可能な武器、状況であればアニメーション再生
+        if (_mainWeapon.CanAttackAnimPlay())
+        {
+            _playerManager.AnimController.SetAttack(animData.AttackTrigger, animData.AnimationType);
+
+            // レイヤー切り替え
+            _playerManager.AnimController.SetWeight(animData.AnimationLayer, animData.AttackLayerWeight);
+        }
 
         // IKを有効化
         EnableIK();
@@ -415,12 +429,6 @@ public class PlayerAttacker : MonoBehaviour
         }
 
         Debug.Log("攻撃開始");
-
-        // とりあえずのデバッグ用、のちに修正
-        if (_mainWeapon as ShortRangeWeapon_B)
-        {
-            Invoke(nameof(EndAttack), 1);
-        }
     }
 
     /// <summary>
@@ -433,10 +441,12 @@ public class PlayerAttacker : MonoBehaviour
         // IKを自然にフェードアウト
         StartIKFadeOut();
 
-        _playerManager.AnimController.SetBool("IsMissileAttack", false);
+        var animData = _mainWeapon.Data.WeaponAnimationData;
+
+        _playerManager.AnimController.ResetAttack(animData.AttackTrigger, animData.AnimationType);
 
         // レイヤー切り替え
-        _playerManager.AnimController.SetWeight(AnimationLayer.Attack, 0);
+        _playerManager.AnimController.SetWeight(animData.AnimationLayer, 0);
 
         _mainWeapon.SetAttack(false);
 
@@ -459,6 +469,7 @@ public class PlayerAttacker : MonoBehaviour
         if (_aimIK != null && _mainWeapon.IKEnable())
         {
             _aimIK.enabled = true;
+            _aimIK.solver.axis = _ikAxis;
             _isIKActive = true;
             _shouldResetIK = false;
             _isIKFadingOut = false;
@@ -482,7 +493,6 @@ public class PlayerAttacker : MonoBehaviour
             _timer = 0f; // フェードアウト用にタイマーリセット
             // 現在のウェイト値を保持してそこからフェードアウト
             _currentIKWeight = _aimIK.solver.IKPositionWeight;
-            Debug.Log($"IKフェードアウト開始 (開始ウェイト: {_currentIKWeight:F3})");
         }
         else
         {
@@ -521,17 +531,22 @@ public class PlayerAttacker : MonoBehaviour
     //AnimationEventで呼び出す、攻撃開始、終了の処理
     private void IsAttack()
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
         _mainWeapon.SetAttack(true);
     }
 
     private void Reload(InputAction.CallbackContext context)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
         _mainWeapon.Reload();
+
+        // リロードのアニメーション再生
+        var animData = _mainWeapon.Data.WeaponAnimationData;
+
+        _playerManager.AnimController.SetTrigger(animData.ReloadTrigger);
     }
 
     private async void Special(InputAction.CallbackContext context)
@@ -547,7 +562,12 @@ public class PlayerAttacker : MonoBehaviour
             // 必殺技開始前にすべての動作を停止
             StopAllMovementAndRotation();
 
-            await _specialAttack.SpecialAttack();
+            try
+            {
+                await _specialAttack.SpecialAttack();
+            }
+            catch (OperationCanceledException ex) { }
+            catch (Exception ex) { Debug.LogWarning(ex.Message); }
 
             _playerManager.SetState(PlayerState.Idle);
         }
@@ -576,8 +596,9 @@ public class PlayerAttacker : MonoBehaviour
         ForceResetIK();
 
         // アニメーション状態もリセット
-        _playerManager.AnimController.SetBool("IsMissileAttack", false);
-        _playerManager.AnimController.SetWeight(AnimationLayer.Attack, 0);
+        var animData = _mainWeapon.Data.WeaponAnimationData;
+        _playerManager.AnimController.ResetAttack(animData.AttackTrigger, animData.AnimationType);
+        _playerManager.AnimController.SetWeight(animData.AnimationLayer, 0);
 
         Debug.Log("必殺技開始：すべての動作を停止しました");
     }

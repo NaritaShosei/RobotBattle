@@ -55,6 +55,8 @@ public class PlayerController : Character_B<PlayerData>
 
     [Header("Animation補間時間")]
     [SerializeField] private float _dampTime = 0.1f;
+    private float _moveX;
+    private float _moveY;
 
     private float _autoMoveSpeed;
 
@@ -101,7 +103,7 @@ public class PlayerController : Character_B<PlayerData>
     private void Update()
     {
         // ポーズ中は何もしない
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         // 必殺技中は移動・回転を完全停止
         if (_playerManager.IsState(PlayerState.SpecialAttack))
@@ -223,7 +225,6 @@ public class PlayerController : Character_B<PlayerData>
 
         // 追尾中は重力を切る
         _rb.useGravity = false;
-        Debug.Log($"目標回転開始");
     }
 
     /// <summary>
@@ -240,7 +241,6 @@ public class PlayerController : Character_B<PlayerData>
 
         // 追尾終了時に重力をかけなおす
         _rb.useGravity = true;
-        Debug.Log("目標回転停止");
     }
 
     /// <summary>
@@ -435,7 +435,7 @@ public class PlayerController : Character_B<PlayerData>
 
     private void FixedUpdate()
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         //AddForceなどはFixedUpdateで
 
@@ -488,7 +488,7 @@ public class PlayerController : Character_B<PlayerData>
 
     private void OnMoveInput(InputAction.CallbackContext context)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         if (_isAutoMoving) return;
 
@@ -513,7 +513,7 @@ public class PlayerController : Character_B<PlayerData>
     }
     private void Move(float speed)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
@@ -536,7 +536,7 @@ public class PlayerController : Character_B<PlayerData>
 
     private void OnJump(InputAction.CallbackContext context)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
         _isJumped = context.phase == InputActionPhase.Started;
@@ -556,7 +556,7 @@ public class PlayerController : Character_B<PlayerData>
 
     private void OnDash(InputAction.CallbackContext context)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
         if (context.phase == InputActionPhase.Started && !_isDashed)
@@ -659,7 +659,7 @@ public class PlayerController : Character_B<PlayerData>
 
     private void OnGuard(InputAction.CallbackContext context)
     {
-        if (_gameManager.IsPaused || _playerManager.IsState(PlayerState.SpecialAttack)) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent || _playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
         // 自動移動中はガードを無効
         if (_isAutoMoving) return;
@@ -701,7 +701,7 @@ public class PlayerController : Character_B<PlayerData>
     /// <param name="other"></param>
     private void OnGuardHit(Collider other)
     {
-        if (_gameManager.IsPaused) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
 
         if (other.TryGetComponent(out Bullet_B bullet))
         {
@@ -736,9 +736,34 @@ public class PlayerController : Character_B<PlayerData>
 
     private void SetMoveAnimParam()
     {
-        _playerManager.AnimController.SetFloat("MoveX", _velocity.x, _dampTime);
-        _playerManager.AnimController.SetFloat("MoveY", _velocity.y, _dampTime);
+        Vector2 target = new Vector2(_velocity.x, _velocity.y);
+
+        // Unityの内部補間に近い指数補間係数
+        float t = 1f - Mathf.Exp(-Time.deltaTime / _dampTime);
+
+        _moveX = Mathf.Lerp(_moveX, target.x, t);
+        _moveY = Mathf.Lerp(_moveY, target.y, t);
+
+        Vector2 nextValue = new Vector2(_moveX, _moveY);
+
+        // 現在Animatorに設定されている値
+        var anim = _playerManager.AnimController;
+        Vector2 currentValue = new Vector2(
+            anim.GetFloat("MoveX"),
+            anim.GetFloat("MoveY")
+        );
+
+        // Lerpなどで値が微妙に動き続けてると、
+        // Animatorが無限に内部時間を積み上げてしまうので
+        // 一定以上の変化がある場合のみAnimatorを更新
+        const float threshold = 0.001f;
+        if (Vector2.Distance(currentValue, nextValue) > threshold)
+        {
+            anim.SetFloat("MoveX", nextValue.x);
+            anim.SetFloat("MoveY", nextValue.y);
+        }
     }
+
 
     private void OnDisable()
     {

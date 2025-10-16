@@ -1,17 +1,18 @@
 ﻿using Cysharp.Threading.Tasks;
+using System.Threading;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemyPhase", menuName = "GameData/PhaseData/EnemyPhase")]
 public class EnemyPhase : PhaseData_B
 {
-    public override async UniTask Run(PhaseContext context)
+    public override async UniTask Run(PhaseContext context, CancellationToken token)
     {
-        var em = ServiceLocator.Get<EnemyManager>();
+        var em = context.EnemyManager;
 
-        await em.WaitUntilGameResumed();
+        em.InitializeEnemies();
 
-        em.StartSpawnersAsync().Forget();
+        em.StartSpawnersAsync().Forget(ex => Debug.LogError(ex.Message));
 
-        await UniTask.WaitUntil(() => em.IsEnemyAllDefeated);
+        await UniTask.WaitUntil(() => em.IsEnemyAllDefeated, PlayerLoopTiming.Update, token);
     }
 }

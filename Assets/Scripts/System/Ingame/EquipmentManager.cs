@@ -17,22 +17,19 @@ public class EquipmentManager : MonoBehaviour
         _specialID = data.CurrentLoadout.SpecialID;
     }
 
-    public WeaponBase SpawnMainWeapon(PlayerEquipmentManager playerEquipmentManager)
+    public WeaponBase SpawnWeapon(PlayerEquipmentManager playerEquipmentManager, WeaponType type)
     {
-        var weaponData = ServiceLocator.Get<WeaponManager>().DataBase.GetWeapon(_mainID);
+        var id = type switch
+        {
+            WeaponType.Main => _mainID,
+            WeaponType.Sub => _subID,
+        };
+
+        var weaponData = ServiceLocator.Get<WeaponManager>().DataBase.GetWeapon(id);
 
         if (weaponData?.WeaponPrefab == null) { Debug.LogWarning("プレハブが設定されていません"); return null; }
 
         var parent = playerEquipmentManager.GetEquipmentParent(weaponData.EquipmentType);
-
-        return SpawnWeapon(weaponData, parent);
-    }
-
-    public WeaponBase SpawnSubWeapon(Transform parent)
-    {
-        var weaponData = ServiceLocator.Get<WeaponManager>().DataBase.GetWeapon(_subID);
-
-        if (weaponData?.WeaponPrefab == null) { Debug.LogWarning("プレハブが設定されていません"); return null; }
 
         return SpawnWeapon(weaponData, parent);
     }

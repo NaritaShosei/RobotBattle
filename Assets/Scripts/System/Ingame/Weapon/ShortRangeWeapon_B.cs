@@ -132,8 +132,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
         // Player以外にダメージを与える
         foreach (var coll in colls)
         {
-            if (coll.TryGetComponent<IFightable>(out var enemy)
-                && enemy.GetTransform().root != _root.GetTransform().root)
+            if (coll.TryGetComponent<IEnemySource>(out var enemy))
             {
                 enemy.HitDamage(this);
 
@@ -184,6 +183,19 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     {
         return _data.AttackPower;
     }
+
+    public override bool CanAttackAnimPlay()
+    {
+        // 攻撃可能であればアニメーション再生可能
+        if (_count <= 0)
+        {
+            Reload();
+            return false;
+        }
+
+        return true;
+    }
+
     /// <summary>
     /// デバッグ用：攻撃範囲の可視化
     /// </summary>

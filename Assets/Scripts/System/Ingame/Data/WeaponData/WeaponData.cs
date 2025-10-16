@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameData/EquipmentData/WeaponData", fileName = "WeaponData")]
-public class WeaponData : ScriptableObject,IData
+public class WeaponData : ScriptableObject, IData
 {
     [Header("基本情報")]
     [SerializeField] private int _weaponID;
@@ -22,6 +23,9 @@ public class WeaponData : ScriptableObject,IData
     [Header("装備情報")]
     [SerializeField] private GameObject _weaponPrefab;
     [SerializeField] private EquipmentType _equipmentType;
+
+    [Header("Animation設定")]
+    [SerializeField] private WeaponAnimationData _weaponAnimationData;
     public int ID => _weaponID;
     public string WeaponName => _weaponName;
     public Sprite WeaponIcon => _weaponIcon;
@@ -36,5 +40,26 @@ public class WeaponData : ScriptableObject,IData
     public float GuardBreakValue => _guardBreak;
     public GameObject WeaponPrefab => _weaponPrefab;
     public EquipmentType EquipmentType => _equipmentType;
+    public WeaponAnimationData WeaponAnimationData => _weaponAnimationData;
+}
 
+[Serializable]
+public class WeaponAnimationData
+{
+    [SerializeField] private string _attackTrigger;
+    [SerializeField] private string _reloadTrigger;
+    [SerializeField] private int _attackLayerWeight = 1;
+    [SerializeField] private AnimationLayer _animationLayer;
+    [SerializeField] private AnimationType _animationType;
+    [Tooltip("攻撃アニメーションのTrigger")] public string AttackTrigger => _attackTrigger;
+    [Tooltip("リロードアニメーションのTrigger")] public string ReloadTrigger => _reloadTrigger;
+    [Tooltip("Layerの重み")] public int AttackLayerWeight => _attackLayerWeight;
+    [Tooltip("Layer")] public AnimationLayer AnimationLayer => _animationLayer;
+    [Tooltip("遷移条件")] public AnimationType AnimationType => _animationType;
+}
+
+public enum AnimationType
+{
+    Bool,
+    Trigger,
 }

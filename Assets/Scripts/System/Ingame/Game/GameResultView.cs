@@ -19,6 +19,7 @@ public class GameResultView : MonoBehaviour
     private void Start()
     {
         _button.OnClick += OnClick;
+        HideUI();
     }
 
     private async void OnClick()

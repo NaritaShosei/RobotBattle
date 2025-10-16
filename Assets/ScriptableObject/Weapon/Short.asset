@@ -10,18 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f47f08e9c447d654ebc9e486ffec7333, type: 3}
-  m_Name: TestShort
+  m_Name: Short
   m_EditorClassIdentifier: 
   _weaponID: 12748
-  _weaponName: "\u30B4\u30C3\u30C9\u30D5\u30A3\u30F3\u30AC\u30FC"
+  _weaponName: "\u30D3\u30FC\u30E0\u30C1\u30A7\u30FC\u30F3\u30BD\u30FC"
   _weaponIcon: {fileID: 21300000, guid: afcc63084ae8abc48bb18daf9be92d68, type: 3}
   _weaponMoney: 0
   _weaponCost: 5
-  _attackPower: 148.66
-  _attackRate: 60
+  _attackPower: 200
+  _attackRate: 1
   _range: 100
   _coolTime: 1.5
-  _capacity: 1000
+  _capacity: 3
   _guardBreak: 50
   _speed: 100
   _weaponPrefab: {fileID: 8394636388324156513, guid: 77984803e5679184a9fcb24a877f2a69, type: 3}
+  _equipmentType: 0
+  _weaponAnimationData:
+    _attackTrigger: ShortAttack
+    _reloadTrigger: 
+    _attackLayerWeight: 1
+    _animationLayer: 0
+    _animationType: 1

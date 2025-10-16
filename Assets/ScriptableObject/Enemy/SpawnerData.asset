@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SpawnerData
   m_EditorClassIdentifier: 
   _maxHealth: 1000
-  _minInterval: 2
-  _maxInterval: 10
+  _minInterval: 6.69
+  _maxInterval: 29.52

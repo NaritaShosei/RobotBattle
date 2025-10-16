@@ -13,15 +13,22 @@ MonoBehaviour:
   m_Name: Beam
   m_EditorClassIdentifier: 
   _weaponID: 0
-  _weaponName: "\u30D3\u30FC\u30E0"
+  _weaponName: "\u30D3\u30FC\u30E0\u30E9\u30A4\u30D5\u30EB"
   _weaponIcon: {fileID: 21300000, guid: afcc63084ae8abc48bb18daf9be92d68, type: 3}
   _weaponMoney: 0
   _weaponCost: 0
-  _attackPower: 22.77
-  _attackRate: 2.53
-  _range: 100
+  _attackPower: 50
+  _attackRate: 1
+  _range: 200
   _coolTime: 1.5
   _capacity: 10
   _guardBreak: 50
   _speed: 100
   _weaponPrefab: {fileID: 8394636388324156513, guid: 1de5c6e1700b1ec438798eb5ea0e5778, type: 3}
+  _equipmentType: 0
+  _weaponAnimationData:
+    _attackTrigger: IsMissileAttack
+    _reloadTrigger: 
+    _attackLayerWeight: 1
+    _animationLayer: 1
+    _animationType: 0

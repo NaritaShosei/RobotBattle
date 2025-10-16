@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 1985820696237555039}
   - component: {fileID: 6115230344392606276}
   - component: {fileID: -6224378851037439143}
+  - component: {fileID: 4407272006859225958}
   m_Layer: 12
   m_Name: WeaponBase
   m_TagString: Untagged
@@ -108,6 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c25ca140e01c3e4ebd7141da4ffd1e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weaponDissolveEffect: {fileID: 4407272006859225958}
   _bullet: {fileID: 7544377930784953706, guid: b71227c7f80bc7a44b9d12f4d78566fe, type: 3}
   _muzzle: {fileID: 1412426406570949387}
   _layer:
@@ -133,6 +135,8 @@ SkinnedMeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -154,6 +158,7 @@ SkinnedMeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -167,5 +172,18 @@ SkinnedMeshRenderer:
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
-  m_DirtyAABB: 1
+    m_Extent: {x: 0.5, y: 0.5, z: 0.5}
+  m_DirtyAABB: 0
+--- !u!114 &4407272006859225958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8642063581048861936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f12d0e2c0ffb77b478bf72dabba2bcc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponDissolveEffect
+  _renderers: []
