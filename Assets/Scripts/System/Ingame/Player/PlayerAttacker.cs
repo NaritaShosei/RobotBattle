@@ -20,6 +20,7 @@ public class PlayerAttacker : MonoBehaviour
     private InputManager _input;
     private WeaponPresenter _presenter;
     private AimIK _aimIK;
+    private Vector3 _ikAxis;
 
     private float _timer = 0;
     [SerializeField] private float _duration = 0.5f;
@@ -103,6 +104,7 @@ public class PlayerAttacker : MonoBehaviour
     {
         //IKの設定
         _aimIK = GetComponent<AimIK>();
+        _ikAxis = _aimIK.solver.axis;
         _aimIK.enabled = false;
         _aimIK.solver.IKPositionWeight = 0f;
     }
@@ -149,7 +151,7 @@ public class PlayerAttacker : MonoBehaviour
     }
 
     /// <summary>
-    /// IK制御を独立したメソッドに分離
+    /// IK制御
     /// </summary>
     private void UpdateIK()
     {
@@ -461,6 +463,7 @@ public class PlayerAttacker : MonoBehaviour
         if (_aimIK != null && _mainWeapon.IKEnable())
         {
             _aimIK.enabled = true;
+            _aimIK.solver.axis = _ikAxis;
             _isIKActive = true;
             _shouldResetIK = false;
             _isIKFadingOut = false;
