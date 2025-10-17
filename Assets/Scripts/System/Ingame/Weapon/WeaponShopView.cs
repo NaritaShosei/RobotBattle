@@ -70,11 +70,11 @@ public class WeaponShopView : MonoBehaviour, IPointerClickHandler
         var data = _weaponDatabase.GetWeapon(id);
 
         if (data != null)
-            _explanation.Set(data.WeaponName, data.AttackPower, data.AttackRate);
+            _explanation.Set(data);
     }
     private void SetNullExplanation()
     {
-        _explanation.Set("", 0, 0);
+        _explanation.Set(null);
     }
 
     public void OnPointerClick(PointerEventData eventData)

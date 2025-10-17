@@ -9,8 +9,9 @@ public class WeaponExplanation : MonoBehaviour
 
     public void Set(WeaponData data)
     {
-        _name.text = data.WeaponName;
-        _power.text = $"{data.AttackPower}";
-        _rate.text = $"{data.AttackRate}";
+        // データがnullだったら空文字を表示
+        _name.text = data ? data.WeaponName : "";
+        _power.text = data ? $"{data.AttackPower}" : "";
+        _rate.text = data ? $"{data.AttackRate}" : "";
     }
 }
