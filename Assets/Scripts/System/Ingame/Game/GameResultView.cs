@@ -12,8 +12,6 @@ public class GameResultView : MonoBehaviour
 
     [SerializeField] Text _gameOverTypeText;
 
-    [SerializeField] Text _timeText;
-
     [SerializeField] private BasicButton _button;
 
     private void Start()
@@ -46,7 +44,6 @@ public class GameResultView : MonoBehaviour
 
     public void SetGameOverType(GameOverType type)
     {
-        _timeText.enabled = false;
         _gameOverTypeText.enabled = true;
         _resultText.text = "GameOver";
         _gameOverTypeText.text = type switch
@@ -59,15 +56,5 @@ public class GameResultView : MonoBehaviour
     public void SetScore(int score)
     {
         _scoreText.text = score.ToString();
-    }
-    public void SetTime(float time)
-    {
-        _timeText.enabled = true;
-        _gameOverTypeText.enabled = false;
-
-        int minutes = Mathf.FloorToInt(time / 60);
-        int seconds = Mathf.FloorToInt(time % 60);
-
-        _timeText.text = $"{minutes:00}:{seconds:00}";
     }
 }

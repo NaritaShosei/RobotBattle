@@ -16,10 +16,9 @@
         UpdateView();
     }
 
-    public void SetGameClear(float time, int score)
+    public void SetGameClear(int score)
     {
         _model.SetGameClear();
-        _model.SetTime(time);
         _model.SetScore(score);
         UpdateView();
     }
@@ -36,7 +35,6 @@
         {
             _view.SetGameClear();
             _view.SetScore(_model.Score);
-            _view.SetTime(_model.ClearTime);
         }
     }
 }
