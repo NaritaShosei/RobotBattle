@@ -135,8 +135,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponDissolveEffect: {fileID: 4519569834169412599}
-  _weaponDistance: 3
-  _attackRadius: 3
+  _weaponDistance: 1.5
+  _attackRadius: 6
 --- !u!1001 &3120936738118752336
 PrefabInstance:
   m_ObjectHideFlags: 0
