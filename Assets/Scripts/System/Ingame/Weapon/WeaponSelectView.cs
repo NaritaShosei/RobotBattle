@@ -60,7 +60,7 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
         var data = _weaponDatabase.GetWeapon(id);
 
         if (data != null)
-            _explanation.Set(data.WeaponName, data.AttackPower, data.AttackRate);
+            _explanation.Set(data);
     }
 
     public void OnPointerClick(PointerEventData eventData)

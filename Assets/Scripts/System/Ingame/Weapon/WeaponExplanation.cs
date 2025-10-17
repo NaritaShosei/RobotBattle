@@ -7,10 +7,10 @@ public class WeaponExplanation : MonoBehaviour
     [SerializeField] private TMP_Text _power;
     [SerializeField] private TMP_Text _rate;
 
-    public void Set(string name, float power, float rate)
+    public void Set(WeaponData data)
     {
-        _name.text = name;
-        _power.text = $"{power}";
-        _rate.text = $"{rate}";
+        _name.text = data.WeaponName;
+        _power.text = $"{data.AttackPower}";
+        _rate.text = $"{data.AttackRate}";
     }
 }
