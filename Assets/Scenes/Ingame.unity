@@ -7826,8 +7826,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efa0cb508dc90ea4885410b787490ed0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interval: 0.05
-  _lifeTime: 0.5
+  _interval: 0.1
+  _lifeTime: 0.28
   _ghostMaterial: {fileID: 2100000, guid: 229e47148262ddc49b380c361500bf8c, type: 2}
   _poolSize: 15
 --- !u!114 &1155244334 stripped

@@ -4,14 +4,17 @@ using UnityEngine;
 public class EnemyLongRangeAttack : LongRangeAttack_B
 {
     [SerializeField] private WeaponData _weaponData;
+    [SerializeField] private AnimationController _animController;
     IEnemy _enemy;
     bool _isAttacked;
-    void Start()
+
+    private void Start()
     {
         Initialize(_weaponData);
         Start_B();
         _isAttacked = true;
     }
+
     private void OnEnable()
     {
         if (TryGetComponent(out _enemy))
@@ -19,7 +22,7 @@ public class EnemyLongRangeAttack : LongRangeAttack_B
             _enemy.AddOnAttackEvent(Attack);
         }
     }
-    void Attack(PlayerController player)
+    private void Attack(PlayerController player)
     {
         if (_isAttacked)
         {
