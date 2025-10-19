@@ -223,6 +223,7 @@ MonoBehaviour:
     Max: 0.9
   _ignoreLayers:
   - EnemyBullet
+  - Enemy
   _radius: 5
   _strength: 5
   _layerName: Enemy
