@@ -39,6 +39,7 @@ public class GameResultView : MonoBehaviour
 
     public void SetGameClear()
     {
+        _gameOverTypeText.enabled = false;
         _resultText.text = "GameClear";
     }
 
