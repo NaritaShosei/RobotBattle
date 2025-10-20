@@ -32,7 +32,7 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
             var data = _weaponDatabase.GetWeapon(id);
 
             var cell = Instantiate(_weaponCell, _cellParent);
-            cell.Initialize(data.WeaponIcon,data.WeaponName ,"cost", data.WeaponCost, data);
+            cell.Initialize(data.WeaponIcon, data.WeaponName, "cost", data.WeaponCost, data);
             _cells.Add(cell);
         }
 
@@ -41,9 +41,14 @@ public class WeaponSelectView : MonoBehaviour, IPointerClickHandler
             WeaponType.Main => _selector.PlayerData.CurrentLoadout.PrimaryWeaponId,
             WeaponType.Sub => _selector.PlayerData.CurrentLoadout.SecondWeaponId,
         };
-        _currentCell = _cells.First(cell => cell.WeaponData.ID == equippedID);
-        _currentCell.Select();
-        SetExplanation(_currentCell.WeaponData.ID);
+
+        _currentCell = _cells.FirstOrDefault(cell => cell.WeaponData.ID == equippedID);
+
+        if (_currentCell != null)
+        {
+            _currentCell.Select();
+            SetExplanation(_currentCell.WeaponData.ID);
+        }
     }
     private void ResetUI()
     {
