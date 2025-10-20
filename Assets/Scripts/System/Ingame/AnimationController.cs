@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 
 public class AnimationController : MonoBehaviour
@@ -35,7 +36,16 @@ public class AnimationController : MonoBehaviour
                 await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken: destroyCancellationToken);
             }
         }
-        catch { }
+        catch (OperationCanceledException)
+        {
+            // 正常なキャンセル
+            Debug.Log("Animation reset cancelled");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Unexpected error in animation reset: {ex}");
+            throw;
+        }
     }
 
     public void SetAttack(string name, AnimationType type)

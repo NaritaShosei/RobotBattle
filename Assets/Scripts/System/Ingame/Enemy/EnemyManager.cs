@@ -9,8 +9,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private List<EnemySpawner> _spawners = new();
     [SerializeField] private List<GameObject> _spawnEnemies = new();
 
-    List<IEnemySource> _enemies = new();
-    public List<IEnemySource> Enemies => _enemies;
+    private HashSet<IEnemySource> _enemies = new();
+    public HashSet<IEnemySource> Enemies => _enemies;
     public bool IsEnemyAllDefeated => _enemies.Count == 0;
 
     private void Awake()
@@ -25,7 +25,7 @@ public class EnemyManager : MonoBehaviour
     {
         _enemies = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
             .OfType<IEnemySource>()
-            .ToList();
+            .ToHashSet();
     }
 
     /// <summary>
