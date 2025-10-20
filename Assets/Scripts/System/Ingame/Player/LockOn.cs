@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -29,80 +30,91 @@ public class LockOn : MonoBehaviour
     {
         ServiceLocator.Set(this);
     }
-    void Start()
+    private async void Start()
     {
         _camera = Camera.main;
         _presenter = new CrosshairPresenter(ServiceLocator.Get<GameUIManager>().CrosshairView);
         _presenter.Initialize();
         _enemyManager = ServiceLocator.Get<EnemyManager>();
+
+        try
+        {
+            await LockOnLoop();
+        }
+        catch { }
     }
 
-    void Update()
+    private async UniTask LockOnLoop()
     {
         float bestScore = float.MinValue;
 
-        _lockOnTarget = null;
-
-        //EnemyListをEnemyManagerから参照する
-        foreach (var enemy in _enemyManager.Enemies)
+        while (true)
         {
-            // カメラ内チェック
-            if (!enemy.IsTargetInView()) continue;
+            _lockOnTarget = null;
 
-            // 実際のPlayerの視界ではなく、カメラベースでロックオン
-
-            Vector3 enemyPos = enemy.GetTargetCenter().position;
-
-            //距離チェック
-            Vector3 dirToEnemy = enemyPos - _player.position;
-
-            float maxDistanceSqr = _maxDistance * _maxDistance;
-            if (dirToEnemy.sqrMagnitude > maxDistanceSqr) continue;
-
-
-            //視野角チェック
-            Vector3 dirNormalized = dirToEnemy.normalized;
-            float dot = Vector3.Dot(_camera.transform.forward, dirNormalized);
-            if (dot < Mathf.Cos(_viewAngle * 0.5f * Mathf.Deg2Rad)) continue;
-
-
-            //実際に見えているかチェック
-            if (!IsVisible(enemy)) continue;
-
-            //指定ポイントからの距離計算
-            Vector3 viewportPosition = _camera.WorldToViewportPoint(enemyPos);
-            Vector2 screenPos = new Vector2(viewportPosition.x, viewportPosition.y);
-
-            Vector2 crosshairPos = (Vector2)_camera.WorldToViewportPoint(_presenter.GetCrosshairPos());
-
-            float disToCenter = Vector2.Distance(screenPos, crosshairPos);
-
-            //Y成分を無視したPlayerとEnemyの距離
-            float playerDis = (new Vector3(_player.position.x, 0, _player.position.z)
-                                     - new Vector3(enemyPos.x, 0, enemyPos.z)).magnitude;
-
-            //スコア計算
-            //0で割らないように小さい数を足す
-            float score = (1 / (disToCenter + 0.001f)) * _centerValue +
-                          (1 / (playerDis + 0.001f)) * _playerValue;
-
-            //プレイヤーからの近さをより優先しつつ、画面中央への近さも考慮する
-            if (score > bestScore)
+            //EnemyListをEnemyManagerから参照する
+            foreach (var enemy in _enemyManager.Enemies)
             {
-                bestScore = score;
-                _lockOnTarget = enemy;
+                // カメラ内チェック
+                if (!enemy.IsTargetInView()) continue;
+
+                // 実際のPlayerの視界ではなく、カメラベースでロックオン
+
+                Vector3 enemyPos = enemy.GetTargetCenter().position;
+
+                //距離チェック
+                Vector3 dirToEnemy = enemyPos - _player.position;
+
+                float maxDistanceSqr = _maxDistance * _maxDistance;
+                if (dirToEnemy.sqrMagnitude > maxDistanceSqr) continue;
+
+
+                //視野角チェック
+                Vector3 dirNormalized = dirToEnemy.normalized;
+                float dot = Vector3.Dot(_camera.transform.forward, dirNormalized);
+                if (dot < Mathf.Cos(_viewAngle * 0.5f * Mathf.Deg2Rad)) continue;
+
+
+                //実際に見えているかチェック
+                if (!IsVisible(enemy)) continue;
+
+                //指定ポイントからの距離計算
+                Vector3 viewportPosition = _camera.WorldToViewportPoint(enemyPos);
+                Vector2 screenPos = new Vector2(viewportPosition.x, viewportPosition.y);
+
+                Vector2 crosshairPos = (Vector2)_camera.WorldToViewportPoint(_presenter.GetCrosshairPos());
+
+                float disToCenter = Vector2.Distance(screenPos, crosshairPos);
+
+                //Y成分を無視したPlayerとEnemyの距離
+                float playerDis = (new Vector3(_player.position.x, 0, _player.position.z)
+                                         - new Vector3(enemyPos.x, 0, enemyPos.z)).magnitude;
+
+                //スコア計算
+                //0で割らないように小さい数を足す
+                float score = (1 / (disToCenter + 0.001f)) * _centerValue +
+                              (1 / (playerDis + 0.001f)) * _playerValue;
+
+                //プレイヤーからの近さをより優先しつつ、画面中央への近さも考慮する
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    _lockOnTarget = enemy;
+                }
+
             }
 
-        }
+            //UIに反映
+            if (_lockOnTarget != null)
+            {
+                _presenter.UpdateLockOn(true, _lockOnTarget.GetTargetCenter().position);
+            }
+            else
+            {
+                _presenter.UpdateLockOn(false, Vector3.zero);
+            }
 
-        //UIに反映
-        if (_lockOnTarget != null)
-        {
-            _presenter.UpdateLockOn(true, _lockOnTarget.GetTargetCenter().position);
-        }
-        else
-        {
-            _presenter.UpdateLockOn(false, Vector3.zero);
+            await UniTask.Delay(100, cancellationToken: destroyCancellationToken);
         }
     }
 

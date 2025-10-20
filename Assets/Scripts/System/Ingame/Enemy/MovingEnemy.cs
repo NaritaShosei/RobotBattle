@@ -36,6 +36,8 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
     private Vector3 _targetPos;
     protected Vector3 _separationDirection;
 
+    protected Collider[] _colliderBuffer = new Collider[50]; // 再利用バッファ、多めに確保
+
     private bool _isDodged;
     private bool _isJumping;
     private bool _canJump = true;
@@ -174,12 +176,15 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
             // 分離方向のリセット
             var _separationDir = Vector3.zero;
 
-            Collider[] colliders = Physics.OverlapSphere(GetTargetCenter().position, _radius);
+            int count = Physics.OverlapSphereNonAlloc(
+                GetTargetCenter().position,
+                _radius,
+                _colliderBuffer);
 
-            foreach (Collider collider in colliders)
+            for (int i = 0; i < count; i++)
             {
-                if (collider.gameObject == gameObject) { continue; }
-                if (collider.TryGetComponent(out IEnemySource enemy))
+                if (_colliderBuffer[i].gameObject == gameObject) { continue; }
+                if (_colliderBuffer[i].TryGetComponent(out IEnemySource enemy))
                 {
                     Vector3 away = GetTargetCenter().position - enemy.GetTargetCenter().position;
                     float dis = away.magnitude;
@@ -194,7 +199,7 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
 
             _separationDirection = _separationDir.normalized * _strength;
 
-            await UniTask.Yield(cancellationToken: destroyCancellationToken);
+            await UniTask.Delay(100, cancellationToken: destroyCancellationToken);
         }
     }
 
