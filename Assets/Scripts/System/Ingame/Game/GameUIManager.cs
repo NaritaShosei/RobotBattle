@@ -2,10 +2,6 @@
 
 public class GameUIManager : MonoBehaviour
 {
-
-    [SerializeField] TimeView _timeView;
-    public TimeView TimeView => _timeView;
-
     [SerializeField] WeaponView _weaponView;
     public WeaponView WeaponView => _weaponView;
 

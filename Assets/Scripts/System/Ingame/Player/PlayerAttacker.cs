@@ -411,10 +411,10 @@ public class PlayerAttacker : MonoBehaviour
 
             // レイヤー切り替え
             _playerManager.AnimController.SetWeight(animData.AnimationLayer, animData.AttackLayerWeight);
-        }
 
-        // IKを有効化
-        EnableIK();
+            // IKを有効化
+            EnableIK();
+        }
 
         // 近接武器の場合、攻撃中も目標への回転を継続
         if (_mainWeapon.RequiresPlayerMovement())

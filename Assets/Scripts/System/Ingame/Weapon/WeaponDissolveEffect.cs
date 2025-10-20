@@ -5,6 +5,8 @@ public class WeaponDissolveEffect : MonoBehaviour
 {
     [SerializeField] private Renderer[] _renderers;
 
+    [SerializeField] private Vector2 _clamp = new Vector2(-0.2f, 1.2f);
+
     private MaterialPropertyBlock _mpb;
     private float _dissolveAmount;
     private static readonly int DissolveProp = Shader.PropertyToID("_DissolveAmount");
@@ -12,7 +14,7 @@ public class WeaponDissolveEffect : MonoBehaviour
     void Awake()
     {
         _mpb = new MaterialPropertyBlock();
-        SetDissolve(1f); // 初期は非表示
+        SetDissolve(0); // 初期は非表示
     }
 
     /// <summary>
@@ -20,7 +22,7 @@ public class WeaponDissolveEffect : MonoBehaviour
     /// </summary>
     public void Spawn(float time)
     {
-        DOTween.To(() => _dissolveAmount, SetDissolve, 0f, time);
+        DOTween.To(() => _dissolveAmount, SetDissolve, _clamp.x, time);
     }
 
     /// <summary>
@@ -28,7 +30,7 @@ public class WeaponDissolveEffect : MonoBehaviour
     /// </summary>
     public void Despawn(float time)
     {
-        DOTween.To(() => _dissolveAmount, SetDissolve, 1f, time);
+        DOTween.To(() => _dissolveAmount, SetDissolve, _clamp.y, time);
     }
 
     /// <summary>

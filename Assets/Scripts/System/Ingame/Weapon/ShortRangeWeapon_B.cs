@@ -123,7 +123,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
         // Playerの中心を取得、攻撃の中心の計算
         var centerPos = _root.GetTargetCenter().position;
 
-        var dir = _root.GetTargetCenter().forward * _attackRadius;
+        var dir = transform.forward * _attackRadius;
         var attackCenter = centerPos + dir;
 
         // 計算した場所で攻撃

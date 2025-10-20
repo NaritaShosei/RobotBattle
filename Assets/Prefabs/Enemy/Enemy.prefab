@@ -130,7 +130,7 @@ Transform:
   m_Children:
   - {fileID: 263053392785496746}
   m_Father: {fileID: 362356832563821023}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 26.809381, y: -0, z: -0}
 --- !u!1 &2166134176414654115
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,6 +144,9 @@ GameObject:
   - component: {fileID: 7026685107550484750}
   - component: {fileID: 838447219257471581}
   - component: {fileID: 822170660464013586}
+  - component: {fileID: 3353074739140950959}
+  - component: {fileID: 2099858683415703412}
+  - component: {fileID: 4862160168590564140}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
@@ -178,10 +181,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2166134176414654115}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 1
-  m_AngularDrag: 0.05
+  m_LinearDamping: 1
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -220,6 +223,12 @@ MonoBehaviour:
     Max: 0.9
   _ignoreLayers:
   - EnemyBullet
+  - Enemy
+  _radius: 5
+  _strength: 5
+  _layerName: Enemy
+  _animController: {fileID: 4862160168590564140}
+  _moveAnimationParamName: MoveValue
 --- !u!114 &838447219257471581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,12 +241,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c95dab13358b514e9a06688e51d15b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weaponDissolveEffect: {fileID: 0}
   _bullet: {fileID: 1930764663170779167, guid: beb06f7ff0d3af348a90099e4de7dbee, type: 3}
   _muzzle: {fileID: 6460085175228565454}
   _layer:
     serializedVersion: 2
     m_Bits: 512
   _weaponData: {fileID: 11400000, guid: c77e607b703bf9d4299d242a3b4ed134, type: 2}
+  _animController: {fileID: 4862160168590564140}
 --- !u!136 &822170660464013586
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -261,6 +272,137 @@ CapsuleCollider:
   m_Height: 9.51
   m_Direction: 1
   m_Center: {x: 0, y: 4.7, z: 0}
+--- !u!95 &3353074739140950959
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2166134176414654115}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 79fbccca8ca507e429c54181de8b6295, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2099858683415703412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2166134176414654115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 246455474a0d74a4291b3cedc896ebdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: AloneSoft.VeryAnimation::VeryAnimation.VeryAnimationSaveSettings
+  bonePaths:
+  - 
+  - Model
+  - Model/robot_metallicEnemy
+  - Model/robot_metallicEnemy/robot_metallic
+  - Model/robot_metallicEnemy/root
+  - Model/robot_metallicEnemy/root/root.x
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/c_neck_01.x
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/neck.x
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/neck.x/head.x
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/neck.x/head.x/c_skull_01.x
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/neck.x/head.x/c_skull_02.x
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/neck.x/head.x/c_skull_03.x
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/index1_base.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/index1_base.l/index1.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/index1_base.l/index1.l/index2.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/index1_base.l/index1.l/index2.l/index3.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/middle1_base.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/middle1_base.l/middle1.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/middle1_base.l/middle1.l/middle2.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/middle1_base.l/middle1.l/middle2.l/middle3.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/pinky1_base.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/pinky1_base.l/pinky1.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/pinky1_base.l/pinky1.l/pinky2.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/pinky1_base.l/pinky1.l/pinky2.l/pinky3.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/ring1_base.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/ring1_base.l/ring1.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/ring1_base.l/ring1.l/ring2.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/ring1_base.l/ring1.l/ring2.l/ring3.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/thumb1.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/thumb1.l/thumb2.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.l/arm_stretch.l/forearm_stretch.l/hand.l/thumb1.l/thumb2.l/thumb3.l
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/index1_base.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/index1_base.r/index1.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/index1_base.r/index1.r/index2.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/index1_base.r/index1.r/index2.r/index3.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/middle1_base.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/middle1_base.r/middle1.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/middle1_base.r/middle1.r/middle2.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/middle1_base.r/middle1.r/middle2.r/middle3.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/pinky1_base.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/pinky1_base.r/pinky1.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/pinky1_base.r/pinky1.r/pinky2.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/pinky1_base.r/pinky1.r/pinky2.r/pinky3.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/ring1_base.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/ring1_base.r/ring1.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/ring1_base.r/ring1.r/ring2.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/ring1_base.r/ring1.r/ring2.r/ring3.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/thumb1.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/thumb1.r/thumb2.r
+  - Model/robot_metallicEnemy/root/root.x/spine_01.x/spine_02.x/shoulder.r/arm_stretch.r/forearm_stretch.r/hand.r/thumb1.r/thumb2.r/thumb3.r
+  - Model/robot_metallicEnemy/root/root.x/thigh_stretch.l
+  - Model/robot_metallicEnemy/root/root.x/thigh_stretch.l/leg_stretch.l
+  - Model/robot_metallicEnemy/root/root.x/thigh_stretch.l/leg_stretch.l/foot.l
+  - Model/robot_metallicEnemy/root/root.x/thigh_stretch.l/leg_stretch.l/foot.l/toes_01.l
+  - Model/robot_metallicEnemy/root/root.x/thigh_stretch.r
+  - Model/robot_metallicEnemy/root/root.x/thigh_stretch.r/leg_stretch.r
+  - Model/robot_metallicEnemy/root/root.x/thigh_stretch.r/leg_stretch.r/foot.r
+  - Model/robot_metallicEnemy/root/root.x/thigh_stretch.r/leg_stretch.r/foot.r/toes_01.r
+  - DodgeCollider
+  - Muzzle
+  - DamageCollider
+  - TargetCenter
+  writeLockBones: 
+  showBones: 00000000
+  foldoutBones: 4200000041000000400000003e0000003d0000003c0000003a000000390000003700000036000000350000003300000032000000310000002f0000002e0000002d0000002b0000002a00000029000000280000002700000026000000250000002300000022000000200000001f0000001e0000001c0000001b0000001a00000018000000170000001600000014000000130000001200000011000000100000000f0000000e0000000a0000000900000007000000060000000500000004000000020000000100000000000000
+  mirrorBones: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff25000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f000000300000003100000032000000330000003400000035000000360000003700000038000000390000003a0000003b0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f0000002000000021000000220000002300000024000000400000004100000042000000430000003c0000003d0000003e0000003f000000ffffffffffffffffffffffffffffffff
+  mirrorBlendShape: []
+  animatorIkData: []
+  originalIkData: []
+  selectionData: []
+  lastSelectAnimationClip: {fileID: 7400000, guid: 066f27a5f10393a41a410bda2db94aa3, type: 2}
+  handPoseList: []
+  blendShapeList: []
+--- !u!114 &4862160168590564140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2166134176414654115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87c86bd422d8b17469343234a07f9e83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationController
+  _animator: {fileID: 3353074739140950959}
 --- !u!1 &6560517811549232731
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,6 +515,150 @@ PrefabInstance:
       propertyPath: m_Name
       value: robot_metallicEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 60.099106
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -5.5287676
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 1.1718535
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -41.3329
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 179.99998
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.000005623958
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -0.0026859718
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90.00411
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -140.98047
+      objectReference: {fileID: 0}
+    - target: {fileID: 400012, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 55.824524
+      objectReference: {fileID: 0}
+    - target: {fileID: 400012, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -118.566765
+      objectReference: {fileID: 0}
+    - target: {fileID: 400012, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -2.3985806
+      objectReference: {fileID: 0}
+    - target: {fileID: 400016, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 31.947607
+      objectReference: {fileID: 0}
+    - target: {fileID: 400016, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.96073306
+      objectReference: {fileID: 0}
+    - target: {fileID: 400016, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -31.229494
+      objectReference: {fileID: 0}
+    - target: {fileID: 400018, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 13.335887
+      objectReference: {fileID: 0}
+    - target: {fileID: 400018, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 23.838293
+      objectReference: {fileID: 0}
+    - target: {fileID: 400018, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 36.831917
+      objectReference: {fileID: 0}
+    - target: {fileID: 400022, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -23.604586
+      objectReference: {fileID: 0}
+    - target: {fileID: 400022, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -178.36948
+      objectReference: {fileID: 0}
+    - target: {fileID: 400022, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -20.471487
+      objectReference: {fileID: 0}
+    - target: {fileID: 400024, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 7.787373
+      objectReference: {fileID: 0}
+    - target: {fileID: 400024, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.7744763
+      objectReference: {fileID: 0}
+    - target: {fileID: 400024, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.0017881748
+      objectReference: {fileID: 0}
+    - target: {fileID: 400042, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 23.06534
+      objectReference: {fileID: 0}
+    - target: {fileID: 400042, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 29.575394
+      objectReference: {fileID: 0}
+    - target: {fileID: 400042, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -34.61939
+      objectReference: {fileID: 0}
+    - target: {fileID: 400044, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 10.277872
+      objectReference: {fileID: 0}
+    - target: {fileID: 400044, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 10.714688
+      objectReference: {fileID: 0}
+    - target: {fileID: 400044, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 46.68147
+      objectReference: {fileID: 0}
+    - target: {fileID: 400062, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -44.025105
+      objectReference: {fileID: 0}
+    - target: {fileID: 400062, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -47.060673
+      objectReference: {fileID: 0}
+    - target: {fileID: 400062, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 36.75425
+      objectReference: {fileID: 0}
+    - target: {fileID: 400086, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 16.514545
+      objectReference: {fileID: 0}
+    - target: {fileID: 400086, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -126.76668
+      objectReference: {fileID: 0}
+    - target: {fileID: 400086, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -8.5831375
+      objectReference: {fileID: 0}
     - target: {fileID: 400096, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -403,15 +689,75 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400096, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -70.82603
       objectReference: {fileID: 0}
     - target: {fileID: 400096, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 400096, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 400098, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -29.847881
+      objectReference: {fileID: 0}
+    - target: {fileID: 400098, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 400098, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 400104, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 83.26623
+      objectReference: {fileID: 0}
+    - target: {fileID: 400104, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 179.99956
+      objectReference: {fileID: 0}
+    - target: {fileID: 400104, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90.00051
+      objectReference: {fileID: 0}
+    - target: {fileID: 400106, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 89.48413
+      objectReference: {fileID: 0}
+    - target: {fileID: 400106, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -179.99771
+      objectReference: {fileID: 0}
+    - target: {fileID: 400106, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90.00265
+      objectReference: {fileID: 0}
+    - target: {fileID: 400112, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -8.3488455
+      objectReference: {fileID: 0}
+    - target: {fileID: 400112, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -111.91461
+      objectReference: {fileID: 0}
+    - target: {fileID: 400112, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -156.92216
+      objectReference: {fileID: 0}
+    - target: {fileID: 400114, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -4.212927
+      objectReference: {fileID: 0}
+    - target: {fileID: 400114, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 116.62375
+      objectReference: {fileID: 0}
+    - target: {fileID: 400114, guid: 9bd6167befa81644f91ddec1bae7fe5e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 150.84715
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

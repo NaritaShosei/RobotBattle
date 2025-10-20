@@ -1,13 +1,15 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class MovingEnemy : Enemy_B<EnemyData_B>
 {
-    Rigidbody _rb;
+    private Rigidbody _rb;
 
-    [SerializeField] EnemyData_B _dataBase;
-    [SerializeField] EnemyDodgeZone _dodgeZone;
-    [SerializeField] EnemyDodgeClampData _dodgeClampData;
+    [SerializeField] private EnemyData_B _dataBase;
+    [SerializeField] private EnemyDodgeZone _dodgeZone;
+    [SerializeField] private EnemyDodgeClampData _dodgeClampData;
 
     [Tooltip("回避行動を無視したいレイヤー")]
     [SerializeField] private string[] _ignoreLayers;
@@ -19,28 +21,53 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
         public float Max;
     }
 
-    float PlayerDistance => Vector3.Distance(transform.position, _player.transform.position);
-    Vector3 _startPos;
-    Vector3 _targetPos;
-    bool _isDodged;
-    bool _isJumping;
-    bool _canJump = true;
-    bool CanMove => _data.MinDistance <= PlayerDistance;
-    bool IsDash => _data.DashMinDistance <= PlayerDistance;
-    bool IsAttack => _data.AttackDistance >= PlayerDistance;
-    void Start()
+    [Header("分離設定")]
+    [SerializeField] private float _radius = 2;
+    [SerializeField] private float _strength = 3;
+    [SerializeField] private string _layerName = "Enemy";
+
+    [Header("アニメーション設定")]
+    [SerializeField] protected AnimationController _animController;
+    [SerializeField] protected string _moveAnimationParamName = "MoveValue";
+
+    private float PlayerDistance => Vector3.Distance(transform.position, _player.transform.position);
+
+    private Vector3 _startPos;
+    private Vector3 _targetPos;
+    protected Vector3 _separationDirection;
+
+    protected Collider[] _colliderBuffer = new Collider[50]; // 再利用バッファ、多めに確保
+
+    private bool _isDodged;
+    private bool _isJumping;
+    private bool _canJump = true;
+    private bool CanMove => _data.MinDistance <= PlayerDistance;
+    private bool IsDash => _data.DashMinDistance <= PlayerDistance;
+    private bool IsAttack => _data.AttackDistance >= PlayerDistance;
+
+    private async void Start()
     {
         OnStart();
         Initialize(_dataBase);
         _rb = GetComponent<Rigidbody>();
+
+        // TODO:managerからPlayerの情報を渡される形にしたほうがいい
         _player = FindAnyObjectByType<PlayerController>();
         _dodgeZone.OnTriggerEnterEvent += SetDodgeTargetPosition;
+
+        try
+        {
+            await CalculateSeparation();
+        }
+        catch { }
     }
 
     private void Update()
     {
         if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
         GaugeValueChange(_data.RecoveryValue * Time.deltaTime);
+
+        SetAnimationParam();
 
         HandleRotation();
 
@@ -75,6 +102,7 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
             _dodgeZone.Collider.enabled = true;
         }
     }
+
     private void FixedUpdate()
     {
         if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
@@ -128,6 +156,9 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
         Vector3 vec = target - transform.position;
         Vector3 dir = vec.normalized;
 
+        dir += _separationDirection;
+        dir = dir.normalized;
+
         var currentVel = _rb.linearVelocity;
 
         var speed = IsDash ? _data.BoostSpeed : _data.NormalSpeed;
@@ -138,11 +169,45 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
         _rb.linearVelocity = currentVel;
     }
 
+    protected virtual async UniTask CalculateSeparation()
+    {
+        while (true)
+        {
+            // 分離方向のリセット
+            var _separationDir = Vector3.zero;
+
+            int count = Physics.OverlapSphereNonAlloc(
+                GetTargetCenter().position,
+                _radius,
+                _colliderBuffer);
+
+            for (int i = 0; i < count; i++)
+            {
+                if (_colliderBuffer[i].gameObject == gameObject) { continue; }
+                if (_colliderBuffer[i].TryGetComponent(out IEnemySource enemy))
+                {
+                    Vector3 away = GetTargetCenter().position - enemy.GetTargetCenter().position;
+                    float dis = away.magnitude;
+
+                    // 0除算の回避
+                    if (dis > 0)
+                    {
+                        _separationDir += away / dis;
+                    }
+                }
+            }
+
+            _separationDirection = _separationDir.normalized * _strength;
+
+            await UniTask.Delay(100, cancellationToken: destroyCancellationToken);
+        }
+    }
+
     protected virtual void SetDodgeTargetPosition(Collider other)
     {
-        int mask = LayerMask.GetMask(_ignoreLayers);
+        int layerMask = LayerMask.GetMask(_ignoreLayers);
 
-        if (((1 << other.gameObject.layer) & mask) != 0) return;
+        if (((1 << other.gameObject.layer) & layerMask) != 0) return;
 
         if (!other.TryGetComponent(out MonoBehaviour _)) return;
 
@@ -179,5 +244,10 @@ public class MovingEnemy : Enemy_B<EnemyData_B>
 
         // 最終的な目標位置を設定
         _targetPos = candidateTarget;
+    }
+
+    protected virtual void SetAnimationParam()
+    {
+        _animController.SetFloat(_moveAnimationParamName, _rb.linearVelocity.magnitude);
     }
 }

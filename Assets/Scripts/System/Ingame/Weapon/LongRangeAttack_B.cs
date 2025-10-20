@@ -53,4 +53,16 @@ public class LongRangeAttack_B : WeaponBase
         var bullets = _bulletManager.SetPool(this, _bullet, _count, _layer);
         Array.ForEach(bullets, b => b.Initialize(_data));
     }
+
+    public override bool CanAttackAnimPlay()
+    {
+        // 攻撃可能であればアニメーション再生可能
+        if (_count <= 0)
+        {
+            Reload();
+            return false;
+        }
+
+        return true;
+    }
 }
