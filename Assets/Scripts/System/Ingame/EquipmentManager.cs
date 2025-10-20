@@ -17,7 +17,7 @@ public class EquipmentManager : MonoBehaviour
         _specialID = data.CurrentLoadout.SpecialID;
     }
 
-    public WeaponBase SpawnWeapon(PlayerEquipmentManager playerEquipmentManager, WeaponType type)
+    public Weapon_B SpawnWeapon(PlayerEquipmentManager playerEquipmentManager, WeaponType type)
     {
         var id = type switch
         {
@@ -34,11 +34,11 @@ public class EquipmentManager : MonoBehaviour
         return SpawnWeapon(weaponData, parent);
     }
 
-    private WeaponBase SpawnWeapon(WeaponData weaponData, Transform parent)
+    private Weapon_B SpawnWeapon(WeaponData weaponData, Transform parent)
     {
         var weaponObj = Instantiate(weaponData.WeaponPrefab, parent);
 
-        if (!weaponObj.TryGetComponent(out WeaponBase weaponComponent))
+        if (!weaponObj.TryGetComponent(out Weapon_B weaponComponent))
         {
             Debug.LogWarning("プレハブにWeaponBaseがアタッチされていません"); return null;
         }
@@ -48,7 +48,7 @@ public class EquipmentManager : MonoBehaviour
         return weaponComponent;
     }
 
-    public SpecialAttackBase SpawnSpecial(PlayerEquipmentManager playerEquipmentManager)
+    public SpecialAttack_B SpawnSpecial(PlayerEquipmentManager playerEquipmentManager)
     {
         var specialData = ServiceLocator.Get<WeaponManager>().DataBase.GetSpecial(_specialID);
 
@@ -58,7 +58,7 @@ public class EquipmentManager : MonoBehaviour
 
         var specialObj = Instantiate(specialData.Prefab, parent);
 
-        if (!specialObj.TryGetComponent(out SpecialAttackBase specialAttack))
+        if (!specialObj.TryGetComponent(out SpecialAttack_B specialAttack))
         {
             Debug.LogWarning("プレハブにWeaponBaseがアタッチされていません"); return null;
         }

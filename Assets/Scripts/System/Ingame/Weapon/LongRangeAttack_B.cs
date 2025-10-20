@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LongRangeAttack_B : WeaponBase
+public class LongRangeAttack_B : Weapon_B
 {
 
     [SerializeField] protected Bullet_B _bullet;

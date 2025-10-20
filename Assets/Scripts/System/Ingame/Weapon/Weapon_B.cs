@@ -2,7 +2,7 @@
 using RootMotion.FinalIK;
 using UnityEngine;
 
-public abstract class WeaponBase : MonoBehaviour
+public abstract class Weapon_B : MonoBehaviour
 {
     [SerializeField] private WeaponDissolveEffect _weaponDissolveEffect;
 

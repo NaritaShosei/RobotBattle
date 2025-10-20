@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public abstract class SpecialAttackBase : MonoBehaviour, IWeapon
+public abstract class SpecialAttack_B : MonoBehaviour, IWeapon
 {
     private SpecialData _data;
     public SpecialData Data => _data;

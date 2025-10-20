@@ -2,7 +2,7 @@
 using RootMotion.FinalIK;
 using UnityEngine;
 
-public class ShortRangeWeapon_B : WeaponBase, IWeapon
+public class ShortRangeWeapon_B : Weapon_B, IWeapon
 {
     [SerializeField, Tooltip("敵から離れる距離")] private float _weaponDistance = 3f;
     [SerializeField, Tooltip("攻撃の半径")] private float _attackRadius = 3f;

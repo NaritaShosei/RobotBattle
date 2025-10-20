@@ -13,9 +13,9 @@ public class PlayerAttacker : MonoBehaviour
     [SerializeField] private PlayerManager _playerManager;
     [SerializeField] private float _animationWeight = 0.5f;
 
-    private WeaponBase _mainWeapon;
-    private WeaponBase _subWeapon;
-    private SpecialAttackBase _specialAttack;
+    private Weapon_B _mainWeapon;
+    private Weapon_B _subWeapon;
+    private SpecialAttack_B _specialAttack;
 
     private InputManager _input;
     private WeaponPresenter _presenter;
