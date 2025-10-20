@@ -1,7 +1,7 @@
 ﻿using Script.System.Ingame;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+// TODO:単一責任の原則を守るため、機能の分離をする
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : Character_B<PlayerData>
 {
