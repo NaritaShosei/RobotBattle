@@ -147,7 +147,7 @@ public class PlayerAttacker : MonoBehaviour
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
         // Debug用に適当なロジック
-        _specialGauge.UpdateValue(1);
+        _specialGauge.UpdateValue(Time.deltaTime);
 
         //残弾数を渡す
         // TODO:イベント駆動にしたほうがきれい

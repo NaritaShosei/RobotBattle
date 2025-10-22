@@ -313,6 +313,9 @@ public class PlayerController : Character_B<PlayerData>
         _onAutoMoveComplete = onComplete;
         _onAutoMoveCanceled = onCanceled;
 
+        // ダッシュ状態を解除
+        _isDashed = false;
+
         _playerManager.SetState(PlayerState.MovingToTarget);
 
         // 自動移動開始時に残像とカメラエフェクトを開始 - 追加
