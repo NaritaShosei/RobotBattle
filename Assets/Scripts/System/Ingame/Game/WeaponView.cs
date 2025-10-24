@@ -56,4 +56,16 @@ public class WeaponView : MonoBehaviour
 
         _isAFront = !_isAFront;
     }
+
+    public void Reload(float duration)
+    {
+        // Aが前だったときはAのリロードアニメーション
+        if (_isAFront)
+        {
+            _slotA.Reload(duration);
+            return;
+        }
+
+        _slotB.Reload(duration);
+    }
 }

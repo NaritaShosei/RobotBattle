@@ -23,4 +23,9 @@ public class WeaponPresenter
     {
         _view.Swap();
     }
+
+    public void Reload(float duration)
+    {
+        _view.Reload(duration);
+    }
 }
