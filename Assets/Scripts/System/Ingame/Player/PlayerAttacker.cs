@@ -121,6 +121,12 @@ public class PlayerAttacker : MonoBehaviour
         _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
         _presenter.Initialize((_mainWeapon.Data.AttackCapacity, _mainWeapon.Data.WeaponIcon), (_subWeapon.Data.AttackCapacity, _subWeapon.Data.WeaponIcon));
 
+        _mainWeapon.OnReload += _presenter.Reload;
+        _subWeapon.OnReload += _presenter.Reload;
+
+        _mainWeapon.OnCountUpdate += _presenter.CountUpdate;
+        _subWeapon.OnCountUpdate += _presenter.CountUpdate;
+
         _lockOn.SetRange(_mainWeapon.Data.Range);
     }
 
@@ -148,10 +154,6 @@ public class PlayerAttacker : MonoBehaviour
 
         // Debug用に適当なロジック
         _specialGauge.UpdateValue(Time.deltaTime);
-
-        //残弾数を渡す
-        // TODO:イベント駆動にしたほうがきれい
-        _presenter.CountUpdate(_mainWeapon.Count);
 
         // IK制御の改善
         UpdateIK();

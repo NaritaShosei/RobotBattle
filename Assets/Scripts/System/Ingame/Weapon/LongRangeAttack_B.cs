@@ -17,8 +17,15 @@ public class LongRangeAttack_B : Weapon_B
     protected float _time;
     protected int _count;
 
-    public override int Count => _count;
-
+    public override int Count
+    {
+        get => _count;
+        set
+        {
+            _count = value;
+            OnCountUpdateInvoke(_count);
+        }
+    }
     public override void Attack() { }
 
     public override Vector3 GetTargetPos()
@@ -49,7 +56,7 @@ public class LongRangeAttack_B : Weapon_B
     {
         _bulletManager = ServiceLocator.Get<BulletManager>();
         _time = Time.time;
-        _count = _data.AttackCapacity;
+        Count = _data.AttackCapacity;
         var bullets = _bulletManager.SetPool(this, _bullet, _count, _layer);
         Array.ForEach(bullets, b => b.Initialize(_data));
     }
