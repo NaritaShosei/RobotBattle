@@ -14572,15 +14572,15 @@ PrefabInstance:
       objectReference: {fileID: 359263432}
     - target: {fileID: 3573825822341839908, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: _dashColliderSize.x
-      value: 3.71
+      value: 2.92
       objectReference: {fileID: 0}
     - target: {fileID: 3573825822341839908, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: _dashColliderSize.y
-      value: 7.93
+      value: 4.09
       objectReference: {fileID: 0}
     - target: {fileID: 3573825822341839908, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: _dashColliderSize.z
-      value: 2.99
+      value: 2.53
       objectReference: {fileID: 0}
     - target: {fileID: 3573825822341839908, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: _damageReactionCollider

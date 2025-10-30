@@ -10,6 +10,7 @@ public abstract class Weapon_B : MonoBehaviour
     protected WeaponData _data;
 
     public WeaponData Data => _data;
+    protected bool _isReloading;
 
     public virtual void Initialize(WeaponData data)
     {

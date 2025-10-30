@@ -162,22 +162,37 @@ public class ShortRangeWeapon_B : Weapon_B, IWeapon
 
     public override async void Reload()
     {
-        // 少し待って攻撃回数を回復
+        if (_isReloading)
+        {
+            Debug.Log("リロード中です");
+            return;
+        }
+
         if (Count >= _data.AttackCapacity)
         {
             Debug.Log("既に弾薬は満タンです");
             return;
         }
 
+        _isReloading = true;
         Debug.Log("リロード開始...");
 
         OnReloadInvoke(_data.CoolTime);
 
-        // リロード時間を設定
-        await UniTask.Delay((int)(_data.CoolTime * 1000));
-
-        Count = _data.AttackCapacity;
-        Debug.Log("リロード完了!");
+        try
+        {
+            await UniTask.Delay((int)(_data.CoolTime * 1000), cancellationToken: this.GetCancellationTokenOnDestroy());
+            Count = _data.AttackCapacity;
+            Debug.Log("リロード完了!");
+        }
+        catch (System.OperationCanceledException)
+        {
+            Debug.Log("リロードがキャンセルされました");
+        }
+        finally
+        {
+            _isReloading = false;
+        }
     }
 
     public override Vector3 GetTargetPos()

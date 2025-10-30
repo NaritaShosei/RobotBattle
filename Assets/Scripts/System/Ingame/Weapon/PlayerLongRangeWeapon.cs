@@ -9,7 +9,6 @@ public class PlayerLongRangeWeapon : LongRangeAttack_B
     Camera _camera;
 
     bool _isAttack;
-    bool _isReload;
     public bool IsAttack { get => _isAttack; set => _isAttack = value; }
     IEnemySource _enemy;
 
@@ -26,7 +25,7 @@ public class PlayerLongRangeWeapon : LongRangeAttack_B
     void Update()
     {
 
-        if (_isReload) return;
+        if (_isReloading) return;
 
         TargetSet();
 
@@ -122,9 +121,9 @@ public class PlayerLongRangeWeapon : LongRangeAttack_B
     }
     protected override async UniTask OnReload()
     {
-        if (_isReload) return;
+        if (_isReloading) return;
         if (Count == _data.AttackCapacity) return;
-        _isReload = true;
+        _isReloading = true;
         Debug.LogWarning("Reload" + Count);
 
         OnReloadInvoke(_data.CoolTime);
@@ -133,7 +132,7 @@ public class PlayerLongRangeWeapon : LongRangeAttack_B
         await UniTask.Delay((int)(_data.CoolTime * 1000));
         Count = _data.AttackCapacity;
         Debug.LogWarning("Reload To Complete" + Count);
-        _isReload = false;
+        _isReloading = false;
     }
 }
 
