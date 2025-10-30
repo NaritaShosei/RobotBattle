@@ -707,12 +707,12 @@ public class PlayerController : Character_B<PlayerData>
     private Vector3 CalculateSafePosition(RaycastHit hit, Vector3 dashDirection)
     {
         // 距離の閾値
-        const float MIN_DISTANCE_THRESHOLD = 0.1f;
+        const float MIN_HIT_DISTANCE_THRESHOLD = 0.1f;
 
         Vector3 safePosition; // ワールド座標で計算
 
         // 0距離ヒット（既に障害物に接触している、またはhit.pointが不正）の場合
-        if (hit.distance <= MIN_DISTANCE_THRESHOLD || hit.point == Vector3.zero)
+        if (hit.distance <= MIN_HIT_DISTANCE_THRESHOLD || hit.point == Vector3.zero)
         {
             Debug.LogWarning($"[Dash] 0距離ヒット検出: {hit.collider.name}, distance={hit.distance:F3}, point={hit.point}");
 
@@ -795,7 +795,11 @@ public class PlayerController : Character_B<PlayerData>
             _newPos = Vector3.Lerp(_dashStartPos, _dashTargetPos, t);
         }
 
-        if (t >= 1)
+        const float MIN_DASH_DISTANCE_THRESHOLD = 0.2f;
+
+        var dis = Vector3.Distance(_newPos, _dashTargetPos);
+
+        if (t >= 1 || dis <= MIN_DASH_DISTANCE_THRESHOLD)
         {
             _conflictObj = null;
             _isDashed = false;
