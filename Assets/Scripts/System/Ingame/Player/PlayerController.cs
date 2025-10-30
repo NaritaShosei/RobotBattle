@@ -16,6 +16,8 @@ public class PlayerController : Character_B<PlayerData>
     [SerializeField] private Vector3 _dashColliderSize = new Vector3(1f, 2f, 1f);
     [SerializeField] private float _dashSafetyMargin = 0.5f;
     [SerializeField] private float _dashPushBackDistance = 0.3f;
+    [SerializeField] private int _rayCastHitSize = 10;
+    private RaycastHit[] _dashHitCache;
 
     private Rigidbody _rb;
     private InputManager _input;
@@ -104,6 +106,8 @@ public class PlayerController : Character_B<PlayerData>
         _gaugePresenter = new GaugePresenter(ServiceLocator.Get<GameUIManager>().GaugeView);
         _gaugePresenter.Initialize(_data.Gauge);
         _collider.GuardVisible(false);
+
+        _dashHitCache = new RaycastHit[_rayCastHitSize];
 
         _camera = Camera.main;
 
@@ -630,7 +634,7 @@ public class PlayerController : Character_B<PlayerData>
     }
 
     /// <summary>
-    /// BoxCastでダッシュ経路の障害物を検出
+    /// BoxCastNonAllocでダッシュ経路の障害物を検出
     /// </summary>
     private DashResult PerformDashBoxCast(Vector3 direction)
     {
@@ -639,28 +643,55 @@ public class PlayerController : Character_B<PlayerData>
         Vector3 startPosition = GetTargetCenter().position;
         Vector3 halfExtents = _dashColliderSize * 0.5f;
         float maxDistance = _data.DashDistance;
-        int layerMask = ~LayerMask.GetMask(_ignoreLayers);
 
-        // BoxCastで判定
-        bool hasHit = Physics.BoxCast(startPosition, halfExtents,
-             direction, out RaycastHit hit, transform.rotation,
-             maxDistance, layerMask
+        // ignoreLayersを反転して「検出すべきレイヤー」のマスクを作成
+        int ignoreMask = LayerMask.GetMask(_ignoreLayers);
+        int detectMask = ~ignoreMask;
+
+        // BoxCastNonAllocで検出
+        int hitCount = Physics.BoxCastNonAlloc(
+            center: startPosition,
+            halfExtents: halfExtents,
+            direction: direction,
+            results: _dashHitCache,
+            orientation: transform.rotation,
+            maxDistance: maxDistance,
+            layerMask: detectMask
         );
 
-        result.hasHit = hasHit;
-        result.hitInfo = hit;
-
-        if (hasHit)
+        if (hitCount > 0)
         {
-            // 衝突した場合、安全な位置を計算
-            result.hitObject = hit.collider.gameObject;
-            result.targetPosition = CalculateSafePosition(hit, direction);
+            // 最も近い障害物を見つける
+            RaycastHit closestHit = _dashHitCache[0];
+            float minDistance = _dashHitCache[0].distance;
 
-            Debug.LogError($"[Dash] 障害物検出: {hit.collider.name} (距離: {hit.distance:F2}m)");
+            for (int i = 1; i < hitCount; i++)
+            {
+                if (_dashHitCache[i].distance < minDistance)
+                {
+                    minDistance = _dashHitCache[i].distance;
+                    closestHit = _dashHitCache[i];
+                }
+            }
+
+            result.hasHit = true;
+            result.hitInfo = closestHit;
+            result.hitObject = closestHit.collider.gameObject;
+            result.targetPosition = CalculateSafePosition(closestHit, direction);
+
+            string hitLayerName = LayerMask.LayerToName(closestHit.collider.gameObject.layer);
+            Debug.Log($"[Dash] 障害物検出: {closestHit.collider.name} " +
+                     $"(レイヤー: {hitLayerName}, 距離: {closestHit.distance:F2}m, " +
+                     $"検出数: {hitCount}{closestHit.collider.name} => {closestHit.point})");
+
+            if (hitCount >= _dashHitCache.Length)
+            {
+                Debug.LogWarning($"[Dash] 検出数がキャッシュサイズ({_dashHitCache.Length})を超えています。");
+            }
         }
         else
         {
-            // 衝突しない場合、最大距離まで移動
+            result.hasHit = false;
             result.targetPosition = transform.position + direction * _data.DashDistance;
             result.hitObject = null;
 
@@ -675,14 +706,71 @@ public class PlayerController : Character_B<PlayerData>
     /// </summary>
     private Vector3 CalculateSafePosition(RaycastHit hit, Vector3 dashDirection)
     {
-        // 衝突点から少し手前に戻る
-        float safeDistance = _dashSafetyMargin + _dashPushBackDistance;
-        Vector3 safePosition = hit.point - dashDirection * safeDistance;
+        const float MIN_DISTANCE_THRESHOLD = 0.1f;
+
+        Vector3 safePosition; // ワールド座標で計算
+
+        // 0距離ヒット（既に障害物に接触している、またはhit.pointが不正）の場合
+        if (hit.distance <= MIN_DISTANCE_THRESHOLD || hit.point == Vector3.zero)
+        {
+            Debug.LogWarning($"[Dash] 0距離ヒット検出: {hit.collider.name}, distance={hit.distance:F3}, point={hit.point}");
+
+            // hit.pointが信頼できないので、Collider.ClosestPointを使用
+            Vector3 playerCenter = GetTargetCenter().position;
+            Vector3 closestPoint = hit.collider.ClosestPoint(playerCenter);
+
+            // プレイヤーから最近接点への方向を計算
+            Vector3 pushDirection = (playerCenter - closestPoint).normalized;
+            pushDirection.y = 0; // 水平方向のみ
+
+            // 押し出し方向が取れない場合はダッシュ方向の逆を使用
+            if (pushDirection.magnitude < 0.1f)
+            {
+                pushDirection = -dashDirection;
+                Debug.LogWarning("[Dash] 押し出し方向が計算できないため、ダッシュ方向の逆を使用");
+            }
+            else
+            {
+                pushDirection.Normalize();
+            }
+
+            float pushDistance = _dashSafetyMargin + _dashPushBackDistance;
+            safePosition = transform.position + pushDirection * pushDistance;
+
+            Debug.Log($"[Dash] 0距離対応: closestPoint={closestPoint}, pushDir={pushDirection}, safePos={safePosition}");
+        }
+        else
+        {
+            // 通常のヒット：衝突点から安全距離だけ手前に戻る
+
+            // 押し出し方向の決定
+            Vector3 pushDirection;
+
+            // 法線のY成分が大きい場合は斜面
+            if (Mathf.Abs(hit.normal.y) > 0.3f)
+            {
+                // 斜面の場合：法線の水平成分を使用
+                pushDirection = new Vector3(hit.normal.x, 0, hit.normal.z).normalized;
+                Debug.Log($"[Dash] 斜面検出: 法線Y={hit.normal.y:F2}");
+            }
+            else
+            {
+                // 垂直な壁の場合：ダッシュ方向の逆を使用
+                pushDirection = -dashDirection;
+            }
+
+            float safeDistance = _dashSafetyMargin + _dashPushBackDistance;
+
+            // hit.pointは既にワールド座標
+            safePosition = hit.point + pushDirection * safeDistance;
+
+            Debug.Log($"[Dash] 通常ヒット: hit.point={hit.point}, pushDir={pushDirection}, safePos={safePosition}");
+        }
 
         // Y座標は現在の高さを維持
         safePosition.y = transform.position.y;
 
-        return safePosition;
+        return safePosition; // ワールド座標を返す
     }
 
     /// <summary>
