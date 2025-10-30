@@ -6,7 +6,7 @@ using UnityEngine.Playables;
 
 public class PhaseManager : MonoBehaviour
 {
-    [SerializeField] private PhaseDataBase _phaseDataBase;
+    [SerializeField] private PhaseDataSequence _phaseDataBase;
     [SerializeField] private PlayerManager _playerManager;
 
     private PhaseContext _context;
