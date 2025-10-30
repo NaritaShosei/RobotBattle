@@ -706,6 +706,7 @@ public class PlayerController : Character_B<PlayerData>
     /// </summary>
     private Vector3 CalculateSafePosition(RaycastHit hit, Vector3 dashDirection)
     {
+        // 距離の閾値
         const float MIN_DISTANCE_THRESHOLD = 0.1f;
 
         Vector3 safePosition; // ワールド座標で計算
