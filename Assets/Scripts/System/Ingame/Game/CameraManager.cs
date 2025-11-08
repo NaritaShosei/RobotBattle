@@ -95,7 +95,7 @@ public class CameraManager : MonoBehaviour
     /// other => Late
     /// </summary>
     /// <param name="num"></param>
-    public void SetUpdateMethod(int num)
+    public void SetBlendUpdateMethod(int num)
     {
         _brain.BlendUpdateMethod =
             num == 0 ? CinemachineBrain.BrainUpdateMethods.FixedUpdate
