@@ -957,7 +957,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 362356832563821023, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 450
+      value: -357
       objectReference: {fileID: 0}
     - target: {fileID: 362356832563821023, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
       propertyPath: m_LocalPosition.y
@@ -965,7 +965,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 362356832563821023, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -613
+      value: 116
       objectReference: {fileID: 0}
     - target: {fileID: 362356832563821023, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1399,7 +1399,7 @@ MonoBehaviour:
   TargetOffset: {x: 0, y: 0, z: 0}
   TrackerSettings:
     BindingMode: 4
-    PositionDamping: {x: 0, y: 0, z: 0}
+    PositionDamping: {x: 0.3, y: 0, z: 0.3}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
@@ -2227,7 +2227,7 @@ MonoBehaviour:
   WorldUpOverride: {fileID: 0}
   ChannelMask: -1
   UpdateMethod: 2
-  BlendUpdateMethod: 1
+  BlendUpdateMethod: 0
   LensModeOverride:
     Enabled: 0
     DefaultMode: 2
@@ -4748,13 +4748,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 709052759}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 1093, y: 273.4197, z: 2158}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 905.58, y: 273.4197, z: 2158}
   m_LocalScale: {x: 6646.1143, y: 944.8574, z: 509.16}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1601236818}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &715512223
 GameObject:
   m_ObjectHideFlags: 0
@@ -7143,7 +7143,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 362356832563821023, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6
+      value: 234
       objectReference: {fileID: 0}
     - target: {fileID: 362356832563821023, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7151,7 +7151,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 362356832563821023, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 738
+      value: 242
       objectReference: {fileID: 0}
     - target: {fileID: 362356832563821023, guid: 020e9d257452c7641abc24a433ea7554, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8471,6 +8471,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1246506307}
   - component: {fileID: 1246506306}
+  - component: {fileID: 1246506308}
   m_Layer: 0
   m_Name: CameraManager
   m_TagString: Untagged
@@ -8492,6 +8493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _freeLookCamera: {fileID: 222685864}
   _lookCamera: {fileID: 222685865}
+  _brain: {fileID: 357140971}
   _cameraSensitivityX: 3.37
   _invertX: 1
   _cameraSensitivityY: 1.2
@@ -8514,6 +8516,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1246506308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246506305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Timeline::UnityEngine.Timeline.SignalReceiver
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 925079e24ae1d8c4f902e35b6492a0b7, type: 2}
+    - {fileID: 11400000, guid: 003308c8a7b163842b536632f92f3b65, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1246506306}
+          m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+          m_MethodName: SetUpdateMethod
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1246506306}
+          m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+          m_MethodName: SetUpdateMethod
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1248553715
 GameObject:
   m_ObjectHideFlags: 0
@@ -10472,7 +10519,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2682460374896523822, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 168
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 2682460374896523822, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10480,7 +10527,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2682460374896523822, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -287
+      value: 235
       objectReference: {fileID: 0}
     - target: {fileID: 2682460374896523822, guid: 6fd3b03a990699046955c8e678505b49, type: 3}
       propertyPath: m_LocalRotation.w
@@ -15449,7 +15496,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8879972122631139895, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
       propertyPath: m_Interpolate
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4623543395009971096, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
