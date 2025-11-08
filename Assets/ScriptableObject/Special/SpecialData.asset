@@ -20,7 +20,7 @@ MonoBehaviour:
   _attackPower: 1000
   _range: 100
   _guardBreak: 50
-  _duration: 10
-  _requiredGauge: 1
+  _duration: 2
+  _requiredGauge: 45
   _prefab: {fileID: 2995124986475092325, guid: a119711e2f274a84096cf2cd530b1296, type: 3}
   _equipmentType: 2
