@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(-50)]
 public class WeaponSelector : MonoBehaviour
 {
     private EquipmentData _playerData;
@@ -12,12 +14,20 @@ public class WeaponSelector : MonoBehaviour
 
     public event Action OnUnlock;
 
-    private void Awake()
+    public event Action OnEquipComplete;
+
+    private async void Awake()
     {
         ServiceLocator.Set(this);
 
         // データロード
         _playerData = SaveLoadService.Load<EquipmentData>();
+
+        try
+        {
+            await UniTask.WaitUntil(() => ServiceLocator.Get<WeaponManager>(), cancellationToken: destroyCancellationToken);
+        }
+        catch { }
 
         // Databaseを取得（WeaponManagerが先に初期化されている前提）
         _database = ServiceLocator.Get<WeaponManager>().DataBase;
@@ -59,6 +69,9 @@ public class WeaponSelector : MonoBehaviour
 
             SaveLoadService.Save(_playerData);
         }
+
+        // 
+        OnEquipComplete?.Invoke();
     }
 
     public bool SelectWeapon(WeaponType type, int id)

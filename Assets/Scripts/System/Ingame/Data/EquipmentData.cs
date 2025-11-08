@@ -17,7 +17,7 @@ public class EquipmentData
     /// </summary>
     public void ApplyInitialUnlocks(IEnumerable<int> weaponIds, IEnumerable<int> specialIds)
     {
-        if (_unlockedWeaponIDs.Count > 0) return; // 既に初期化済み
+        if (_unlockedWeaponIDs.Count > 0) { return; } // 既に初期化済み
 
         foreach (var id in weaponIds)
             UnlockWeapon(id);

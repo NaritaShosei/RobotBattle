@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[DefaultExecutionOrder(-100)]
 public class WeaponManager : MonoBehaviour
 {
     [SerializeField] private EquipmentDatabase _dataBase;
