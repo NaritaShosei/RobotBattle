@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   _maxHealth: 1000
-  _maxGauge: 1000
+  _maxGauge: 1e+26
   _normalSpeed: 20
   _boostSpeed: 60
   _jumpPower: 10
