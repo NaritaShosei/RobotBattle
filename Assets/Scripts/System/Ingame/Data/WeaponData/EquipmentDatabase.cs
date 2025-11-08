@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 [CreateAssetMenu(menuName = "GameData/EquipmentData/Database", fileName = "Database")]
@@ -43,10 +44,17 @@ public class EquipmentDatabase : ScriptableObject
                 onUnlock?.Invoke(data, item.ID);
             }
         }
+        /// <summary>
+        /// 初期開放IDリストを取得（実行時用）
+        /// </summary>
+        public int[] GetInitialIds()
+        {
+            return _initialData.Select(d => d.ID).ToArray();
+        }
     }
 
-    [SerializeField] Data<WeaponData> _weapons = new();
-    [SerializeField] Data<SpecialData> _specials = new();
+    [SerializeField] private Data<WeaponData> _weapons = new();
+    [SerializeField] private Data<SpecialData> _specials = new();
 
     private void OnValidate()
     {
@@ -69,6 +77,16 @@ public class EquipmentDatabase : ScriptableObject
 
         SaveLoadService.Save(data);
     }
+
+    /// <summary>
+    /// 初期解放武器IDを取得
+    /// </summary>
+    public int[] GetInitialWeaponIds() => _weapons.GetInitialIds();
+
+    /// <summary>
+    /// 初期解放必殺技IDを取得
+    /// </summary>
+    public int[] GetInitialSpecialIds() => _specials.GetInitialIds();
 
 
 #if UNITY_EDITOR

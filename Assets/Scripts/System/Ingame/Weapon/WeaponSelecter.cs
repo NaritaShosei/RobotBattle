@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponSelector : MonoBehaviour
@@ -7,19 +8,57 @@ public class WeaponSelector : MonoBehaviour
     public EquipmentData PlayerData => _playerData;
 
     private MoneyManager _moneyManager;
+    private EquipmentDatabase _database;
 
-    // アンロック時に発火するイベント
-    public event System.Action OnUnlock;
+    public event Action OnUnlock;
 
     private void Awake()
     {
         ServiceLocator.Set(this);
+
+        // データロード
         _playerData = SaveLoadService.Load<EquipmentData>();
+
+        // Databaseを取得（WeaponManagerが先に初期化されている前提）
+        _database = ServiceLocator.Get<WeaponManager>().DataBase;
+
+        // 初回起動時の初期化
+        ValidateInitialSetup();
     }
 
     private void Start()
     {
         _moneyManager = ServiceLocator.Get<MoneyManager>();
+    }
+
+    /// <summary>
+    /// 初期装備が未設定なら自動で付与
+    /// </summary>
+    private void ValidateInitialSetup()
+    {
+        if (_playerData.UnlockedWeaponIds.Count == 0)
+        {
+            Debug.Log("初回起動: 初期装備を付与");
+
+            var initialWeapons = _database.GetInitialWeaponIds();
+            var initialSpecials = _database.GetInitialSpecialIds();
+
+            _playerData.ApplyInitialUnlocks(initialWeapons, initialSpecials);
+
+            // 初期装備をセット
+            if (initialWeapons.Length > 0)
+            {
+                _playerData.EquipWeapon(WeaponType.Main, initialWeapons[0]);
+
+                if (initialWeapons.Length > 1)
+                    _playerData.EquipWeapon(WeaponType.Sub, initialWeapons[1]);
+            }
+
+            if (initialSpecials.Length > 0)
+                _playerData.EquipSpecial(initialSpecials[0]);
+
+            SaveLoadService.Save(_playerData);
+        }
     }
 
     public bool SelectWeapon(WeaponType type, int id)

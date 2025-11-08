@@ -1,12 +1,13 @@
 ﻿using Cysharp.Threading.Tasks;
-using UnityEngine;
+using System;
 using System.Threading;
+using UnityEngine;
 
 public abstract class Bullet_B : MonoBehaviour, IWeapon
 {
     [SerializeField] protected float _enableTime = 1.5f;
     protected ILockOnTarget _target;
-    public System.Action ReturnPoolEvent;
+    public Action ReturnPoolEvent;
     protected float _timer;
 
     protected bool _isTimeReturned;

@@ -1,4 +1,5 @@
 ﻿using Script.System.Ingame;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 // TODO:単一責任の原則を守るため、機能の分離をする
@@ -68,8 +69,8 @@ public class PlayerController : Character_B<PlayerData>
     private bool _isAutoMoving = false;
     private Transform _autoMoveTarget;
     private float _autoMoveTimer = 0f;
-    private System.Action _onAutoMoveComplete;
-    private System.Action _onAutoMoveCanceled;
+    private Action _onAutoMoveComplete;
+    private Action _onAutoMoveCanceled;
 
     // 攻撃中の回転制御用
     private bool _shouldRotateToTarget = false;
@@ -310,7 +311,7 @@ public class PlayerController : Character_B<PlayerData>
     /// <param name="target">移動先の標的</param>
     /// <param name="onComplete">到達時のコールバック</param>
     /// <param name="onCanceled">キャンセル時のコールバック</param>
-    public void StartAutoMovement(Transform target, float speed, System.Action onComplete = null, System.Action onCanceled = null)
+    public void StartAutoMovement(Transform target, float speed, Action onComplete = null, Action onCanceled = null)
     {
         if (_playerManager.IsState(PlayerState.SpecialAttack)) return;
 
