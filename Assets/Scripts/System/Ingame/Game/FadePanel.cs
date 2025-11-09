@@ -14,8 +14,13 @@ public class FadePanel : MonoBehaviour
         ServiceLocator.Set(this);
     }
 
-    public async UniTask Fade(float alpha)
+    public async UniTask Fade(float startAlpha, float targetAlpha)
     {
-        await _fadePanel.DOFade(alpha, _duration).AsyncWaitForCompletion();
+        // アルファ値の設定
+        var color = _fadePanel.color;
+        color.a = startAlpha;
+        _fadePanel.color = color;
+
+        await _fadePanel.DOFade(targetAlpha, _duration).AsyncWaitForCompletion();
     }
 }

@@ -3,14 +3,11 @@ using UnityEngine;
 using UnityEngine.UI;
 public class WeaponUISlotView : MonoBehaviour
 {
-    [SerializeField]
-    Text _bulletCountText;
-    [SerializeField]
-    Image _iconImage;
-    [SerializeField]
-    RectTransform _rectTransform;
-    [SerializeField]
-    CanvasGroup _canvasGroup;
+    [SerializeField] private Text _bulletCountText;
+    [SerializeField] private Image _iconImage;
+    [SerializeField] private Image _backGround;
+    [SerializeField] private RectTransform _rectTransform;
+    [SerializeField] private CanvasGroup _canvasGroup;
 
     int _maxCount;
     public void SetContent(int count, Sprite icon)
@@ -34,5 +31,14 @@ public class WeaponUISlotView : MonoBehaviour
 
         if (!enabled) { return; }
         _rectTransform.SetAsLastSibling();
+    }
+
+    public void Reload(float duration)
+    {
+        // 一度fillを0にする
+        _backGround.fillAmount = 0;
+
+        // fillAmountを指定時間かけて1にするアニメーション
+        _backGround.DOFillAmount(1, duration);
     }
 }

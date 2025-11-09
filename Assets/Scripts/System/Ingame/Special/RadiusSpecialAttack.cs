@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class RadiusSpecialAttack : SpecialAttackBase
+public class RadiusSpecialAttack : SpecialAttack_B
 {
     [SerializeField] private SphereCollider _collider;
     [SerializeField] private GameObject _viewObj;

@@ -8,7 +8,8 @@ public class TitleManager : MonoBehaviour
     [SerializeField] private TMP_Text _moneyText;
     private void Start()
     {
-        ServiceLocator.Get<FadePanel>().Fade(0).Forget();
+        // スタート時なので1→0のフェード
+        ServiceLocator.Get<FadePanel>().Fade(1, 0).Forget();
         _button.OnClick += OnClick;
         SetMoney();
         ServiceLocator.Get<WeaponSelector>().OnUnlock += SetMoney;
@@ -16,7 +17,8 @@ public class TitleManager : MonoBehaviour
 
     private async void OnClick()
     {
-        await ServiceLocator.Get<FadePanel>().Fade(1);
+        // 終了時なので0→1のフェード
+        await ServiceLocator.Get<FadePanel>().Fade(0, 1);
         SceneChanger.LoadScene(SceneChanger.INGAME);
     }
 

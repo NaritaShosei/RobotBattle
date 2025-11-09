@@ -6,7 +6,7 @@ using UnityEngine.Playables;
 
 public class PhaseManager : MonoBehaviour
 {
-    [SerializeField] private PhaseDataBase _phaseDataBase;
+    [SerializeField] private PhaseDataSequence _phaseDataBase;
     [SerializeField] private PlayerManager _playerManager;
 
     private PhaseContext _context;
@@ -42,7 +42,8 @@ public class PhaseManager : MonoBehaviour
             timeLineManager: ServiceLocator.Get<TimeLineManager>(),
             bossManager: ServiceLocator.Get<BossManager>(),
             enemyManager: ServiceLocator.Get<EnemyManager>(),
-            ingameManager: ServiceLocator.Get<IngameManager>());
+            ingameManager: ServiceLocator.Get<IngameManager>(),
+            fadePanel: ServiceLocator.Get<FadePanel>());
     }
 
     private async UniTask WaitAllPhase(CancellationToken token)
@@ -87,12 +88,14 @@ public class PhaseContext
     public BossManager BossManager { get; }
     public EnemyManager EnemyManager { get; }
     public IngameManager IngameManager { get; }
+    public FadePanel FadePanel { get; }
 
-    public PhaseContext(TimeLineManager timeLineManager, BossManager bossManager, EnemyManager enemyManager, IngameManager ingameManager)
+    public PhaseContext(TimeLineManager timeLineManager, BossManager bossManager, EnemyManager enemyManager, IngameManager ingameManager, FadePanel fadePanel)
     {
         TimeLineManager = timeLineManager;
         BossManager = bossManager;
         EnemyManager = enemyManager;
         IngameManager = ingameManager;
+        FadePanel = fadePanel;
     }
 }

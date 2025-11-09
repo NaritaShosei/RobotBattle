@@ -22,7 +22,8 @@ public class GameResultView : MonoBehaviour
 
     private async void OnClick()
     {
-        await ServiceLocator.Get<FadePanel>().Fade(1);
+        // 終了時なので0→1のフェード
+        await ServiceLocator.Get<FadePanel>().Fade(0,1);
         SceneChanger.LoadScene(SceneChanger.TITLE);
     }
 

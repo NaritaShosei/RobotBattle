@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -21,11 +22,14 @@ public class EnemySpawner : MonoBehaviour, ISpawner
 
     private Camera _camera;
 
+    private CancellationTokenSource _cts;
+
 
     private void Start()
     {
         _camera = Camera.main;
         _data.Health = _data.MaxHealth;
+        _cts = new CancellationTokenSource();
     }
 
     public async UniTask Spawn(List<GameObject> enemies)
@@ -34,7 +38,7 @@ public class EnemySpawner : MonoBehaviour, ISpawner
         {
             float randInterval = Random.Range(_data.MinInterval, _data.MaxInterval);
 
-            await UniTask.Delay((int)(randInterval * 1000), cancellationToken: destroyCancellationToken);
+            await UniTask.Delay((int)(randInterval * 1000), cancellationToken: _cts.Token);
 
             int randIndex = Random.Range(0, enemies.Count);
 
@@ -85,6 +89,14 @@ public class EnemySpawner : MonoBehaviour, ISpawner
             // 死亡処理
             OnDestroyed?.Invoke(this);
             Dead();
+
+            if (_cts != null)
+            {
+                _cts.Cancel();
+                _cts.Dispose();
+                _cts = null;
+            }
+
             Destroy(gameObject);
         }
     }

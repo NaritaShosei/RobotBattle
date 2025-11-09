@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PhaseDataBase", menuName = "GameData/PhaseDataBase")]
-public class PhaseDataBase : ScriptableObject
+[CreateAssetMenu(fileName = "PhaseDataSequence", menuName = "GameData/PhaseDataSequence")]
+public class PhaseDataSequence : ScriptableObject
 {
     [SerializeField] private List<PhaseData_B> _phases;
 

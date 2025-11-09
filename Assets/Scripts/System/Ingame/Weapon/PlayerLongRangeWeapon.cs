@@ -9,7 +9,6 @@ public class PlayerLongRangeWeapon : LongRangeAttack_B
     Camera _camera;
 
     bool _isAttack;
-    bool _isReload;
     public bool IsAttack { get => _isAttack; set => _isAttack = value; }
     IEnemySource _enemy;
 
@@ -26,7 +25,7 @@ public class PlayerLongRangeWeapon : LongRangeAttack_B
     void Update()
     {
 
-        if (_isReload) return;
+        if (_isReloading) return;
 
         TargetSet();
 
@@ -37,7 +36,7 @@ public class PlayerLongRangeWeapon : LongRangeAttack_B
     }
     public override void Attack()
     {
-        if (_bulletManager.IsPoolCount(this) && _count != 0)
+        if (_bulletManager.IsPoolCount(this) && Count    != 0)
         {
             float rate = 1 / _data.AttackRate;
             if (Time.time > _time + rate)
@@ -49,7 +48,7 @@ public class PlayerLongRangeWeapon : LongRangeAttack_B
 
                 _enemy = _lockOn.GetTarget();
                 bullet.SetTarget(_enemy as IFightable);
-                _count--;
+                Count--;
                 if (_enemy == null)
                 {
                     bullet.transform.forward = _aimTargetPos - _muzzle.position;
@@ -115,23 +114,25 @@ public class PlayerLongRangeWeapon : LongRangeAttack_B
     public override void SetAttack(bool value)
     {
         IsAttack = value;
-        if (value && _count <= 0 && enabled)
+        if (value && Count <= 0 && enabled)
         {
             Reload();
         }
     }
     protected override async UniTask OnReload()
     {
-        if (_isReload) return;
-        if (_count == _data.AttackCapacity) return;
-        _isReload = true;
-        Debug.LogWarning("Reload" + _count);
+        if (_isReloading) return;
+        if (Count == _data.AttackCapacity) return;
+        _isReloading = true;
+        Debug.LogWarning("Reload" + Count);
+
+        OnReloadInvoke(_data.CoolTime);
 
         // 1000ミリ秒に変換
         await UniTask.Delay((int)(_data.CoolTime * 1000));
-        _count = _data.AttackCapacity;
-        Debug.LogWarning("Reload To Complete" + _count);
-        _isReload = false;
+        Count = _data.AttackCapacity;
+        Debug.LogWarning("Reload To Complete" + Count);
+        _isReloading = false;
     }
 }
 

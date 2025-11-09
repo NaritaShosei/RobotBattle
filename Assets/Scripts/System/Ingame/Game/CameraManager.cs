@@ -1,4 +1,5 @@
 ﻿
+using TMPro.EditorUtilities;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ public class CameraManager : MonoBehaviour
 {
     [SerializeField] private CinemachineOrbitalFollow _freeLookCamera;
     [SerializeField] private CinemachineCamera _lookCamera;
+    [SerializeField] private CinemachineBrain _brain;
+
     [SerializeField, Range(0.1f, 10)] private float _cameraSensitivityX = 2;
 
     [SerializeField] private bool _invertX;
@@ -85,5 +88,15 @@ public class CameraManager : MonoBehaviour
     public void SetFastMode(bool isFast)
     {
         _isFast = isFast;
+    }
+
+    public void SetFixed()
+    {
+        _brain.BlendUpdateMethod = CinemachineBrain.BrainUpdateMethods.FixedUpdate;
+    }
+
+    public void SetLate()
+    {
+        _brain.BlendUpdateMethod = CinemachineBrain.BrainUpdateMethods.LateUpdate;
     }
 }

@@ -13,9 +13,9 @@ public class PlayerAttacker : MonoBehaviour
     [SerializeField] private PlayerManager _playerManager;
     [SerializeField] private float _animationWeight = 0.5f;
 
-    private WeaponBase _mainWeapon;
-    private WeaponBase _subWeapon;
-    private SpecialAttackBase _specialAttack;
+    private Weapon_B _mainWeapon;
+    private Weapon_B _subWeapon;
+    private SpecialAttack_B _specialAttack;
 
     private InputManager _input;
     private WeaponPresenter _presenter;
@@ -121,6 +121,12 @@ public class PlayerAttacker : MonoBehaviour
         _presenter = new WeaponPresenter(ServiceLocator.Get<GameUIManager>().WeaponView);
         _presenter.Initialize((_mainWeapon.Data.AttackCapacity, _mainWeapon.Data.WeaponIcon), (_subWeapon.Data.AttackCapacity, _subWeapon.Data.WeaponIcon));
 
+        _mainWeapon.OnReload += _presenter.Reload;
+        _subWeapon.OnReload += _presenter.Reload;
+
+        _mainWeapon.OnCountUpdate += _presenter.CountUpdate;
+        _subWeapon.OnCountUpdate += _presenter.CountUpdate;
+
         _lockOn.SetRange(_mainWeapon.Data.Range);
     }
 
@@ -147,11 +153,7 @@ public class PlayerAttacker : MonoBehaviour
         if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
 
         // Debug用に適当なロジック
-        _specialGauge.UpdateValue(1);
-
-        //残弾数を渡す
-        // TODO:イベント駆動にしたほうがきれい
-        _presenter.CountUpdate(_mainWeapon.Count);
+        _specialGauge.UpdateValue(Time.deltaTime);
 
         // IK制御の改善
         UpdateIK();

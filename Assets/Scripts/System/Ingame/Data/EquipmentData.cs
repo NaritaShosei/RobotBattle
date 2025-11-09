@@ -12,6 +12,20 @@ public class EquipmentData
     public List<int> UnlockedWeaponIds => _unlockedWeaponIDs;
     public List<int> UnlockedSpecialIds => _unlockedSpecialIDs;
 
+    /// <summary>
+    /// 初期装備を解放する
+    /// </summary>
+    public void ApplyInitialUnlocks(IEnumerable<int> weaponIds, IEnumerable<int> specialIds)
+    {
+        if (_unlockedWeaponIDs.Count > 0) { return; } // 既に初期化済み
+
+        foreach (var id in weaponIds)
+            UnlockWeapon(id);
+
+        foreach (var id in specialIds)
+            UnlockSpecial(id);
+    }
+
     // 武器のアンロック
     public bool UnlockWeapon(int weaponId)
     {

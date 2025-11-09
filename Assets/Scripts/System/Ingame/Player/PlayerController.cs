@@ -1,7 +1,8 @@
 ﻿using Script.System.Ingame;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+// TODO:単一責任の原則を守るため、機能の分離をする
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : Character_B<PlayerData>
 {
@@ -11,8 +12,13 @@ public class PlayerController : Character_B<PlayerData>
     [SerializeField] private float _rotateSpeed = 10;
     [SerializeField] private GhostSpawner _ghostSpawner;
 
-    [Header("ダッシュ時に判定しないレイヤー")]
+    [Header("ダッシュ設定")]
     [SerializeField] private string[] _ignoreLayers;
+    [SerializeField] private Vector3 _dashColliderSize = new Vector3(1f, 2f, 1f);
+    [SerializeField] private float _dashSafetyMargin = 0.5f;
+    [SerializeField] private float _dashPushBackDistance = 0.3f;
+    [SerializeField] private int _rayCastHitSize = 10;
+    private RaycastHit[] _dashHitCache;
 
     private Rigidbody _rb;
     private InputManager _input;
@@ -49,7 +55,7 @@ public class PlayerController : Character_B<PlayerData>
 
     // 自動移動関連
     [Header("自動移動設定")]
-    [SerializeField] public float _arriveThreshold = 1.5f;
+    [SerializeField] private float _arriveThreshold = 1.5f;
     public float ArriveThreshold => _arriveThreshold; // PlayerAttackからアクセスするためpublic
     [SerializeField] private float _maxAutoMoveTime = 3f;
 
@@ -63,8 +69,8 @@ public class PlayerController : Character_B<PlayerData>
     private bool _isAutoMoving = false;
     private Transform _autoMoveTarget;
     private float _autoMoveTimer = 0f;
-    private System.Action _onAutoMoveComplete;
-    private System.Action _onAutoMoveCanceled;
+    private Action _onAutoMoveComplete;
+    private Action _onAutoMoveCanceled;
 
     // 攻撃中の回転制御用
     private bool _shouldRotateToTarget = false;
@@ -75,7 +81,14 @@ public class PlayerController : Character_B<PlayerData>
     private IngameManager _gameManager;
     private CameraManager _cameraManager;
     private Camera _camera;
-
+    // ダッシュ結果を構造体で管理
+    private struct DashResult
+    {
+        public bool hasHit;
+        public Vector3 targetPosition;
+        public GameObject hitObject;
+        public RaycastHit hitInfo;
+    }
     void Start()
     {
         _input = ServiceLocator.Get<InputManager>();
@@ -94,6 +107,8 @@ public class PlayerController : Character_B<PlayerData>
         _gaugePresenter = new GaugePresenter(ServiceLocator.Get<GameUIManager>().GaugeView);
         _gaugePresenter.Initialize(_data.Gauge);
         _collider.GuardVisible(false);
+
+        _dashHitCache = new RaycastHit[_rayCastHitSize];
 
         _camera = Camera.main;
 
@@ -296,7 +311,7 @@ public class PlayerController : Character_B<PlayerData>
     /// <param name="target">移動先の標的</param>
     /// <param name="onComplete">到達時のコールバック</param>
     /// <param name="onCanceled">キャンセル時のコールバック</param>
-    public void StartAutoMovement(Transform target, float speed, System.Action onComplete = null, System.Action onCanceled = null)
+    public void StartAutoMovement(Transform target, float speed, Action onComplete = null, Action onCanceled = null)
     {
         if (_playerManager.IsState(PlayerState.SpecialAttack)) return;
 
@@ -312,6 +327,9 @@ public class PlayerController : Character_B<PlayerData>
         _autoMoveTimer = 0f;
         _onAutoMoveComplete = onComplete;
         _onAutoMoveCanceled = onCanceled;
+
+        // ダッシュ状態を解除
+        _isDashed = false;
 
         _playerManager.SetState(PlayerState.MovingToTarget);
 
@@ -556,42 +574,15 @@ public class PlayerController : Character_B<PlayerData>
 
     private void OnDash(InputAction.CallbackContext context)
     {
-        if (_gameManager.IsPaused || _gameManager.IsInEvent) { return; }
-        if (_playerManager.IsState(PlayerState.SpecialAttack)) { return; }
+        if (_gameManager.IsPaused || _gameManager.IsInEvent) return;
+        if (_playerManager.IsState(PlayerState.SpecialAttack)) return;
 
         if (context.phase == InputActionPhase.Started && !_isDashed)
         {
             if (_isAutoMoving) return;
-
             if (!GaugeValueChange(-_data.DashValue)) return;
 
-            _isBoost = true;
-            _data.DashTimer = 0;
-            _dashStartPos = transform.position;
-
-            Vector3 moveVel = _velocity != Vector2.zero ? _moveDir : _camForward;
-            Vector3 moveDir = moveVel.normalized;
-
-            var rayCastDis = 8;
-            _isDashed = true;
-
-            int layerMask = ~LayerMask.GetMask(_ignoreLayers);
-
-            if (Physics.Raycast(GetTargetCenter().position, moveDir, out RaycastHit hit, rayCastDis, layerMask))
-            {
-                Debug.Log(hit.collider.name);
-                var dir = (transform.position - hit.point).normalized;
-                var newPos = hit.point + dir * 10;
-                newPos.y = transform.position.y;
-                _newPos = newPos;
-                _conflictObj = hit.collider.gameObject;
-            }
-            else
-            {
-                _dashTargetPos = transform.position + moveDir * _data.DashDistance;
-            }
-
-            UpdateFastEffect();
+            ExecuteDash();
         }
 
         if (context.phase == InputActionPhase.Canceled)
@@ -599,6 +590,199 @@ public class PlayerController : Character_B<PlayerData>
             _isBoost = false;
             UpdateFastEffect();
         }
+    }
+
+    private void ExecuteDash()
+    {
+        _isBoost = true;
+        _data.DashTimer = 0;
+        _dashStartPos = transform.position;
+
+        // ダッシュ方向を決定
+        Vector3 dashDirection = CalculateDashDirection();
+
+        // BoxCastで障害物チェック
+        DashResult result = PerformDashBoxCast(dashDirection);
+
+        // 結果を適用
+        ApplyDashResult(result);
+
+        _isDashed = true;
+        UpdateFastEffect();
+    }
+
+    /// <summary>
+    /// ダッシュ方向を計算
+    /// </summary>
+    private Vector3 CalculateDashDirection()
+    {
+        Vector3 direction;
+
+        if (_velocity != Vector2.zero)
+        {
+            // 入力がある場合はその方向
+            direction = _moveDir.normalized;
+        }
+        else
+        {
+            // 入力がない場合はカメラの正面
+            direction = _camForward.normalized;
+        }
+
+        // Y軸を0にして水平方向のみにする
+        direction.y = 0;
+        return direction.normalized;
+    }
+
+    /// <summary>
+    /// BoxCastNonAllocでダッシュ経路の障害物を検出
+    /// </summary>
+    private DashResult PerformDashBoxCast(Vector3 direction)
+    {
+        DashResult result = new DashResult();
+
+        Vector3 startPosition = GetTargetCenter().position;
+        Vector3 halfExtents = _dashColliderSize * 0.5f;
+        float maxDistance = _data.DashDistance;
+
+        // ignoreLayersを反転して「検出すべきレイヤー」のマスクを作成
+        int ignoreMask = LayerMask.GetMask(_ignoreLayers);
+        int detectMask = ~ignoreMask;
+
+        // BoxCastNonAllocで検出
+        int hitCount = Physics.BoxCastNonAlloc(
+            center: startPosition,
+            halfExtents: halfExtents,
+            direction: direction,
+            results: _dashHitCache,
+            orientation: transform.rotation,
+            maxDistance: maxDistance,
+            layerMask: detectMask
+        );
+
+        if (hitCount > 0)
+        {
+            // 最も近い障害物を見つける
+            RaycastHit closestHit = _dashHitCache[0];
+            float minDistance = _dashHitCache[0].distance;
+
+            for (int i = 1; i < hitCount; i++)
+            {
+                if (_dashHitCache[i].distance < minDistance)
+                {
+                    minDistance = _dashHitCache[i].distance;
+                    closestHit = _dashHitCache[i];
+                }
+            }
+
+            result.hasHit = true;
+            result.hitInfo = closestHit;
+            result.hitObject = closestHit.collider.gameObject;
+            result.targetPosition = CalculateSafePosition(closestHit, direction);
+
+            string hitLayerName = LayerMask.LayerToName(closestHit.collider.gameObject.layer);
+            Debug.Log($"[Dash] 障害物検出: {closestHit.collider.name} " +
+                     $"(レイヤー: {hitLayerName}, 距離: {closestHit.distance:F2}m, " +
+                     $"検出数: {hitCount}{closestHit.collider.name} => {closestHit.point})");
+
+            if (hitCount >= _dashHitCache.Length)
+            {
+                Debug.LogWarning($"[Dash] 検出数がキャッシュサイズ({_dashHitCache.Length})を超えています。");
+            }
+        }
+        else
+        {
+            result.hasHit = false;
+            result.targetPosition = transform.position + direction * _data.DashDistance;
+            result.hitObject = null;
+
+            Debug.Log($"[Dash] 障害物なし。目標距離: {_data.DashDistance:F2}m");
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// 衝突位置から安全な停止位置を計算
+    /// </summary>
+    private Vector3 CalculateSafePosition(RaycastHit hit, Vector3 dashDirection)
+    {
+        // 距離の閾値
+        const float MIN_HIT_DISTANCE_THRESHOLD = 0.1f;
+
+        Vector3 safePosition; // ワールド座標で計算
+
+        // 0距離ヒット（既に障害物に接触している、またはhit.pointが不正）の場合
+        if (hit.distance <= MIN_HIT_DISTANCE_THRESHOLD || hit.point == Vector3.zero)
+        {
+            Debug.LogWarning($"[Dash] 0距離ヒット検出: {hit.collider.name}, distance={hit.distance:F3}, point={hit.point}");
+
+            // hit.pointが信頼できないので、Collider.ClosestPointを使用
+            Vector3 playerCenter = GetTargetCenter().position;
+            Vector3 closestPoint = hit.collider.ClosestPoint(playerCenter);
+
+            // プレイヤーから最近接点への方向を計算
+            Vector3 pushDirection = (playerCenter - closestPoint).normalized;
+            pushDirection.y = 0; // 水平方向のみ
+
+            // 押し出し方向が取れない場合はダッシュ方向の逆を使用
+            if (pushDirection.magnitude < 0.1f)
+            {
+                pushDirection = -dashDirection;
+                Debug.LogWarning("[Dash] 押し出し方向が計算できないため、ダッシュ方向の逆を使用");
+            }
+            else
+            {
+                pushDirection.Normalize();
+            }
+
+            float pushDistance = _dashSafetyMargin + _dashPushBackDistance;
+            safePosition = transform.position + pushDirection * pushDistance;
+
+            Debug.Log($"[Dash] 0距離対応: closestPoint={closestPoint}, pushDir={pushDirection}, safePos={safePosition}");
+        }
+        else
+        {
+            // 通常のヒット：衝突点から安全距離だけ手前に戻る
+
+            // 押し出し方向の決定
+            Vector3 pushDirection;
+
+            // 法線のY成分が大きい場合は斜面
+            if (Mathf.Abs(hit.normal.y) > 0.3f)
+            {
+                // 斜面の場合：法線の水平成分を使用
+                pushDirection = new Vector3(hit.normal.x, 0, hit.normal.z).normalized;
+                Debug.Log($"[Dash] 斜面検出: 法線Y={hit.normal.y:F2}");
+            }
+            else
+            {
+                // 垂直な壁の場合：ダッシュ方向の逆を使用
+                pushDirection = -dashDirection;
+            }
+
+            float safeDistance = _dashSafetyMargin + _dashPushBackDistance;
+
+            // hit.pointは既にワールド座標
+            safePosition = hit.point + pushDirection * safeDistance;
+
+            Debug.Log($"[Dash] 通常ヒット: hit.point={hit.point}, pushDir={pushDirection}, safePos={safePosition}");
+        }
+
+        // Y座標は現在の高さを維持
+        safePosition.y = transform.position.y;
+
+        return safePosition; // ワールド座標を返す
+    }
+
+    /// <summary>
+    /// ダッシュ結果を適用
+    /// </summary>
+    private void ApplyDashResult(DashResult result)
+    {
+        _dashTargetPos = result.targetPosition;
+        _newPos = result.targetPosition;
+        _conflictObj = result.hitObject;
     }
 
     private void Dash()
@@ -612,7 +796,11 @@ public class PlayerController : Character_B<PlayerData>
             _newPos = Vector3.Lerp(_dashStartPos, _dashTargetPos, t);
         }
 
-        if (t >= 1)
+        const float MIN_DASH_DISTANCE_THRESHOLD = 0.2f;
+
+        var dis = Vector3.Distance(_newPos, _dashTargetPos);
+
+        if (t >= 1 || dis <= MIN_DASH_DISTANCE_THRESHOLD)
         {
             _conflictObj = null;
             _isDashed = false;
@@ -801,6 +989,29 @@ public class PlayerController : Character_B<PlayerData>
     // デバッグ用の可視化
     private void OnDrawGizmos()
     {
+        if (!_isDashed && !Application.isPlaying) return;
+
+        Vector3 direction = CalculateDashDirection();
+        Vector3 startPosition = GetTargetCenter().position;
+        Vector3 halfExtents = _dashColliderSize * 0.5f;
+
+        // BoxCastの可視化
+        Gizmos.color = Color.cyan;
+
+        // 開始位置のボックス
+        Gizmos.matrix = Matrix4x4.TRS(startPosition, transform.rotation, Vector3.one);
+        Gizmos.DrawWireCube(Vector3.zero, _dashColliderSize);
+
+        // 終了位置のボックス
+        Vector3 endPosition = startPosition + direction * _data.DashDistance;
+        Gizmos.matrix = Matrix4x4.TRS(endPosition, transform.rotation, Vector3.one);
+        Gizmos.DrawWireCube(Vector3.zero, _dashColliderSize);
+
+        // 経路を線で表示
+        Gizmos.matrix = Matrix4x4.identity;
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(startPosition, endPosition);
+
         if (_isAutoMoving)
         {
             // 移動目標を赤い球で表示

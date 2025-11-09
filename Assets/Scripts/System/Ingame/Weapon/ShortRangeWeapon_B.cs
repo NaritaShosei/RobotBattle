@@ -1,8 +1,9 @@
 ﻿using Cysharp.Threading.Tasks;
 using RootMotion.FinalIK;
+using TMPro;
 using UnityEngine;
 
-public class ShortRangeWeapon_B : WeaponBase, IWeapon
+public class ShortRangeWeapon_B : Weapon_B, IWeapon
 {
     [SerializeField, Tooltip("敵から離れる距離")] private float _weaponDistance = 3f;
     [SerializeField, Tooltip("攻撃の半径")] private float _attackRadius = 3f;
@@ -18,14 +19,22 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     private LockOn _lockOn;
 
     private int _count;
-    public override int Count => _count;
+    public override int Count
+    {
+        get => _count;
+        set
+        {
+            _count = value;
+            OnCountUpdateInvoke(_count);
+        }
+    }
 
     // いらないかもだが一旦残しておく
     private bool _isAttack;
 
     private void Start()
     {
-        _count = _data.AttackCapacity;
+        Count = _data.AttackCapacity;
 
         Start_B();
     }
@@ -77,7 +86,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     public override bool IsTrackingActive() => _isTracking;
 
     // 近接武器なので常に true
-    public override bool RequiresPlayerMovement() => _count > 0;
+    public override bool RequiresPlayerMovement() => Count > 0;
 
     /// <summary>
     /// 攻撃対象
@@ -140,7 +149,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
             }
         }
 
-        _count--;
+        Count--;
     }
 
     public override void SetAttack(bool value)
@@ -153,20 +162,37 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
 
     public override async void Reload()
     {
-        // 少し待って攻撃回数を回復
-        if (_count >= _data.AttackCapacity)
+        if (_isReloading)
+        {
+            Debug.Log("リロード中です");
+            return;
+        }
+
+        if (Count >= _data.AttackCapacity)
         {
             Debug.Log("既に弾薬は満タンです");
             return;
         }
 
+        _isReloading = true;
         Debug.Log("リロード開始...");
 
-        // リロード時間を設定（近接武器なので短めに）
-        await UniTask.Delay((int)(_data.CoolTime * 1000));
+        OnReloadInvoke(_data.CoolTime);
 
-        _count = _data.AttackCapacity;
-        Debug.Log("リロード完了!");
+        try
+        {
+            await UniTask.Delay((int)(_data.CoolTime * 1000), cancellationToken: this.GetCancellationTokenOnDestroy());
+            Count = _data.AttackCapacity;
+            Debug.Log("リロード完了!");
+        }
+        catch (System.OperationCanceledException)
+        {
+            Debug.Log("リロードがキャンセルされました");
+        }
+        finally
+        {
+            _isReloading = false;
+        }
     }
 
     public override Vector3 GetTargetPos()
@@ -187,7 +213,7 @@ public class ShortRangeWeapon_B : WeaponBase, IWeapon
     public override bool CanAttackAnimPlay()
     {
         // 攻撃可能であればアニメーション再生可能
-        if (_count <= 0)
+        if (Count <= 0)
         {
             Reload();
             return false;

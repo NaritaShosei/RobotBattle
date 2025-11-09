@@ -31,7 +31,8 @@ public class IngameManager : MonoBehaviour
 
     void Start()
     {
-        ServiceLocator.Get<FadePanel>().Fade(0).Forget();
+        // スタート時なので1→0のフェード
+        ServiceLocator.Get<FadePanel>().Fade(1, 0).Forget();
 
         var resultModel = new GameResultModel();
 
