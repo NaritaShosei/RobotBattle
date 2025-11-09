@@ -36,11 +36,14 @@ public class PlayerLongRangeWeapon : LongRangeAttack_B
     }
     public override void Attack()
     {
-        if (_bulletManager.IsPoolCount(this) && Count    != 0)
+        if (_bulletManager.IsPoolCount(this) && Count != 0)
         {
             float rate = 1 / _data.AttackRate;
             if (Time.time > _time + rate)
             {
+                // Debug
+                ServiceLocator.Get<AudioManager>().PlaySE3D(_attackSEName, _muzzle);
+
                 _time = Time.time;
                 var bullet = _bulletManager.GetBullet(this);
                 bullet.gameObject.SetActive(true);

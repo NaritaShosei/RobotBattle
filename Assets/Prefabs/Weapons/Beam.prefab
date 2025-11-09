@@ -108,6 +108,10 @@ PrefabInstance:
       propertyPath: _bullet
       value: 
       objectReference: {fileID: 1930764663170779167, guid: beb06f7ff0d3af348a90099e4de7dbee, type: 3}
+    - target: {fileID: 6115230344392606276, guid: fa1b68544e025ad4e8745c09b911651a, type: 3}
+      propertyPath: _attackSEName
+      value: Shot
+      objectReference: {fileID: 0}
     - target: {fileID: 8642063581048861936, guid: fa1b68544e025ad4e8745c09b911651a, type: 3}
       propertyPath: m_Name
       value: Beam

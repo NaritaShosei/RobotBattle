@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,10 +8,14 @@ public class EffectManager : MonoBehaviour
     [SerializeField] Transform _parent;
 
     [SerializeField] ParticleSystem _explosion;
+
+    [SerializeField] private string _seName;
     //エフェクトを保持するプール
     Queue<ParticleSystem> _pool = new();
     //生成済みエフェクトを保持するリスト
     List<ParticleSystem> _particles = new();
+
+    private event Action<string, Vector3> OnPlayEffect;
 
     private void Awake()
     {
@@ -26,6 +31,9 @@ public class EffectManager : MonoBehaviour
             effect.gameObject.SetActive(false);
             _pool.Enqueue(effect);
         }
+
+        OnPlayEffect += (key, pos) => ServiceLocator.Get<AudioManager>().PlaySE3D(key, pos);
+
         StartCoroutine(ReturnPool());
     }
 
@@ -44,6 +52,9 @@ public class EffectManager : MonoBehaviour
         var effect = _pool.Dequeue();
         effect.transform.position = pos;
         effect.gameObject.SetActive(true);
+
+        OnPlayEffect?.Invoke(_seName, pos);
+
         _particles.Add(effect);
     }
     IEnumerator ReturnPool()

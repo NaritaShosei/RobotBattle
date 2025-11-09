@@ -6,6 +6,7 @@ using UnityEngine;
 public abstract class Weapon_B : MonoBehaviour
 {
     [SerializeField] private WeaponDissolveEffect _weaponDissolveEffect;
+    [SerializeField] protected string _attackSEName;
 
     protected WeaponData _data;
 
