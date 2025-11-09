@@ -11710,6 +11710,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parent: {fileID: 1556743758}
   _explosion: {fileID: 7147912361235092151, guid: 9e94d1de2818bdf4fb7847a510164fc3, type: 3}
+  _seName: Explosion
 --- !u!4 &1556743758
 Transform:
   m_ObjectHideFlags: 0
