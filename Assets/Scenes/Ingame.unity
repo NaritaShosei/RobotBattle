@@ -3440,6 +3440,8 @@ PlayableDirector:
     value: {fileID: 1155244336}
   - key: {fileID: -970650224395267428, guid: 046e53ae1f0df294aaf6b3934d826f5b, type: 2}
     value: {fileID: 1155244336}
+  - key: {fileID: -6761314970222494788, guid: 046e53ae1f0df294aaf6b3934d826f5b, type: 2}
+    value: {fileID: 1246506308}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &484472512
@@ -8537,8 +8539,8 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1246506306}
           m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
-          m_MethodName: SetBlendUpdateMethod
-          m_Mode: 3
+          m_MethodName: SetFixed
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8551,8 +8553,8 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1246506306}
           m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
-          m_MethodName: SetBlendUpdateMethod
-          m_Mode: 3
+          m_MethodName: SetLate
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

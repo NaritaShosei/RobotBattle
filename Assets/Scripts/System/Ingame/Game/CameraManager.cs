@@ -90,16 +90,13 @@ public class CameraManager : MonoBehaviour
         _isFast = isFast;
     }
 
-    /// <summary>
-    /// 0 => Fixed
-    /// other => Late
-    /// </summary>
-    /// <param name="num"></param>
-    public void SetBlendUpdateMethod(int num)
+    public void SetFixed()
     {
-        _brain.BlendUpdateMethod =
-            num == 0 ? CinemachineBrain.BrainUpdateMethods.FixedUpdate
-                     : CinemachineBrain.BrainUpdateMethods.LateUpdate;
+        _brain.BlendUpdateMethod = CinemachineBrain.BrainUpdateMethods.FixedUpdate;
     }
 
+    public void SetLate()
+    {
+        _brain.BlendUpdateMethod = CinemachineBrain.BrainUpdateMethods.LateUpdate;
+    }
 }
