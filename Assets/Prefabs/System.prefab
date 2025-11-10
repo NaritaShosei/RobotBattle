@@ -188,9 +188,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dbf9c9ea2de0dd4690d042a9d4e12d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  _bgmDatas: []
+  _bgmDatas:
+  - {fileID: 11400000, guid: 07e877ef87d62384397d4e22f79d91d4, type: 2}
   _seDatas:
   - {fileID: 11400000, guid: c3f991c62ea22bb48a4f4d3e748e90b7, type: 2}
+  - {fileID: 11400000, guid: 63fa915f7b421e24eaed9e6615fc7e4d, type: 2}
+  _audioMixerGroup: {fileID: 24300002, guid: 3be7b1f8644d8ee4eb9b717f80bcf084, type: 2}
   _seAudioSourceCount: 30
   _masterVolume: 1
   _bgmVolume: 1
