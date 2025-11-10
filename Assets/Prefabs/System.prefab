@@ -190,6 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   _bgmDatas:
   - {fileID: 11400000, guid: 07e877ef87d62384397d4e22f79d91d4, type: 2}
+  - {fileID: 11400000, guid: f8c82d7eb79a5354c99ba11f8917f195, type: 2}
   _seDatas:
   - {fileID: 11400000, guid: c3f991c62ea22bb48a4f4d3e748e90b7, type: 2}
   - {fileID: 11400000, guid: 63fa915f7b421e24eaed9e6615fc7e4d, type: 2}
