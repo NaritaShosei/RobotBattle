@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioData
   _name: IngameBGM
   _audioClip: {fileID: 8300000, guid: 2aae4f3aea56f3846872bc6b73185b04, type: 3}
-  _volume: 0.05
+  _volume: 0.069
   _spatialBlend: 0
   _minDistance: 1
   _maxDistance: 500

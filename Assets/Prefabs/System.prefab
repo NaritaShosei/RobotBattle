@@ -195,6 +195,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c3f991c62ea22bb48a4f4d3e748e90b7, type: 2}
   - {fileID: 11400000, guid: 63fa915f7b421e24eaed9e6615fc7e4d, type: 2}
   - {fileID: 11400000, guid: 73ae4ac77d65e214ab3bfc6608a03d8a, type: 2}
+  - {fileID: 11400000, guid: dfb02c5be9e3a134fb83272b5dcae176, type: 2}
   _audioMixerGroup: {fileID: 24300002, guid: 3be7b1f8644d8ee4eb9b717f80bcf084, type: 2}
   _seAudioSourceCount: 30
   _masterVolume: 1

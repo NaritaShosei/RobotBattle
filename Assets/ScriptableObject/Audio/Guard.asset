@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ca71dd2b17262445aa00216335d6489, type: 3}
-  m_Name: Shot
+  m_Name: Guard
   m_EditorClassIdentifier: Assembly-CSharp::AudioData
-  _name: Shot
-  _audioClip: {fileID: 8300000, guid: 531c7f90da3a7a6489efe4318f9d25a1, type: 3}
-  _volume: 0.101
+  _name: Guard
+  _audioClip: {fileID: 8300000, guid: a4657aa748d0e524cafe126a6a06413b, type: 3}
+  _volume: 0.28
   _spatialBlend: 1
-  _minDistance: 1
-  _maxDistance: 500
+  _minDistance: 0.5
+  _maxDistance: 50
   _rolloffMode: 0
   _customRolloffCurve:
     serializedVersion: 2
@@ -44,9 +44,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _dopplerLevel: 1
-  _spread: 0
+  _spread: 228
   _loop: 0
-  _priority: 84
+  _priority: 128
   _pitch: 1
   _randomizePitch: 0
-  _pitchRange: {x: 0.95, y: 1.05}
+  _pitchRange: {x: 0.9, y: 1.1}
