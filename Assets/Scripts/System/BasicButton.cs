@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class BasicButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private string _seName = "Button";
     [Header("ボタンアニメーション設定")]
     [SerializeField] private float _clickScale = 0.8f;
     [SerializeField] private float _clickDuration = 0.15f;
@@ -16,6 +17,8 @@ public class BasicButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     public event Action OnClick;
     public void OnPointerClick(PointerEventData eventData)
     {
+        ServiceLocator.Get<AudioManager>().PlaySE(_seName);
+
         _clickSequence.Kill();
 
         _clickSequence = DOTween.Sequence();
