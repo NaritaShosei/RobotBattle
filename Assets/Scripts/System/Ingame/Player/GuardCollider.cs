@@ -3,10 +3,8 @@ using UnityEngine;
 
 public class GuardCollider : MonoBehaviour
 {
-    [SerializeField]
-    Collider _collider;
-    [SerializeField]
-    Renderer _renderer;
+    [SerializeField] private Collider _collider;
+    [SerializeField] private Renderer _renderer;
 
     public Action<Collider> OnTriggerEnterEvent;
 

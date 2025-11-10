@@ -8,7 +8,10 @@ public class PlayerController : Character_B<PlayerData>
 {
     [SerializeField] private PlayerManager _playerManager;
     [SerializeField] private PlayerData _dataBase;
+
     [SerializeField] private GuardCollider _collider;
+    [SerializeField] private string _GuardSEName = "Guard";
+
     [SerializeField] private float _rotateSpeed = 10;
     [SerializeField] private GhostSpawner _ghostSpawner;
 
@@ -255,7 +258,7 @@ public class PlayerController : Character_B<PlayerData>
         transform.forward = forward;
 
         // 追尾終了時に重力をかけなおす
-       UseGravity();
+        UseGravity();
     }
 
     /// <summary>
@@ -873,6 +876,7 @@ public class PlayerController : Character_B<PlayerData>
             //ゲージが残ってるかつIdle状態のときのみガード可能
             if (_data.Gauge >= _data.GuardMinValue && _playerManager.IsState(PlayerState.Idle))
             {
+                ServiceLocator.Get<AudioManager>().PlaySE3D(_GuardSEName, transform);
                 Debug.Log("ガード開始");
                 _isGuard = true;
                 _playerManager.SetState(PlayerState.Guard);
