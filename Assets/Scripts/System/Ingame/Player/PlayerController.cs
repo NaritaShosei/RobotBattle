@@ -239,7 +239,7 @@ public class PlayerController : Character_B<PlayerData>
         _shouldRotateToTarget = true;
 
         // 追尾中は重力を切る
-        _rb.useGravity = false;
+        UnuseGravity();
     }
 
     /// <summary>
@@ -255,7 +255,7 @@ public class PlayerController : Character_B<PlayerData>
         transform.forward = forward;
 
         // 追尾終了時に重力をかけなおす
-        _rb.useGravity = true;
+       UseGravity();
     }
 
     /// <summary>
@@ -843,6 +843,22 @@ public class PlayerController : Character_B<PlayerData>
             _ghostSpawner.StopSpawning();
             _cameraManager.SetFastMode(false);
         }
+    }
+
+    /// <summary>
+    /// 重力を無効化
+    /// </summary>
+    public void UnuseGravity()
+    {
+        _rb.useGravity = false;
+    }
+
+    /// <summary>
+    /// 重力を有効化
+    /// </summary>
+    public void UseGravity()
+    {
+        _rb.useGravity = true;
     }
 
     private void OnGuard(InputAction.CallbackContext context)
