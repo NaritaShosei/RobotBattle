@@ -1,7 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
+using UnityEngine.Audio;
 
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
@@ -12,6 +14,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioData[] _seDatas;
 
     [Header("Audio Source Settings")]
+    [SerializeField] private AudioMixerGroup _audioMixerGroup;
     [SerializeField] private int _seAudioSourceCount = 30;
     [SerializeField, Range(0f, 1f)] private float _masterVolume = 1f;
     [SerializeField, Range(0f, 1f)] private float _bgmVolume = 1f;
@@ -22,8 +25,8 @@ public class AudioManager : MonoBehaviour
 
     // BGM用
     private AudioSource _bgmAudioSource;
-    private Coroutine _bgmFadeCoroutine;
     private string _currentBGMKey;
+    private CancellationTokenSource _cts;
 
     // SE用（プーリング）
     private Queue<AudioSource> _seAudioSourcePool;
@@ -123,6 +126,7 @@ public class AudioManager : MonoBehaviour
         _bgmAudioSource = GetComponent<AudioSource>();
         _bgmAudioSource.loop = true;
         _bgmAudioSource.playOnAwake = false;
+        _bgmAudioSource.outputAudioMixerGroup = _audioMixerGroup;
 
         // SEプールの初期化
         _seAudioSourcePool = new Queue<AudioSource>(_seAudioSourceCount);
@@ -135,8 +139,9 @@ public class AudioManager : MonoBehaviour
             AudioSource source = sourceObj.AddComponent<AudioSource>();
             source.playOnAwake = false;
             source.loop = false;
+            source.outputAudioMixerGroup = _audioMixerGroup;
 
-            _seAudioSourcePool.Enqueue(source); 
+            _seAudioSourcePool.Enqueue(source);
         }
     }
 
@@ -155,7 +160,7 @@ public class AudioManager : MonoBehaviour
     /// <summary>
     /// BGMを再生
     /// </summary>
-    public void PlayBGM(string key, bool useFade)
+    public async void PlayBGM(string key, bool useFade)
     {
         if (string.IsNullOrEmpty(key))
         {
@@ -183,15 +188,19 @@ public class AudioManager : MonoBehaviour
 
         _currentBGMKey = key;
 
-        if (_bgmFadeCoroutine != null)
+        if (_cts is not null)
         {
-            StopCoroutine(_bgmFadeCoroutine);
+            _cts.Cancel();
+            _cts.Dispose();
+            _cts = null;
         }
 
         if (useFade)
         {
-            _bgmFadeCoroutine = StartCoroutine(FadeBGM(bgmData));
+            _cts = new CancellationTokenSource();
+            await FadeBGM(bgmData, _cts.Token);
         }
+
         else
         {
             if (_bgmAudioSource.isPlaying)
@@ -207,17 +216,21 @@ public class AudioManager : MonoBehaviour
     /// <summary>
     /// BGMを停止
     /// </summary>
-    public void StopBGM(bool useFade = false)
+    public async void StopBGM(bool useFade = false)
     {
-        if (_bgmFadeCoroutine != null)
+        if (_cts is not null)
         {
-            StopCoroutine(_bgmFadeCoroutine);
+            _cts.Cancel();
+            _cts.Dispose();
+            _cts = null;
         }
 
         if (useFade)
         {
-            _bgmFadeCoroutine = StartCoroutine(FadeOutBGM());
+            _cts = new CancellationTokenSource();
+            await FadeOutBGM(_cts.Token);
         }
+
         else
         {
             _bgmAudioSource.Stop();
@@ -228,7 +241,7 @@ public class AudioManager : MonoBehaviour
     /// <summary>
     /// BGMのフェード処理
     /// </summary>
-    private IEnumerator FadeBGM(AudioData newBgmData)
+    private async UniTask FadeBGM(AudioData newBgmData, CancellationToken token)
     {
         float startVolume = _bgmAudioSource.volume;
         float targetVolume = newBgmData.Volume * _bgmVolume * _masterVolume;
@@ -240,7 +253,7 @@ public class AudioManager : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = elapsed / (_bgmFadeDuration * 0.5f);
             _bgmAudioSource.volume = Mathf.Lerp(startVolume, 0f, t);
-            yield return null;
+            await UniTask.DelayFrame(1, PlayerLoopTiming.Update, token);
         }
 
         // BGM切り替え
@@ -256,17 +269,16 @@ public class AudioManager : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = elapsed / (_bgmFadeDuration * 0.5f);
             _bgmAudioSource.volume = Mathf.Lerp(0f, targetVolume, t);
-            yield return null;
+            await UniTask.DelayFrame(1, PlayerLoopTiming.Update, token);
         }
 
         _bgmAudioSource.volume = targetVolume;
-        _bgmFadeCoroutine = null;
     }
 
     /// <summary>
     /// BGMフェードアウト
     /// </summary>
-    private IEnumerator FadeOutBGM()
+    private async UniTask FadeOutBGM(CancellationToken token)
     {
         float startVolume = _bgmAudioSource.volume;
         float elapsed = 0f;
@@ -276,12 +288,11 @@ public class AudioManager : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = elapsed / _bgmFadeDuration;
             _bgmAudioSource.volume = Mathf.Lerp(startVolume, 0f, t);
-            yield return null;
+            await UniTask.DelayFrame(1, PlayerLoopTiming.Update, token);
         }
 
         _bgmAudioSource.Stop();
         _currentBGMKey = null;
-        _bgmFadeCoroutine = null;
     }
 
     #endregion
