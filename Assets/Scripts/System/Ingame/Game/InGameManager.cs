@@ -12,6 +12,7 @@ public class IngameManager : MonoBehaviour
 
     [SerializeField] private string _inputMode = "Player";
 
+    [SerializeField] private string _bgmName = "IngameBGM";
     GameResultPresenter _gameResultPresenter;
     EnemyManager _enemyManager;
     ScoreManager _scoreManager;
@@ -47,10 +48,14 @@ public class IngameManager : MonoBehaviour
         ServiceLocator.Get<PhaseManager>().OnComplete += GameEnd;
 
         ServiceLocator.Get<InputManager>().SwitchInputMode(_inputMode);
+
+        ServiceLocator.Get<AudioManager>().PlayBGM(_bgmName);
     }
 
     private void GameEnd()
     {
+        ServiceLocator.Get<AudioManager>().StopBGM(true);
+
         if (_player.IsState(PlayerState.Dead))
         {
             _gameResultPresenter.SetGameOver(GameOverType.Death, _scoreManager.Score);

@@ -6,6 +6,7 @@ public class TitleManager : MonoBehaviour
 {
     [SerializeField] private BasicButton _button;
     [SerializeField] private TMP_Text _moneyText;
+    [SerializeField] private string _bgmName = "TitleBGM";
     private void Start()
     {
         // スタート時なので1→0のフェード
@@ -13,6 +14,7 @@ public class TitleManager : MonoBehaviour
         _button.OnClick += OnClick;
         SetMoney();
         ServiceLocator.Get<WeaponSelector>().OnUnlock += SetMoney;
+        ServiceLocator.Get<AudioManager>().PlayBGM(_bgmName);
     }
 
     private async void OnClick()

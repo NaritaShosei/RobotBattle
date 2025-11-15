@@ -2226,8 +2226,8 @@ MonoBehaviour:
   IgnoreTimeScale: 0
   WorldUpOverride: {fileID: 0}
   ChannelMask: -1
-  UpdateMethod: 2
-  BlendUpdateMethod: 0
+  UpdateMethod: 1
+  BlendUpdateMethod: 1
   LensModeOverride:
     Enabled: 0
     DefaultMode: 2
@@ -3414,6 +3414,7 @@ GameObject:
   - component: {fileID: 484472512}
   - component: {fileID: 484472511}
   - component: {fileID: 484472513}
+  - component: {fileID: 484472514}
   m_Layer: 0
   m_Name: TimeLineManager
   m_TagString: Untagged
@@ -3440,8 +3441,8 @@ PlayableDirector:
     value: {fileID: 1155244336}
   - key: {fileID: -970650224395267428, guid: 046e53ae1f0df294aaf6b3934d826f5b, type: 2}
     value: {fileID: 1155244336}
-  - key: {fileID: -6761314970222494788, guid: 046e53ae1f0df294aaf6b3934d826f5b, type: 2}
-    value: {fileID: 1246506308}
+  - key: {fileID: -5312951336471220811, guid: 046e53ae1f0df294aaf6b3934d826f5b, type: 2}
+    value: {fileID: 484472514}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &484472512
@@ -3472,6 +3473,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playableDirector: {fileID: 484472511}
+--- !u!114 &484472514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484472510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Timeline::UnityEngine.Timeline.SignalReceiver
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 003308c8a7b163842b536632f92f3b65, type: 2}
+    - {fileID: 11400000, guid: 925079e24ae1d8c4f902e35b6492a0b7, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1155244342}
+          m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+          m_MethodName: UnuseGravity
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1155244342}
+          m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+          m_MethodName: UseGravity
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &490795148
 GameObject:
   m_ObjectHideFlags: 0
@@ -7714,6 +7760,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7053778544467440685, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
   m_PrefabInstance: {fileID: 3019013742801692727}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1155244342 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3573825822341839908, guid: 594f4a8c287780c4aa70820991b6305d, type: 3}
+  m_PrefabInstance: {fileID: 3019013742801692727}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638546170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4703980db985bdc4fac95e8b6d34fcd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1156532536 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3152140421916720333, guid: e8593a52c464d3b4baeed69529cc691f, type: 3}
@@ -7885,6 +7942,7 @@ MonoBehaviour:
   _player: {fileID: 1155244318}
   _maxTime: 60
   _inputMode: Player
+  _bgmName: IngameBGM
 --- !u!4 &1177678969
 Transform:
   m_ObjectHideFlags: 0
@@ -8473,7 +8531,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1246506307}
   - component: {fileID: 1246506306}
-  - component: {fileID: 1246506308}
   m_Layer: 0
   m_Name: CameraManager
   m_TagString: Untagged
@@ -8495,7 +8552,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _freeLookCamera: {fileID: 222685864}
   _lookCamera: {fileID: 222685865}
-  _brain: {fileID: 357140971}
   _cameraSensitivityX: 3.37
   _invertX: 1
   _cameraSensitivityY: 1.2
@@ -8518,51 +8574,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1246506308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1246506305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Timeline::UnityEngine.Timeline.SignalReceiver
-  m_Events:
-    m_Signals:
-    - {fileID: 11400000, guid: 925079e24ae1d8c4f902e35b6492a0b7, type: 2}
-    - {fileID: 11400000, guid: 003308c8a7b163842b536632f92f3b65, type: 2}
-    m_Events:
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1246506306}
-          m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
-          m_MethodName: SetFixed
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1246506306}
-          m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
-          m_MethodName: SetLate
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 1
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &1248553715
 GameObject:
   m_ObjectHideFlags: 0
@@ -11710,6 +11721,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parent: {fileID: 1556743758}
   _explosion: {fileID: 7147912361235092151, guid: 9e94d1de2818bdf4fb7847a510164fc3, type: 3}
+  _seName: Explosion
 --- !u!4 &1556743758
 Transform:
   m_ObjectHideFlags: 0
